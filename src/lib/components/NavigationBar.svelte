@@ -8,7 +8,6 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-full w-52">
             <li><a href="/" class="rounded-full">Great Hall</a></li>
             <li><a class="rounded-full">Fatiha, The Holy Qur'an</a></li>
-            <li><a href="/about" class="rounded-full">About Me, Epic of Identity</a></li>
             <li><a class="rounded-full">Clyfar, Pyschological Test</a></li>
         </ul>
     </div>
