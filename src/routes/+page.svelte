@@ -20,7 +20,7 @@
                 <div class="text-sm breadcrumbs">
                     <ul>
                         <li>
-                        <a href="/">
+                        <a href="/clyfar">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
                             <span class="ms-2">Clyfar - Pyschological Test</span>
                         </a>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    {#each Array(10) as _,index }
+    {#each Array(1) as _,index }
         <div class="divider"></div>
 
         <div class="mx-5 my-2">
@@ -64,7 +64,7 @@
             <p class="pt-4">
                 With me as your guide, be ready to go on a delightfully crazy adventure across the vast world of code. As I make my way through frontend mishaps and backend errors, leaving a path of bug-filled mayhem in my wake, get ready to laugh till you weep.
             </p>
-            <a href="/blog/{index}" class="btn btn-xs btn-neutral rounded-full mt-2">Read More..</a>
+            <a href="/blogs/{index}" class="btn btn-xs btn-neutral rounded-full mt-2">Read More..</a>
         </div>
     {/each}
 
