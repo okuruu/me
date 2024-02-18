@@ -1,25 +1,42 @@
-    <!-- <div class="navbar bg-base-100 flex items-center justify-end">
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-            </div>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-full w-52">
-                <li><a href="/" class="rounded-full">Great Hall</a></li>
-                <li><a href="/quran" class="rounded-full">Fatiha, The Holy Qur'an</a></li>
-                <li><a href="/" class="rounded-full">Clyfar, Pyschological Test</a></li>
-            </ul>
-        </div>
-    </div> -->
+<script lang="ts">
+    import { goto } from '$app/navigation';
+    import { page } from '$app/stores';
+    import { onDestroy } from 'svelte';
 
-    <div class="text-sm breadcrumbs mb-5">
-        <ul>
-          <li>
-            <a>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-              <span class="ms-2">Clyfar - Pyschological Test</span>
-            </a>
-          </li> 
-        </ul>
-      </div>
+    // Define navigation items
+    const navigationItems = [
+        { id: 'home', redirectTo: '/' },
+        { id: 'quran', redirectTo: '/quran' }
+    ];
+
+    // Reactive variable to track active item
+    let activeItem: string = '';
+
+    // Function to set active item and navigate
+    const setActive = (id: string) => {
+        activeItem = id;
+        const redirectTo = navigationItems.find(item => item.id === id)?.redirectTo ?? '/';
+        goto(redirectTo);
+    }
+
+    // Subscribe to the $page store to get the current route
+    const unsubscribe = page.subscribe($page => {
+        const currentRoute = $page.url.pathname;
+        activeItem = navigationItems.find(item => item.redirectTo === currentRoute)?.id ?? '';
+    });
+
+    // Unsubscribe when the component is destroyed
+    onDestroy(() => {
+        unsubscribe();
+    });
+</script>
+<div class=" fixed bottom-0 left-0 right-0 bg-white shadow-lg">
+    <div class="container mx-auto btm-nav flex justify-between p-4">
+        <button on:click={() => setActive('home')} class={activeItem === 'home' ? 'active' : ''}>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+        </button>
+        <button on:click={() => setActive('quran')} class={activeItem === 'quran' ? 'active' : ''}>
+            <img src="/icons/Quran.svg" class="h-4 w-4" alt="Quran icon" />
+        </button>
+    </div>
+</div>
