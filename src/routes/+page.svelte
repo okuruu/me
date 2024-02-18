@@ -8,7 +8,9 @@
         <div class="col-span-1 md:col-span-1">
             <div class="avatar">
                 <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                    <img src="/images/profile.png" alt="Profile" />
+                    <a href="https://id.linkedin.com/in/gilby-dhilega-555b9b152" target="_blank">
+                        <img src="/images/profile.png" alt="Profile" />
+                    </a>
                 </div>
             </div>
         </div>
@@ -32,7 +34,7 @@
         <div class="row-span-3 font-bold text-gray-400 ms-3">Dea Bakery<br/>(Present)</div>
         <div class="col-span-2">
             <p class="font-bold">Head of Information Technology</p>
-            <p class="mt-2">Building Point of Sales, Internal Management System, and a lot.</p>
+            <p class="mt-2">Led development team, Building Point of Sale (POS), Internal Management System, and various other projects.</p>
         </div>
         <div class="col-span-2">
             <p class="font-semibold text-gray-400">
@@ -44,23 +46,7 @@
         </div>
     </div>
 
-    <div class="grid grid-rows-1 grid-flow-col gap-4 mx-1">
-        <div class="row-span-3 font-bold text-gray-400 ms-3">Jasa Tirta 1<br/>(2019)</div>
-        <div class="col-span-2">
-            <p class="font-bold">Software Engineer</p>
-            <p class="mt-2">Building Key Performance Index. Used for employee performance measurements.</p>
-        </div>
-        <div class="col-span-2">
-            <p class="font-semibold text-gray-400">
-                <a href="https://codeigniter.com/">Codeigniter</a> • 
-                <a href="https://www.proxmox.com/en/">Proxmox</a> • 
-                <a href="https://navicat.com/en/">Navicat</a> • 
-                <a href="https://getbootstrap.com/">Bootstrap</a>
-            </p>
-        </div>
-    </div>
-
-    <!-- {#each Array(10) as _,index }
+    {#each Array(10) as _,index }
         <div class="divider"></div>
 
         <div class="mx-5 my-2">
@@ -70,5 +56,5 @@
             </p>
             <a href="/blog/{index}" class="btn btn-xs btn-neutral rounded-full mt-2">Read More..</a>
         </div>
-    {/each} -->
+    {/each}
 </div>
