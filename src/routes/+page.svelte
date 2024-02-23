@@ -7,7 +7,7 @@
             <div class="avatar">
                 <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <a href="https://id.linkedin.com/in/gilby-dhilega-555b9b152" target="_blank">
-                        <img src="/images/profile.png" alt="Profile" />
+                        <img src="/images/avatar.jfif" alt="Profile" />
                     </a>
                 </div>
             </div>

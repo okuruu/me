@@ -1,0 +1,1 @@
+export const psychologicalToken :string[] = ['FINITO','VRTSRM','ACCIO','EPISKEY','PTRNM',''];
