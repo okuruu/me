@@ -2,7 +2,7 @@
     import NavigationBar from "$lib/components/NavigationBar.svelte";
 </script>
 <div class="container mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-4 mx-5 my-5">
+    <div class="grid grid-cols-1 md:grid-cols-4 mx-5 mb-5 mt-9">
         <div class="col-span-1 md:col-span-1">
             <div class="avatar">
                 <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
