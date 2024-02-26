@@ -107,64 +107,66 @@
         </div>
     {/if}
 
-    {#each disc as disc,index}
-        <div class="card w-full bg-base-100 shadow-xl my-5">
-            <div class="card-body">
+    {#if enableTest}
+        {#each disc as disc,index}
+            <div class="card w-full bg-base-100 shadow-xl my-5">
+                <div class="card-body">
 
-                <div class="overflow-x-auto">
-                    <table class="table-auto mx-auto">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2"></th>
-                                <th class="px-4 py-2">M</th>
-                                <th class="px-4 py-2">L</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="px-4 py-2">{disc.LV_1}</td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,1, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,1, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{disc.LV_2}</td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,2, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,2, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{disc.LV_3}</td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,3, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,3, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{disc.LV_4}</td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,4, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,4, 'Least')}>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="overflow-x-auto">
+                        <table class="table-auto mx-auto">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2"></th>
+                                    <th class="px-4 py-2">M</th>
+                                    <th class="px-4 py-2">L</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2">{disc.LV_1}</td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,1, 'Most')}>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,1, 'Least')}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">{disc.LV_2}</td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,2, 'Most')}>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,2, 'Least')}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">{disc.LV_3}</td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,3, 'Most')}>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,3, 'Least')}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2">{disc.LV_4}</td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-blue-500" type="radio" name="M{index}" on:click={() => setValue(index,4, 'Most')}>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <input class="radio checked:bg-red-500" type="radio" name="L{index}" on:click={() => setValue(index,4, 'Least')}>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
-    {/each}
+        {/each}
 
-    <button type="button" on:click={isValid} class="btn btn-neutral w-full">Simpan</button>
+        <button type="button" on:click={isValid} class="btn btn-neutral w-full">Simpan</button>
+    {/if}
     
 </div>
