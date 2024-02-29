@@ -169,7 +169,7 @@
             </div>
         {/each}
 
-        <button type="button" on:click={isValid} class="btn btn-neutral w-full">Simpan</button>
+        <button type="button" on:click={isValid} class="btn btn-neutral w-full">Selesaikan Tes</button>
     {/if}
     
 </div>

@@ -15,6 +15,10 @@
         return toast.error("Token tidak sesuai");
     }
 
+    const isValid = () => {
+        // 
+    }
+
 </script>
 <Toaster/>
 <div class="container mx-auto p-2">
@@ -57,5 +61,7 @@
             </div>
         {/each}
     {/if}
+
+    <button type="button" on:click={isValid} class="btn btn-neutral w-full">Selesaikan Tes</button>
 
 </div>
