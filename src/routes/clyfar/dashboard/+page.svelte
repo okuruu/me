@@ -31,7 +31,7 @@
 
     <div class="card w-full bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">
-            <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-xl" />
+            <img src="/images/Cat.jpg" alt="Shoes" class="rounded-xl" />
         </figure>
         <div class="card-body items-center text-center">
             <h2 class="card-title text-2xl">{'Selamat ' + time}! 👋</h2>
