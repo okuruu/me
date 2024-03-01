@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import toast, { Toaster } from 'svelte-french-toast';
 
     interface User {
         name: string;
@@ -31,14 +30,13 @@
         if (storedUserData) {
             userData = JSON.parse(storedUserData);
         } else {
-            toast.error('Ada kesalahan pada perangkat anda.');
         }
     });
 
     const startInterval = setInterval(() => {
         if(timer == 0){
             clearInterval(startInterval);
-            return toast.error('Uji coba telah selesai!', {position : 'top-right' });
+            return;
         }
         timer = timer - 1;
     },1000)
@@ -49,7 +47,6 @@
         }
     };
 </script>
-<Toaster/>
 <div class="card w-full bg-base-100 shadow-xl mt-3">
     <div class="card-body">
         <h2 class="card-title">Hai, {userData?.name}!</h2>
