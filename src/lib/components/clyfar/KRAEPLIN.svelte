@@ -11,21 +11,23 @@
     let subIndex: number = 0;
 
     const startInterval = setInterval(() => {
-        if(timer == 0){
+        if(index == 49 && timer == 0){
+            clearInterval(startInterval);
+            isValid();
+            return;
+        } else if(timer == 0){
             index += 1;
             subIndex = 0;
             timer = 15;
-            clearInterval(startInterval);
-            return;
         }
         timer = timer - 1;
-    },1000)
+    }, 1);
+
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
             subIndex += 1;
         }
-        console.log(id)
     };
 
     const checkToken = () => {
@@ -38,7 +40,7 @@
     }
 
     const isValid = () => {
-        // 
+        console.log("It's done");
     }
 </script>
 <Toaster/>
@@ -58,35 +60,32 @@
     {/if}
 
     {#if enableTest}
-    
-    <div class="card w-full bg-base-100 shadow-xl my-5">
-        <div class="card-body">
+        <div class="card w-full bg-base-100 shadow-xl my-5">
+            <div class="card-body">
 
-            <div class="flex justify-end my-12">
-                <p class="font-semibold">{timer}</p>
-            </div>
-            
-            <h1 class="text-6xl font-bold text-center my-6">{kraeplin[index][subIndex]}</h1>
-            
-            <div class="grid grid-cols-3 gap-2 my-5">
-                <button type="button" on:click={() => onTap(1)} class="btn btn-lg btn-neutral">1</button>
-                <button type="button" on:click={() => onTap(2)} class="btn btn-lg btn-neutral">2</button>
-                <button type="button" on:click={() => onTap(3)} class="btn btn-lg btn-neutral">3</button>
-                <button type="button" on:click={() => onTap(4)} class="btn btn-lg btn-neutral">4</button>
-                <button type="button" on:click={() => onTap(5)} class="btn btn-lg btn-neutral">5</button>
-                <button type="button" on:click={() => onTap(6)} class="btn btn-lg btn-neutral">6</button>
-                <button type="button" on:click={() => onTap(7)} class="btn btn-lg btn-neutral">7</button>
-                <button type="button" on:click={() => onTap(8)} class="btn btn-lg btn-neutral">8</button>
-                <button type="button" on:click={() => onTap(9)} class="btn btn-lg btn-neutral">9</button>
-                <button type="button" class="btn btn-lg btn-dark" disabled></button>
-                <button type="button" on:click={() => onTap(0)} class="btn btn-lg btn-neutral">0</button>
-                <button type="button" class="btn btn-lg btn-neutral" disabled></button>
-            </div>
+                <div class="flex justify-end my-12">
+                    <p class="font-semibold">{timer}</p>
+                </div>
+                
+                <h1 class="text-6xl font-bold text-center my-6">{kraeplin[index][subIndex]}</h1>
+                
+                <div class="grid grid-cols-3 gap-2 my-5">
+                    <button type="button" on:click={() => onTap(1)} class="btn btn-lg btn-neutral">1</button>
+                    <button type="button" on:click={() => onTap(2)} class="btn btn-lg btn-neutral">2</button>
+                    <button type="button" on:click={() => onTap(3)} class="btn btn-lg btn-neutral">3</button>
+                    <button type="button" on:click={() => onTap(4)} class="btn btn-lg btn-neutral">4</button>
+                    <button type="button" on:click={() => onTap(5)} class="btn btn-lg btn-neutral">5</button>
+                    <button type="button" on:click={() => onTap(6)} class="btn btn-lg btn-neutral">6</button>
+                    <button type="button" on:click={() => onTap(7)} class="btn btn-lg btn-neutral">7</button>
+                    <button type="button" on:click={() => onTap(8)} class="btn btn-lg btn-neutral">8</button>
+                    <button type="button" on:click={() => onTap(9)} class="btn btn-lg btn-neutral">9</button>
+                    <button type="button" class="btn btn-lg btn-dark" disabled></button>
+                    <button type="button" on:click={() => onTap(0)} class="btn btn-lg btn-neutral">0</button>
+                    <button type="button" class="btn btn-lg btn-neutral" disabled></button>
+                </div>
 
+            </div>
         </div>
-    </div>
-
-        <button type="button" on:click={isValid} class="btn btn-neutral w-full">Selesaikan Tes</button>
     {/if}
 
 </div>
