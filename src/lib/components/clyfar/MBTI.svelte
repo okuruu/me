@@ -12,6 +12,10 @@
     }
 
     const checkAnswers = () => {
+        if (userAnswers.length !== 60) {
+            return;
+        }
+        
         const uniqueIndices = new Set();
         const filteredData = [];
 
