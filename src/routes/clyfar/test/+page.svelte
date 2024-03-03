@@ -1,8 +1,10 @@
 <script>
-    import DISC from "$lib/components/clyfar/DISC.svelte";
-    import Papi from "$lib/components/clyfar/PAPI.svelte";
-    import Kraeplin from "$lib/components/clyfar/KRAEPLIN.svelte";
+    import DISC from "$lib/components/clyfar/Disc.svelte";
+    import Papi from "$lib/components/clyfar/Papi.svelte";
+    import Kraeplin from "$lib/components/clyfar/Kraeplin.svelte";
+    import Baum from "$lib/components/clyfar/Baum.svelte";
 </script>
 <!-- <DISC/> -->
 <!-- <Papi/> -->
-<Kraeplin/>
+<!-- <Kraeplin/> -->
+<Baum/>
