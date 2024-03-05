@@ -27,13 +27,11 @@
     <form on:submit|preventDefault={isValid}>
         {#each Array(64) as _,index}
             <div class="card w-full bg-base-100 shadow-xl my-5">
-            <div class="card-body">
-
+                <div class="card-body">
                     <div class="badge badge-secondary font-semibold">#{index + 1}</div>
-                
                     <div class="form-control">
                         <label class="label cursor-pointer">
-                            <span class="label-text">                            <span class="ml-2">{newData.A[index]}</span>
+                            <span class="label-text"><span class="mr-2">{newData.A[index]}</span>
                         </span> 
                             <input type="radio" name="MBTI_{index}" value="A" class="radio checked:bg-blue-500 ms-4"  on:click={() => doKeep(index,'A')} required/>
                         </label>
@@ -44,15 +42,14 @@
                             <input type="radio" name="MBTI_{index}" value="B" class="radio checked:bg-red-500 ms-4" on:click={() => doKeep(index,'B')} required/>
                         </label>
                     </div>
+                </div>
+            </div>
 
-                    {#if index == 63}
-                        <div class="mt-5">
-                            <button type="submit" class="btn btn-neutral">Selesaikan Tes</button>
-                        </div>
-                    {/if}
-    
-            </div>
-            </div>
+            {#if index == 63}
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-neutral w-full">Selesaikan Tes</button>
+                </div>
+            {/if}
         {/each}
     </form>
 </div>
