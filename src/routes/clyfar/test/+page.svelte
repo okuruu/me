@@ -5,6 +5,7 @@
     import Baum from "$lib/components/clyfar/Baum.svelte";
     import Mbti from "$lib/components/clyfar/MBTI.svelte";
     import Msdt from "$lib/components/clyfar/MSDT.svelte";
+    import CFIT from "$lib/components/clyfar/CFIT.svelte";
 </script>
 <!-- <DISC/> -->
 <!-- <Papi/> -->
@@ -12,3 +13,4 @@
 <!-- <Baum/> -->
 <!-- <Mbti/> -->
 <!-- <Msdt/> -->
+<CFIT/>
