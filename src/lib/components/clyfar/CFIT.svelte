@@ -46,8 +46,14 @@
 
 </script>
 <Toaster/>
-{timer}
 <div class="container mx-auto p-2">
+
+    <div class="fixed-bottom d-flex justify-content-center p-3">
+        <button class="btn btn-dark position-absolute bottom-0  mb-3">
+            Sisa Waktu : {timer} Detik
+        </button>
+    </div>
+    
     {#if timer <= 750 && timer >= 571}
         <div class="card w-full bg-base-100 shadow-xl my-5">
             <div class="card-body">
