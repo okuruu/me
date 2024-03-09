@@ -2,29 +2,37 @@
     import { goto } from "$app/navigation";
     import toast, { Toaster } from 'svelte-french-toast';
     import { getTimeOfDay } from "$lib/utils/timeDetector";
+    import { onMount } from "svelte";
 
-   let name: string;
-   let whatsapp: string = '08984170335';
-   let birthDate: Date;
-   let gender: string;
-   let isAgree: boolean = false;
-   const time: string = getTimeOfDay();
+    let name: string;
+    let whatsapp: string = '08984170335';
+    let birthDate: Date;
+    let gender: string;
+    let isAgree: boolean = false;
+    const time: string = getTimeOfDay();
 
-   async function doPost(): Promise <void>{
-	   try {
-			localStorage.setItem('user',JSON.stringify({
-				name : name,
-				whatsapp : whatsapp,
-				birthDate : birthDate,
-				gender : gender,
-				isAgree : isAgree,
-				agreementDate : Date.now()
-			}));
-			return goto('/clyfar/test');
-		} catch (error) {
-        	toast.error('Token tidak sesuai!');
-		}
-   }
+    onMount(() => {
+        const getStorage = localStorage.getItem('user');
+        if(getStorage){
+            return goto('/clyfar/test');
+        }
+    });
+
+    async function doPost(): Promise<void> {
+        try {
+            localStorage.setItem('user', JSON.stringify({
+                name: name,
+                whatsapp: whatsapp,
+                birthDate: birthDate,
+                gender: gender,
+                isAgree: isAgree,
+                agreementDate: Date.now()
+            }));
+            return goto('/clyfar/test');
+        } catch (error) {
+            toast.error('Token tidak sesuai!');
+        }
+    }
 </script>
 <Toaster/>
 <div class="container mx-auto p-2">

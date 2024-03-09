@@ -3,25 +3,13 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import SampleDisc from "../sample/SampleDISC.svelte";
     import { disc } from "$lib/strings/psychological/disc";
+    import { baseConfig } from "$lib/strings/baseConfig";
+    import { goto } from "$app/navigation";
 
     let token: string; 
     let enableTest: boolean = false;
 
-    interface User {
-        name: string;
-        whatsapp: string;
-        birthDate: Date;
-        gender: string;
-        isAgree: boolean;
-        agreementDate: Date;
-    }
-
-    interface Disc {
-        Most : number|null;
-        Least : number|null;
-    }
-
-    let data:Disc[] = [];
+    let data: { Most : number|null; Least : number|null; }[] = [];
 
     onMount(() => {
         for(let i: number = 0; i < 24; i++){
@@ -36,6 +24,7 @@
     const checkToken = () => {
         if(token === 'Veritas'){
             enableTest = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return toast.success("Selamat mengerjakan");
         }
         token = '';
@@ -88,6 +77,23 @@
         if(!isValid){
             toast.error("Anda belum melengkapi semua subtes!");
             return;
+        }
+    }
+
+    async function doPost(): Promise <void> {
+        const doPost = await fetch(baseConfig.url + '???',{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({
+                DISC : data
+            })
+        });
+        const { status, message, redirectTo } = await doPost.json();
+
+        if(status === 'success'){
+            return goto(redirectTo);
+        } else {
+            toast.error(message);
         }
     }
 
