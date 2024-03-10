@@ -1,11 +1,13 @@
 <script lang="ts">
+    import { base } from "$app/paths";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
+    import { baseString } from "../database/base";
 </script>
 <div class="container mx-auto p-2">
 
     <div class="card w-full bg-base-300 shadow-xl my-5">
         <div class="card-body">
-            <div class="grid grid-cols-1 md:grid-cols-4 mx-5 md:flex md:flex-row md:flex-wrap"> <!-- Added responsive classes -->
+            <div class="grid grid-cols-1 md:grid-cols-4 mx-5 md:flex md:flex-row md:flex-wrap">
                 <div class="col-span-1 md:col-span-1">
                     <div class="avatar">
                         <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -17,9 +19,9 @@
                 </div>
                 <div class="col-span-1 md:col-span-3 flex md:items-center mt-1 md:mt-0 md:ml-4">
                     <div class="content-center">
-                        <p class="text-xl font-bold">Gilby Dhilega Yodiaz</p>
-                        <p>Lórien Loremaster of Languages</p>
-                        <a href="https://github.com/okuruu" class="text-gray-500">@okuruu</a>
+                        <p class="text-xl font-bold">{baseString.name}</p>
+                        <p>{baseString.workingAt.shorts}</p>
+                        <a href="{baseString.workingAt.github.url}" class="text-gray-500">{baseString.workingAt.github.display}</a>
                         <div class="text-sm breadcrumbs">
                             <ul>
                                 <li>
@@ -35,43 +37,39 @@
             </div>
         </div>
     </div>
-    
-
 
     <div class="mt-2 mx-5">
         <h1 class="font-bold">About</h1>
-        <p class="mt-2">Hey there, I'm Gilby, a Fullstack Developer on a mission to turn ideas into digital delights. Armed with my trusty keyboard and fueled by endless snacks, I tame bugs and craft user experiences that spark joy. </p>
+        <p class="mt-2">{baseString.workingAt.bio}</p>
     </div>
 
     <div class="divider"></div>
 
     <div class="grid grid-rows-1 grid-flow-col gap-4 mx-1">
-        <div class="row-span-3 font-bold text-gray-400 ms-3">Dea Bakery<br/>(Present)</div>
+        <div class="row-span-3 font-bold text-gray-400 ms-3">{baseString.workingAt.name}<br/>(Present)</div>
         <div class="col-span-2">
-            <p class="font-bold">Head of Information Technology</p>
-            <p class="mt-2">Led development team, Building Point of Sale (POS), Internal Management System, and various other projects.</p>
+            <p class="font-bold">{baseString.workingAt.position}</p>
+            <p class="mt-2">{baseString.workingAt.doingWhat}</p>
         </div>
         <div class="col-span-2">
             <p class="font-semibold text-gray-400">
-                <a href="https://kit.svelte.dev/">Sveltekit</a> • 
-                <a href="https://tauri.app/">Tauri</a> • 
-                <a href="https://flutter.dev/">Flutter</a> • 
-                <a href="https://daisyui.com/">DaisyUI</a>
+                {#each baseString.workingAt.skills as skills }
+                    <a href="{skills.url}" class="mr-2">• {skills.name}</a>
+                {/each}
             </p>
         </div>
     </div>
 
     {#each Array(1) as _,index }
         <div class="divider"></div>
-
         <div class="mx-5 my-2">
-            <h1 class="font-bold text-2xl">A Lonesome Journey</h1>
+            <h1 class="font-bold text-2xl">"Code, Carrots, and Compassion: A Whimsical Journey of Optimism"</h1>
             <p class="pt-4">
-                With me as your guide, be ready to go on a delightfully crazy adventure across the vast world of code. As I make my way through frontend mishaps and backend errors, leaving a path of bug-filled mayhem in my wake, get ready to laugh till you weep.
+                Join me in "Code, Carrots, Compassion." Through coding chaos and Quranic wisdom, to pursue a dream of growing a giant carrot, guided by humor and optimism to spread joy and kindness.
             </p>
             <a href="/blogs/{index}" class="btn btn-xs btn-neutral rounded-full mt-2">Read More..</a>
         </div>
     {/each}
-
+    <div class="divider mb-12"></div>
     <NavigationBar/>
 </div>
