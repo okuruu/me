@@ -17,7 +17,7 @@
         if(getStorage !== null){
             $baseConfig.currentTest = getStorage.currentTest;
         } else {
-            console.log("Nothing")
+            $baseConfig.currentTest = 'DISC';
         }
     });
 </script>
