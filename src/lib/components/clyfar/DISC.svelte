@@ -1,10 +1,10 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { baseConfig } from "$lib/strings/baseConfig";
     import toast, { Toaster } from 'svelte-french-toast';
     import SampleDisc from "../sample/SampleDISC.svelte";
     import { disc } from "$lib/strings/psychological/disc";
-    import { baseConfig } from "$lib/strings/baseConfig";
-    import { goto } from "$app/navigation";
+    import { updateCurrentTest } from "$lib/utils/storage";
 
     let token: string; 
     let enableTest: boolean = false;
@@ -75,26 +75,27 @@
         });
 
         if(!isValid){
-            toast.error("Anda belum melengkapi semua subtes!");
-            return;
+            return toast.error("Anda belum melengkapi semua subtes!");
         }
+        doPost();
     }
 
     async function doPost(): Promise <void> {
-        const doPost = await fetch(baseConfig.url + '???',{
-            method : 'post',
-            headers : { 'Content-Type' : 'application/json' },
-            body : JSON.stringify({
-                DISC : data
-            })
-        });
-        const { status, message, redirectTo } = await doPost.json();
+        // const doPost = await fetch($baseConfig.url + '???',{
+        //     method : 'post',
+        //     headers : { 'Content-Type' : 'application/json' },
+        //     body : JSON.stringify({
+        //         DISC : data
+        //     })
+        // });
+        // const { status, message, redirectTo } = await doPost.json();
 
-        if(status === 'success'){
-            return goto(redirectTo);
-        } else {
-            toast.error(message);
-        }
+        // if(status === 'success'){
+            updateCurrentTest('PAPI');
+            $baseConfig.currentTest = 'PAPI';
+        // } else {
+        //     toast.error(message);
+        // }
     }
 
 </script>

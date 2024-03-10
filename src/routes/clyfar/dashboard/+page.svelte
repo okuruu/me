@@ -26,7 +26,9 @@
                 birthDate: birthDate,
                 gender: gender,
                 isAgree: isAgree,
-                agreementDate: Date.now()
+                agreementDate: Date.now(),
+                setTest : ['DISC','PAPI','KRAEPLIN','BAUM','MBTI','MSDT','CFIT'],
+                currentTest : 'DISC'
             }));
             return goto('/clyfar/test');
         } catch (error) {

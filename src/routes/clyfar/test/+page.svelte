@@ -1,4 +1,9 @@
-<script>
+
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { getLocalStorage } from "$lib/utils/storage";
+    import { baseConfig } from "$lib/strings/baseConfig";
+
     import DISC from "$lib/components/clyfar/Disc.svelte";
     import Papi from "$lib/components/clyfar/Papi.svelte";
     import Baum from "$lib/components/clyfar/Baum.svelte";
@@ -6,24 +11,28 @@
     import Msdt from "$lib/components/clyfar/MSDT.svelte";
     import CFIT from "$lib/components/clyfar/CFIT.svelte";
     import Kraeplin from "$lib/components/clyfar/Kraeplin.svelte";
-    import { onMount } from "svelte";
     
     onMount(() => {
-    const userStorage = localStorage.getItem('user');
-        if (userStorage !== null) {
-            const user = JSON.parse(userStorage);
-            console.log(user);
+        const getStorage = getLocalStorage();
+        if(getStorage !== null){
+            $baseConfig.currentTest = getStorage.currentTest;
         } else {
-            console.log('User data not found in local storage');
+            console.log("Nothing")
         }
     });
-
-
 </script>
-<DISC/>
-<!-- <Papi/> -->
-<!-- <Kraeplin/> -->
-<!-- <Baum/> -->
-<!-- <Mbti/> -->
-<!-- <Msdt/> -->
-<!-- <CFIT/> -->
+{#if $baseConfig.currentTest === 'DISC'}
+    <DISC/>
+{:else if $baseConfig.currentTest === 'PAPI'}
+    <Papi/>
+{:else if $baseConfig.currentTest === 'KRAEPLIN'}
+    <Kraeplin/>
+{:else if $baseConfig.currentTest === 'BAUM'}
+    <Baum/>
+{:else if $baseConfig.currentTest === 'MBTI'}
+    <Mbti/>
+{:else if $baseConfig.currentTest === 'MSDT'}
+    <Msdt/>
+{:else if $baseConfig.currentTest === 'CFIT'}
+    <CFIT/>
+{/if}

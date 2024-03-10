@@ -3,6 +3,6 @@
     import "../app.css";
 </script>
 <svelte:head>
-    <title>{baseConfig.pageTitle}</title>
+    <title>{$baseConfig.pageTitle}</title>
 </svelte:head>
 <slot />
