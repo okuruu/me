@@ -21,7 +21,7 @@
 
     const resetCanvas = () => {
         if (!ctx) return;
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Clears the entire canvas
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     };
   
     const stopDrawing = () => {
@@ -63,5 +63,5 @@
       on:touchend="{stopDrawing}"
       on:mouseleave="{stopDrawing}"
   />
-  <button type="button" on:click={resetCanvas} class="btn btn-neutral w-full">Reset Canvas</button>
+  <button type="button" on:click={resetCanvas} class="btn btn-neutral w-full">Reset Kanvas</button>
 </div>

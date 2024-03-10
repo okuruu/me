@@ -101,10 +101,8 @@
 </script>
 <Toaster/>
 <div class="container mx-auto p-2">
-    
     {#if !enableTest}
         <SampleDisc/>
-
         <div class="card w-full bg-base-100 shadow-xl my-5">
             <div class="card-body">
                 
@@ -115,9 +113,7 @@
     
             </div>
         </div>
-    {/if}
-
-    {#if enableTest}
+    {:else if enableTest}
         {#each disc as disc,index}
             <div class="card w-full bg-base-100 shadow-xl my-5">
                 <div class="card-body">
@@ -175,8 +171,6 @@
                 </div>
             </div>
         {/each}
-
         <button type="button" on:click={isValid} class="btn btn-neutral w-full">Selesaikan Tes</button>
     {/if}
-    
 </div>

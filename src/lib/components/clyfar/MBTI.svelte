@@ -1,7 +1,25 @@
 <script lang="ts">
+    import SampleMbti from "../sample/SampleMBTI.svelte";
+    import toast, { Toaster } from 'svelte-french-toast';
     import { mbti } from "$lib/strings/psychological/mbti";
     import { capitalizeFirstWord } from "$lib/utils/capitalize";
+    import { baseConfig } from "$lib/strings/baseConfig";
+    import { updateCurrentTest } from "$lib/utils/storage";
+
+    let token: string; 
+    let enableTest: boolean = false;
+
     let userAnswers: { index: number; answer: number }[] = [];
+
+    const checkToken = () => {
+        if(token === 'Sonorus'){
+            enableTest = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return toast.success("Selamat mengerjakan");
+        }
+        token = '';
+        return toast.error("Token tidak sesuai");
+    }
 
     const setUserAnswer = (answer: number, index: number) => {
         userAnswers = [...userAnswers, {
@@ -11,25 +29,22 @@
         userAnswers = userAnswers
     }
 
-    const checkAnswers = () => {
-        if (userAnswers.length !== 60) {
-            return;
-        }
-        
+    const isValid = () => {
         const uniqueIndices = new Set();
-        const filteredData = [];
 
-        for (let i = userAnswers.length - 1; i >= 0; i--) {
-            const item = userAnswers[i];
+        // Remove duplicates directly from userAnswers
+        const filteredUserAnswers = userAnswers.filter(item => {
             if (!uniqueIndices.has(item.index)) {
                 uniqueIndices.add(item.index);
-                filteredData.unshift(item);
+                return true;
             }
-        }
+            return false;
+        });
 
-        let userInput: any = filteredData;
+        let userInput: { [key: number]: number } = {}; // Change to an object to easily access by index
 
-        userAnswers.forEach(item => {
+        // Populate userInput with filtered data
+        filteredUserAnswers.forEach(item => {
             userInput[item.index] = item.answer;
         });
 
@@ -38,8 +53,8 @@
         let mbti = '';
 
         for (let i = 1; i <= 60; i++) {
-            dimensionA[i] = typeof userInput[i] !== 'undefined' && userInput[i] === 1 ? 1 : 0;
-            dimensionB[i] = typeof userInput[i] !== 'undefined' && userInput[i] === 2 ? 1 : 0;
+            dimensionA[i] = userInput[i] === 1 ? 1 : 0;
+            dimensionB[i] = userInput[i] === 2 ? 1 : 0;
         }
 
         let introversion = (dimensionB[60] + dimensionB[52] + dimensionA[45] + dimensionA[38] + dimensionB[35] + dimensionA[31] + dimensionA[29] + dimensionB[28] + dimensionA[20] + dimensionA[15] + dimensionA[11] + dimensionA[10] + dimensionB[7] + dimensionB[5] + dimensionA[2]) / 15;
@@ -52,33 +67,64 @@
         let perceiving = (dimensionA[59] + dimensionB[56] + dimensionB[54] + dimensionA[50] + dimensionB[47] + dimensionA[44] + dimensionA[40] + dimensionA[33] + dimensionA[26] + dimensionB[24] + dimensionA[21] + dimensionB[19] + dimensionA[12] + dimensionB[3] + dimensionA[1]) / 15;
 
         mbti = (introversion > extraversion ? 'I' : 'E') + (sensing > intuition ? 'S' : 'N') + (thinking > feeling ? 'T' : 'F') + (judging > perceiving ? 'J' : 'P');
+        doPost(mbti)
+    }
+
+    async function doPost(mbti: any): Promise <void> {
+        // const doPost = await fetch($baseConfig.url + '???',{
+        //     method : 'post',
+        //     headers : { 'Content-Type' : 'application/json' },
+        //     body : JSON.stringify({
+        //         MBTI : mbti
+        //     })
+        // });
+        // const { status, message, redirectTo } = await doPost.json();
+
+        // if(status === 'success'){
+            updateCurrentTest('MSDT');
+            $baseConfig.currentTest = 'MSDT';
+        // } else {
+        //     toast.error(message);
+        // }
     }
 </script>
-
+<Toaster/>
 <div class="container mx-auto p-2">
-    <form on:submit|preventDefault={checkAnswers}>
-        {#each mbti as mbti,index}
-            <div class="card w-full bg-base-100 shadow-xl my-5">
-                <div class="card-body">
-    
-                    <div class="badge badge-secondary font-semibold">#{index + 1}</div>
-                
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                            <span class="label-text">{capitalizeFirstWord(mbti.A)}</span> 
-                            <input type="radio" name="MBTI_{index}" value="A" class="radio checked:bg-blue-500 ms-4" on:click={() => setUserAnswer(1, mbti.index)} required/>
-                        </label>
+
+    {#if !enableTest}
+        <SampleMbti/>
+
+        <form on:submit|preventDefault={checkToken} class="mt-3">
+            <input type="text" bind:value={token} placeholder="Masukkan token" class="input text-center input-bordered w-full" required/>
+            <button type="submit" class="btn btn-neutral w-full mt-3">Verifikasi Token</button>
+        </form>
+
+    {:else if enableTest}
+        <form on:submit|preventDefault={isValid}>
+            {#each mbti as mbti,index}
+                <div class="card w-full bg-base-100 shadow-xl my-5">
+                    <div class="card-body">
+        
+                        <div class="badge badge-secondary font-semibold">#{index + 1}</div>
+                    
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                                <span class="label-text">{capitalizeFirstWord(mbti.A)}</span> 
+                                <input type="radio" name="MBTI_{index}" value="A" class="radio checked:bg-blue-500 ms-4" on:click={() => setUserAnswer(1, mbti.index)} required/>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                                <span class="label-text">{capitalizeFirstWord(mbti.B)}</span> 
+                                <input type="radio" name="MBTI_{index}" value="B" class="radio checked:bg-red-500 ms-4" on:click={() => setUserAnswer(2, mbti.index)} required/>
+                            </label>
+                        </div>
+        
                     </div>
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                            <span class="label-text">{capitalizeFirstWord(mbti.B)}</span> 
-                            <input type="radio" name="MBTI_{index}" value="B" class="radio checked:bg-red-500 ms-4" on:click={() => setUserAnswer(2, mbti.index)} required/>
-                        </label>
-                    </div>
-    
                 </div>
-            </div>
-        {/each}
-        <button type="submit" class="btn btn-neutral w-full">Submit</button>
-    </form>
+            {/each}
+            <button type="submit" class="btn btn-neutral w-full">Submit</button>
+        </form>
+    {/if}
+
 </div>

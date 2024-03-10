@@ -90,9 +90,7 @@
                 </form>
             </div>
         </div>
-    {/if}
-
-    {#if enableTest}
+    {:else if enableTest}
         <div class="card w-full bg-base-100 shadow-xl my-5">
             <div class="card-body">
 
@@ -120,5 +118,4 @@
             </div>
         </div>
     {/if}
-
 </div>

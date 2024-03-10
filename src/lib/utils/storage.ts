@@ -9,7 +9,7 @@ function getLocalStorage(){
     }
 }
 
-function updateCurrentTest(newValue:any) {
+function updateCurrentTest(newValue: string) {
     const userStorage = localStorage.getItem('user');
     if (userStorage !== null) {
         const user = JSON.parse(userStorage);

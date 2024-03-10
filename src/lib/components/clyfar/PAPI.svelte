@@ -65,7 +65,6 @@
 </script>
 <Toaster/>
 <div class="container mx-auto p-2">
-    
     {#if !enableTest}
         <SamplePapi/>
         <div class="card w-full bg-base-100 shadow-xl my-5">
@@ -78,9 +77,7 @@
 
             </div>
         </div>
-    {/if}
-
-    {#if enableTest}
+    {:else if enableTest}
         <form on:submit|preventDefault={isValid}>
             {#each Array(90) as data,index }
                 <div class="card w-full bg-base-100 shadow-xl my-5">
@@ -107,6 +104,4 @@
             <button type="submit" class="btn btn-neutral w-full">Selesaikan Tes</button>
         </form>
     {/if}
-
-
 </div>
