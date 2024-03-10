@@ -16,5 +16,6 @@
             </a>
         </div>
     {/each}
+    <div class="divider mb-12"></div>
     <NavigationBar/>
 </div>
