@@ -9,7 +9,7 @@
     import MBTI from "$lib/components/clyfar/MBTI.svelte";
     import MSDT from "$lib/components/clyfar/MSDT.svelte";
     import CFIT from "$lib/components/clyfar/CFIT.svelte";
-    import Kraeplin from "$lib/components/clyfar/Kraeplin.svelte";
+    import Kraepelin from "$lib/components/clyfar/Kraepelin.svelte";
     import Papikostick from "$lib/components/clyfar/Papkostick.svelte";
     
     onMount(() => {
@@ -26,7 +26,7 @@
 {:else if $baseConfig.currentTest === 'PAPI'}
     <Papikostick/>
 {:else if $baseConfig.currentTest === 'KRAEPLIN'}
-    <Kraeplin/>
+    <Kraepelin/>
 {:else if $baseConfig.currentTest === 'BAUM'}
     <Baum/>
 {:else if $baseConfig.currentTest === 'MBTI'}
