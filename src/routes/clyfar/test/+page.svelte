@@ -4,7 +4,7 @@
     import { getLocalStorage } from "$lib/utils/storage";
     import { baseConfig } from "$lib/strings/baseConfig";
 
-    import DISC from "$lib/components/clyfar/Disc.svelte";
+    import DISC from "$lib/components/clyfar/DISC.svelte";
     import Papi from "$lib/components/clyfar/Papi.svelte";
     import Baum from "$lib/components/clyfar/Baum.svelte";
     import Mbti from "$lib/components/clyfar/MBTI.svelte";
