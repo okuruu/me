@@ -30,7 +30,20 @@
 
     function removeDuplicate(array:any,key:any){
         return [...new Map(array.map((item:any) => [item[key], item])).values()]
-    } 
+    }
+
+    const isValid = () => {
+        let answers = answerList;
+        let uniqueAnswers = removeDuplicate(answers, 'index');
+        // @ts-ignore
+        let sortedAnswers = uniqueAnswers.sort((a, b) => a.index - b.index);
+
+        if(sortedAnswers.length !== 90){
+            return toast.error("Anda belum melengkapi semua subtes!");
+        }
+
+        doPost(answers);
+    }
 
     async function doPost(answers: any): Promise<void> {
         // const doPost = await fetch($baseConfig.url + '???',{
@@ -49,19 +62,6 @@
         //     toast.error(message);
         // }
     }
-    
-    const isValid = () => {
-        let answers = answerList;
-        let uniqueAnswers = removeDuplicate(answers, 'index');
-        // @ts-ignore
-        let sortedAnswers = uniqueAnswers.sort((a, b) => a.index - b.index);
-
-        if(sortedAnswers.length !== 90){
-            return toast.error("Anda belum melengkapi semua subtes!");
-        }
-
-        doPost(answers);
-    }
 </script>
 <Toaster/>
 <div class="container mx-auto p-2">
@@ -69,12 +69,10 @@
         <SamplePapi/>
         <div class="card w-full bg-base-100 shadow-xl my-5">
             <div class="card-body">
-                
-                <form on:submit|preventDefault={checkToken}>
+                <form on:submit|preventDefault={checkToken} class="mt-3">
                     <input type="text" bind:value={token} placeholder="Masukkan token" class="input text-center input-bordered w-full" required/>
                     <button type="submit" class="btn btn-neutral w-full mt-3">Verifikasi Token</button>
                 </form>
-
             </div>
         </div>
     {:else if enableTest}

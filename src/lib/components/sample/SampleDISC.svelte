@@ -2,42 +2,19 @@
     import { onMount } from "svelte";
     import toast, { Toaster } from 'svelte-french-toast';
     import { discSample } from "$lib/strings/psychological/sample/disc";
+    import { getLocalStorage } from "$lib/utils/storage";
 
-    interface User {
-        name: string;
-        whatsapp: string;
-        birthDate: Date;
-        gender: string;
-        isAgree: boolean;
-        agreementDate: Date;
-    }
-
-    interface Disc {
-        Most : number|null;
-        Least : number|null;
-    }
-
-    let data:Disc[] = [];
-
-    let userData: User|null = null;
+    let userData = getLocalStorage();
+    let data:{ Most : number|null; Least : number|null }[] = [];
 
     onMount(() => {
-        const storedUserData = localStorage.getItem('user');
-        if (storedUserData) {
-            userData = JSON.parse(storedUserData);
-            
-            for(let i: number = 0; i < 24; i++){
+        for(let i: number = 0; i < 24; i++){
                 data = [...data,{
                     Most : null,
                     Least : null
                 }]
             }
-
-            data = data;
-            
-        } else {
-            toast.error('Ada kesalahan pada perangkat anda.');
-        }
+        data = data;
     });
 
     function setValue(index: number, value: number, letter: string) {
@@ -75,7 +52,6 @@
 
 </script>
 <Toaster/>
-
 <div class="card w-full bg-base-100 shadow-xl mt-3">
     <div class="card-body">
         <h2 class="card-title">Hai, {userData?.name}!</h2>
@@ -94,7 +70,6 @@
 
 <div class="card w-full bg-base-100 shadow-xl my-5">
     <div class="card-body">
-        
         <div class="overflow-x-auto my-5">
             <table class="table-auto mx-auto">
                 <thead>
@@ -144,7 +119,6 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 

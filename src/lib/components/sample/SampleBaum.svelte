@@ -1,26 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import toast, { Toaster } from 'svelte-french-toast';
-
-    interface User {
-        name: string;
-        whatsapp: string;
-        birthDate: Date;
-        gender: string;
-        isAgree: boolean;
-        agreementDate: Date;
-    }
-
-    let userData: User|null = null;
-
-    onMount(() => {
-        const storedUserData = localStorage.getItem('user');
-        if (storedUserData) {
-            userData = JSON.parse(storedUserData);
-        } else {
-            toast.error('Ada kesalahan pada perangkat anda.');
-        }
-    });
+    import { getLocalStorage } from "$lib/utils/storage";
+    let userData = getLocalStorage();
 </script>
 <div class="container mx-auto p-2">
     <div class="card w-full bg-base-100 shadow-xl mt-3">

@@ -1,18 +1,9 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { getLocalStorage } from "$lib/utils/storage";
 
-    interface User {
-        name: string;
-        whatsapp: string;
-        birthDate: Date;
-        gender: string;
-        isAgree: boolean;
-        agreementDate: Date;
-    }
-    let userData: User|null = null;
+    let userData = getLocalStorage();
 
     let timer: number = 15;
-
     let expressionIndex: number = 0;
     const expressions: string[] = [
         "4 + 7","5 + 4","2 + 9",
@@ -25,21 +16,13 @@
         "4 + 3"
     ];
 
-    onMount(() => {
-        const storedUserData = localStorage.getItem('user');
-        if (storedUserData) {
-            userData = JSON.parse(storedUserData);
-        } else {
-        }
-    });
-
     const startInterval = setInterval(() => {
         if(timer == 0){
             clearInterval(startInterval);
             return;
         }
         timer = timer - 1;
-    },1000)
+    }, 1000)
 
     const onTap = (id: number) => {
         if (expressionIndex < expressions.length - 1) {
