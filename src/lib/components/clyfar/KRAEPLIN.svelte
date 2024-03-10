@@ -2,32 +2,46 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import SampleKraeplin from "../sample/SampleKraeplin.svelte";
     import { kraeplin } from '$lib/strings/psychological/kraeplin';
+    import { baseConfig } from '$lib/strings/baseConfig';
+    import { updateCurrentTest } from '$lib/utils/storage';
 
     let token: string;
-    let enableTest: boolean = true;
+    let enableTest: boolean = false;
 
     let timer: number = 15;
     let index: number = 0;
     let subIndex: number = 0;
 
-    const startInterval = setInterval(() => {
-        if(index == 49 && timer == 0){
-            clearInterval(startInterval);
-            isValid();
-            return;
-        } else if(timer == 0){
-            index += 1;
-            subIndex = 0;
-            timer = 15;
-        }
-        timer = timer - 1;
-    }, 1);
+    let answer: number[] = [];
+    let allAnswer: number[][] = [];
 
+    const startInterval = setInterval(() => {
+        if(enableTest == true){
+            if(index == 49 && timer == 0){
+                clearInterval(startInterval);
+                isValid();
+                return;
+            } else if(timer == 0){
+                timer = 15;
+                index += 1;
+                subIndex = 0;
+                allAnswer.push(answer);
+                answer = [];
+            }
+            timer = timer - 1;
+        }
+    }, 1);
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
             subIndex += 1;
         }
+
+        if(answer.length == 27){
+            return;
+        }
+        answer.push(id)
+
     };
 
     const checkToken = () => {
@@ -40,7 +54,28 @@
     }
 
     const isValid = () => {
-        console.log("It's done");
+        if(allAnswer.length == 49){
+            clearInterval(startInterval);
+            doPost();
+        }
+    }
+
+    async function doPost(): Promise <void> {
+        // const doPost = await fetch($baseConfig.url + '???',{
+        //     method : 'post',
+        //     headers : { 'Content-Type' : 'application/json' },
+        //     body : JSON.stringify({
+        //         KRAEPLIN : allAnswer
+        //     })
+        // });
+        // const { status, message, redirectTo } = await doPost.json();
+
+        // if(status === 'success'){
+            updateCurrentTest('BAUM');
+            $baseConfig.currentTest = 'BAUM';
+        // } else {
+        //     toast.error(message);
+        // }
     }
 </script>
 <Toaster/>
@@ -49,12 +84,10 @@
         <SampleKraeplin/>
         <div class="card w-full bg-base-100 shadow-xl my-5">
             <div class="card-body">
-                
                 <form on:submit|preventDefault={checkToken}>
                     <input type="text" bind:value={token} placeholder="Masukkan token" class="input text-center input-bordered w-full" required/>
                     <button type="submit" class="btn btn-neutral w-full mt-3">Verifikasi Token</button>
                 </form>
-
             </div>
         </div>
     {/if}
