@@ -11,6 +11,7 @@
     import CFIT from "$lib/components/clyfar/CFIT.svelte";
     import Kraepelin from "$lib/components/clyfar/Kraepelin.svelte";
     import Papikostick from "$lib/components/clyfar/Papkostick.svelte";
+    import Complete from "$lib/components/clyfar/Complete.svelte";
     
     onMount(() => {
         const getStorage = getLocalStorage();
@@ -35,4 +36,6 @@
     <MSDT/>
 {:else if $baseConfig.currentTest === 'CFIT'}
     <CFIT/>
+{:else if $baseConfig.currentTest === 'CLEAR'}
+    <Complete/>
 {/if}

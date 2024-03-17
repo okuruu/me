@@ -30,7 +30,7 @@
             }
             timer = timer - 1;
         }
-    }, 1);
+    }, 1000);
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
