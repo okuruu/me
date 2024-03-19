@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { base } from "$app/paths";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
-    import { baseString } from "../database/base";
+    import { baseConfig } from "../database/base";
 </script>
 <div class="container mx-auto p-2">
 
@@ -9,7 +8,7 @@
         <div class="card-body">
             <div class="grid grid-cols-1 md:grid-cols-4 mx-5 md:flex md:flex-row md:flex-wrap">
                 <div class="col-span-1 md:col-span-1">
-                    <div class="avatar">
+                    <div class="avatar me-3">
                         <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                             <a href="https://id.linkedin.com/in/gilby-dhilega-555b9b152" target="_blank">
                                 <img src="/images/avatar.jfif" alt="Profile" />
@@ -19,9 +18,9 @@
                 </div>
                 <div class="col-span-1 md:col-span-3 flex md:items-center mt-1 md:mt-0 md:ml-4">
                     <div class="content-center">
-                        <p class="text-xl font-bold">{baseString.name}</p>
-                        <p>{baseString.workingAt.shorts}</p>
-                        <a href="{baseString.workingAt.github.url}" class="text-gray-500">{baseString.workingAt.github.display}</a>
+                        <p class="text-xl font-bold">{baseConfig.name}</p>
+                        <p>{baseConfig.workingAt.shorts}</p>
+                        <a href="{baseConfig.workingAt.github.url}" class="text-gray-500">{baseConfig.workingAt.github.display}</a>
                         <div class="text-sm breadcrumbs">
                             <ul>
                                 <li>
@@ -40,20 +39,20 @@
 
     <div class="mt-2 mx-5">
         <h1 class="font-bold">About</h1>
-        <p class="mt-2">{baseString.workingAt.bio}</p>
+        <p class="mt-2">{baseConfig.workingAt.bio}</p>
     </div>
 
     <div class="divider"></div>
 
     <div class="grid grid-rows-1 grid-flow-col gap-4 mx-1">
-        <div class="row-span-3 font-bold text-gray-400 ms-3">{baseString.workingAt.name}<br/>(Present)</div>
+        <div class="row-span-3 font-bold text-gray-400 ms-3">{baseConfig.workingAt.name}<br/>(Present)</div>
         <div class="col-span-2">
-            <p class="font-bold">{baseString.workingAt.position}</p>
-            <p class="mt-2">{baseString.workingAt.doingWhat}</p>
+            <p class="font-bold">{baseConfig.workingAt.position}</p>
+            <p class="mt-2">{baseConfig.workingAt.doingWhat}</p>
         </div>
         <div class="col-span-2">
             <p class="font-semibold text-gray-400">
-                {#each baseString.workingAt.skills as skills }
+                {#each baseConfig.workingAt.skills as skills }
                     <a href="{skills.url}" class="mr-2">• {skills.name}</a>
                 {/each}
             </p>

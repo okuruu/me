@@ -21,34 +21,50 @@
         qurans = searchSurah;
     }
 
+    const searchFocus = () => {
+        searchBar.value = '';
+        searchBar.focus();
+    }
+
     function keyboardEvents(event: { key: string }){
         if(event.key === 'Escape'){
-            searchBar.value = '';
-            searchBar.focus();
+            searchFocus();
         }
     }
 </script>
-<div class="container mx-auto">
+<div class="container mx-auto p-2">
     <label class="input input-bordered flex items-center gap-2 mt-3">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70"><path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" /></svg>
         <input type="text" bind:this={searchBar} on:keyup={searchSurah} class="grow" placeholder="Search" />
-        Press <kbd class="kbd kbd-sm">Esc</kbd> to search surah.
+        <kbd class="kbd kbd-sm">Esc</kbd> to search.
     </label>
 
-    {#each qurans as qurans }
-        <div class="max-w-xl mx-2">
-            <a href="/quran/{qurans.id}" class="w-full bg-base-100 shadow-xl my-2 transition-transform duration-500 transform hover:scale-105 cursor-pointer rounded-2xl flex justify-between items-center p-5">
-                <div>
-                    <h2 class="card-title">{qurans.transliteration}</h2>
-                    <p>{qurans.type == 'meccan' ? 'Makkiyah' : 'Madaniyah'} | {qurans.total_verses} ayat</p>
+    {#if qurans.length === 0}
+        <div class="card w-full bg-base-100 shadow-xl my-7">
+            <div class="card-body flex items-center justify-center">
+                <h2 class="card-title">Nothing Found!</h2>
+                <p>Try entering the correct title of the Surah.</p>
+                <div class="card-actions">
+                    <button type="button" on:click={searchFocus} class="btn btn-neutral mt-5">Sure!</button>
                 </div>
-                <div>
-                    <h2 class="text-2xl font-medium arabic">{qurans.name}</h2>
-                </div>
-            </a>
+            </div>
         </div>
-    {/each}
-    
+    {:else}
+        {#each qurans as qurans }
+            <div class="max-w-xl mx-2">
+                <a href="/quran/{qurans.id}" class="w-full bg-base-100 shadow-xl my-2 transition-transform duration-500 transform hover:scale-105 cursor-pointer rounded-2xl flex justify-between items-center p-5">
+                    <div>
+                        <h2 class="card-title">{qurans.transliteration}</h2>
+                        <p>{qurans.type == 'meccan' ? 'Makkiyah' : 'Madaniyah'} | {qurans.total_verses} ayat</p>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-medium arabic">{qurans.name}</h2>
+                    </div>
+                </a>
+            </div>
+        {/each}
+    {/if}
+
     <div class="divider mb-12"></div>
     <NavigationBar/>
 </div>

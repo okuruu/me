@@ -60,7 +60,7 @@
 				<BaumCanvas/>
 			</div>
 			
-			<input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Selesaikan Tes"/>
+			<input type="radio" name="my_tabs_1" role="tab" class="tab" aria-label="Selesaikan"/>
 			<div role="tabpanel" class="tab-content p-10">
 
 				<form on:submit|preventDefault={isValid}>

@@ -1,14 +1,14 @@
-const enableSensitive:boolean = false;
+const secureInfo:boolean = false;
 
-const baseString = {
+const baseConfig = {
     url : '',
-    name : enableSensitive ? 'Gilby Dhilega Yodiaz' : 'Richie',
+    name : secureInfo ? 'Gilby Dhilega Yodiaz' : 'Richie',
     workingAt : {
         name : 'Dea Bakery',
         shorts: 'Lórien Loremaster of Languages',
         position : 'Head of Information Technology',
         companyProfile : 'https://www.linkedin.com/company/dea-bakery/',
-        doingWhat : "Led development team, Building Point of Sale (POS), Internal Management System, and various other projects.",
+        doingWhat : "Led development team, Building Point of Sales (POS), Internal Management System, and various other projects.",
         skills : [
             { name : 'Sveltekit', url : 'https://kit.svelte.dev/' },
             { name : 'Tauri', url : 'https://tauri.app/' },
@@ -25,10 +25,10 @@ const baseString = {
         language : ['Typescript','Dart','Python','SQL','Java','PHP','Rust'],
         using : [
             'Svelte','Sveltekit','Bootstrap','DaisyUI','NodeJS',
-            'Laravel','Codeigniter','Android Studio','Flutter'
+            'Laravel','Codeigniter','Android Studio','Flutter', 'Tauri'
         ],
         databases : ['MySQL','SQLite','Supabase','Firestore']
     }
 }
 
-export { baseString };
+export { baseConfig };
