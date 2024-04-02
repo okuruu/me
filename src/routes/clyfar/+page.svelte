@@ -6,7 +6,9 @@
 
     const check = () => {
         if(token === 'URXVT'){
-            return goto('/clyfar/dashboard')
+            return goto('/clyfar/dashboard');
+        } else if(token === 'HTOP') {
+            return goto('/clyfar/beranda');
         }
         token = ''
         return toast.error('Token tidak sesuai!');

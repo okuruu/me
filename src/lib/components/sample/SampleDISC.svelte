@@ -1,11 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import toast, { Toaster } from 'svelte-french-toast';
-    import { discSample } from "$lib/strings/psychological/sample/disc";
     import { getLocalStorage } from "$lib/utils/storage";
+    import { discSample } from "$lib/strings/psychological/sample/disc";
 
     let userData = getLocalStorage();
-    let data:{ Most : number|null; Least : number|null }[] = [];
+    let data: { Most : number|null; Least : number|null }[] = [];
 
     onMount(() => {
         for(let i: number = 0; i < 24; i++){

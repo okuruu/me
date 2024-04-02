@@ -81,21 +81,21 @@
     }
 
     async function doPost(): Promise <void> {
-        // const doPost = await fetch($baseConfig.url + '???',{
-        //     method : 'post',
-        //     headers : { 'Content-Type' : 'application/json' },
-        //     body : JSON.stringify({
-        //         DISC : data
-        //     })
-        // });
-        // const { status, message, redirectTo } = await doPost.json();
+        const doPost = await fetch($baseConfig.url + '#Waiting',{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({
+                DISC : data
+            })
+        });
+        const { status, message, redirectTo } = await doPost.json();
 
-        // if(status === 'success'){
-            updateCurrentTest('PAPI');
-            $baseConfig.currentTest = 'PAPI';
-        // } else {
-        //     toast.error(message);
-        // }
+        if(status === 'success'){
+            updateCurrentTest(redirectTo); // 'PAPI'
+            $baseConfig.currentTest = redirectTo; // 'PAPI'
+        } else {
+            toast.error(message);
+        }
     }
 
 </script>

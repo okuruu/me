@@ -71,21 +71,21 @@
     }
 
     async function doPost(mbti: any): Promise <void> {
-        // const doPost = await fetch($baseConfig.url + '???',{
-        //     method : 'post',
-        //     headers : { 'Content-Type' : 'application/json' },
-        //     body : JSON.stringify({
-        //         MBTI : mbti
-        //     })
-        // });
-        // const { status, message, redirectTo } = await doPost.json();
+        const doPost = await fetch($baseConfig.url + '#Waiting',{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({
+                MBTI : mbti
+            })
+        });
+        const { status, message, redirectTo } = await doPost.json();
 
-        // if(status === 'success'){
-            updateCurrentTest('MSDT');
-            $baseConfig.currentTest = 'MSDT';
-        // } else {
-        //     toast.error(message);
-        // }
+        if(status === 'success'){
+            updateCurrentTest(redirectTo); // MSDT
+            $baseConfig.currentTest = redirectTo; // MSDT
+        } else {
+            toast.error(message);
+        }
     }
 </script>
 <Toaster/>

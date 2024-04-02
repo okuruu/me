@@ -1,7 +1,18 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { baseConfig } from "$lib/strings/baseConfig";
+    import { getLocalStorage } from "$lib/utils/storage";
 
-    const endTest = () => {
+    const endTest = async () => {
+        // let userData = getLocalStorage();
+        // const doPost = await fetch($baseConfig.url + '#Waiting',{
+        //     method : 'post',
+        //     headers : { 'Content-Type' : 'application/json' },
+        //     body : JSON.stringify({
+        //         id : userData.whatsapp;
+        //     })
+        // });
+
         localStorage.removeItem('user');
         return goto('/clyfar');
     }

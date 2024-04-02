@@ -3,9 +3,10 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import { getTimeOfDay } from "$lib/utils/timeDetector";
     import { onMount } from "svelte";
+    import { baseConfig } from "$lib/strings/baseConfig";
 
     let name: string;
-    let whatsapp: string = '08984170335';
+    let whatsapp: string = '';
     let birthDate: Date;
     let gender: string;
     let isAgree: boolean = false;
@@ -18,19 +19,41 @@
         }
     });
 
+    // runTask
     async function doPost(): Promise<void> {
         try {
-            localStorage.setItem('user', JSON.stringify({
-                name: name,
-                whatsapp: whatsapp,
-                birthDate: birthDate,
-                gender: gender,
-                isAgree: isAgree,
-                agreementDate: Date.now(),
-                setTest : ['DISC','PAPI','KRAEPLIN','BAUM','MBTI','MSDT','CFIT'],
-                currentTest : 'DISC'
-            }));
-            return goto('/clyfar/test');
+            const doPost = await fetch($baseConfig.url + '#Waiting',{
+                method : 'post',
+                headers : { 
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({
+                    name : name,
+                    whatsapp : whatsapp,
+                    birthDate : birthDate,
+                    gender : gender,
+                    isAgree : isAgree,
+                })
+            });
+
+            const { status, message, data } = await doPost.json();
+
+            if(status === 'success'){
+                localStorage.setItem('user', JSON.stringify({
+                    name: name,
+                    whatsapp: whatsapp,
+                    birthDate: birthDate,
+                    gender: gender,
+                    isAgree: isAgree,
+                    agreementDate: Date.now(),
+                    setTest : data, // ['DISC','PAPI','KRAEPLIN','BAUM','MBTI','MSDT','CFIT']
+                    currentTest : 'DISC'
+                }));
+                return goto('/clyfar/test');
+            } else {
+                toast.error(message);
+            }
+
         } catch (error) {
             toast.error('Token tidak sesuai!');
         }
@@ -71,7 +94,7 @@
 						<div class="label">
 							<span class="label-text">Harap masukkan nomor WhatsApp Anda.</span>
 						</div>
-						<input type="number" bind:value={whatsapp} placeholder="Type here" min="0" class="input input-bordered input-accent w-full" disabled />
+						<input type="number" bind:value={whatsapp} placeholder="Type here" min="0" class="input input-bordered input-accent w-full" />
 					</label>
 
 					<label class="form-control w-full">

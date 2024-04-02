@@ -31,18 +31,18 @@
 		const forms = new FormData();
 			forms.append('baum',picture[0]);
 
-		// const doPost = await fetch($baseConfig.url + '???',{
-		// 	method : 'post',
-		// 	body : forms
-		// });
-        // const { status, message, redirectTo } = await doPost.json();
+		const doPost = await fetch($baseConfig.url + '#Waiting',{
+			method : 'post',
+			body : forms
+		});
+        const { status, message, redirectTo } = await doPost.json();
 
-		// if(status === 'success'){
-            updateCurrentTest('MBTI');
-            $baseConfig.currentTest = 'MBTI';
-        // } else {
-        //     toast.error(message);
-        // }
+		if(status === 'success'){
+            updateCurrentTest(redirectTo); // 'MBTI'
+            $baseConfig.currentTest = redirectTo; // 'MBTI'
+        } else {
+            toast.error(message);
+        }
 	}
 </script>
 <Toaster/>

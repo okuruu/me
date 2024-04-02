@@ -46,21 +46,21 @@
     }
 
     async function doPost(answers: any): Promise <void> {
-         // const doPost = await fetch($baseConfig.url + '???',{
-        //     method : 'post',
-        //     headers : { 'Content-Type' : 'application/json' },
-        //     body : JSON.stringify({
-        //         CFIT : answers
-        //     })
-        // });
-        // const { status, message, redirectTo } = await doPost.json();
+         const doPost = await fetch($baseConfig.url + '#Waiting',{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({
+                CFIT : answers
+            })
+        });
+        const { status, message, redirectTo } = await doPost.json();
 
-        // if(status === 'success'){
-            updateCurrentTest('CFIT');
-            $baseConfig.currentTest = 'CFIT';
-        // } else {
-        //     toast.error(message);
-        // }
+        if(status === 'success'){
+            updateCurrentTest(redirectTo); // CFIT
+            $baseConfig.currentTest = redirectTo; // CFIT
+        } else {
+            toast.error(message);
+        }
     }
 
 </script>

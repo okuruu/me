@@ -61,21 +61,21 @@
     }
 
     async function doPost(): Promise <void> {
-        // const doPost = await fetch($baseConfig.url + '???',{
-        //     method : 'post',
-        //     headers : { 'Content-Type' : 'application/json' },
-        //     body : JSON.stringify({
-        //         KRAEPLIN : allAnswer
-        //     })
-        // });
-        // const { status, message, redirectTo } = await doPost.json();
+        const doPost = await fetch($baseConfig.url + '???',{
+            method : 'post',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify({
+                KRAEPLIN : allAnswer
+            })
+        });
+        const { status, message, redirectTo } = await doPost.json();
 
-        // if(status === 'success'){
-            updateCurrentTest('BAUM');
-            $baseConfig.currentTest = 'BAUM';
-        // } else {
-        //     toast.error(message);
-        // }
+        if(status === 'success'){
+            updateCurrentTest(redirectTo); // 'BAUM'
+            $baseConfig.currentTest = redirectTo; // 'BAUM'
+        } else {
+            toast.error(message);
+        }
     }
 </script>
 <Toaster/>
