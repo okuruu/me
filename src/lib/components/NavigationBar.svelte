@@ -40,7 +40,7 @@
             <img src="/icons/Quran.svg" class="h-4 w-4" alt="Quran icon" />
         </button>
         <button on:click={() => setActive('threads')} class={activeItem === 'threads' ? 'active' : ''}>
-            <img src="/icons/Thread.svg" class="h-4 w-4" alt="Threads icon" />
+            <img src="/icons/Threads.svg" class="h-4 w-4" alt="Threads icon" />
         </button>
     </div>
 </div>
