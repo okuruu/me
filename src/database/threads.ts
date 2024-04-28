@@ -15,6 +15,17 @@ interface Threads {
 
 export const threads: Threads[] = [
     {
+        tweets : 'gini doang ngakak. ternyata arsip lama masih ada wkkwkw 🤣',
+        images : '12012015.jpg',
+        timestamp : '2015-01-12 15:08',
+        replies : 0,
+        likes : 6,
+        reply : {
+            view : false,
+            replies : []
+        }
+    },
+    {
         tweets : 'Kalau dalam Kejawen, ini disebut Renggati atau Renggat nang jero ati, yaitu saat kita melihat sesuatu terutama yg tidak pernah kita lihat visualnya sedang mencoba berinteraksi dengan kita, apa pun itu selalu ada maksud tersembunyi dan memang gak ada salahnya untuk berjaga-jaga.',
         images : null,
         timestamp : '2024-04-28 15:08',
