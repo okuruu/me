@@ -148,7 +148,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <button type="button" on:click={() => viewInterpretation = true} class="btn btn-neutral">Lihat</button>
+                                        <button type="button" on:click={() => viewInterpretation = true} class="btn btn-sm btn-neutral">Lihat</button>
                                     </td>
                                 </tr>
                             {/each}

@@ -6,7 +6,8 @@
     // Define navigation items
     const navigationItems = [
         { id: 'home', redirectTo: '/' },
-        { id: 'quran', redirectTo: '/quran' }
+        { id: 'quran', redirectTo: '/quran' },
+        { id: 'threads', redirectTo: '/threads' }
     ];
 
     // Reactive variable to track active item
@@ -37,6 +38,9 @@
         </button>
         <button on:click={() => setActive('quran')} class={activeItem === 'quran' ? 'active' : ''}>
             <img src="/icons/Quran.svg" class="h-4 w-4" alt="Quran icon" />
+        </button>
+        <button on:click={() => setActive('threads')} class={activeItem === 'threads' ? 'active' : ''}>
+            <img src="/icons/Thread.svg" class="h-4 w-4" alt="Threads icon" />
         </button>
     </div>
 </div>

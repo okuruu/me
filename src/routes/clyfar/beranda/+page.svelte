@@ -18,8 +18,8 @@
             </div>
         </div>
         <div class="flex-1">
-            <a href="/" class="btn btn-ghost text-xl">CLYFAR</a>
-            <a href="/" class="ms-5 text-sm text-gray-600 font-semibold hover:text-white transition ease-in-out delay-20">Interpretasi</a>
+            <!-- <a href="/clyfar/beranda" class="btn btn-ghost text-xl">CLYFAR</a>
+            <a href="/" class="ms-5 text-sm text-gray-600 font-semibold hover:text-white transition ease-in-out delay-20">Interpretasi</a> -->
         </div>
         <div class="flex-none">
             <div class="dropdown dropdown-end">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a>Keluar</a></li>
+                    <li><a href="/">Keluar</a></li>
                 </ul>
             </div>
             
