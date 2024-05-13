@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { threadsTextCount } from "$lib/utils/threads/threadsTextCount";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
     import { threadsLike } from "$lib/utils/threads/threadsLike";
-    import { threadsTextCount } from "$lib/utils/threads/threadsTextCount";
     import { threadsTime } from "$lib/utils/threads/threadsTime";
     import { baseConfig } from "../../database/base";
     import { threads } from "../../database/threads";

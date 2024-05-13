@@ -1,17 +1,24 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { kobo } from "$lib/utils/kobo";
     import toast, { Toaster } from 'svelte-french-toast';
 
     let token: string;
 
-    const check = () => {
-        if(token === 'URXVT'){
-            return goto('/clyfar/dashboard');
-        } else if(token === 'HTOP') {
-            return goto('/clyfar/beranda');
+    const check = async (): Promise <void> => {
+        const { status, message, data } = await kobo(
+            { id : token },
+            'Clyfar/Authorize-Token'
+        );
+
+        if(status == 'success'){
+            data === 'administrator' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
+            return;
         }
-        token = ''
-        return toast.error('Token tidak sesuai!');
+
+        token = '';
+        toast.error(message);
+        return;
     }
 </script>
 <Toaster/>

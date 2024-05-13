@@ -25,14 +25,13 @@ async function kobo(data: FormData | Record<string, any>, url: string): Promise<
 async function postForms(forms: FormData, url: string): Promise<ResponseType> {
     try {
         const doPost = await fetch(baseConfigValue.url + url, {
-            method: 'POST',
+            method: 'post',
             body: forms
         });
 
         const { status, message, data } = await doPost.json();
         return { status, message, data };
     } catch {
-        toast.error('(800) Ada kesalahan pada server', { position: 'top-right' });
         return { status: 'error', message: 'Internal Server Error', data : null };
     }
 }
@@ -40,7 +39,7 @@ async function postForms(forms: FormData, url: string): Promise<ResponseType> {
 async function postJson(jsons: Record<string, any>, url: string): Promise<ResponseType> {
     try {
         const doPost = await fetch(baseConfigValue.url + url, {
-            method: 'POST',
+            method: 'post',
             headers: { 'Content-Type': 'application/json', },
             body: JSON.stringify(jsons)
         });
@@ -48,7 +47,6 @@ async function postJson(jsons: Record<string, any>, url: string): Promise<Respon
         const { status, message, data } = await doPost.json();
         return { status, message, data };
     } catch {
-        toast.error('(800) Ada kesalahan pada server', { position: 'top-right' });
         return { status: 'error', message: 'Internal Server Error', data : null };
     }
 }
