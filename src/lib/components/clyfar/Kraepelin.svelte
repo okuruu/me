@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { kobo } from '$lib/utils/kobo';
+    import { baseConfig } from '$lib/strings/baseConfig';
     import toast, { Toaster } from 'svelte-french-toast';
+    import { updateCurrentTest } from '$lib/utils/storage';
     import SampleKraeplin from "../sample/SampleKraeplin.svelte";
     import { kraeplin } from '$lib/strings/psychological/kraeplin';
-    import { baseConfig } from '$lib/strings/baseConfig';
-    import { updateCurrentTest } from '$lib/utils/storage';
 
     let token: string;
     let enableTest: boolean = false;
@@ -44,13 +45,22 @@
 
     };
 
-    const checkToken = () => {
-        if(token === 'Reparo'){
+    async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'Kraepelin'
+        }, 'Clyfar/Verify-Token');
+        
+        if(status === 'success'){
             enableTest = true;
-            return toast.success("Selamat mengerjakan");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
     const isValid = () => {
@@ -61,13 +71,15 @@
     }
 
     async function doPost(): Promise <void> {
-        const doPost = await fetch($baseConfig.url + '???',{
+        const doPost = await fetch($baseConfig.url + 'Clyfar/Test-Completion',{
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                KRAEPLIN : allAnswer
+                KRAEPLIN : allAnswer,
+                TIPE : 'Kraepelin'
             })
         });
+        
         const { status, message, redirectTo } = await doPost.json();
 
         if(status === 'success'){

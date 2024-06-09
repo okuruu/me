@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { kobo } from "$lib/utils/kobo";
     import { baseConfig } from "$lib/strings/baseConfig";
     import BaumCanvas from "../clyfar/BaumCanvas.svelte";
     import SampleBaum from "../sample/SampleBaum.svelte";
@@ -10,13 +11,22 @@
 
 	let picture: any;
 
-    const checkToken = () => {
-        if(token === 'Finite'){
+	async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'BAUM'
+        }, 'Clyfar/Verify-Token');
+        
+        if(status === 'success'){
             enableTest = true;
-            return toast.success("Selamat mengerjakan");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
 	const isValid = () => {
@@ -31,10 +41,11 @@
 		const forms = new FormData();
 			forms.append('baum',picture[0]);
 
-		const doPost = await fetch($baseConfig.url + '#Waiting',{
+		const doPost = await fetch($baseConfig.url + 'Clyfar/Baum-Completion',{
 			method : 'post',
 			body : forms
 		});
+
         const { status, message, redirectTo } = await doPost.json();
 
 		if(status === 'success'){
