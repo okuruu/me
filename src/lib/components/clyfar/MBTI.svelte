@@ -1,24 +1,33 @@
 <script lang="ts">
+    import { kobo } from "$lib/utils/kobo";
     import SampleMbti from "../sample/SampleMBTI.svelte";
     import toast, { Toaster } from 'svelte-french-toast';
-    import { mbti } from "$lib/strings/psychological/mbti";
-    import { capitalizeFirstWord } from "$lib/utils/capitalize";
     import { baseConfig } from "$lib/strings/baseConfig";
+    import { mbti } from "$lib/strings/psychological/mbti";
     import { updateCurrentTest } from "$lib/utils/storage";
+    import { capitalizeFirstWord } from "$lib/utils/capitalize";
 
     let token: string; 
     let enableTest: boolean = false;
 
     let userAnswers: { index: number; answer: number }[] = [];
 
-    const checkToken = () => {
-        if(token === 'Sonorus'){
+    async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'MBTI'
+        }, 'Clyfar/Verify-Token');
+
+        if(status === 'success'){
             enableTest = true;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            return toast.success("Selamat mengerjakan");
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
     const setUserAnswer = (answer: number, index: number) => {
@@ -71,11 +80,12 @@
     }
 
     async function doPost(mbti: any): Promise <void> {
-        const doPost = await fetch($baseConfig.url + '#Waiting',{
+        const doPost = await fetch($baseConfig.url + 'Clyfar/Test-Completion',{
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                MBTI : mbti
+                MBTI : mbti,
+                TIPE : 'MBTI'
             })
         });
         const { status, message, redirectTo } = await doPost.json();

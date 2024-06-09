@@ -63,6 +63,7 @@
                 TIPE : 'PAPI'
             })
         });
+        
         const { status, message, redirectTo } = await doPost.json();
 
         if(status === 'success'){
