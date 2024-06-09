@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { kobo } from "$lib/utils/kobo";
     import SamplePapi from "../sample/SamplePapi.svelte";
     import toast, { Toaster } from 'svelte-french-toast';
     import { baseConfig } from "$lib/strings/baseConfig";
@@ -8,14 +9,22 @@
     let token: string; 
     let enableTest: boolean = false;
 
-    const checkToken = () => {
-        if(token === 'Lumos'){
+    async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'PAPI'
+        }, 'Clyfar/Verify-Token');
+        
+        if(status === 'success'){
             enableTest = true;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            return toast.success("Selamat mengerjakan");
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
     let answerList:any = [];
@@ -46,11 +55,12 @@
     }
 
     async function doPost(answers: any): Promise<void> {
-        const doPost = await fetch($baseConfig.url + '#Waiting',{
+        const doPost = await fetch($baseConfig.url + 'Clyfar/Test-Completion',{
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                PAPI : answers
+                PAPI : answers,
+                TIPE : 'PAPI'
             })
         });
         const { status, message, redirectTo } = await doPost.json();

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { kobo } from "$lib/utils/kobo";
     import { baseConfig } from "$lib/strings/baseConfig";
     import toast, { Toaster } from 'svelte-french-toast';
     import SampleDisc from "../sample/SampleDISC.svelte";
     import { disc } from "$lib/strings/psychological/disc";
     import { updateCurrentTest } from "$lib/utils/storage";
-    import { kobo } from "$lib/utils/kobo";
 
     let token: string; 
     let enableTest: boolean = false;
