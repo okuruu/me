@@ -5,6 +5,7 @@
     import SampleDisc from "../sample/SampleDISC.svelte";
     import { disc } from "$lib/strings/psychological/disc";
     import { updateCurrentTest } from "$lib/utils/storage";
+    import { kobo } from "$lib/utils/kobo";
 
     let token: string; 
     let enableTest: boolean = false;
@@ -21,14 +22,22 @@
         data = data;
     });
 
-    const checkToken = () => {
-        if(token === 'Veritas'){
+    async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'DISC'
+        }, 'Clyfar/Verify-Token');
+
+        if(status === 'success'){
             enableTest = true;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            return toast.success("Selamat mengerjakan");
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
     function setValue(index: number, value: number, letter: string) {
@@ -77,17 +86,20 @@
         if(!isValid){
             return toast.error("Anda belum melengkapi semua subtes!");
         }
+        
         doPost();
     }
 
     async function doPost(): Promise <void> {
-        const doPost = await fetch($baseConfig.url + '#Waiting',{
+        const doPost = await fetch($baseConfig.url + 'Clyfar/Test-Completion',{
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                DISC : data
+                DISC : data,
+                TIPE : 'DISC'
             })
         });
+
         const { status, message, redirectTo } = await doPost.json();
 
         if(status === 'success'){

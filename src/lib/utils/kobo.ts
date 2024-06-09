@@ -1,5 +1,4 @@
 import { get } from "svelte/store";
-import toast from "svelte-french-toast";
 import { baseConfig } from "$lib/strings/baseConfig";
 
 interface ResponseType {
