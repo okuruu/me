@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { kobo } from "$lib/utils/kobo";
+    import SampleMSDT from "../sample/SampleMSDT.svelte";
+    import toast, { Toaster } from 'svelte-french-toast';
     import { baseConfig } from "$lib/strings/baseConfig";
     import { msdt } from "$lib/strings/psychological/msdt";
     import { updateCurrentTest } from "$lib/utils/storage";
-    import SampleMSDT from "../sample/SampleMSDT.svelte";
-    import toast, { Toaster } from 'svelte-french-toast';
 
     let token: string; 
     let enableTest: boolean = false;
@@ -11,14 +12,22 @@
     let newData: any = msdt;
     let answerList: any = [];
 
-    const checkToken = () => {
-        if(token === 'Stupefy'){
+    async function checkToken(): Promise <void> {
+        const { status, message } = await kobo({
+            'token' : token,
+            'type' : 'MSDT'
+        }, 'Clyfar/Verify-Token');
+
+        if(status === 'success'){
             enableTest = true;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            return toast.success("Selamat mengerjakan");
+            toast.success(message);
+            return;
         }
+
         token = '';
-        return toast.error("Token tidak sesuai");
+        toast.error(message);
+        return;
     }
 
     function setAnswer(ID: number, value: string) {
@@ -46,11 +55,12 @@
     }
 
     async function doPost(answers: any): Promise <void> {
-         const doPost = await fetch($baseConfig.url + '#Waiting',{
+         const doPost = await fetch($baseConfig.url + 'Clyfar/Test-Completion',{
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                CFIT : answers
+                MSDT : answers,
+                TIPE : 'MSDT'
             })
         });
         const { status, message, redirectTo } = await doPost.json();
