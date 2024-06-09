@@ -49,16 +49,14 @@
 </div>
 
 <!-- Modal -->
-{#if isModal}
-    <div class="modal modal-open">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">Tandai Ayat Terakhir!</h3>
-            <button type="button" on:click={closeModal} class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            <p class="py-4">Dengan menandai ayat ini sebagai yang terakhir, kamu akan mudah menemukannya untuk dibaca lagi nanti.</p>
-            <div class="modal-action">
-                <button type="button" class="btn" on:click={bookmark}>Ya, Tandai</button>
-            </div>
+<div class="modal" class:modal-open={isModal}>
+    <div class="modal-box">
+        <h3 class="font-bold text-lg">Tandai Ayat Terakhir!</h3>
+        <button type="button" on:click={closeModal} class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <p class="py-4">Dengan menandai ayat ini sebagai yang terakhir, kamu akan mudah menemukannya untuk dibaca lagi nanti.</p>
+        <div class="modal-action">
+            <button type="button" class="btn" on:click={bookmark}>Ya, Tandai</button>
         </div>
-        <button on:click={closeModal} class="modal-backdrop"></button>
     </div>
-{/if}
+    <button on:click={closeModal} class="modal-backdrop"></button>
+</div>

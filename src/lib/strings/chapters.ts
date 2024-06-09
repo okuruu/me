@@ -1,4 +1,13 @@
-export const chapters = [
+interface Chapters {
+    id: number;
+    name : string;
+    transliteration: string;
+    translation: string;
+    type : "meccan" | "medinan";
+    total_verses: number;
+}
+
+export const chapters: Chapters[] = [
     {
         "id": 1,
         "name": "الفاتحة",
@@ -6,7 +15,7 @@ export const chapters = [
         "translation": "Pembukaan",
         "type": "meccan",
         "total_verses": 7,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/1.json"
+
     },
     {
         "id": 2,
@@ -15,7 +24,7 @@ export const chapters = [
         "translation": "Sapi Betina",
         "type": "medinan",
         "total_verses": 286,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/2.json"
+
     },
     {
         "id": 3,
@@ -24,7 +33,7 @@ export const chapters = [
         "translation": "Keluarga Imran",
         "type": "medinan",
         "total_verses": 200,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/3.json"
+
     },
     {
         "id": 4,
@@ -33,7 +42,7 @@ export const chapters = [
         "translation": "Wanita",
         "type": "medinan",
         "total_verses": 176,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/4.json"
+
     },
     {
         "id": 5,
@@ -42,7 +51,7 @@ export const chapters = [
         "translation": "Jamuan (Hidangan Makanan)",
         "type": "medinan",
         "total_verses": 120,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/5.json"
+
     },
     {
         "id": 6,
@@ -51,7 +60,7 @@ export const chapters = [
         "translation": "Binatang Ternak",
         "type": "meccan",
         "total_verses": 165,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/6.json"
+
     },
     {
         "id": 7,
@@ -60,7 +69,7 @@ export const chapters = [
         "translation": "Tempat-tempat Tinggi",
         "type": "meccan",
         "total_verses": 206,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/7.json"
+
     },
     {
         "id": 8,
@@ -69,7 +78,7 @@ export const chapters = [
         "translation": "Rampasan Perang",
         "type": "medinan",
         "total_verses": 75,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/8.json"
+
     },
     {
         "id": 9,
@@ -78,7 +87,7 @@ export const chapters = [
         "translation": "Pengampunan",
         "type": "medinan",
         "total_verses": 129,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/9.json"
+
     },
     {
         "id": 10,
@@ -87,7 +96,7 @@ export const chapters = [
         "translation": "Yunus",
         "type": "meccan",
         "total_verses": 109,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/10.json"
+
     },
     {
         "id": 11,
@@ -96,7 +105,7 @@ export const chapters = [
         "translation": "Hud",
         "type": "meccan",
         "total_verses": 123,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/11.json"
+
     },
     {
         "id": 12,
@@ -105,7 +114,7 @@ export const chapters = [
         "translation": "Yusuf",
         "type": "meccan",
         "total_verses": 111,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/12.json"
+
     },
     {
         "id": 13,
@@ -114,7 +123,7 @@ export const chapters = [
         "translation": "Guruh (Petir)",
         "type": "medinan",
         "total_verses": 43,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/13.json"
+
     },
     {
         "id": 14,
@@ -123,7 +132,7 @@ export const chapters = [
         "translation": "Ibrahim",
         "type": "meccan",
         "total_verses": 52,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/14.json"
+
     },
     {
         "id": 15,
@@ -132,7 +141,7 @@ export const chapters = [
         "translation": "Bukit",
         "type": "meccan",
         "total_verses": 99,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/15.json"
+
     },
     {
         "id": 16,
@@ -141,7 +150,7 @@ export const chapters = [
         "translation": "Lebah Madu",
         "type": "meccan",
         "total_verses": 128,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/16.json"
+
     },
     {
         "id": 17,
@@ -150,7 +159,7 @@ export const chapters = [
         "translation": "Perjalanan Malam",
         "type": "meccan",
         "total_verses": 111,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/17.json"
+
     },
     {
         "id": 18,
@@ -159,7 +168,7 @@ export const chapters = [
         "translation": "Para Penghuni Gua",
         "type": "meccan",
         "total_verses": 110,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/18.json"
+
     },
     {
         "id": 19,
@@ -168,7 +177,7 @@ export const chapters = [
         "translation": "Maryam",
         "type": "meccan",
         "total_verses": 98,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/19.json"
+
     },
     {
         "id": 20,
@@ -177,7 +186,7 @@ export const chapters = [
         "translation": "Tha-Ha",
         "type": "meccan",
         "total_verses": 135,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/20.json"
+
     },
     {
         "id": 21,
@@ -186,7 +195,7 @@ export const chapters = [
         "translation": "Para Nabi",
         "type": "meccan",
         "total_verses": 112,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/21.json"
+
     },
     {
         "id": 22,
@@ -195,7 +204,7 @@ export const chapters = [
         "translation": "Haji",
         "type": "medinan",
         "total_verses": 78,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/22.json"
+
     },
     {
         "id": 23,
@@ -204,7 +213,7 @@ export const chapters = [
         "translation": "Orang-orang Mukmin",
         "type": "meccan",
         "total_verses": 118,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/23.json"
+
     },
     {
         "id": 24,
@@ -213,7 +222,7 @@ export const chapters = [
         "translation": "Cahaya",
         "type": "medinan",
         "total_verses": 64,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/24.json"
+
     },
     {
         "id": 25,
@@ -222,7 +231,7 @@ export const chapters = [
         "translation": "Pembeda",
         "type": "meccan",
         "total_verses": 77,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/25.json"
+
     },
     {
         "id": 26,
@@ -231,7 +240,7 @@ export const chapters = [
         "translation": "Penyair",
         "type": "meccan",
         "total_verses": 227,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/26.json"
+
     },
     {
         "id": 27,
@@ -240,7 +249,7 @@ export const chapters = [
         "translation": "Semut",
         "type": "meccan",
         "total_verses": 93,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/27.json"
+
     },
     {
         "id": 28,
@@ -249,7 +258,7 @@ export const chapters = [
         "translation": "Kisah-kisah",
         "type": "meccan",
         "total_verses": 88,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/28.json"
+
     },
     {
         "id": 29,
@@ -258,7 +267,7 @@ export const chapters = [
         "translation": "Laba-laba",
         "type": "meccan",
         "total_verses": 69,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/29.json"
+
     },
     {
         "id": 30,
@@ -267,7 +276,7 @@ export const chapters = [
         "translation": "Bangsa Romawi",
         "type": "meccan",
         "total_verses": 60,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/30.json"
+
     },
     {
         "id": 31,
@@ -276,7 +285,7 @@ export const chapters = [
         "translation": "Luqman",
         "type": "meccan",
         "total_verses": 34,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/31.json"
+
     },
     {
         "id": 32,
@@ -285,7 +294,7 @@ export const chapters = [
         "translation": "Sujud",
         "type": "meccan",
         "total_verses": 30,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/32.json"
+
     },
     {
         "id": 33,
@@ -294,7 +303,7 @@ export const chapters = [
         "translation": "Golongan yang Bersekutu",
         "type": "medinan",
         "total_verses": 73,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/33.json"
+
     },
     {
         "id": 34,
@@ -303,7 +312,7 @@ export const chapters = [
         "translation": "Saba\\'",
         "type": "meccan",
         "total_verses": 54,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/34.json"
+
     },
     {
         "id": 35,
@@ -312,7 +321,7 @@ export const chapters = [
         "translation": "Pencipta",
         "type": "meccan",
         "total_verses": 45,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/35.json"
+
     },
     {
         "id": 36,
@@ -321,7 +330,7 @@ export const chapters = [
         "translation": "Yas Sin",
         "type": "meccan",
         "total_verses": 83,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/36.json"
+
     },
     {
         "id": 37,
@@ -330,7 +339,7 @@ export const chapters = [
         "translation": "Barisan-barisan",
         "type": "meccan",
         "total_verses": 182,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/37.json"
+
     },
     {
         "id": 38,
@@ -339,7 +348,7 @@ export const chapters = [
         "translation": "Shad",
         "type": "meccan",
         "total_verses": 88,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/38.json"
+
     },
     {
         "id": 39,
@@ -348,7 +357,7 @@ export const chapters = [
         "translation": "Para Rombongan",
         "type": "meccan",
         "total_verses": 75,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/39.json"
+
     },
     {
         "id": 40,
@@ -357,7 +366,7 @@ export const chapters = [
         "translation": "Sang Maha Pengampun",
         "type": "meccan",
         "total_verses": 85,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/40.json"
+
     },
     {
         "id": 41,
@@ -366,7 +375,7 @@ export const chapters = [
         "translation": "Yang Dijelaskan",
         "type": "meccan",
         "total_verses": 54,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/41.json"
+
     },
     {
         "id": 42,
@@ -375,7 +384,7 @@ export const chapters = [
         "translation": "Musyawarah",
         "type": "meccan",
         "total_verses": 53,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/42.json"
+
     },
     {
         "id": 43,
@@ -384,7 +393,7 @@ export const chapters = [
         "translation": "Perhiasan",
         "type": "meccan",
         "total_verses": 89,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/43.json"
+
     },
     {
         "id": 44,
@@ -393,7 +402,7 @@ export const chapters = [
         "translation": "Kabut",
         "type": "meccan",
         "total_verses": 59,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/44.json"
+
     },
     {
         "id": 45,
@@ -402,7 +411,7 @@ export const chapters = [
         "translation": "Yang Bertekuk Lutut",
         "type": "meccan",
         "total_verses": 37,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/45.json"
+
     },
     {
         "id": 46,
@@ -411,7 +420,7 @@ export const chapters = [
         "translation": "Bukit-bukir Pasir",
         "type": "meccan",
         "total_verses": 35,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/46.json"
+
     },
     {
         "id": 47,
@@ -420,7 +429,7 @@ export const chapters = [
         "translation": "Muhammad",
         "type": "medinan",
         "total_verses": 38,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/47.json"
+
     },
     {
         "id": 48,
@@ -429,7 +438,7 @@ export const chapters = [
         "translation": "Kemenangan",
         "type": "medinan",
         "total_verses": 29,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/48.json"
+
     },
     {
         "id": 49,
@@ -438,7 +447,7 @@ export const chapters = [
         "translation": "Kamar-kamar",
         "type": "medinan",
         "total_verses": 18,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/49.json"
+
     },
     {
         "id": 50,
@@ -447,7 +456,7 @@ export const chapters = [
         "translation": "Qaf",
         "type": "meccan",
         "total_verses": 45,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/50.json"
+
     },
     {
         "id": 51,
@@ -456,7 +465,7 @@ export const chapters = [
         "translation": "Angin yang Menerbangkan",
         "type": "meccan",
         "total_verses": 60,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/51.json"
+
     },
     {
         "id": 52,
@@ -465,7 +474,7 @@ export const chapters = [
         "translation": "Bukit",
         "type": "meccan",
         "total_verses": 49,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/52.json"
+
     },
     {
         "id": 53,
@@ -474,7 +483,7 @@ export const chapters = [
         "translation": "Bintang",
         "type": "meccan",
         "total_verses": 62,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/53.json"
+
     },
     {
         "id": 54,
@@ -483,7 +492,7 @@ export const chapters = [
         "translation": "Bulan",
         "type": "meccan",
         "total_verses": 55,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/54.json"
+
     },
     {
         "id": 55,
@@ -492,7 +501,7 @@ export const chapters = [
         "translation": "Yang Maha Pemurah",
         "type": "medinan",
         "total_verses": 78,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/55.json"
+
     },
     {
         "id": 56,
@@ -501,7 +510,7 @@ export const chapters = [
         "translation": "Hari Kiamat",
         "type": "meccan",
         "total_verses": 96,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/56.json"
+
     },
     {
         "id": 57,
@@ -510,7 +519,7 @@ export const chapters = [
         "translation": "Besi",
         "type": "medinan",
         "total_verses": 29,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/57.json"
+
     },
     {
         "id": 58,
@@ -519,7 +528,7 @@ export const chapters = [
         "translation": "Wanita yang Menggugat",
         "type": "medinan",
         "total_verses": 22,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/58.json"
+
     },
     {
         "id": 59,
@@ -528,7 +537,7 @@ export const chapters = [
         "translation": "Pengusiran",
         "type": "medinan",
         "total_verses": 24,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/59.json"
+
     },
     {
         "id": 60,
@@ -537,7 +546,7 @@ export const chapters = [
         "translation": "Wanita yang Diuji",
         "type": "medinan",
         "total_verses": 13,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/60.json"
+
     },
     {
         "id": 61,
@@ -546,7 +555,7 @@ export const chapters = [
         "translation": "Barisan",
         "type": "medinan",
         "total_verses": 14,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/61.json"
+
     },
     {
         "id": 62,
@@ -555,7 +564,7 @@ export const chapters = [
         "translation": "Hari Jum\\'at",
         "type": "medinan",
         "total_verses": 11,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/62.json"
+
     },
     {
         "id": 63,
@@ -564,7 +573,7 @@ export const chapters = [
         "translation": "Kaum Munafik",
         "type": "medinan",
         "total_verses": 11,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/63.json"
+
     },
     {
         "id": 64,
@@ -573,7 +582,7 @@ export const chapters = [
         "translation": "Hari Dinampakkan Kesalahan",
         "type": "medinan",
         "total_verses": 18,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/64.json"
+
     },
     {
         "id": 65,
@@ -582,7 +591,7 @@ export const chapters = [
         "translation": "Perceraian",
         "type": "medinan",
         "total_verses": 12,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/65.json"
+
     },
     {
         "id": 66,
@@ -591,7 +600,7 @@ export const chapters = [
         "translation": "Mengharamkan",
         "type": "medinan",
         "total_verses": 12,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/66.json"
+
     },
     {
         "id": 67,
@@ -600,7 +609,7 @@ export const chapters = [
         "translation": "Kerajaan",
         "type": "meccan",
         "total_verses": 30,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/67.json"
+
     },
     {
         "id": 68,
@@ -609,7 +618,7 @@ export const chapters = [
         "translation": "Pena",
         "type": "meccan",
         "total_verses": 52,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/68.json"
+
     },
     {
         "id": 69,
@@ -618,7 +627,7 @@ export const chapters = [
         "translation": "Kenyataan (Hari Kiamat)",
         "type": "meccan",
         "total_verses": 52,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/69.json"
+
     },
     {
         "id": 70,
@@ -627,7 +636,7 @@ export const chapters = [
         "translation": "Tempat yang Naik",
         "type": "meccan",
         "total_verses": 44,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/70.json"
+
     },
     {
         "id": 71,
@@ -636,7 +645,7 @@ export const chapters = [
         "translation": "Nuh",
         "type": "meccan",
         "total_verses": 28,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/71.json"
+
     },
     {
         "id": 72,
@@ -645,7 +654,7 @@ export const chapters = [
         "translation": "Jin",
         "type": "meccan",
         "total_verses": 28,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/72.json"
+
     },
     {
         "id": 73,
@@ -654,7 +663,7 @@ export const chapters = [
         "translation": "Orang yang Berselimut",
         "type": "meccan",
         "total_verses": 20,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/73.json"
+
     },
     {
         "id": 74,
@@ -663,7 +672,7 @@ export const chapters = [
         "translation": "Orang yang Berkemul",
         "type": "meccan",
         "total_verses": 56,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/74.json"
+
     },
     {
         "id": 75,
@@ -672,7 +681,7 @@ export const chapters = [
         "translation": "Hari Berbangkit",
         "type": "meccan",
         "total_verses": 40,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/75.json"
+
     },
     {
         "id": 76,
@@ -681,7 +690,7 @@ export const chapters = [
         "translation": "Manusia",
         "type": "medinan",
         "total_verses": 31,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/76.json"
+
     },
     {
         "id": 77,
@@ -690,7 +699,7 @@ export const chapters = [
         "translation": "Malaikat-malaikan yang Diutus",
         "type": "meccan",
         "total_verses": 50,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/77.json"
+
     },
     {
         "id": 78,
@@ -699,7 +708,7 @@ export const chapters = [
         "translation": "Berita Besar",
         "type": "meccan",
         "total_verses": 40,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/78.json"
+
     },
     {
         "id": 79,
@@ -708,7 +717,7 @@ export const chapters = [
         "translation": "Malaikat yang Mencabut",
         "type": "meccan",
         "total_verses": 46,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/79.json"
+
     },
     {
         "id": 80,
@@ -717,7 +726,7 @@ export const chapters = [
         "translation": "Ia Bermuka Masam",
         "type": "meccan",
         "total_verses": 42,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/80.json"
+
     },
     {
         "id": 81,
@@ -726,7 +735,7 @@ export const chapters = [
         "translation": "Menggulung",
         "type": "meccan",
         "total_verses": 29,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/81.json"
+
     },
     {
         "id": 82,
@@ -735,7 +744,7 @@ export const chapters = [
         "translation": "Terbelah",
         "type": "meccan",
         "total_verses": 19,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/82.json"
+
     },
     {
         "id": 83,
@@ -744,7 +753,7 @@ export const chapters = [
         "translation": "Orang-orang Curang",
         "type": "meccan",
         "total_verses": 36,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/83.json"
+
     },
     {
         "id": 84,
@@ -753,7 +762,7 @@ export const chapters = [
         "translation": "Terbelah",
         "type": "meccan",
         "total_verses": 25,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/84.json"
+
     },
     {
         "id": 85,
@@ -762,7 +771,7 @@ export const chapters = [
         "translation": "Gugusan Bintang",
         "type": "meccan",
         "total_verses": 22,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/85.json"
+
     },
     {
         "id": 86,
@@ -771,7 +780,7 @@ export const chapters = [
         "translation": "Yang Datang di Malam Hari",
         "type": "meccan",
         "total_verses": 17,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/86.json"
+
     },
     {
         "id": 87,
@@ -780,7 +789,7 @@ export const chapters = [
         "translation": "Yang Paling Tinggi",
         "type": "meccan",
         "total_verses": 19,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/87.json"
+
     },
     {
         "id": 88,
@@ -789,7 +798,7 @@ export const chapters = [
         "translation": "Hari Pembalasan",
         "type": "meccan",
         "total_verses": 26,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/88.json"
+
     },
     {
         "id": 89,
@@ -798,7 +807,7 @@ export const chapters = [
         "translation": "Fajar",
         "type": "meccan",
         "total_verses": 30,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/89.json"
+
     },
     {
         "id": 90,
@@ -807,7 +816,7 @@ export const chapters = [
         "translation": "Negeri",
         "type": "meccan",
         "total_verses": 20,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/90.json"
+
     },
     {
         "id": 91,
@@ -816,7 +825,7 @@ export const chapters = [
         "translation": "Matahari",
         "type": "meccan",
         "total_verses": 15,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/91.json"
+
     },
     {
         "id": 92,
@@ -825,7 +834,7 @@ export const chapters = [
         "translation": "Malam",
         "type": "meccan",
         "total_verses": 21,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/92.json"
+
     },
     {
         "id": 93,
@@ -834,7 +843,7 @@ export const chapters = [
         "translation": "Waktu Dhuha",
         "type": "meccan",
         "total_verses": 11,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/93.json"
+
     },
     {
         "id": 94,
@@ -843,7 +852,7 @@ export const chapters = [
         "translation": "Melapangkan",
         "type": "meccan",
         "total_verses": 8,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/94.json"
+
     },
     {
         "id": 95,
@@ -852,7 +861,7 @@ export const chapters = [
         "translation": "Buah Tin",
         "type": "meccan",
         "total_verses": 8,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/95.json"
+
     },
     {
         "id": 96,
@@ -861,7 +870,7 @@ export const chapters = [
         "translation": "Segumpal Darah",
         "type": "meccan",
         "total_verses": 19,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/96.json"
+
     },
     {
         "id": 97,
@@ -870,7 +879,7 @@ export const chapters = [
         "translation": "Kemuliaan",
         "type": "meccan",
         "total_verses": 5,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/97.json"
+
     },
     {
         "id": 98,
@@ -879,7 +888,7 @@ export const chapters = [
         "translation": "Pembuktian",
         "type": "medinan",
         "total_verses": 8,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/98.json"
+
     },
     {
         "id": 99,
@@ -888,7 +897,7 @@ export const chapters = [
         "translation": "Kegoncangan",
         "type": "medinan",
         "total_verses": 8,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/99.json"
+
     },
     {
         "id": 100,
@@ -897,7 +906,7 @@ export const chapters = [
         "translation": "Berlari Kencang",
         "type": "meccan",
         "total_verses": 11,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/100.json"
+
     },
     {
         "id": 101,
@@ -906,7 +915,7 @@ export const chapters = [
         "translation": "Hari Kiamat",
         "type": "meccan",
         "total_verses": 11,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/101.json"
+
     },
     {
         "id": 102,
@@ -915,7 +924,7 @@ export const chapters = [
         "translation": "Bermegah-megahan",
         "type": "meccan",
         "total_verses": 8,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/102.json"
+
     },
     {
         "id": 103,
@@ -924,7 +933,7 @@ export const chapters = [
         "translation": "Waktu Sore",
         "type": "meccan",
         "total_verses": 3,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/103.json"
+
     },
     {
         "id": 104,
@@ -933,7 +942,7 @@ export const chapters = [
         "translation": "Pengumpat",
         "type": "meccan",
         "total_verses": 9,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/104.json"
+
     },
     {
         "id": 105,
@@ -942,7 +951,7 @@ export const chapters = [
         "translation": "Gajah",
         "type": "meccan",
         "total_verses": 5,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/105.json"
+
     },
     {
         "id": 106,
@@ -951,7 +960,7 @@ export const chapters = [
         "translation": "Suku Quraisy",
         "type": "meccan",
         "total_verses": 4,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/106.json"
+
     },
     {
         "id": 107,
@@ -960,7 +969,7 @@ export const chapters = [
         "translation": "Barang yang Berguna",
         "type": "meccan",
         "total_verses": 7,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/107.json"
+
     },
     {
         "id": 108,
@@ -969,7 +978,7 @@ export const chapters = [
         "translation": "Nikmat Berlimpah",
         "type": "meccan",
         "total_verses": 3,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/108.json"
+
     },
     {
         "id": 109,
@@ -978,7 +987,7 @@ export const chapters = [
         "translation": "Orang-orang Kafir",
         "type": "meccan",
         "total_verses": 6,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/109.json"
+
     },
     {
         "id": 110,
@@ -987,7 +996,7 @@ export const chapters = [
         "translation": "Pertolongan",
         "type": "medinan",
         "total_verses": 3,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/110.json"
+
     },
     {
         "id": 111,
@@ -996,7 +1005,7 @@ export const chapters = [
         "translation": "Gejolak Api (Sabut)",
         "type": "meccan",
         "total_verses": 5,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/111.json"
+
     },
     {
         "id": 112,
@@ -1005,7 +1014,7 @@ export const chapters = [
         "translation": "Ikhlash",
         "type": "meccan",
         "total_verses": 4,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/112.json"
+
     },
     {
         "id": 113,
@@ -1014,7 +1023,7 @@ export const chapters = [
         "translation": "Waktu Shubuh",
         "type": "meccan",
         "total_verses": 5,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/113.json"
+
     },
     {
         "id": 114,
@@ -1023,6 +1032,6 @@ export const chapters = [
         "translation": "Umat Manusia",
         "type": "meccan",
         "total_verses": 6,
-        "link": "https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/id/114.json"
+
     }
 ]
