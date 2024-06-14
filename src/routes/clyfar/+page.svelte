@@ -12,7 +12,7 @@
         );
 
         if(status == 'success'){
-            data === 'administrator' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
+            data === 'Super' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
             return;
         }
 
