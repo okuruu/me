@@ -11,6 +11,7 @@
         const { status, message } = await kobo({ whatsapp : userData.whatsapp }, 'Clyfar/Log-Out');
 
         if ( status === 'success' ) {
+            localStorage.removeItem('localPIN');
             localStorage.removeItem('user');
             return goto('/clyfar');
         }

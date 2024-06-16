@@ -38,8 +38,11 @@
 	}
 
 	async function doPost(): Promise <void>{
+		const getLocal: any = localStorage.getItem('localPIN');
+
 		const forms = new FormData();
 			forms.append('baum',picture[0]);
+			forms.append('localPIN', getLocal);
 
 		const doPost = await fetch($baseConfig.url + 'Clyfar/Baum-Completion',{
 			method : 'post',

@@ -59,8 +59,9 @@
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                PAPI : answers,
-                TIPE : 'PAPI'
+                data : answers,
+                TIPE : 'PAPI',
+                localPIN : localStorage.getItem('localPIN') ?? null
             })
         });
         

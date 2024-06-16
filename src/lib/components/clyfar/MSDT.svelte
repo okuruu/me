@@ -59,8 +59,9 @@
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                MSDT : answers,
-                TIPE : 'MSDT'
+                data : answers,
+                TIPE : 'MSDT',
+                localPIN : localStorage.getItem('localPIN') ?? null
             })
         });
         const { status, message, redirectTo } = await doPost.json();

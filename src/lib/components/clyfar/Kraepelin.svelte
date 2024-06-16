@@ -31,7 +31,7 @@
             }
             timer = timer - 1;
         }
-    }, 1000);
+    }, 10);
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
@@ -75,8 +75,9 @@
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                KRAEPLIN : allAnswer,
-                TIPE : 'Kraepelin'
+                data : allAnswer,
+                TIPE : 'KRAEPLIN',
+                localPIN : localStorage.getItem('localPIN') ?? null
             })
         });
         

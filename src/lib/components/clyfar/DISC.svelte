@@ -95,16 +95,17 @@
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                DISC : data,
-                TIPE : 'DISC'
+                data : data,
+                TIPE : 'DISC',
+                localPIN : localStorage.getItem('localPIN') ?? null
             })
         });
 
         const { status, message, redirectTo } = await doPost.json();
 
         if(status === 'success'){
-            updateCurrentTest(redirectTo); // 'PAPI'
-            $baseConfig.currentTest = redirectTo; // 'PAPI'
+            updateCurrentTest(redirectTo);
+            $baseConfig.currentTest = redirectTo;
         } else {
             toast.error(message);
         }

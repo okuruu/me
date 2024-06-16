@@ -84,8 +84,9 @@
             method : 'post',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify({
-                MBTI : mbti,
-                TIPE : 'MBTI'
+                data : mbti,
+                TIPE : 'MBTI',
+                localPIN : localStorage.getItem('localPIN') ?? null
             })
         });
         const { status, message, redirectTo } = await doPost.json();
