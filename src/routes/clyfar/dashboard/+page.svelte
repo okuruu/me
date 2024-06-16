@@ -28,6 +28,7 @@
                 birthDate : birthDate,
                 gender : gender,
                 isAgree : isAgree,
+                localPIN : localStorage.getItem('localPIN') ?? null
             },'Clyfar/Register-Account');
 
             if(status === 'success'){

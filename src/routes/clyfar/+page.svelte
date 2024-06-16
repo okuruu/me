@@ -12,7 +12,8 @@
         );
 
         if(status == 'success'){
-            data === 'Super' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
+            localStorage.setItem("localPIN",data.userCodes);
+            data.statusAccount === 'Super' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
             return;
         }
 
