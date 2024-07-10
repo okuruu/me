@@ -36,3 +36,8 @@
 body {
     font-family: 'Inter', sans-serif;
 }
+
+.avatar {
+    vertical-align: middle;
+    border-radius: 50%;
+}
