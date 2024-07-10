@@ -1,7 +1,7 @@
 <script lang="ts">
     import { kobo } from "$lib/utils/kobo";
-    import NavigationClyfar from "$lib/components/NavigationClyfar.svelte";
     import toast, { Toaster } from 'svelte-french-toast';
+    import NavigationClyfar from "$lib/components/NavigationClyfar.svelte";
     
     export let kandidat;
 
@@ -63,16 +63,25 @@
 </div>
 
 <div class="grid grid-cols-2 gap-4 my-3">
-    {#each testOption as data }
-        <div>
-            <div class="form-control">
-                <label class="label cursor-pointer">
-                    <span class="label-text">{data}</span> 
-                    <input type="checkbox" bind:group={test} value="{data}" class="checkbox checkbox-primary" />
-                </label>
-            </div>
+    <div>
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">DISC</span> 
+                <input type="checkbox" bind:group={test} value="DISC" class="checkbox checkbox-primary" />
+            </label>
         </div>
-    {/each}
+    </div>
+</div>
+
+<div class="grid grid-cols-2 gap-4 my-3">
+    <div>
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">KRAEPELIN</span> 
+                <input type="checkbox" bind:group={test} value="KRAEPELIN" class="checkbox checkbox-primary" />
+            </label>
+        </div>
+    </div>
 </div>
 
 <div class="card w-full bg-base-100">
@@ -88,7 +97,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {#if newData.length === 0}
+                    <!-- {#if newData.length === 0}
                         <tr>
                             <td colspan="8">Tidak ada data</td>
                         </tr>
@@ -103,7 +112,7 @@
                                 </td>
                             </tr>
                         {/each}
-                    {/if}
+                    {/if} -->
                 </tbody>
             </table>
         </div>

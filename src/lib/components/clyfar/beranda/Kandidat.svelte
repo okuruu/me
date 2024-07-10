@@ -56,6 +56,3 @@
         </div>
     </div>
 </div>
-
-<div class="divider mb-12"></div>
-<NavigationClyfar/>

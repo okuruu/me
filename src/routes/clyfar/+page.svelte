@@ -12,6 +12,10 @@
         );
 
         if(status == 'success'){
+
+            localStorage.removeItem('localPIN');
+            localStorage.removeItem('user');
+
             localStorage.setItem("localPIN",data.userCodes);
             data.statusAccount === 'Super' ? goto('/clyfar/beranda') : goto('/clyfar/dashboard');
             return;
