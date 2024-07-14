@@ -37,6 +37,14 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+.container-xs {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
 .avatar {
     vertical-align: middle;
     border-radius: 50%;
