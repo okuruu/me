@@ -13,7 +13,7 @@ export const threadsTweets: Threads[] = [
         }
     },
     {
-        tweets : 'Kalau dalam Kejawen, ini disebut Renggati atau Renggat nang jero ati, yaitu saat kita melihat sesuatu terutama yg tidak pernah kita lihat visualnya sedang mencoba berinteraksi dengan kita, apa pun itu selalu ada maksud tersembunyi dan memang gak ada salahnya untuk berjaga-jaga. - view more',
+        tweets : `[Thread] Bagian paling gak asyik itu kalau ke kamar mandi malam-malam begini, kenapa? Pengalaman sewaktu masih bekerja di pabrik keramik trus dapat shift malam, pas ke kamar mandi untuk menuntaskan hajat, membuka pintu keluar itu akan selalu saya ingat sampai kapan pun. -cont `,
         images : null,
         timestamp : '2024-04-28 15:08',
         replies : 0,
@@ -21,23 +21,19 @@ export const threadsTweets: Threads[] = [
         reply : {
             view : false,
             replies :[{
-                tweets : 'seperti yg terjadi pada beliau ini, mungkin secara gak langsung si wanita berpakaian hijau ini sedang mencoba berinteraksi dan tentu saja ada sesuatu yg sedang dia inginkan.',
+                tweets : 'Bagaimana tidak. Bayangkan setelah perasaan lega menyelesaikan apa yg sempat tertunda, kemudian disambut oleh wanita. Iya benar-benar sosok wajah wanita hanya saja kulitnya putih pucat, melotot, tanpa ekspresi apapun, sedang melihat kita dalam posisi ngesot. Bayangkan dulu. ',
                 images : null
             },
             {
-                tweets : 'dulu, si mbah melakukan Wijih, yaitu membaca petunjuk dengan meletakkan telur ayam kampung di dalam besek ',
+                tweets : 'Untung saja waktu itu tidak jatuh pingsan, tidak juga lari karena ya dalam kondisi seperti itu otak kita kaya ngeblank, akhirnya, jalan melewati beliau sambil ngucap "NUWUN SEWU", sejak saat itu gak pernah lagi berani buang air disitu lagi kalau dapat shift malam. Jadi salah gak sih punya perasaan takut?',
                 images : null
             },
             {
-                tweets : 'tapi ya sekali lagi, yg di lakukan si mbah saya dulu itu untuk sekedar berjaga-jaga, karena kaum dari bangsa Jin memang sukar dipercaya, karena memang begitulah tugas mereka bahkan sampai di akhir zaman.',
+                tweets : 'Gak salah karena ya nyatanya kita memang hidup berdampingan. Saling menghormati saja. Kalau memang tidak mau melihat yg seperti itu biasanya mereka mengerti, kalau kebetulan melihat yg begitu. Artinya, dua-duanya sedang apes saja. Hahaha',
                 images : null
             },
             {
-                tweets : 'kalau nulis ini jadi flashback, waktu sepupu saya kena ini, gak bisa bangun berhari-hari karena si mbah telat menyadari, telur ayam yg ditaruh di besek isi nya darah dengan noda hitam kental, tapi setelah melewati berbagai prosesi, sepupu akhirnya selamat, tapi ya linglung..',
-                images : null
-            },
-            {
-                tweets : 'diselidiki sama si mbah, ternyata sepupu keberatan nama, jadi badannya gak kuat, setelah nama sepupu diganti, alhamdulillah sampai sekarang kejadian itu gak pernah lagi sambang di kehidupannya. ',
+                tweets : 'Ada tahapan kita sebagai manusia berada dalam kondisi takut yg berlebihan entah karena suatu tempat atau suasana sepi yg mencekam dan biasanya saat seperti itu memang rawan, tapi kalau menampakkan diri seperti ini biasanya ya memang penunggunya yg kelewat usil.',
                 images : null
             }],
         }
