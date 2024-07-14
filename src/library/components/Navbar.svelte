@@ -11,5 +11,8 @@
         <a href="/quran">
             <img src="/icons/Quran.svg" class="h-20px me-3" alt="Quran Icon"/>
         </a>
+        <a href="/threads">
+            <img src="/icons/Threads.svg" class="h-20px me-3" alt="Quran Icon"/>
+        </a>
     </div>
 </div>

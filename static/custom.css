@@ -60,3 +60,7 @@ body {
     vertical-align: middle;
     border-radius: 50%;
 }
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
