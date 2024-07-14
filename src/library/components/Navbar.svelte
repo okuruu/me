@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
         <a href="https://github.com/okuruu">
-            <img src="/icons/Github.svg" class="h-20px me-3" alt="Github Icon"/>
+            <img src="/icons/github.svg" class="h-20px me-3" alt="Github Icon"/>
         </a>
         <a href="/quran">
             <img src="/icons/Quran.svg" class="h-20px me-3" alt="Quran Icon"/>
