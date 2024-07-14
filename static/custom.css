@@ -33,8 +33,19 @@
     font-style: bold;
 }
 
+@font-face {
+    font-family: 'Quran';
+    src: url('/fonts/fatiha/quran.ttf') format('truetype');
+    font-weight: 700;
+    font-style: bold;
+}
+
 body {
     font-family: 'Inter', sans-serif;
+}
+
+.quran-font {
+    font-family: Quran;   
 }
 
 .container-xs {

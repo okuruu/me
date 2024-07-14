@@ -1,25 +1,8 @@
-<script>
-
+<script lang="ts">
     import { userText } from "../library/strings";
-
 </script>
 <div class="bg-dark vh-100 wh-100">
     <div class="container-xs">
-
-        <!-- The Navbar? -->
-        <div class="navbar d-flex justify-between-end mb-7">
-            <div class="form-group">
-                <a href="/">
-                    <img src="/icons/elements/Function.svg" alt="Site Icon" class="h-30px" />
-                </a>
-            </div>
-            <div class="form-group">
-                <a href="https://github.com/okuruu">
-                    <img src="/icons/Github.svg" class="h-20px me-2" alt="Github Icon"/>
-                </a>
-                <img src="/icons/Quran.svg" class="h-20px me-2" alt="Quran Icon"/>
-            </div>
-        </div>
 
         <div class="d-flex justify-content-evenly">
             <img src="/images/avatar.jfif" alt="" class="avatar h-100px" />
@@ -55,7 +38,6 @@
                 </div>
             </div>
          {/each}
-
 
     </div>
 </div>
