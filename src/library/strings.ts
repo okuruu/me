@@ -1,5 +1,5 @@
 export const userText = {
-    pageTitle : 'Hello There!',
+    pageTitle : 'okuruu - hello there',
     name : 'Richie',
     bio : 'Lórien Loremaster of Languages',
     github : {
