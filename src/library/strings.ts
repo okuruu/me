@@ -1,6 +1,9 @@
+const isProduction: boolean = false;
+
 export const userText = {
+    url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
     pageTitle : 'okuruu - hello there',
-    name : 'Richie',
+    name : 'Esdelfron',
     bio : 'Lórien Loremaster of Languages',
     github : {
         url : 'https://github.com/okuruu',
