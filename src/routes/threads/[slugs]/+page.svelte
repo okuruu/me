@@ -19,6 +19,10 @@
                 <span class="text-muted ms-1">{formatTime(threads.timestamp)}</span>
             </div>
             <p class="mt-2">{threads.tweets}</p>
+            
+            {#if threads.images !== null}
+                <img src="/threads/{threads.images}" alt="{threads.tweets}" class="img-fluid w-full my-4" />
+            {/if}
 
             <div class="form-group">
                 <img src="/icons/elements/Heart.svg" class="h-15px cursor-not-allowed" alt="Likes"> <span class="me-3 ms-1">{formatLike(threads.likes)}</span>
@@ -41,6 +45,10 @@
                             <span class="text-muted ms-1">{formatTime(threads.timestamp)}</span>
                         </div>
                         <p class="mt-2">{replies.tweets}</p>
+
+                        {#if replies.images !== null}
+                            <img src="/threads/{replies.images}" alt="{replies.tweets}" class="img-fluid w-full my-4" />
+                        {/if}
             
                         <p class="text-muted">
                             {#if indexes === threads.reply.replies.length - 1}

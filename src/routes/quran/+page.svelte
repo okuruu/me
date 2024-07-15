@@ -51,23 +51,23 @@
     </div>
 
     {#each quranChapters as chapters }
-    <a href="/quran/{chapters.id}">
-        <div class="bg-dark rounded shadow-sm my-3">
-            <div class="p-5">
-                <div class="row">
-                    <div class="col">
-                        <span class="fw-bold text-white">{chapters.transliteration}</span>
-                        <p class="text-muted">{chapters.type === 'meccan' ? 'Makkiyah' : 'Madaniyah'} | {chapters.total_verses} ayat</p>
-                    </div>
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <p class="h1 quran-font text-white mt-3">{chapters.name}</p>
+        <a href="/quran/{chapters.id}">
+            <div class="bg-dark rounded shadow-sm my-3">
+                <div class="p-5">
+                    <div class="row">
+                        <div class="col">
+                            <span class="fw-bold text-white">{chapters.transliteration}</span>
+                            <p class="text-muted">{chapters.type === 'meccan' ? 'Makkiyah' : 'Madaniyah'} | {chapters.total_verses} ayat</p>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <p class="h1 quran-font text-white mt-3">{chapters.name}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
     {/each}
 </div>
 <svelte:window on:keydown={keyboardEvents} />
