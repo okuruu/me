@@ -2,7 +2,6 @@
     import { threadsTweets } from "../../library/threads";
     import { formatLike } from "../../library/utils/formatLike";
     import { formatTime } from "../../library/utils/formatTime";
-
 </script>
 <div class="container-xs">
     {#each threadsTweets as threads, index }
