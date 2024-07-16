@@ -92,7 +92,6 @@
             {#each Array(64) as _,index}
                 <div class="p-7 w-full my-3 border border border-gray-700 rounded">
                     <div class="badge badge-secondary fw-semibold">#{index + 1}</div>
-                    
                     <div class="table-responsive">
                         <table class="table align-middle text-white">
                             <tbody>
@@ -101,7 +100,7 @@
                                         <span class="mr-2">{newData.A[index]}</span>
                                     </td>
                                     <td>
-                                        <input type="radio" name="MBTI_{index}" value="A" class="form-check-input ms-4" on:click={() => setAnswer(index, 'A')} required />
+                                        <input type="radio" name="MSDT_{index}" value="A" class="form-check-input ms-4" on:click={() => setAnswer(index, 'A')} required />
                                     </td>
                                 </tr>
                                 <tr>
@@ -109,7 +108,7 @@
                                         <span class="mr-2">{newData.B[index]}</span>
                                     </td>
                                     <td>
-                                        <input type="radio" name="MBTI_{index}" value="B" class="form-check-input ms-4" on:click={() => setAnswer(index, 'B')} required />
+                                        <input type="radio" name="MSDT_{index}" value="B" class="form-check-input ms-4" on:click={() => setAnswer(index, 'B')} required />
                                     </td>
                                 </tr>
                             </tbody>
