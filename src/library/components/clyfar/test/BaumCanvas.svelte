@@ -50,10 +50,10 @@
       ctx = canvas.getContext('2d');
     });
 </script>
-<div class="flex flex-col items-center">
+<div class="w-100">
   <canvas
       id="whiteboard"
-      class="bg-white mb-4"
+      class="w-full bg-white mb-4"
       height="500"
       on:mousedown="{startDrawing}"
       on:touchstart="{startDrawing}"
@@ -63,5 +63,5 @@
       on:touchend="{stopDrawing}"
       on:mouseleave="{stopDrawing}"
   />
-  <button type="button" on:click={resetCanvas} class="btn btn-neutral w-full">Reset Kanvas</button>
+  <button type="button" on:click={resetCanvas} class="btn btn-sm btn-light w-50 text-center text-dark">Reset Kanvas</button>
 </div>
