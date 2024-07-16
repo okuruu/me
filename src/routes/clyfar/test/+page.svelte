@@ -4,9 +4,10 @@
     import ExampleKraeplin from "../../../library/components/clyfar/sample/ExampleKraeplin.svelte";
     import ExampleMsdt from "../../../library/components/clyfar/sample/ExampleMSDT.svelte";
     import ExamplePapi from "../../../library/components/clyfar/sample/ExamplePapi.svelte";
+    import DISC from "../../../library/components/clyfar/test/DISC.svelte";
     import Kraepelin from "../../../library/components/clyfar/test/Kraepelin.svelte";
     import MBTI from "../../../library/components/clyfar/test/MBTI.svelte";
     import Msdt from "../../../library/components/clyfar/test/MSDT.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
 </script>
-<!-- <Kraepelin/> -->
+<DISC/>
