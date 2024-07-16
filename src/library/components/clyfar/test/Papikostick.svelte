@@ -76,40 +76,38 @@
     }
 </script>
 <Toaster/>
+<div class="container-xs">
 {#if !enableTest}
-    <ExamplePapi/>
     <form on:submit|preventDefault={checkToken}>
-        <div class="container-xs">
-            <div class="d-flex justify-content-center">
-                <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
-            </div>
+        <ExamplePapi/>
+        <div class="d-flex justify-content-center">
+            <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
         </div>
     </form>
 {:else}
-    <div class="container-xs">
-        <form on:submit|preventDefault={isValid}>
-            {#each Array(90) as data,index }
-                <div class="p-7 w-full my-3 border border border-gray-700 rounded">
-                    <div class="form-group">
-                        <div class="form-check form-check-custom form-check-solid my-2">
-                            <input class="form-check-input" type="radio" name="Papi_{index}" value="A" id="{`Papi_A_${index}`}" on:click={() => setAnswer(index,'A')} required/>
-                            <label class="form-check-label text-white ms-7" for="{`Papi_A_${index}`}">
-                                {papikostick.A[index]}
-                            </label>
-                        </div>
-                        <div class="form-check form-check-custom form-check-danger form-check-solid my-2">
-                            <input class="form-check-input" type="radio" name="Papi_{index}" value="B" id="{`Papi_B_${index}`}" on:click={() => setAnswer(index,'B')} required/>
-                            <label class="form-check-label text-white ms-7" for="{`Papi_B_${index}`}">
-                                {papikostick.B[index]}
-                            </label>
-                        </div>
+    <form on:submit|preventDefault={isValid}>
+        {#each Array(90) as data,index }
+            <div class="p-7 w-full my-3 border border border-gray-700 rounded">
+                <div class="form-group">
+                    <div class="form-check form-check-custom form-check-solid my-2">
+                        <input class="form-check-input" type="radio" name="Papi_{index}" value="A" id="{`Papi_A_${index}`}" on:click={() => setAnswer(index,'A')} required/>
+                        <label class="form-check-label text-white ms-7" for="{`Papi_A_${index}`}">
+                            {papikostick.A[index]}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-danger form-check-solid my-2">
+                        <input class="form-check-input" type="radio" name="Papi_{index}" value="B" id="{`Papi_B_${index}`}" on:click={() => setAnswer(index,'B')} required/>
+                        <label class="form-check-label text-white ms-7" for="{`Papi_B_${index}`}">
+                            {papikostick.B[index]}
+                        </label>
                     </div>
                 </div>
-            {/each}
-            <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Selesaikan Tes</button>
-        </form>
-    </div>
+            </div>
+        {/each}
+        <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Selesaikan Tes</button>
+    </form>
 {/if}
+</div>

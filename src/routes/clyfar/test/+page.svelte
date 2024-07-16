@@ -4,6 +4,7 @@
     import ExampleKraeplin from "../../../library/components/clyfar/sample/ExampleKraeplin.svelte";
     import ExampleMsdt from "../../../library/components/clyfar/sample/ExampleMSDT.svelte";
     import ExamplePapi from "../../../library/components/clyfar/sample/ExamplePapi.svelte";
+    import Msdt from "../../../library/components/clyfar/test/MSDT.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
 </script>
-<Papikostick/>
+<Msdt/>
