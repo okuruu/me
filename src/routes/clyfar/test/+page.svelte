@@ -22,7 +22,7 @@
         userText.currentTest = 'DISC';
     });
 </script>
-<!-- {#if userText.currentTest === 'DISC'}
+{#if userText.currentTest === 'DISC'}
     <DISC/>
 {:else if userText.currentTest === 'PAPI'}
     <Papikostick/>
@@ -36,5 +36,4 @@
     <MSDT/>
 {:else if userText.currentTest === 'CLEAR'}
     <Complete/>
-{/if} -->
-<Complete/>
+{/if}
