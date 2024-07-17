@@ -7,7 +7,7 @@
     import { updateCurrentTest } from '../../../utils/userStorage';
 
     let token: string; 
-    let enableTest: boolean = false;
+    let enableTest: boolean = true;
 
 	let picture: any;
 
@@ -73,5 +73,14 @@
         </form>
     {:else}
         <BaumCanvas/>
+
+        <div class="row mt-8">
+            <div class="col">
+                <input type="file" class="form-control form-control-sm form-control-transparent border rounded" />
+            </div>
+            <div class="col-5">
+                <button type="button" class="btn btn-sm border text-white">Unggah Lampiran</button>
+            </div>
+        </div>
     {/if}
 </div>

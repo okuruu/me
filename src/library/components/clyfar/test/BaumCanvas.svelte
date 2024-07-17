@@ -51,10 +51,12 @@
     });
 </script>
 <div class="w-100">
+  <button type="button" on:click={resetCanvas} class="btn btn-sm btn-light w-50 text-center text-dark mb-5">Reset Kanvas</button>
   <canvas
       id="whiteboard"
-      class="w-full bg-white mb-4"
+      class="w-100 bg-white rounded mb-4"
       height="500"
+      width="350"
       on:mousedown="{startDrawing}"
       on:touchstart="{startDrawing}"
       on:mousemove="{draw}"
@@ -63,5 +65,4 @@
       on:touchend="{stopDrawing}"
       on:mouseleave="{stopDrawing}"
   />
-  <button type="button" on:click={resetCanvas} class="btn btn-sm btn-light w-50 text-center text-dark">Reset Kanvas</button>
 </div>
