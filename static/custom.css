@@ -46,6 +46,8 @@ body {
 
 .quran-font {
     font-family: Quran;   
+    line-height: 2.0;
+    white-space: pre-line;
 }
 
 .container-xs {
