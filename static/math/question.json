@@ -1,0 +1,942 @@
+[
+    {
+        "question": "Berapa hasil dari 15 ÷ 97?",
+        "options": {
+            "A": "7.15",
+            "B": "6.15",
+            "C": "1.15",
+            "D": "0.15"
+        },
+        "answer": 0.15
+    },
+    {
+        "question": "Berapa hasil dari 130 - 216?",
+        "options": {
+            "A": "-86",
+            "B": "-84",
+            "C": "-93",
+            "D": "-81"
+        },
+        "answer": -86
+    },
+    {
+        "question": "Berapa hasil dari 53 - 10?",
+        "options": {
+            "A": "53",
+            "B": "45",
+            "C": "43",
+            "D": "46"
+        },
+        "answer": 43
+    },
+    {
+        "question": "Berapa hasil dari 90 + 34?",
+        "options": {
+            "A": "125",
+            "B": "124",
+            "C": "117",
+            "D": "115"
+        },
+        "answer": 124
+    },
+    {
+        "question": "Berapa hasil dari 11 - 147?",
+        "options": {
+            "A": "-136",
+            "B": "-139",
+            "C": "-128",
+            "D": "-131"
+        },
+        "answer": -136
+    },
+    {
+        "question": "Berapa hasil dari 381 + 202?",
+        "options": {
+            "A": "577",
+            "B": "593",
+            "C": "573",
+            "D": "583"
+        },
+        "answer": 583
+    },
+    {
+        "question": "Berapa hasil dari 237 + 436?",
+        "options": {
+            "A": "681",
+            "B": "666",
+            "C": "683",
+            "D": "673"
+        },
+        "answer": 673
+    },
+    {
+        "question": "Jika sin(x) = 1, berapa x?",
+        "options": {
+            "A": "1",
+            "B": "0",
+            "C": "e",
+            "D": "π/2 atau 90°"
+        },
+        "answer": "π/2 atau 90°"
+    },
+    {
+        "question": "Berapa hasil dari 93^3?",
+        "options": {
+            "A": "804350",
+            "B": "804347",
+            "C": "804357",
+            "D": "804351"
+        },
+        "answer": 804357
+    },
+    {
+        "question": "Berapa hasil dari 47 ÷ 52?",
+        "options": {
+            "A": "0.9",
+            "B": "7.9",
+            "C": "-6.1",
+            "D": "4.9"
+        },
+        "answer": 0.9
+    },
+    {
+        "question": "Berapa hasil dari 136 + 207?",
+        "options": {
+            "A": "346",
+            "B": "347",
+            "C": "343",
+            "D": "338"
+        },
+        "answer": 343
+    },
+    {
+        "question": "Jika e^x = exp(37), berapa x?",
+        "options": {
+            "A": "37",
+            "B": "32",
+            "C": "38",
+            "D": "43"
+        },
+        "answer": 37
+    },
+    {
+        "question": "Berapa hasil dari 66 ÷ 38?",
+        "options": {
+            "A": "-7.26",
+            "B": "1.74",
+            "C": "6.74",
+            "D": "-1.26"
+        },
+        "answer": 1.74
+    },
+    {
+        "question": "Berapa hasil dari 47 ÷ 3?",
+        "options": {
+            "A": "9.67",
+            "B": "25.67",
+            "C": "21.67",
+            "D": "15.67"
+        },
+        "answer": 15.67
+    },
+    {
+        "question": "Berapa hasil dari akar kuadrat dari 169?",
+        "options": {
+            "A": "13",
+            "B": "8",
+            "C": "4",
+            "D": "7"
+        },
+        "answer": 13
+    },
+    {
+        "question": "Berapa hasil dari akar kuadrat dari 9216?",
+        "options": {
+            "A": "98",
+            "B": "96",
+            "C": "94",
+            "D": "105"
+        },
+        "answer": 96
+    },
+    {
+        "question": "Berapa hasil dari 263 x 322?",
+        "options": {
+            "A": "84686",
+            "B": "84687",
+            "C": "84682",
+            "D": "84680"
+        },
+        "answer": 84686
+    },
+    {
+        "question": "Berapa hasil dari 465 ÷ 391?",
+        "options": {
+            "A": "-6.8100000000000005",
+            "B": "9.19",
+            "C": "1.19",
+            "D": "2.19"
+        },
+        "answer": 1.19
+    },
+    {
+        "question": "Berapa hasil dari 68 ÷ 62?",
+        "options": {
+            "A": "3.1",
+            "B": "1.1",
+            "C": "5.1",
+            "D": "-4.9"
+        },
+        "answer": 1.1
+    },
+    {
+        "question": "Berapa hasil dari 50^3?",
+        "options": {
+            "A": "124990",
+            "B": "124992",
+            "C": "124993",
+            "D": "125000"
+        },
+        "answer": 125000
+    },
+    {
+        "question": "Berapa hasil dari 406 - 20?",
+        "options": {
+            "A": "395",
+            "B": "386",
+            "C": "380",
+            "D": "378"
+        },
+        "answer": 386
+    },
+    {
+        "question": "Berapa hasil dari 98 + 75?",
+        "options": {
+            "A": "174",
+            "B": "171",
+            "C": "173",
+            "D": "172"
+        },
+        "answer": 173
+    },
+    {
+        "question": "Jika f(x) = 80x^2 + 88x + 41, berapa f(5)?",
+        "options": {
+            "A": "2481",
+            "B": "2479",
+            "C": "2484",
+            "D": "2474"
+        },
+        "answer": 2481
+    },
+    {
+        "question": "Berapa hasil dari 48 + 38?",
+        "options": {
+            "A": "95",
+            "B": "87",
+            "C": "81",
+            "D": "86"
+        },
+        "answer": 86
+    },
+    {
+        "question": "Berapa hasil dari 171 x 462?",
+        "options": {
+            "A": "79006",
+            "B": "78997",
+            "C": "79002",
+            "D": "79004"
+        },
+        "answer": 79002
+    },
+    {
+        "question": "Berapa hasil dari 307 + 259?",
+        "options": {
+            "A": "573",
+            "B": "566",
+            "C": "560",
+            "D": "574"
+        },
+        "answer": 566
+    },
+    {
+        "question": "Berapa hasil dari 33 - 70?",
+        "options": {
+            "A": "-37",
+            "B": "-38",
+            "C": "-47",
+            "D": "-46"
+        },
+        "answer": -37
+    },
+    {
+        "question": "Berapa hasil dari turunan dari 83x^2 + 69x?",
+        "options": {
+            "A": "2",
+            "B": "ln(2)",
+            "C": "e",
+            "D": "166x + 69"
+        },
+        "answer": "166x + 69"
+    },
+    {
+        "question": "Berapa hasil dari 51 + 56?",
+        "options": {
+            "A": "107",
+            "B": "100",
+            "C": "110",
+            "D": "105"
+        },
+        "answer": 107
+    },
+    {
+        "question": "Berapa hasil dari 61 + 215?",
+        "options": {
+            "A": "268",
+            "B": "271",
+            "C": "276",
+            "D": "284"
+        },
+        "answer": 276
+    },
+    {
+        "question": "Berapa hasil dari 230 - 69?",
+        "options": {
+            "A": "161",
+            "B": "155",
+            "C": "164",
+            "D": "168"
+        },
+        "answer": 161
+    },
+    {
+        "question": "Berapa hasil dari akar kuadrat dari 784?",
+        "options": {
+            "A": "28",
+            "B": "31",
+            "C": "18",
+            "D": "37"
+        },
+        "answer": 28
+    },
+    {
+        "question": "Berapa hasil dari 383 - 266?",
+        "options": {
+            "A": "114",
+            "B": "117",
+            "C": "116",
+            "D": "111"
+        },
+        "answer": 117
+    },
+    {
+        "question": "Berapa hasil dari 15 ÷ 86?",
+        "options": {
+            "A": "0.17",
+            "B": "-6.83",
+            "C": "1.17",
+            "D": "8.17"
+        },
+        "answer": 0.17
+    },
+    {
+        "question": "Berapa hasil dari 272 - 253?",
+        "options": {
+            "A": "11",
+            "B": "19",
+            "C": "20",
+            "D": "22"
+        },
+        "answer": 19
+    },
+    {
+        "question": "Berapa hasil dari 328 x 87?",
+        "options": {
+            "A": "28536",
+            "B": "28545",
+            "C": "28546",
+            "D": "28534"
+        },
+        "answer": 28536
+    },
+    {
+        "question": "Berapa hasil dari 437 - 17?",
+        "options": {
+            "A": "417",
+            "B": "410",
+            "C": "416",
+            "D": "420"
+        },
+        "answer": 420
+    },
+    {
+        "question": "Berapa hasil dari 9 - 98?",
+        "options": {
+            "A": "-87",
+            "B": "-79",
+            "C": "-99",
+            "D": "-89"
+        },
+        "answer": -89
+    },
+    {
+        "question": "Berapa hasil dari 301 ÷ 360?",
+        "options": {
+            "A": "-3.16",
+            "B": "5.84",
+            "C": "-1.1600000000000001",
+            "D": "0.84"
+        },
+        "answer": 0.84
+    },
+    {
+        "question": "Berapa hasil dari 139 x 146?",
+        "options": {
+            "A": "20290",
+            "B": "20284",
+            "C": "20294",
+            "D": "20297"
+        },
+        "answer": 20294
+    },
+    {
+        "question": "Berapa hasil dari 162 x 75?",
+        "options": {
+            "A": "12143",
+            "B": "12154",
+            "C": "12151",
+            "D": "12150"
+        },
+        "answer": 12150
+    },
+    {
+        "question": "Berapa hasil dari 480 ÷ 250?",
+        "options": {
+            "A": "10.92",
+            "B": "1.92",
+            "C": "-0.08000000000000007",
+            "D": "-3.08"
+        },
+        "answer": 1.92
+    },
+    {
+        "question": "Berapa hasil dari 437 ÷ 340?",
+        "options": {
+            "A": "-1.71",
+            "B": "10.29",
+            "C": "7.29",
+            "D": "1.29"
+        },
+        "answer": 1.29
+    },
+    {
+        "question": "Berapa hasil dari 18 ÷ 74?",
+        "options": {
+            "A": "0.24",
+            "B": "10.24",
+            "C": "7.24",
+            "D": "8.24"
+        },
+        "answer": 0.24
+    },
+    {
+        "question": "Berapa hasil dari 11 + 62?",
+        "options": {
+            "A": "71",
+            "B": "63",
+            "C": "70",
+            "D": "73"
+        },
+        "answer": 73
+    },
+    {
+        "question": "Jika e^x = exp(24), berapa x?",
+        "options": {
+            "A": "27",
+            "B": "21",
+            "C": "19",
+            "D": "24"
+        },
+        "answer": 24
+    },
+    {
+        "question": "Berapa hasil dari 470 - 109?",
+        "options": {
+            "A": "361",
+            "B": "369",
+            "C": "352",
+            "D": "362"
+        },
+        "answer": 361
+    },
+    {
+        "question": "Berapa hasil dari 82 + 60?",
+        "options": {
+            "A": "142",
+            "B": "143",
+            "C": "139",
+            "D": "152"
+        },
+        "answer": 142
+    },
+    {
+        "question": "Berapa hasil dari 137 ÷ 301?",
+        "options": {
+            "A": "-9.54",
+            "B": "0.46",
+            "C": "-0.54",
+            "D": "5.46"
+        },
+        "answer": 0.46
+    },
+    {
+        "question": "Berapa hasil dari 91 + 56?",
+        "options": {
+            "A": "155",
+            "B": "147",
+            "C": "154",
+            "D": "138"
+        },
+        "answer": 147
+    },
+    {
+        "question": "Berapa hasil dari 87 - 61?",
+        "options": {
+            "A": "32",
+            "B": "21",
+            "C": "17",
+            "D": "26"
+        },
+        "answer": 26
+    },
+    {
+        "question": "Berapa hasil dari 6 x 75?",
+        "options": {
+            "A": "443",
+            "B": "460",
+            "C": "450",
+            "D": "447"
+        },
+        "answer": 450
+    },
+    {
+        "question": "Berapa hasil dari 65 x 83?",
+        "options": {
+            "A": "5386",
+            "B": "5404",
+            "C": "5395",
+            "D": "5401"
+        },
+        "answer": 5395
+    },
+    {
+        "question": "Berapa hasil dari 383 - 415?",
+        "options": {
+            "A": "-36",
+            "B": "-32",
+            "C": "-38",
+            "D": "-22"
+        },
+        "answer": -32
+    },
+    {
+        "question": "Berapa hasil dari 354 x 38?",
+        "options": {
+            "A": "13452",
+            "B": "13454",
+            "C": "13443",
+            "D": "13456"
+        },
+        "answer": 13452
+    },
+    {
+        "question": "Jika f(x) = 93x^2 + 70x + 56, berapa f(5)?",
+        "options": {
+            "A": "2725",
+            "B": "2737",
+            "C": "2731",
+            "D": "2733"
+        },
+        "answer": 2731
+    },
+    {
+        "question": "Berapa hasil dari 438 + 365?",
+        "options": {
+            "A": "796",
+            "B": "803",
+            "C": "800",
+            "D": "807"
+        },
+        "answer": 803
+    },
+    {
+        "question": "Berapa hasil dari 46 - 11?",
+        "options": {
+            "A": "37",
+            "B": "43",
+            "C": "35",
+            "D": "41"
+        },
+        "answer": 35
+    },
+    {
+        "question": "Jika sin(x) = 1, berapa x?",
+        "options": {
+            "A": "π/2 atau 90°",
+            "B": "ln(2)",
+            "C": "2",
+            "D": "2π atau 360°"
+        },
+        "answer": "π/2 atau 90°"
+    },
+    {
+        "question": "Berapa hasil dari 324 ÷ 368?",
+        "options": {
+            "A": "-7.12",
+            "B": "9.88",
+            "C": "0.88",
+            "D": "3.88"
+        },
+        "answer": 0.88
+    },
+    {
+        "question": "Berapa hasil dari akar kuadrat dari 3600?",
+        "options": {
+            "A": "61",
+            "B": "54",
+            "C": "60",
+            "D": "57"
+        },
+        "answer": 60
+    },
+    {
+        "question": "Berapa hasil dari 83 - 230?",
+        "options": {
+            "A": "-157",
+            "B": "-147",
+            "C": "-146",
+            "D": "-153"
+        },
+        "answer": -147
+    },
+    {
+        "question": "Berapa hasil dari 23 - 61?",
+        "options": {
+            "A": "-35",
+            "B": "-28",
+            "C": "-38",
+            "D": "-33"
+        },
+        "answer": -38
+    },
+    {
+        "question": "Berapa hasil dari 15 x 44?",
+        "options": {
+            "A": "654",
+            "B": "660",
+            "C": "658",
+            "D": "650"
+        },
+        "answer": 660
+    },
+    {
+        "question": "Berapa hasil dari 99 - 99?",
+        "options": {
+            "A": "0",
+            "B": "9",
+            "C": "-3",
+            "D": "6"
+        },
+        "answer": 0
+    },
+    {
+        "question": "Berapa hasil dari 57 + 461?",
+        "options": {
+            "A": "527",
+            "B": "518",
+            "C": "523",
+            "D": "512"
+        },
+        "answer": 518
+    },
+    {
+        "question": "Berapa hasil dari 144 - 92?",
+        "options": {
+            "A": "44",
+            "B": "49",
+            "C": "52",
+            "D": "43"
+        },
+        "answer": 52
+    },
+    {
+        "question": "Berapa hasil dari 413 ÷ 384?",
+        "options": {
+            "A": "-8.92",
+            "B": "1.08",
+            "C": "-2.92",
+            "D": "8.08"
+        },
+        "answer": 1.08
+    },
+    {
+        "question": "Berapa hasil dari 83 x 57?",
+        "options": {
+            "A": "4731",
+            "B": "4738",
+            "C": "4733",
+            "D": "4727"
+        },
+        "answer": 4731
+    },
+    {
+        "question": "Berapa hasil dari akar kuadrat dari 4096?",
+        "options": {
+            "A": "71",
+            "B": "55",
+            "C": "62",
+            "D": "64"
+        },
+        "answer": 64
+    },
+    {
+        "question": "Berapa hasil dari turunan dari 85x^2 + 24x?",
+        "options": {
+            "A": "170x + 24",
+            "B": "ln(2)",
+            "C": "2",
+            "D": "1"
+        },
+        "answer": "170x + 24"
+    },
+    {
+        "question": "Berapa hasil dari 18 ÷ 46?",
+        "options": {
+            "A": "-6.61",
+            "B": "-8.61",
+            "C": "10.39",
+            "D": "0.39"
+        },
+        "answer": 0.39
+    },
+    {
+        "question": "Berapa hasil dari integral 7x dx?",
+        "options": {
+            "A": "1",
+            "B": "2",
+            "C": "ln(2)",
+            "D": "3.5x^2 + C"
+        },
+        "answer": "3.5x^2 + C"
+    },
+    {
+        "question": "Jika f(x) = 7x^2 + 21x + 91, berapa f(5)?",
+        "options": {
+            "A": "372",
+            "B": "369",
+            "C": "371",
+            "D": "364"
+        },
+        "answer": 371
+    },
+    {
+        "question": "Berapa hasil dari 354 + 85?",
+        "options": {
+            "A": "429",
+            "B": "436",
+            "C": "449",
+            "D": "439"
+        },
+        "answer": 439
+    },
+    {
+        "question": "Berapa hasil dari 349 ÷ 96?",
+        "options": {
+            "A": "0.6400000000000001",
+            "B": "13.64",
+            "C": "3.64",
+            "D": "5.640000000000001"
+        },
+        "answer": 3.64
+    },
+    {
+        "question": "Berapa hasil dari 6 - 7?",
+        "options": {
+            "A": "3",
+            "B": "7",
+            "C": "-10",
+            "D": "-1"
+        },
+        "answer": -1
+    },
+    {
+        "question": "Jika f(x) = 63x^2 + 65x + 41, berapa f(5)?",
+        "options": {
+            "A": "1941",
+            "B": "1950",
+            "C": "1951",
+            "D": "1943"
+        },
+        "answer": 1941
+    },
+    {
+        "question": "Berapa hasil dari 86 - 67?",
+        "options": {
+            "A": "28",
+            "B": "29",
+            "C": "19",
+            "D": "16"
+        },
+        "answer": 19
+    },
+    {
+        "question": "Berapa hasil dari 450 ÷ 117?",
+        "options": {
+            "A": "7.85",
+            "B": "1.85",
+            "C": "-0.1499999999999999",
+            "D": "3.85"
+        },
+        "answer": 3.85
+    },
+    {
+        "question": "Berapa hasil dari 333 - 102?",
+        "options": {
+            "A": "231",
+            "B": "234",
+            "C": "224",
+            "D": "223"
+        },
+        "answer": 231
+    },
+    {
+        "question": "Berapa hasil dari 104 ÷ 332?",
+        "options": {
+            "A": "1.31",
+            "B": "-7.69",
+            "C": "5.31",
+            "D": "0.31"
+        },
+        "answer": 0.31
+    },
+    {
+        "question": "Berapa hasil dari 470 x 465?",
+        "options": {
+            "A": "218553",
+            "B": "218540",
+            "C": "218550",
+            "D": "218560"
+        },
+        "answer": 218550
+    },
+    {
+        "question": "Berapa hasil dari 70 x 54?",
+        "options": {
+            "A": "3770",
+            "B": "3788",
+            "C": "3783",
+            "D": "3780"
+        },
+        "answer": 3780
+    },
+    {
+        "question": "Berapa hasil dari turunan dari 62x^2 + 3x?",
+        "options": {
+            "A": "2",
+            "B": "π/4 atau 45°",
+            "C": "2π atau 360°",
+            "D": "124x + 3"
+        },
+        "answer": "124x + 3"
+    },
+    {
+        "question": "Berapa hasil dari 79^3?",
+        "options": {
+            "A": "493045",
+            "B": "493033",
+            "C": "493039",
+            "D": "493048"
+        },
+        "answer": 493039
+    },
+    {
+        "question": "Berapa hasil dari integral 38x dx?",
+        "options": {
+            "A": "1",
+            "B": "π/4 atau 45°",
+            "C": "ln(2)",
+            "D": "19.0x^2 + C"
+        },
+        "answer": "19.0x^2 + C"
+    },
+    {
+        "question": "Berapa hasil dari 412 x 153?",
+        "options": {
+            "A": "63030",
+            "B": "63036",
+            "C": "63042",
+            "D": "63031"
+        },
+        "answer": 63036
+    },
+    {
+        "question": "Jika f(x) = 77x^2 + 93x + 95, berapa f(5)?",
+        "options": {
+            "A": "2495",
+            "B": "2485",
+            "C": "2492",
+            "D": "2476"
+        },
+        "answer": 2485
+    },
+    {
+        "question": "Berapa hasil dari 30 x 196?",
+        "options": {
+            "A": "5880",
+            "B": "5882",
+            "C": "5872",
+            "D": "5875"
+        },
+        "answer": 5880
+    },
+    {
+        "question": "Berapa hasil dari 475 ÷ 199?",
+        "options": {
+            "A": "-3.61",
+            "B": "-6.609999999999999",
+            "C": "4.390000000000001",
+            "D": "2.39"
+        },
+        "answer": 2.39
+    },
+    {
+        "question": "Berapa hasil dari 327 x 24?",
+        "options": {
+            "A": "7848",
+            "B": "7847",
+            "C": "7851",
+            "D": "7838"
+        },
+        "answer": 7848
+    },
+    {
+        "question": "Berapa hasil dari 75 x 2?",
+        "options": {
+            "A": "159",
+            "B": "150",
+            "C": "154",
+            "D": "143"
+        },
+        "answer": 150
+    },
+    {
+        "question": "Jika e^x = exp(48), berapa x?",
+        "options": {
+            "A": "48",
+            "B": "45",
+            "C": "58",
+            "D": "46"
+        },
+        "answer": 48
+    }
+]

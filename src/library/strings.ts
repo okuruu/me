@@ -13,6 +13,7 @@ export const userText = {
         username : '@okuruu'
     },
     about : `Hey there, I'm Gilby, a Fullstack Developer on a mission to turn ideas into digital delights. Armed with my trusty keyboard and fueled by endless snacks, I tame bugs and craft user experiences that spark joy. Also, i love maths!`,
+    keywords : `Okuruu's Fullstack Developer Portfolio, Portofolio, Fullstack Developer`,
     experience : [
         {
             name : 'UTHM',
