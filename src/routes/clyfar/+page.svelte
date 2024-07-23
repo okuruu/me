@@ -32,7 +32,7 @@
     </div>
     <form on:submit|preventDefault={checkAuthenticity} class="mt-7">
         <div class="d-flex justify-content-center">
-            <input type="text" class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white w-50 mb-3" placeholder="Enter your token" required/>
+            <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white w-50 mb-3" placeholder="Enter your token" required/>
         </div>
         <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Check</button>
