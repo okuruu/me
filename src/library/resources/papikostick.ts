@@ -183,4 +183,128 @@ export const papikostick = {
       "Saya selalu menyenangkan",
       "Saya harus menyelesaikan apa yang saya mulai"
     ]
-};  
+};
+
+export const papikostickDescription: { [key: string]: { range: [number, number]; text: string }[] } = {
+  A: [
+      { range: [0, 4], text: 'Tidak kompetitif, mapan, dan puas. Tidak terdorong untuk mencapai prestasi, tidak berusaha untuk sukses, membutuhkan dorongan dari luar diri, tidak berinisiatif, tidak memanfaatkan kemampuan diri secara optimal, ragu akan tujuan diri, misalnya sebagai akibat promosi atau perubahan struktur jabatan.' },
+      { range: [5, 7], text: 'Tahu tujuan yang ingin dicapai dan dapat merumuskannya, realistis mengenai kemampuan diri, dan berusaha mencapai target.' },
+      { range: [8, 9], text: 'Sangat berambisi untuk berprestasi dan menjadi yang terbaik, menyukai tantangan, cenderung mengejar kesempurnaan, menetapkan target yang tinggi, self-starter, merumuskan pekerjaan dengan baik. Tidak realistis mengenai kemampuan dirinya, sulit dipuaskan, mudah kecewa, dan harapan yang tinggi mungkin mengganggu orang lain.' }
+  ],
+  N: [
+      { range: [0, 2], text: 'Tidak terlalu merasa perlu untuk menyelesaikan tugas-tugasnya sendiri, senang menangani beberapa pekerjaan sekaligus, mudah mendelegasikan tugas. Komitmen rendah, cenderung meninggalkan tugas sebelum selesai, konsentrasi mudah buyar, mungkin suka berpindah pekerjaan.' },
+      { range: [3, 5], text: 'Cukup memiliki komitmen untuk menyelesaikan tugas, tetapi jika memungkinkan akan mendelegasikan sebagian pekerjaan kepada orang lain.' },
+      { range: [6, 7], text: 'Komitmen tinggi, lebih suka menangani pekerjaan satu per satu, tetapi masih dapat mengubah prioritas jika terpaksa.' },
+      { range: [8, 9], text: 'Memiliki komitmen yang sangat tinggi terhadap tugas, sangat ingin menyelesaikan tugas, tekun dan tuntas dalam menangani pekerjaan satu per satu hingga selesai. Perhatian terfokus pada satu tugas, sulit untuk menangani beberapa pekerjaan sekaligus, sulit diinterupsi, dan tidak memperhatikan masalah sampingan.' }
+  ],
+  G: [
+      { range: [0, 2], text: 'Santai, melihat kerja sebagai sesuatu yang menyenangkan, bukan beban yang memerlukan usaha besar. Mungkin termotivasi untuk mencari cara atau sistem yang mempermudah penyelesaian pekerjaan, berusaha menghindari kerja keras, sehingga dapat memberi kesan malas.' },
+      { range: [3, 4], text: 'Bekerja keras sesuai tuntutan, menyalurkan usaha untuk hal-hal yang bermanfaat atau menguntungkan.' },
+      { range: [5, 7], text: 'Bekerja keras, tetapi tujuan yang ingin dicapai jelas.' },
+      { range: [8, 9], text: 'Ingin tampil sebagai pekerja keras, sangat suka jika orang lain memandangnya sebagai pekerja keras. Cenderung menciptakan pekerjaan yang tidak perlu agar terlihat sibuk, kadang-kadang tanpa tujuan yang jelas.' }
+  ],
+  C: [
+      { range: [0, 2], text: 'Lebih mementingkan fleksibilitas daripada struktur, pendekatan kerja lebih ditentukan oleh situasi daripada perencanaan sebelumnya, mudah beradaptasi. Tidak memperhatikan keteraturan atau kerapihan, ceroboh.' },
+      { range: [3, 4], text: 'Fleksibel tetapi masih cukup memperhatikan keteraturan atau sistematika kerja.' },
+      { range: [5, 6], text: 'Memperhatikan keteraturan dan sistematika kerja, tetapi cukup fleksibel.' },
+      { range: [7, 9], text: 'Sistematis, bermetoda, berstruktur, rapi, dan teratur, dapat menata tugas dengan baik. Cenderung kaku dan tidak fleksibel.' }
+  ],
+  D: [
+      { range: [0, 1], text: 'Melihat pekerjaan secara makro, membedakan hal penting dari yang kurang penting, mendelegasikan detail kepada orang lain, generalis. Menghindari detail, yang mungkin mengakibatkan tindakan tanpa data yang cukup atau akurat, serta bertindak ceroboh pada hal yang memerlukan kecermatan. Dapat mengabaikan proses vital dalam evaluasi data.' },
+      { range: [2, 3], text: 'Cukup peduli terhadap akurasi dan kelengkapan data.' },
+      { range: [4, 6], text: 'Tertarik untuk menangani sendiri detail.' },
+      { range: [7, 9], text: 'Sangat menyukai detail, sangat peduli terhadap akurasi dan kelengkapan data. Cenderung terlalu terlibat dengan detail sehingga melupakan tujuan utama.' }
+  ],
+  R: [
+      { range: [0, 3], text: 'Tipe pelaksana, praktis-pragmatis, mengandalkan pengalaman masa lalu dan intuisi. Bekerja tanpa perencanaan, mengandalkan perasaan.' },
+      { range: [4, 5], text: 'Pertimbangan mencakup aspek teoritis (konsep atau pemikiran baru) dan aspek praktis (pengalaman) secara berimbang.' },
+      { range: [6, 7], text: 'Suka memikirkan suatu masalah secara mendalam, merujuk pada teori dan konsep.' },
+      { range: [8, 9], text: 'Tipe pemikir, sangat berminat pada gagasan, konsep, dan teori, mencari alternatif baru, serta menyukai perencanaan. Mungkin sulit dimengerti oleh orang lain, terlalu teoritis dan tidak praktis, cenderung mengawang-awang dan berbelit-belit.' }
+  ],
+  T: [
+      { range: [0, 3], text: 'Santai. Kurang peduli terhadap waktu, kurang memiliki rasa urgensi, membuang-buang waktu, bukan pekerja yang tepat waktu.' },
+      { range: [4, 6], text: 'Cukup aktif secara mental, dapat menyesuaikan tempo kerja dengan tuntutan pekerjaan atau lingkungan.' },
+      { range: [7, 9], text: 'Cekatan, selalu siaga, bekerja cepat, dan ingin segera menyelesaikan tugas. Negatifnya: tegang, cemas, impulsif, mungkin ceroboh, serta banyak gerakan yang tidak perlu.' }
+  ],
+  V: [
+      { range: [0, 2], text: 'Cocok untuk pekerjaan "di belakang meja". Cenderung lamban, tidak tanggap, mudah lelah, dan daya tahan lemah.' },
+      { range: [3, 6], text: 'Dapat bekerja di belakang meja dan senang jika sesekali harus terjun ke lapangan atau melaksanakan tugas-tugas yang bersifat mobile.' },
+      { range: [7, 9], text: 'Menyukai aktivitas fisik (seperti olahraga), enerjik, memiliki stamina untuk menangani tugas-tugas berat, dan tidak mudah lelah. Tidak betah duduk lama, kurang dapat konsentrasi "di belakang meja".' }
+  ],
+  W: [
+      { range: [0, 3], text: 'Hanya membutuhkan gambaran umum tentang kerangka tugas, berpatokan pada tujuan, dapat bekerja dalam suasana yang kurang terstruktur, berinisiatif, mandiri. Tidak teratur dalam bekerja, cenderung ceroboh, dan tidak mengacu pada prosedur atau sistematika kerja.' },
+      { range: [4, 6], text: 'Seimbang antara bekerja sesuai prosedur dan memiliki kebebasan dalam bekerja.' },
+      { range: [7, 9], text: 'Suka bekerja menurut sistematika kerja yang teratur, prosedural, cenderung sangat mengandalkan instruksi atau keinginan atasan. Butuh pengarahan, tidak berani mengambil keputusan tanpa persetujuan atasan.' }
+  ],
+  F: [
+      { range: [0, 3], text: 'Otonom, dapat bekerja sendiri tanpa campur tangan orang lain, motivasi timbul karena pekerjaan itu sendiri - bukan karena pujian dari otoritas. Mempertanyakan otoritas, cenderung tidak puas terhadap atasan, loyalitas lebih didasari kepentingan pribadi.' },
+      { range: [4, 6], text: 'Loyal pada perusahaan.' },
+      { range: [7, 7], text: 'Loyal pada pribadi atasan.' },
+      { range: [8, 9], text: 'Loyal, berusaha dekat dengan pribadi atasan, ingin menyenangkan atasan, dan sadar akan harapan atasan terhadap dirinya. Terlalu memperhatikan cara menyenangkan atasan, tidak berani berpendirian lain, dan tidak mandiri.' }
+  ],
+  L: [
+      { range: [0, 1], text: 'Puas dengan peran sebagai bawahan, memberikan kesempatan kepada orang lain untuk memimpin, tidak dominan. Tidak percaya diri; sama sekali tidak berminat untuk berperan sebagai pemimpin; bersikap pasif dalam kelompok.' },
+      { range: [2, 3], text: 'Tidak percaya diri dan tidak ingin memimpin atau mengawasi orang lain.' },
+      { range: [4, 4], text: 'Kurang percaya diri dan kurang berminat untuk menjadi pemimpin.' },
+      { range: [5, 5], text: 'Cukup percaya diri, tidak secara aktif mencari posisi kepemimpinan tetapi juga tidak akan menghindarinya.' },
+      { range: [6, 7], text: 'Percaya diri dan ingin berperan sebagai pemimpin.' },
+      { range: [8, 9], text: 'Sangat percaya diri untuk berperan sebagai atasan dan sangat mengharapkan posisi tersebut. Lebih mementingkan citra dan status kepemimpinannya daripada efektivitas kelompok, mungkin akan tampil angkuh atau terlalu percaya diri.' }
+  ],
+  P: [
+      { range: [0, 1], text: 'Permisif, akan memberikan kesempatan kepada orang lain untuk memimpin. Tidak mau mengontrol orang lain dan tidak mau mempertanggungjawabkan hasil kerja bawahannya.' },
+      { range: [2, 3], text: 'Enggan mengontrol orang lain dan tidak mau mempertanggungjawabkan hasil kerja bawahannya, lebih memberi kebebasan kepada bawahan untuk memilih cara sendiri dalam penyelesaian tugas dan meminta bawahan untuk mempertanggungjawabkan hasilnya masing-masing.' },
+      { range: [4, 4], text: 'Cenderung enggan melakukan fungsi pengarahan dan pengendalian.' },
+      { range: [5, 5], text: 'Bertanggung jawab, akan melakukan fungsi pengarahan dan pengendalian.' },
+      { range: [6, 7], text: 'Dominan dan bertanggung jawab, akan melakukan fungsi pengarahan, pengendalian, dan pengawasan.' },
+      { range: [8, 9], text: 'Sangat dominan, sangat mempengaruhi dan mengawasi orang lain, bertanggung jawab atas tindakan dan hasil kerja bawahan. Posesif, tidak ingin berada di bawah pimpinan orang lain, cemas bila tidak berada di posisi pemimpin, mungkin sulit untuk bekerja sama dengan rekan yang setara.' }
+  ],
+  I: [
+      { range: [0, 1], text: 'Sangat berhati-hati, memikirkan langkah-langkahnya secara mendalam. Lamban dalam mengambil keputusan, terlalu lama merenung, cenderung menghindari pengambilan keputusan.' },
+      { range: [2, 3], text: 'Enggan mengambil keputusan.' },
+      { range: [4, 5], text: 'Berhati-hati dalam pengambilan keputusan.' },
+      { range: [6, 7], text: 'Cukup percaya diri dalam pengambilan keputusan, mau mengambil risiko, dapat memutuskan dengan cepat, mengikuti alur logika.' },
+      { range: [8, 9], text: 'Sangat yakin dalam pengambilan keputusan, cepat tanggap terhadap situasi, berani mengambil risiko, mau memanfaatkan kesempatan. Impulsif, dapat membuat keputusan yang tidak praktis, cenderung lebih mementingkan kecepatan daripada akurasi, tidak sabar, cenderung meloncat pada keputusan.' }
+  ],
+  S: [
+      { range: [0, 2], text: 'Dapat bekerja sendiri, tidak membutuhkan kehadiran orang lain. Menarik diri, kaku dalam bergaul, canggung dalam situasi sosial, lebih memperhatikan hal-hal lain daripada manusia.' },
+      { range: [3, 4], text: 'Kurang percaya diri dan kurang aktif dalam menjalin hubungan sosial.' },
+      { range: [5, 9], text: 'Percaya diri dan sangat senang bergaul, menyukai interaksi sosial, bisa menciptakan suasana yang menyenangkan, mempunyai inisiatif, dan mampu menjalin hubungan serta komunikasi, memperhatikan orang lain. Mungkin membuang-buang waktu untuk aktivitas sosial, kurang peduli akan penyelesaian tugas.' }
+  ],
+  B: [
+      { range: [0, 2], text: 'Mandiri secara emosional, tidak mudah dipengaruhi oleh tekanan kelompok. Penyendiri, kurang peka terhadap sikap dan kebutuhan kelompok, mungkin sulit menyesuaikan diri.' },
+      { range: [3, 5], text: 'Selektif dalam bergabung dengan kelompok, hanya mau berhubungan dengan kelompok di lingkungan kerja jika bernilai dan sesuai minat, tidak terlalu mudah dipengaruhi.' },
+      { range: [6, 9], text: 'Suka bergabung dalam kelompok, sadar akan sikap dan kebutuhan kelompok, suka bekerja sama, ingin menjadi bagian dari kelompok, ingin disukai dan diakui oleh lingkungan; sangat tergantung pada kelompok, lebih memperhatikan kebutuhan kelompok daripada pekerjaan.' }
+  ],
+  O: [
+      { range: [0, 2], text: 'Menjaga jarak, lebih memperhatikan hal-hal kedinasan, tidak mudah dipengaruhi oleh individu tertentu, objektif dan analitis. Tampil dingin, tidak acuh, tidak ramah, suka berahasia, mungkin tidak sadar akan perasaan orang lain, dan mungkin sulit menyesuaikan diri.' },
+      { range: [3, 5], text: 'Tidak mencari atau menghindari hubungan antarpribadi di lingkungan kerja, masih mampu menjaga jarak.' },
+      { range: [6, 9], text: 'Peka terhadap kebutuhan orang lain, sangat memikirkan hal-hal yang dibutuhkan orang lain, suka menjalin hubungan persahabatan yang hangat dan tulus. Sangat perasa, mudah tersinggung, cenderung subjektif, dapat terlibat terlalu dalam atau intim dengan individu tertentu dalam pekerjaan, sangat tergantung pada individu tertentu.' }
+  ],
+  X: [
+      { range: [0, 1], text: 'Sederhana, rendah hati, tulus, tidak sombong dan tidak suka menampilkan diri. Terlalu sederhana, cenderung merendahkan kapasitas diri, tidak percaya diri, cenderung menarik diri dan pemalu.' },
+      { range: [2, 3], text: 'Sederhana, cenderung diam, cenderung pemalu, tidak suka menonjolkan diri.' },
+      { range: [4, 5], text: 'Mengharapkan pengakuan dari lingkungan dan tidak mau diabaikan, tetapi tidak mencari perhatian.' },
+      { range: [6, 9], text: 'Bangga akan diri dan gayanya sendiri, senang menjadi pusat perhatian, mengharapkan penghargaan dari lingkungan. Mencari perhatian dan suka menyombongkan diri.' }
+  ],
+  E: [
+      { range: [0, 1], text: 'Sangat terbuka, terus terang, mudah terbaca (dari air muka, tindakan, perkataan, sikap). Tidak dapat mengendalikan emosi, cepat bereaksi, kurang mengindahkan atau tidak mempunyai "nilai" yang mengharuskannya menahan emosi.' },
+      { range: [2, 3], text: 'Terbuka, mudah mengungkapkan pendapat atau perasaannya mengenai suatu hal kepada orang lain.' },
+      { range: [4, 5], text: 'Dapat menyimpan pendapat atau perasaannya dan bersikap agak terbuka.' },
+      { range: [6, 7], text: 'Mampu mengendalikan diri, cukup tertutup, lebih banyak mendengar daripada berbicara.' },
+      { range: [8, 9], text: 'Sangat tertutup, tidak mudah bereaksi, tidak mudah berbicara dan mengungkapkan perasaannya kepada orang lain. Sangat berhati-hati dalam tindakan dan perkataan. Dapat dianggap angkuh, sulit bergaul, atau sukar menyesuaikan diri.' }
+  ],
+  K: [
+      { range: [0, 1], text: 'Sabar, tidak menyukai konflik. Menghindari atau mengelak dari konflik, pasif, menekan atau menyembunyikan perasaan sesungguhnya, menghindari konfrontasi, lari dari konflik, tidak mau mengakui adanya konflik.' },
+      { range: [2, 3], text: 'Lebih suka menghindari konflik, akan mencari rasionalisasi untuk menerima situasi dan melihat permasalahan dari sudut pandang orang lain.' },
+      { range: [4, 5], text: 'Tidak mencari atau menghindari konflik, mau mendengarkan pandangan orang lain tetapi dapat menjadi keras kepala saat mempertahankan pandangannya.' },
+      { range: [6, 7], text: 'Akan menghadapi konflik, mengungkapkan serta memaksakan pandangan dengan cara positif.' },
+      { range: [8, 9], text: 'Terbuka, jujur, terus terang, asertif, agresif, reaktif, mudah tersinggung, mudah meledak, curiga, berprasangka, suka berkelahi atau berkonfrontasi, berpikir negatif.' }
+  ],
+  Z: [
+      { range: [0, 1], text: 'Mudah beradaptasi dengan pekerjaan rutin tanpa merasa bosan, tidak membutuhkan variasi, menyukai lingkungan yang stabil dan tidak berubah. Konservatif, menolak perubahan, sulit menerima hal-hal baru, tidak dapat beradaptasi dengan situasi yang berbeda-beda.' },
+      { range: [2, 3], text: 'Enggan berubah, tidak siap untuk beradaptasi, hanya mau menerima perubahan jika alasannya jelas dan meyakinkan.' },
+      { range: [4, 5], text: 'Mudah beradaptasi, cukup menyukai perubahan.' },
+      { range: [6, 7], text: 'Antusias terhadap perubahan dan akan mencari hal-hal baru, tetapi masih selektif (menilai kemanfaatannya).' },
+      { range: [8, 9], text: 'Sangat menyukai perubahan, gagasan baru/variasi, aktif mencari perubahan, antusias dengan hal-hal baru, fleksibel dalam berpikir, mudah beradaptasi pada situasi yang berbeda-beda. Gelisah, frustrasi, mudah bosan, sangat membutuhkan variasi, tidak menyukai tugas atau situasi yang rutin dan monoton.' }
+  ],
+}
