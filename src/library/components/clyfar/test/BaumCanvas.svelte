@@ -51,7 +51,7 @@
     });
 </script>
 <div class="w-100">
-  <button type="button" on:click={resetCanvas} class="btn btn-sm btn-light w-50 text-center text-dark mb-5">Reset Kanvas</button>
+  <!-- <button type="button" on:click={resetCanvas} class="btn btn-sm btn-light w-50 text-center text-dark mb-5">Reset Kanvas</button> -->
   <canvas
       id="whiteboard"
       class="w-100 bg-white rounded mb-4"

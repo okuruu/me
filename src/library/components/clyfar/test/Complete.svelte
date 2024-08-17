@@ -20,12 +20,16 @@
         toast.error(message);
     }
 </script>
-<div class="container-xs">
-    <div class="p-5 border border border-gray-700 rounded">
-        <h3 class="text-white mb-5">Terima Kasih!</h3>
-        <p class="text-white">Anda telah menyelesaikan tes dengan baik. Apakah Anda ingin menutup halaman ini?</p>
-        <div class="d-flex justify-content-end mt-12">
-            <button type="button" on:click={endTest} class="btn btn-sm btn-light w-50 text-center text-dark">Oke, tutup halaman.</button>
+<div class="bg-clyfar vh-100">
+    <div class="container-xs">
+        <div class="card shadow-sm my-10 bg-white">
+            <div class="card-body">
+                <h3 class="mb-5">Terima Kasih!</h3>
+                <p>Anda telah menyelesaikan tes dengan baik. Apakah Anda ingin menutup halaman ini?</p>
+                <div class="d-flex justify-content-end mt-12">
+                    <button type="button" on:click={endTest} class="btn btn-sm btn-primary">Oke, tutup halaman.</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

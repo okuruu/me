@@ -6,6 +6,7 @@
     import DISC from "../../../library/components/clyfar/test/DISC.svelte";
     import MBTI from "../../../library/components/clyfar/test/MBTI.svelte";
     import MSDT from "../../../library/components/clyfar/test/MSDT.svelte";
+    import Cfit from "../../../library/components/clyfar/test/CFIT.svelte";
     import Complete from "../../../library/components/clyfar/test/Complete.svelte";
     import Kraepelin from "../../../library/components/clyfar/test/Kraepelin.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
@@ -17,9 +18,6 @@
             userText.currentTest = getStorage.currentTest;
             return;
         }
-
-        // @ts-ignore
-        userText.currentTest = 'DISC';
     });
 </script>
 {#if userText.currentTest === 'DISC'}
@@ -34,6 +32,8 @@
     <MBTI/>
 {:else if userText.currentTest === 'MSDT'}
     <MSDT/>
+{:else if userText.currentTest === 'CFIT'}
+    <Cfit/>
 {:else if userText.currentTest === 'CLEAR'}
     <Complete/>
 {/if}

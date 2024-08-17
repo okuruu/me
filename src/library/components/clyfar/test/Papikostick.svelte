@@ -76,38 +76,44 @@
     }
 </script>
 <Toaster/>
-<div class="container-xs">
-{#if !enableTest}
-    <form on:submit|preventDefault={checkToken}>
-        <ExamplePapi/>
-        <div class="d-flex justify-content-center">
-            <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
-        </div>
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
-        </div>
-    </form>
-{:else}
-    <form on:submit|preventDefault={isValid}>
-        {#each Array(90) as data,index }
-            <div class="p-7 w-full my-3 border border border-gray-700 rounded">
-                <div class="form-group">
-                    <div class="form-check form-check-custom form-check-solid my-2">
-                        <input class="form-check-input" type="radio" name="Papi_{index}" value="A" id="{`Papi_A_${index}`}" on:click={() => setAnswer(index,'A')} required/>
-                        <label class="form-check-label text-white ms-7" for="{`Papi_A_${index}`}">
-                            {papikostick.A[index]}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-custom form-check-danger form-check-solid my-2">
-                        <input class="form-check-input" type="radio" name="Papi_{index}" value="B" id="{`Papi_B_${index}`}" on:click={() => setAnswer(index,'B')} required/>
-                        <label class="form-check-label text-white ms-7" for="{`Papi_B_${index}`}">
-                            {papikostick.B[index]}
-                        </label>
-                    </div>
+<div class="bg-clyfar">
+    <div class="container-xs">
+    {#if !enableTest}
+        <form class="mt-5" on:submit|preventDefault={checkToken}>
+            <ExamplePapi/>
+            <div class="p-5 rounded shadow-sm bg-white mt-5">
+                <div class="d-flex justify-content-center">
+                    <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
                 </div>
             </div>
-        {/each}
-        <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Selesaikan Tes</button>
-    </form>
-{/if}
+        </form>
+    {:else}
+        <form on:submit|preventDefault={isValid}>
+            {#each Array(90) as data,index }
+                <div class="card shadow-sm my-3 bg-white">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="form-check form-check-custom form-check-solid my-2">
+                                <input class="form-check-input" type="radio" name="Papi_{index}" value="A" id="{`Papi_A_${index}`}" on:click={() => setAnswer(index,'A')} required/>
+                                <label class="form-check-label ms-7" for="{`Papi_A_${index}`}">
+                                    {papikostick.A[index]}
+                                </label>
+                            </div>
+                            <div class="form-check form-check-custom form-check-danger form-check-solid my-2">
+                                <input class="form-check-input" type="radio" name="Papi_{index}" value="B" id="{`Papi_B_${index}`}" on:click={() => setAnswer(index,'B')} required/>
+                                <label class="form-check-label ms-7" for="{`Papi_B_${index}`}">
+                                    {papikostick.B[index]}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {/each}
+            <button type="submit" class="btn btn-sm btn-light-primary text-center shadow-sm w-100">Selesaikan Tes</button>
+        </form>
+    {/if}
+    </div>
 </div>

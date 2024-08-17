@@ -5,7 +5,6 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import ExampleMsdt from "../sample/ExampleMSDT.svelte";
     import { updateCurrentTest } from "../../../utils/userStorage";
-
     
     let token: string; 
     let enableTest: boolean = false;
@@ -76,51 +75,55 @@
     }
 </script>
 <Toaster/>
-<div class="container-xs">
-    {#if !enableTest}
-        <form on:submit|preventDefault={checkToken}>
-            <ExampleMsdt/>
-            <div class="d-flex justify-content-center">
-                <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
-            </div>
-        </form>
-    {:else}
-        <form on:submit|preventDefault={isValid}>
-            {#each Array(64) as _,index}
-                <div class="p-7 w-full my-3 border border border-gray-700 rounded">
-                    <div class="badge badge-secondary fw-semibold">#{index + 1}</div>
-                    <div class="table-responsive">
-                        <table class="table align-middle text-white">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span class="mr-2">{newData.A[index]}</span>
-                                    </td>
-                                    <td>
-                                        <input type="radio" name="MSDT_{index}" value="A" class="form-check-input ms-4" on:click={() => setAnswer(index, 'A')} required />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="mr-2">{newData.B[index]}</span>
-                                    </td>
-                                    <td>
-                                        <input type="radio" name="MSDT_{index}" value="B" class="form-check-input ms-4" on:click={() => setAnswer(index, 'B')} required />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+<div class="bg-clyfar {!enableTest ? 'vh-100' : ''}">
+    <div class="container-xs">
+        {#if !enableTest}
+            <form class="mt-20" on:submit|preventDefault={checkToken}>
+                <ExampleMsdt/>
+                <div class="p-5 rounded shadow-sm bg-white mt-5">
+                    <div class="d-flex justify-content-center">
+                        <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
                     </div>
                 </div>
-                {#if index == 63}
-                    <div class="mt-5">
-                        <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Selesaikan Tes</button>
+            </form>
+        {:else}
+            <form on:submit|preventDefault={isValid}>
+                {#each Array(64) as _,index}
+                    <div class="p-7 w-full my-3 border border border-gray-700 rounded bg-white">
+                        <div class="badge badge-secondary fw-semibold">#{index + 1}</div>
+                        <div class="table-responsive">
+                            <table class="table align-middle ">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-2">{newData.A[index]}</span>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="MSDT_{index}" value="A" class="form-check-input ms-4" on:click={() => setAnswer(index, 'A')} required />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-2">{newData.B[index]}</span>
+                                        </td>
+                                        <td>
+                                            <input type="radio" name="MSDT_{index}" value="B" class="form-check-input ms-4" on:click={() => setAnswer(index, 'B')} required />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                {/if}
-            {/each}
-        </form>
-    {/if}
+                    {#if index == 63}
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-sm btn-light-primary text-center shadow-sm w-100">Selesaikan Tes</button>
+                        </div>
+                    {/if}
+                {/each}
+            </form>
+        {/if}
+    </div>
 </div>

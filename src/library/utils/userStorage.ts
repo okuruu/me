@@ -15,7 +15,6 @@ function updateCurrentTest(newValue: string) {
         const user = JSON.parse(userStorage);
         user.currentTest = newValue;
         localStorage.setItem('user', JSON.stringify(user));
-        console.log('currentTest updated successfully');
     } else {
         console.log('User data not found in local storage');
     }

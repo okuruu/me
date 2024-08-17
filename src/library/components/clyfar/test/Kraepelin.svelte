@@ -7,7 +7,7 @@
     import ExampleKraeplin from '../sample/ExampleKraeplin.svelte';
 
     let token: string;
-    let enableTest: boolean = true;
+    let enableTest: boolean = false;
 
     let timer: number = 15;
     let index: number = 0;
@@ -31,7 +31,7 @@
             }
             timer = timer - 1;
         }
-    }, 1000);
+    }, 100);
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
@@ -92,37 +92,39 @@
     }
 </script>
 <Toaster/>
-<div class="container-xs">
-    {#if !enableTest}
-        <form on:submit|preventDefault={checkToken}>
-            <ExampleKraeplin/>
-            <div class="d-flex justify-content-center mt-15">
-                <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
+<div class="bg-clyfar min-vh-100 min-wh-100">
+    <div class="container-xs">
+        {#if !enableTest}
+            <form on:submit|preventDefault={checkToken}>
+                <ExampleKraeplin/>
+                <div class="d-flex justify-content-center mt-15">
+                    <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                </div>
+            </form>
+        {:else}
+            <div class="d-flex justify-content-end mt-12">
+                <span class="text-white h4">{timer}</span>
             </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
+            
+            <h1 class="text-white text-center display-3 my-5">{kraeplin[index][subIndex]}</h1>
+            
+            <div class="row mt-12">
+                <div class="col-4"><button type="button" on:click={() => onTap(1)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">1</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(2)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">2</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(3)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">3</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(4)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">4</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(5)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">5</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(6)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">6</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(7)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">7</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(8)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">8</span></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(9)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">9</span></button></div>
+                <div class="col-4"><button type="button" class="btn btn-lg btn-flush w-100 p-5 fw-bold"></button></div>
+                <div class="col-4"><button type="button" on:click={() => onTap(0)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">0</span></button></div>
+                <div class="col-4"><button type="button" class="btn btn-lg btn-flush w-100 p-5 fw-bold"></button></div>
             </div>
-        </form>
-    {:else}
-        <div class="d-flex justify-content-end mt-12">
-            <span class="text-muted h4">{timer}</span>
-        </div>
-        
-        <h1 class="text-white text-center display-3 my-5">{kraeplin[index][subIndex]}</h1>
-        
-        <div class="row mt-12">
-            <div class="col-4"><button type="button" on:click={() => onTap(1)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">1</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(2)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">2</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(3)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">3</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(4)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">4</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(5)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">5</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(6)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">6</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(7)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">7</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(8)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">8</span></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(9)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">9</span></button></div>
-            <div class="col-4"><button type="button" class="btn btn-lg btn-dark w-100 fw-bold"></button></div>
-            <div class="col-4"><button type="button" on:click={() => onTap(0)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">0</span></button></div>
-            <div class="col-4"><button type="button" class="btn btn-lg btn-dark w-100 fw-bold"></button></div>
-        </div>
-    {/if}
+        {/if}
+    </div>
 </div>

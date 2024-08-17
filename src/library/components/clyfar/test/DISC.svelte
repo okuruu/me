@@ -112,72 +112,77 @@
     }
 </script>
 <Toaster/>
-<div class="container-xs">
-    {#if !enableTest}
-        <form on:submit|preventDefault={checkToken}>
-            <ExampleDisc/>
-            <div class="d-flex justify-content-center">
-                <input type="text" bind:value={token} class="form-control form-control-flush form-control-sm border rounded shadow text-center text-white mb-3 w-50" placeholder="Masukkan Password" required/>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-sm btn-light w-50 text-center text-dark">Verifikasi Password</button>
-            </div>
-        </form>
-    {:else}
-        {#each disc as DISC ,index}
-
-            <div class="p-3 w-full my-3 border border border-gray-700 rounded">
-                <div class="table-responsive">
-                    <table class="table align-middle text-center text-white">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2"></th>
-                                <th class="px-4 py-2">M</th>
-                                <th class="px-4 py-2">L</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="px-4 py-2">{DISC.LV_1}</td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,1, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,1, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{DISC.LV_2}</td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,2, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,2, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{DISC.LV_3}</td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,3, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,3, 'Least')}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2">{DISC.LV_4}</td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,4, 'Most')}>
-                                </td>
-                                <td class="px-4 py-2">
-                                    <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,4, 'Least')}>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+<div class="bg-clyfar">
+    <div class="container-xs">
+        {#if !enableTest}
+            <form class="mt-20" on:submit|preventDefault={checkToken}>
+                <ExampleDisc/>
+                <div class="p-5 rounded shadow-sm bg-white mt-5">
+                    <div class="d-flex justify-content-center">
+                        <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                    </div>
                 </div>
-            </div>
-        {/each}
-        <button type="button" on:click={isValid} class="btn btn-sm btn-light w-50 text-center text-dark">Selesaikan Tes</button>
-    {/if}
+            </form>
+        {:else}
+            {#each disc as DISC ,index}
+                <div class="card shadow-sm my-3 bg-white">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle text-center">
+                                <thead>
+                                    <tr class="fw-bolder">
+                                        <th class="px-4 py-2"></th>
+                                        <th class="px-4 py-2">M</th>
+                                        <th class="px-4 py-2">L</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-2">{DISC.LV_1}</td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,1, 'Most')}>
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,1, 'Least')}>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2">{DISC.LV_2}</td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,2, 'Most')}>
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,2, 'Least')}>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2">{DISC.LV_3}</td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,3, 'Most')}>
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,3, 'Least')}>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2">{DISC.LV_4}</td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="M{index}" on:click={() => setValue(index,4, 'Most')}>
+                                        </td>
+                                        <td class="px-4 py-2">
+                                            <input class="form-check-input" type="radio" name="L{index}" on:click={() => setValue(index,4, 'Least')}>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {/each}
+            <button type="button" on:click={isValid} class="btn btn-sm btn-light-primary text-center shadow-sm w-100">Selesaikan Tes</button>
+        {/if}
+    </div>
 </div>
