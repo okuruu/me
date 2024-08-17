@@ -1,5 +1,4 @@
-<script>
-    import Navbar from "../library/components/Navbar.svelte";
+<script lang="ts">
     import { userText } from "../library/strings";
 </script>
 <svelte:head>
@@ -15,7 +14,4 @@
     <meta property="og:site_name" content="{userText.pageTitle}" />
     <meta property="og:image" content="/images/avatar.jfif" />
 </svelte:head>
-<div class="container-xs">
-    <Navbar/>
-</div>
 <slot/>

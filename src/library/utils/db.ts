@@ -1,4 +1,3 @@
-import { get } from "svelte/store";
 import { userText } from "../strings";
 
 interface ResponseType {

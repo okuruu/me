@@ -66,3 +66,7 @@ body {
 .cursor-not-allowed {
     cursor: not-allowed;
 }
+
+.bg-clyfar {
+    background-color: #3A5BA0;
+}

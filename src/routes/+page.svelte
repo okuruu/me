@@ -1,9 +1,10 @@
 <script lang="ts">
     import { userText } from "../library/strings";
+    import Navbar from "../library/components/Navbar.svelte";
 </script>
 <div class="bg-dark vh-100 wh-100">
     <div class="container-xs">
-
+        <Navbar/>
         <div class="d-flex justify-content-evenly">
             <img src="/images/avatar.jfif" alt="" class="avatar h-100px" />
             <div class="form-group mt-4">

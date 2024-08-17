@@ -1,4 +1,4 @@
-<div class="navbar d-flex justify-between-end">
+<div class="navbar d-flex justify-between-end mb-5">
     <div class="form-group">
         <a href="/">
             <img src="/icons/elements/Function.svg" alt="Site Icon" class="h-30px" /> <span class="text-white">okuruu</span>
