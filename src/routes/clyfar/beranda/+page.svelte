@@ -4,30 +4,26 @@
     import toast, { Toaster } from 'svelte-french-toast';
     import { estimateAge } from '../../../library/utils/formatTime';
     import type { Testee } from '../../../library/interface/Clyfar.js';
+    import Modal from '../../../library/components/partials/Modal.svelte';
 
     export let data;
 
-    /*
-    interface Testee {
-        CREATED_AT: string;
-        ENABLE_TEST: "Yes" | "No";
-        GENDER: "Pria" | "Wanita" | null;
-        ID: number;
-        LEVEL: number;
-        LIST: string;
-        NAMA: string | null;
-        TOKEN: string;
-        TTL: string | null;
-        UPDATED_AT: string | null;
-        WHATSAPP: string | null;
-}
-    */
-
+    let key:string;
     let searchBar: string = '';
     let searchBarController:HTMLElement;
 
     let newData: Testee[] = data.testee ?? [];
     let newDataDefault: Testee[] = data.testee ?? [];
+
+    let isModal: boolean = false;
+
+    const openModal = () => {
+        isModal = true
+    };
+
+    const closeModal = () => {
+        isModal = false
+    };
 
     function filterData(searchTerm: string): void {
         const term = searchTerm.toLowerCase();
@@ -49,16 +45,24 @@
 
         toast.error(message);
     }
-</script>
 
+    function keyPrompt(eventPressed:any){
+        key     = eventPressed.key;
+        if (key == 'Escape'){
+            searchBar = '';
+            searchBarController.focus();
+        }
+    }
+
+</script>
 <Toaster />
-<div class="bg-clyfar {newData.length < 6 ? 'min-vh-100' : 'min-vh-100'}">
+<div class="bg-clyfar min-vh-100">
     <div class="container-fluid">
         <div class="card shadow-sm bg-white mt-10">
             <div class="card-header">
                 <h3 class="card-title fw-bold">Dashboard Utama</h3>
                 <div class="card-toolbar">
-                    <button type="button" class="btn btn-sm btn-primary">
+                    <button type="button" class="btn btn-sm btn-primary" on:click={openModal}>
                         <img src="/icons/elements/Human.svg" alt="Person Icon" class="me-2"/> Buat User
                     </button>
                 </div>
@@ -66,8 +70,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end">
                     <div class="form-group">
-                        <!-- The searchBar will now filter data based on TOKEN, NAMA, or WHATSAPP -->
-                        <input type="text" bind:this={searchBarController} bind:value={searchBar} on:keyup={() => filterData(searchBar)} class="form-control form-control-sm" placeholder="Pencarian..." />
+                        <input type="text" bind:this={searchBarController} bind:value={searchBar} on:keyup={() => filterData(searchBar)} class="form-control form-control-sm" placeholder="[ESC] Pencarian..." />
                     </div>
                 </div>
 
@@ -115,3 +118,11 @@
         </div>
     </div>
 </div>
+
+{#if isModal}
+    <Modal open={isModal} onClose={closeModal}>
+        <p>Hi!</p>
+    </Modal>
+{/if}
+
+<svelte:window on:keydown={keyPrompt} />
