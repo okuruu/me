@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { db } from '../../../library/utils/db';
+    import { callRequest, db } from '../../../library/utils/db';
     import toast, { Toaster } from 'svelte-french-toast';
     import { estimateAge } from '../../../library/utils/formatTime';
     import type { Testee } from '../../../library/interface/Clyfar.js';
@@ -15,7 +15,19 @@
     let newData: Testee[] = data.testee ?? [];
     let newDataDefault: Testee[] = data.testee ?? [];
 
+    let userAmount: number = 1;
+    let userGender: "Pria" | "Wanita" = "Pria";
+
+    let enableMSDT: boolean;
+    let enableCFIT: boolean;
+    let enableMBTI: boolean;
+    let enableKraeplin: boolean;
+    let enableBAUM: boolean;
+    let enableDISC: boolean;
+    let enablePapikostick: boolean;
+
     let isModal: boolean = false;
+    let isDisabled: boolean = false;
 
     const openModal = () => {
         isModal = true
@@ -46,25 +58,74 @@
         toast.error(message);
     }
 
+    async function createCandidate(): Promise <void> {
+        isDisabled = true;
+
+        const { status, message } = await db({
+            amount: userAmount,
+            gender : userGender,
+            MSDT : enableMSDT,
+            CFIT : enableCFIT,
+            MBTI : enableMBTI,
+            KRAEPLIN : enableKraeplin,
+            BAUM : enableBAUM,
+            DISC : enableDISC,
+            PAPI : enablePapikostick
+        }, 'Clyfar/Create-Token');
+
+        if (status === 'success') {
+            newData = await callRequest('Clyfar/Dashboard');
+            newDataDefault = newData;
+            userAmount = 1;
+            userGender = "Pria";
+            enableMSDT = false;
+            enableCFIT = false;
+            enableMBTI = false;
+            enableKraeplin = false;
+            enableBAUM = false;
+            enableDISC = false;
+            enablePapikostick = false;
+            toast.success(message);
+            closeModal();
+            isDisabled = false;
+            return;
+        }
+
+        isDisabled = false;
+        toast.error(message);
+    }
+
+    async function logOut(): Promise <void> {
+        localStorage.removeItem('localPIN');  
+        localStorage.removeItem('user');
+        toast('See you soon!', { icon : '👋' }); 
+        return goto('/clyfar');
+    }
+
     function keyPrompt(eventPressed:any){
-        key     = eventPressed.key;
+        key = eventPressed.key;
         if (key == 'Escape'){
             searchBar = '';
             searchBarController.focus();
         }
     }
-
 </script>
 <Toaster />
-<div class="bg-clyfar min-vh-100">
+<div class="bg-clyfar">
     <div class="container-fluid">
-        <div class="card shadow-sm bg-white mt-10">
+        <div class="card shadow-sm bg-white my-10">
             <div class="card-header">
                 <h3 class="card-title fw-bold">Dashboard Utama</h3>
                 <div class="card-toolbar">
-                    <button type="button" class="btn btn-sm btn-primary" on:click={openModal}>
-                        <img src="/icons/elements/Human.svg" alt="Person Icon" class="me-2"/> Buat User
-                    </button>
+                    <div class="me-2">
+                        <button type="button" class="btn btn-sm btn-primary" on:click={openModal}>
+                            <img src="/icons/elements/Human.svg" alt="Person Icon" class="me-2"/> Buat User
+                        </button>
+                        <button type="button" on:click={logOut} class="btn btn-sm btn-danger">
+                            <img src="/icons/elements/Log-Out.svg" alt="Log Out Icon" class=" h-20px me-2"/>
+                            Keluar
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -121,7 +182,109 @@
 
 {#if isModal}
     <Modal open={isModal} onClose={closeModal}>
-        <p>Hi!</p>
+        <p class="fw-bolder h5">Buat User</p>
+
+        <div class="separator mb-5"/>
+
+        <form on:submit|preventDefault={createCandidate}>
+            <div class="form-group mb-5">
+                <label for="setTotal" class="form-label fw-bold">Jumlah Kandidat</label>
+                <input type="number" bind:value={userAmount} class="form-control form-control-sm" placeholder="0" min="1" required/>
+            </div>
+            <div class="form-group">
+                <label for="setGender" class="form-label fw-bold">Jenis Kelamin Testee</label>
+                <select bind:value={userGender} class="form-select form-select-sm" required>
+                    <option value="Pria">Pria</option>
+                    <option value="Wanita">Wanita</option>
+                </select>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle mt-5">
+                    <thead>
+                        <tr class="fw-bold">
+                            <th>Psikotes</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MSDT</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableMSDT} class="form-check-input form-check-input-sm me-2" value="MSDT" />
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CFIT</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableCFIT} class="form-check-input form-check-input-sm me-2" />
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MBTI</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableMBTI} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kraeplin</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableKraeplin} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Baum</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableBAUM} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DISC</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableDISC} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Papikostick</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enablePapikostick} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="submit" disabled={isDisabled} class="btn btn-sm btn-success w-100 mt-5">
+                {#if isDisabled}
+                    Loading...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                {:else}
+                    Submit
+                {/if}
+            </button>
+        </form>
+
     </Modal>
 {/if}
 
