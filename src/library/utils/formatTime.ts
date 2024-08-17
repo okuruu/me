@@ -1,4 +1,4 @@
-export function formatTime(date: string){
+function formatTime(date: string){
     const currentDate = new Date();
     const inputDate = new Date(date);
 
@@ -17,3 +17,24 @@ export function formatTime(date: string){
         return `${Math.floor(timeDifferenceInSeconds / 2592000)}M`; // months
     }
 }
+
+function estimateAge(birthDateString: string | null): number | null {
+    if (!birthDateString) {
+        return null; // Return null if the input is null
+    }
+
+    const today = new Date();
+    const birthDate = new Date(birthDateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    const dayDifference = today.getDate() - birthDate.getDate();
+
+    // If the birth date hasn't occurred yet this year, subtract one from the age
+    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+        age--;
+    }
+
+    return age;
+}
+
+export { formatTime, estimateAge };
