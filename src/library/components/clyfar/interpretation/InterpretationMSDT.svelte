@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { read } from "$app/server";
-import type { MSDT } from "../../../interface/Clyfar";
-
     export let msdt: MSDT;
+    import type { MSDT } from "../../../interface/Clyfar";
 </script>
 <div class="card shadow-sm my-3 bg-white">
     <div class="card-header">

@@ -72,5 +72,18 @@ interface Kraeplin {
     GRAPH: number[];
 }
 
+interface DiscScores {
+    D: number | null;
+    I: number | null;
+    S: number | null;
+    C: number | null;
+    toArray(): (number | null)[];
+}
 
-export type { Testee, Kraeplin, MSDT };
+interface DISC {
+    Most: DiscScores;
+    Least: DiscScores;
+    Change: DiscScores;
+}
+
+export type { Testee, Kraeplin, MSDT, DISC };
