@@ -4,6 +4,7 @@ const isProduction: boolean = false;
 
 const userText = {
     url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
+    rawURL : isProduction ? 'https://fae.deabakery.co.id/' : 'http://localhost:8000/',
     pageTitle : 'okuruu - hello there',
     name : 'Esdelfron',
     bio : 'Lórien Loremaster of Languages',

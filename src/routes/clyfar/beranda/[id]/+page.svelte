@@ -5,6 +5,7 @@
     import InterpretationMsdt from '../../../../library/components/clyfar/interpretation/InterpretationMSDT.svelte';
     import InterpretationDisc from '../../../../library/components/clyfar/interpretation/InterpretationDISC.svelte';
     import InterpretationMbti from '../../../../library/components/clyfar/interpretation/InterpretationMBTI.svelte';
+    import InterpretationBaum from '../../../../library/components/clyfar/interpretation/InterpretationBAUM.svelte';
 
     export let data: any;
     let kraeplin: Kraeplin = data.result.KRAEPLIN ?? {};
@@ -13,14 +14,15 @@
     let msdt: MSDT = data.result.MSDT ?? {};
     let disc: DISC = data.result.DISC ?? {};
     let mbti: string = data.result.MBTI ?? "";
-    console.log(data)
+    let baum: string = data.result.BAUM ?? "";
 </script>
 <div class="bg-clyfar">
     <div class="container-sm">
-        <InterpretationMbti mbti={mbti}/>
         <InterpretationDisc disc={disc} />
-        <InterpretationMsdt msdt={msdt}/>
-        <InterpretationKraeplin kraeplin={kraeplin} />
         <InterpretationPapikostick papikostickTable={papikostickTable} />
+        <InterpretationKraeplin kraeplin={kraeplin} />
+        <InterpretationBaum baum={baum} />
+        <InterpretationMbti mbti={mbti}/>
+        <InterpretationMsdt msdt={msdt}/>
     </div>
 </div>
