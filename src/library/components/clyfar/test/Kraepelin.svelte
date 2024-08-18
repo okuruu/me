@@ -31,7 +31,7 @@
             }
             timer = timer - 1;
         }
-    }, 100);
+    }, 1000);
 
     const onTap = (id: number) => {
         if(subIndex < 27 - 1){
@@ -106,10 +106,10 @@
             </form>
         {:else}
             <div class="d-flex justify-content-end mt-12">
-                <span class="text-white h4">{timer}</span>
+                <span class="h4">{timer}</span>
             </div>
             
-            <h1 class="text-white text-center display-3 my-5">{kraeplin[index][subIndex]}</h1>
+            <h1 class="text-center display-3 my-5">{kraeplin[index][subIndex]}</h1>
             
             <div class="row mt-12">
                 <div class="col-4"><button type="button" on:click={() => onTap(1)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">1</span></button></div>
