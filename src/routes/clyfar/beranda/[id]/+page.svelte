@@ -6,9 +6,11 @@
     export let data: any;
     let kraeplin: Kraeplin = data.result.KRAEPLIN ?? {};
     let papikostick: string[] | null = data.result.PAPI ?? null;
-    let papikostick_table: { NILAI : number; Deskripsi: string; }[] = data.result.PAPI_TABLE;
+    let papikostickTable: { NILAI : number; Deskripsi: string; }[] = data.result.PAPI_TABLE;
 </script>
-<div class="container-sm">
-    <InterpretationKraeplin kraeplin={kraeplin} />
-    <InterpretationPapikostick papikostick_table={papikostick_table} />
+<div class="bg-clyfar">
+    <div class="container-sm">
+        <InterpretationKraeplin kraeplin={kraeplin} />
+        <InterpretationPapikostick papikostickTable={papikostickTable} />
+    </div>
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { userConfig } from '../../../library/strings';
+    import { logOut } from '../../../library/utils/auth';
     import { db } from '../../../library/utils/db';
     import toast, { Toaster } from 'svelte-french-toast';
 
@@ -44,6 +45,12 @@
 
         <div class="card bg-white shadow-sm">
             <div class="card-body">
+                <div class="d-flex justify-content-end mb-5">
+                    <button type="button" on:click={logOut} class="btn btn-sm btn-dark">
+                        <img src="/icons/elements/Log-Out.svg" alt="Log Out Icon" class=" h-20px me-2"/>
+                        Keluar
+                    </button>
+                </div>
                 <form on:submit|preventDefault={doPost}>
                     <div class="form-group mb-12">
                         <h1 class="display-4 text-primary">Clyfar - </h1>

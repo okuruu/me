@@ -2,7 +2,7 @@
 import { onMount } from 'svelte';
     import { papikostickDescription } from '../../../resources/papikostick';
 
-export let papikostick_table: any;
+export let papikostickTable: any;
 
 interface Data {
     key: string;
@@ -25,10 +25,10 @@ const getDescription = (key: string, nilai: number) => {
 };
 
 onMount(() => {
-    newData = Object.keys(papikostick_table).map((key: string) => ({ key,
-        nilai: papikostick_table[key].NILAI,
-        deskripsi: papikostick_table[key].Deskripsi,
-        color: papikostick_table[key].color,
+    newData = Object.keys(papikostickTable).map((key: string) => ({ key,
+        nilai: papikostickTable[key].NILAI,
+        deskripsi: papikostickTable[key].Deskripsi,
+        color: papikostickTable[key].color,
     }));
 });
 </script>

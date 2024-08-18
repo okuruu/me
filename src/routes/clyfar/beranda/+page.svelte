@@ -1,7 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { callRequest, db } from '../../../library/utils/db';
+    import { logOut } from '../../../library/utils/auth';
     import toast, { Toaster } from 'svelte-french-toast';
+    import { callRequest, db } from '../../../library/utils/db';
     import { estimateAge } from '../../../library/utils/formatTime';
     import type { Testee } from '../../../library/interface/Clyfar.js';
     import Modal from '../../../library/components/partials/Modal.svelte';
@@ -93,13 +94,6 @@
 
         isDisabled = false;
         toast.error(message);
-    }
-
-    async function logOut(): Promise <void> {
-        localStorage.removeItem('localPIN');  
-        localStorage.removeItem('user');
-        toast('See you soon!', { icon : '👋' }); 
-        return goto('/clyfar');
     }
 
     function keyPrompt(eventPressed:any){
