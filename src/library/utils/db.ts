@@ -57,6 +57,7 @@ async function postJson(jsons: Record<string, any>, url: string): Promise<Respon
         const { status, message, data } = await doPost.json();
         return { status, message, data };
     } catch (error) {
+        console.log(error)
         return { status: 'error', message: 'Internal Server Error', data : null };
     }
 }

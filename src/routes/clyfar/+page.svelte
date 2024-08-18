@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { db } from '../../library/utils/db';
+    import { userConfig } from '../../library/strings';
     import toast, { Toaster } from 'svelte-french-toast';
 
     let token: string;
@@ -18,8 +19,18 @@
             localStorage.removeItem('localPIN');
             localStorage.removeItem('user');
             localStorage.setItem("localPIN",data.userCodes);
-            data.statusAccount === 'Super' ? goto('/clyfar/beranda') : goto('/clyfar/home');
-            return;
+
+            if (data.statusAccount === 'Super') {
+                return goto('/clyfar/beranda')
+            }
+
+            if (data.continueFrom.writeForm) {
+                return goto('/clyfar/home');
+            }
+
+            $userConfig.testPosition = data.continueFrom.continueTest;
+            return goto('/clyfar/test');
+
         }
 
         token = '';

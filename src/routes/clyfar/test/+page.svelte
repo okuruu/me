@@ -9,6 +9,7 @@
     import Complete from "../../../library/components/clyfar/test/Complete.svelte";
     import Kraepelin from "../../../library/components/clyfar/test/Kraepelin.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
+    import Session from "../../../library/components/clyfar/test/Session.svelte";
 </script>
 {#if $userConfig.testPosition === 'DISC'}
     <DISC/>
@@ -28,4 +29,6 @@
     <Rmib/>
 {:else if $userConfig.testPosition === 'CLEAR'}
     <Complete/>
+{:else}
+    <Session/>
 {/if}
