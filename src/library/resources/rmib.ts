@@ -1,7 +1,4 @@
-interface RMIB {
-    Pria: string[][];
-    Wanita: string[][];
-}
+import type { RMIB } from "../interface/Clyfar";
 
 export const rmib: RMIB = {
     "Pria" : [

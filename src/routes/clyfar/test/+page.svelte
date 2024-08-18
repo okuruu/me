@@ -5,6 +5,7 @@
     import MBTI from "../../../library/components/clyfar/test/MBTI.svelte";
     import MSDT from "../../../library/components/clyfar/test/MSDT.svelte";
     import Cfit from "../../../library/components/clyfar/test/CFIT.svelte";
+    import Rmib from "../../../library/components/clyfar/test/RMIB.svelte";
     import Complete from "../../../library/components/clyfar/test/Complete.svelte";
     import Kraepelin from "../../../library/components/clyfar/test/Kraepelin.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
@@ -23,6 +24,8 @@
     <MSDT/>
 {:else if $userConfig.testPosition === 'CFIT'}
     <Cfit/>
+{:else if $userConfig.testPosition === 'RMIB'}
+    <Rmib/>
 {:else if $userConfig.testPosition === 'CLEAR'}
     <Complete/>
 {/if}

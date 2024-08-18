@@ -12,6 +12,11 @@ interface Testee {
     WHATSAPP: string | null;
 }
 
+interface RMIB {
+    Pria: string[][];
+    Wanita: string[][];
+}
+
 interface MSDT {
     rawjawaban: {
         index: number;
@@ -86,4 +91,25 @@ interface DISC {
     Change: DiscScores;
 }
 
-export type { Testee, Kraeplin, MSDT, DISC };
+interface RMIBValue {
+    [key: string]: number;
+}
+
+interface RMIBResult {
+    out: string[];
+    me: string[];
+    comp: string[];
+    sci: string[];
+    prs: string[];
+    aesth: string[];
+    lit: string[];
+    mus: string[];
+    ss: string[];
+    cler: string[];
+    prac: string[];
+    med: string[];
+    VALUE: RMIBValue;
+    SORTED_VALUE: RMIBValue;
+}
+
+export type { Testee, RMIB, RMIBResult, Kraeplin, MSDT, DISC };
