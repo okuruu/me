@@ -54,7 +54,7 @@
             currentSecond = currentSecond - 1;
             currentSecond = currentSecond;
         }
-    },300);
+    },1000);
 
     async function checkToken(): Promise <void> {
         const { status, message } = await db({
