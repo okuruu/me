@@ -112,4 +112,18 @@ interface RMIBResult {
     SORTED_VALUE: RMIBValue;
 }
 
-export type { Testee, RMIB, RMIBResult, Kraeplin, MSDT, DISC };
+interface CFIT {
+    FIRST: string[];
+    TWO: string[];
+    THIRD: string[];
+    FOURTH: string[];
+    SAMPLE : string[];
+}
+
+interface CFITResult {
+    score : number;
+    resultScore: number;
+    resultStatus : string;
+}
+
+export type { Testee, RMIB, RMIBResult, Kraeplin, MSDT, DISC, CFIT, CFITResult };

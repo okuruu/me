@@ -1,13 +1,13 @@
 <script lang="ts">
+    import { previousPage } from "../../../utils/navigates";
+
     export let mbti;
 </script>
 <div class="card shadow-sm bg-white my-5">
     <div class="card-header">
         <h3 class="card-title fw-bolder">Interpretasi MBTI</h3>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm btn-light">
-                Interpretation Viewer
-            </button>
+            <button type="button" on:click={previousPage} class="btn btn-sm btn-light">Kembali</button>
         </div>
     </div>
     <div class="card-body">

@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { Chart, registerables, type ChartConfiguration } from 'chart.js';
     import { onMount } from 'svelte';
+    import { previousPage } from '../../../utils/navigates';
+    import { Chart, registerables, type ChartConfiguration } from 'chart.js';
 
     export let kraeplin;
 
@@ -53,9 +54,7 @@
     <div class="card-header">
         <h3 class="card-title fw-bolder">Interpretasi Kraeplin</h3>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm btn-light">
-                Interpretation Viewer
-            </button>
+            <button type="button" on:click={previousPage} class="btn btn-sm btn-light">Kembali</button>
         </div>
     </div>
     <div class="card-body">

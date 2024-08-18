@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { DISC, Kraeplin, MSDT, RMIBResult } from '../../../../library/interface/Clyfar';
+    import type { CFITResult, DISC, Kraeplin, MSDT, RMIBResult } from '../../../../library/interface/Clyfar';
     import InterpretationKraeplin from '../../../../library/components/clyfar/interpretation/InterpretationKraeplin.svelte';
     import InterpretationPapikostick from '../../../../library/components/clyfar/interpretation/InterpretationPapikostick.svelte';
     import InterpretationMsdt from '../../../../library/components/clyfar/interpretation/InterpretationMSDT.svelte';
@@ -7,27 +7,46 @@
     import InterpretationMbti from '../../../../library/components/clyfar/interpretation/InterpretationMBTI.svelte';
     import InterpretationBaum from '../../../../library/components/clyfar/interpretation/InterpretationBAUM.svelte';
     import InterpretationRmib from '../../../../library/components/clyfar/interpretation/InterpretationRMIB.svelte';
+    import InterpretationCfit from '../../../../library/components/clyfar/interpretation/InterpretationCFIT.svelte';
 
     export let data: any;
-    console.log(data)
 
-    let kraeplin: Kraeplin = data.result.KRAEPLIN ?? {};
-    let papikostick: string[] | null = data.result.PAPI ?? null;
-    let papikostickTable: { NILAI : number; Deskripsi: string; }[] = data.result.PAPI_TABLE;
-    let msdt: MSDT = data.result.MSDT ?? {};
-    let disc: DISC = data.result.DISC ?? {};
-    let mbti: string = data.result.MBTI ?? "";
-    let baum: string = data.result.BAUM ?? "";
-    let rmib: RMIBResult = data.result.RMIB ?? {};
+    let kraeplin: Kraeplin | null = data?.result?.KRAEPLIN ?? null;
+    let papikostick: string[] | null = data?.result?.PAPI ?? null;
+    let papikostickTable: { NILAI: number; Deskripsi: string; }[] | null = data?.result?.PAPI_TABLE ?? null;
+    let msdt: MSDT | null = data?.result?.MSDT ?? null;
+    let disc: DISC | null = data?.result?.DISC ?? null;
+    let mbti: string | null = data?.result?.MBTI ?? null;
+    let baum: string | null = data?.result?.BAUM ?? null;
+    let rmib: RMIBResult | null = data?.result?.RMIB ?? null;
+    let cfit: CFITResult | null = data?.result?.CFIT ?? null;
 </script>
+
 <div class="bg-clyfar">
     <div class="container-sm">
-        <InterpretationRmib rmib={rmib}/>
-        <InterpretationDisc disc={disc} />
-        <InterpretationPapikostick papikostickTable={papikostickTable} />
-        <InterpretationKraeplin kraeplin={kraeplin} />
-        <InterpretationBaum baum={baum} />
-        <InterpretationMbti mbti={mbti}/>
-        <InterpretationMsdt msdt={msdt}/>
+        {#if cfit}
+            <InterpretationCfit cfit={cfit}/>
+        {/if}
+        {#if disc}
+            <InterpretationDisc disc={disc} />
+        {/if}
+        {#if papikostickTable}
+            <InterpretationPapikostick papikostickTable={papikostickTable} />
+        {/if}
+        {#if kraeplin}
+            <InterpretationKraeplin kraeplin={kraeplin} />
+        {/if}
+        {#if baum}
+            <InterpretationBaum baum={baum} />
+        {/if}
+        {#if mbti}
+            <InterpretationMbti mbti={mbti}/>
+        {/if}
+        {#if msdt}
+            <InterpretationMsdt msdt={msdt}/>
+        {/if}
+        {#if rmib}
+            <InterpretationRmib rmib={rmib}/>
+        {/if}
     </div>
 </div>

@@ -2,8 +2,8 @@
     import { db } from '../../../utils/db';
     import BaumCanvas from './BaumCanvas.svelte';
     import toast, { Toaster } from 'svelte-french-toast';
-    import { userConfig, userText } from '../../../strings';
     import ExampleBaum from '../sample/ExampleBaum.svelte';
+    import { userConfig, userText } from '../../../strings';
     import { updateCurrentTest } from '../../../utils/userStorage';
 
     let token: string; 

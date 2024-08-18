@@ -1,14 +1,13 @@
 <script lang="ts">
     export let msdt: MSDT;
     import type { MSDT } from "../../../interface/Clyfar";
+    import { previousPage } from "../../../utils/navigates";
 </script>
 <div class="card shadow-sm my-3 bg-white">
     <div class="card-header">
         <h3 class="card-title fw-bolder">Interpretasi MSDT</h3>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm btn-light">
-                Interpretation Viewer
-            </button>
+            <button type="button" on:click={previousPage} class="btn btn-sm btn-light">Kembali</button>
         </div>
     </div>
     <div class="card-body">

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import type { DISC } from '../../../interface/Clyfar';
+    import { previousPage } from '../../../utils/navigates';
     import { Chart, registerables, type ChartConfiguration } from 'chart.js';
     
     export let disc: DISC;
@@ -60,9 +61,7 @@
     <div class="card-header">
         <h3 class="card-title fw-bolder">Interpretasi DISC</h3>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm btn-light">
-                Interpretation Viewer
-            </button>
+            <button type="button" on:click={previousPage} class="btn btn-sm btn-light">Kembali</button>
         </div>
     </div>
     <div class="card-body">

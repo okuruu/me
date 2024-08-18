@@ -1,5 +1,6 @@
 <script lang="ts">
     import { userText } from "../../../strings";
+    import { previousPage } from "../../../utils/navigates";
 
     export let baum: string;
 </script>
@@ -7,9 +8,7 @@
     <div class="card-header">
         <h3 class="card-title fw-bolder">Interpretasi Baum</h3>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-sm btn-light">
-                Interpretation Viewer
-            </button>
+            <button type="button" on:click={previousPage} class="btn btn-sm btn-light">Kembali</button>
         </div>
     </div>
     <div class="card-body">
