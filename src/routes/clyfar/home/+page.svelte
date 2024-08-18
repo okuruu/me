@@ -1,17 +1,20 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { userConfig } from '../../../library/strings';
-    import { logOut } from '../../../library/utils/auth';
     import { db } from '../../../library/utils/db';
+    import { logOut } from '../../../library/utils/auth';
     import toast, { Toaster } from 'svelte-french-toast';
+    import { userConfig } from '../../../library/strings';
 
     let name: string;
     let whatsapp: number;
     let birthDate: Date;
-    let gender: "Pria" | "Wanita" = "Pria"; 
+    let gender: "Pria" | "Wanita" = "Pria";
+
+    let isDisabled: boolean = false;
 
     async function doPost(): Promise <void> {
         try {
+            isDisabled = true;
             const { status, message , data } = await db({
                 name : name,
                 whatsapp : "0" + whatsapp.toString(),
@@ -35,6 +38,7 @@
                 toast.error(message);
             }
         } catch (error) {
+            isDisabled = false;
             toast.error('Token tidak sesuai!');
         }
     }
@@ -47,8 +51,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end mb-5">
                     <button type="button" on:click={logOut} class="btn btn-sm btn-dark">
-                        <img src="/icons/elements/Log-Out.svg" alt="Log Out Icon" class=" h-20px me-2"/>
-                        Keluar
+                        <img src="/icons/elements/Log-Out.svg" alt="Log Out Icon" class=" h-20px"/>
                     </button>
                 </div>
                 <form on:submit|preventDefault={doPost}>
@@ -86,7 +89,14 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-sm btn-primary w-50">Selanjutnya</button>
+                    <button type="submit" disabled={isDisabled} class="btn btn-sm btn-primary w-50">
+                        {#if isDisabled}
+                            Loading...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        {:else}
+                            Selanjutnya
+                        {/if}
+                    </button>
                 </form>
             </div>
         </div>
