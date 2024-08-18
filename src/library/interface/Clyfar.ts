@@ -12,6 +12,28 @@ interface Testee {
     WHATSAPP: string | null;
 }
 
+interface MSDT {
+    rawjawaban: {
+        index: number;
+        value: string
+    }[];
+    A: number[];
+    B: number[];
+    koreksi: number[];
+    jumlah: number[];
+    O: number;
+    E: number;
+    RO: number;
+    TO: number;
+    konversiE: number;
+    konversiRO: number;
+    konversiTO: number;
+    line1: string[];
+    line2: string[];
+    resultMSDT: string;
+    deskripsi: string;
+}
+
 interface Kraeplin {
     MEAN: number;
     RANGE: number;
@@ -51,4 +73,4 @@ interface Kraeplin {
 }
 
 
-export type { Testee, Kraeplin };
+export type { Testee, Kraeplin, MSDT };
