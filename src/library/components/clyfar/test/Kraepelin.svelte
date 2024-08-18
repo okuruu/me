@@ -1,8 +1,8 @@
 <script lang="ts">
     import { db } from '../../../utils/db';
-    import { userText } from '../../../strings';
     import toast, { Toaster } from 'svelte-french-toast';
     import { kraeplin } from '../../../resources/kraeplin';
+    import { userConfig, userText } from '../../../strings';
     import { updateCurrentTest } from '../../../utils/userStorage';
     import ExampleKraeplin from '../sample/ExampleKraeplin.svelte';
 
@@ -85,7 +85,7 @@
 
         if(status === 'success'){
             updateCurrentTest(redirectTo); // 'BAUM'
-            userText.currentTest = redirectTo; // 'BAUM'
+            $userConfig.testPosition = redirectTo;
         } else {
             toast.error(message);
         }

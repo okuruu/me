@@ -1,3 +1,6 @@
+import { get } from "svelte/store";
+import { userConfig } from "../strings";
+
 function getLocalStorage(){
     const userStorage = localStorage.getItem('user');
     if (userStorage !== null) {
@@ -13,7 +16,7 @@ function updateCurrentTest(newValue: string) {
     const userStorage = localStorage.getItem('user');
     if (userStorage !== null) {
         const user = JSON.parse(userStorage);
-        user.currentTest = newValue;
+        get(userConfig).testPosition = newValue;
         localStorage.setItem('user', JSON.stringify(user));
     } else {
         console.log('User data not found in local storage');

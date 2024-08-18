@@ -1,9 +1,9 @@
 <script lang="ts">
     import { db } from "../../../utils/db";
-    import { userText } from "../../../strings";
     import { msdt } from "../../../resources/msdt";
     import toast, { Toaster } from 'svelte-french-toast';
     import ExampleMsdt from "../sample/ExampleMSDT.svelte";
+    import { userConfig, userText } from "../../../strings";
     import { updateCurrentTest } from "../../../utils/userStorage";
     
     let token: string; 
@@ -68,7 +68,7 @@
 
         if(status === 'success'){
             updateCurrentTest(redirectTo); // CFIT
-            userText.currentTest = redirectTo; // CFIT
+            $userConfig.testPosition = redirectTo;
         } else {
             toast.error(message);
         }

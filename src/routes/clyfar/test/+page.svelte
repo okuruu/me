@@ -1,7 +1,5 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { userText } from "../../../library/strings";
-    import { getLocalStorage } from "../../../library/utils/userStorage";
+    import { userConfig } from "../../../library/strings";
     import Baum from "../../../library/components/clyfar/test/Baum.svelte";
     import DISC from "../../../library/components/clyfar/test/DISC.svelte";
     import MBTI from "../../../library/components/clyfar/test/MBTI.svelte";
@@ -10,30 +8,21 @@
     import Complete from "../../../library/components/clyfar/test/Complete.svelte";
     import Kraepelin from "../../../library/components/clyfar/test/Kraepelin.svelte";
     import Papikostick from "../../../library/components/clyfar/test/Papikostick.svelte";
-
-    onMount(() => {
-        const getStorage = getLocalStorage();
-
-        if (getStorage !== null) {
-            userText.currentTest = getStorage.currentTest;
-            return;
-        }
-    });
 </script>
-{#if userText.currentTest === 'DISC'}
+{#if $userConfig.testPosition === 'DISC'}
     <DISC/>
-{:else if userText.currentTest === 'PAPI'}
+{:else if $userConfig.testPosition === 'PAPI'}
     <Papikostick/>
-{:else if userText.currentTest === 'KRAEPLIN'}
+{:else if $userConfig.testPosition === 'KRAEPLIN'}
     <Kraepelin/>
-{:else if userText.currentTest === 'BAUM'}
+{:else if $userConfig.testPosition === 'BAUM'}
     <Baum/>
-{:else if userText.currentTest === 'MBTI'}
+{:else if $userConfig.testPosition === 'MBTI'}
     <MBTI/>
-{:else if userText.currentTest === 'MSDT'}
+{:else if $userConfig.testPosition === 'MSDT'}
     <MSDT/>
-{:else if userText.currentTest === 'CFIT'}
+{:else if $userConfig.testPosition === 'CFIT'}
     <Cfit/>
-{:else if userText.currentTest === 'CLEAR'}
+{:else if $userConfig.testPosition === 'CLEAR'}
     <Complete/>
 {/if}

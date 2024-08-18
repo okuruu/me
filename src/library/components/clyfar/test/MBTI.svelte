@@ -1,9 +1,9 @@
 <script lang="ts">
     import { db } from '../../../utils/db';
-    import { userText } from '../../../strings';
     import { mbti } from '../../../resources/mbti';
     import toast, { Toaster } from 'svelte-french-toast';
     import ExampleMbti from '../sample/ExampleMBTI.svelte';
+    import { userConfig, userText } from '../../../strings';
     import { updateCurrentTest } from '../../../utils/userStorage';
     import { formatCapitalize } from '../../../utils/formatCapitalize';
 
@@ -93,7 +93,7 @@
 
         if(status === 'success'){
             updateCurrentTest(redirectTo); // MSDT
-            userText.currentTest = redirectTo; // MSDT
+            $userConfig.testPosition = redirectTo;
         } else {
             toast.error(message);
         }

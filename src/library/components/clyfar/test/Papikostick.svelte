@@ -1,8 +1,8 @@
 <script lang="ts">
     import { db } from '../../../utils/db';
-    import { userText } from '../../../strings';
     import toast, { Toaster } from 'svelte-french-toast';
     import ExamplePapi from "../sample/ExamplePapi.svelte";
+    import { userConfig, userText } from '../../../strings';
     import { papikostick } from '../../../resources/papikostick';
     import { updateCurrentTest } from '../../../utils/userStorage';
 
@@ -69,7 +69,7 @@
 
         if(status === 'success'){
             updateCurrentTest(redirectTo); // 'KRAEPLIN'
-            userText.currentTest = redirectTo; // 'KRAEPLIN'
+            $userConfig.testPosition = redirectTo;
         } else {
             toast.error(message);
         }

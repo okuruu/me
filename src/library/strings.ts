@@ -1,10 +1,9 @@
+import { writable } from "svelte/store";
+
 const isProduction: boolean = false;
 
-const currentTest: string|null  = null;
-
-export const userText = {
+const userText = {
     url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
-    currentTest : currentTest,
     pageTitle : 'okuruu - hello there',
     name : 'Esdelfron',
     bio : 'Lórien Loremaster of Languages',
@@ -34,3 +33,9 @@ export const userText = {
         }
     ]
 }
+
+const userConfig = writable({
+    testPosition : 'startPage'
+});
+
+export { userConfig, userText };

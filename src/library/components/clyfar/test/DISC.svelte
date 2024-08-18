@@ -1,10 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { db } from '../../../utils/db';
-    import { userText } from '../../../strings';
     import { disc } from '../../../resources/disc';
     import toast, { Toaster } from 'svelte-french-toast';
     import ExampleDisc from '../sample/ExampleDISC.svelte';
+    import { userConfig, userText } from '../../../strings';
     import { updateCurrentTest } from '../../../utils/userStorage';
 
     let token: string; 
@@ -105,7 +105,7 @@
 
         if(status === 'success'){
             updateCurrentTest(redirectTo);
-            userText.currentTest = redirectTo;
+            $userConfig.testPosition = redirectTo;
         } else {
             toast.error(message);
         }

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { userConfig } from '../../../library/strings';
     import { db } from '../../../library/utils/db';
     import toast, { Toaster } from 'svelte-french-toast';
 
@@ -26,8 +27,8 @@
                     birthDate: birthDate,
                     gender: gender,
                     setTest : data.setTest,
-                    currentTest : data.currentTest
                 }));
+                $userConfig.testPosition = data.currentTest;
                 return goto('/clyfar/test');
             } else {
                 toast.error(message);

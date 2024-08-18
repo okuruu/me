@@ -1,8 +1,8 @@
 <script lang="ts">
     import { db } from '../../../utils/db';
-    import { userText } from '../../../strings';
     import BaumCanvas from './BaumCanvas.svelte';
     import toast, { Toaster } from 'svelte-french-toast';
+    import { userConfig, userText } from '../../../strings';
     import ExampleBaum from '../sample/ExampleBaum.svelte';
     import { updateCurrentTest } from '../../../utils/userStorage';
 
@@ -57,8 +57,8 @@
 
 		if(status === 'success'){
             isDisabled = false;
-            updateCurrentTest(redirectTo); // 'MBTI'
-            userText.currentTest = redirectTo; // 'MBTI'
+            updateCurrentTest(redirectTo);
+            $userConfig.testPosition = redirectTo;
         }
 
         isDisabled = false;
