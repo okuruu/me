@@ -26,6 +26,7 @@
     let enableBAUM: boolean;
     let enableDISC: boolean;
     let enablePapikostick: boolean;
+    let enableRMIB: boolean;
 
     let isModal: boolean = false;
     let isDisabled: boolean = false;
@@ -71,7 +72,8 @@
             KRAEPLIN : enableKraeplin,
             BAUM : enableBAUM,
             DISC : enableDISC,
-            PAPI : enablePapikostick
+            PAPI : enablePapikostick,
+            RMIB : enableRMIB
         }, 'Clyfar/Create-Token');
 
         if (status === 'success') {
@@ -261,6 +263,15 @@
                             <td>
                                 <div class="form-check form-check-custom form-check-solid form-check-sm">
                                     <input type="checkbox" bind:checked={enablePapikostick} class="form-check-input form-check-input-sm me-2"/>
+                                    Active
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RMIB</td>
+                            <td>
+                                <div class="form-check form-check-custom form-check-solid form-check-sm">
+                                    <input type="checkbox" bind:checked={enableRMIB} class="form-check-input form-check-input-sm me-2"/>
                                     Active
                                 </div>
                             </td>
