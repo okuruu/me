@@ -22,11 +22,11 @@
     let enableMSDT: boolean;
     let enableCFIT: boolean;
     let enableMBTI: boolean;
-    let enableKraeplin: boolean;
     let enableBAUM: boolean;
     let enableDISC: boolean;
-    let enablePapikostick: boolean;
     let enableRMIB: boolean;
+    let enableKraeplin: boolean;
+    let enablePapikostick: boolean;
 
     let isModal: boolean = false;
     let isDisabled: boolean = false;
@@ -107,13 +107,14 @@
     }
 </script>
 <Toaster />
-<div class="bg-clyfar">
+<div class="bg-clyfar {newData.length > 5 ? 'min-vh-100' : 'min-vh-100'}">
     <div class="container-fluid">
         <div class="card shadow-sm bg-white my-10">
             <div class="card-header">
                 <h3 class="card-title fw-bold">Dashboard Utama</h3>
                 <div class="card-toolbar">
                     <div class="me-2">
+                        <a href="/clyfar/beranda/viewer" class="btn btn-sm btn-info">Lihat Soal</a>
                         <button type="button" class="btn btn-sm btn-primary" on:click={openModal}>
                             <img src="/icons/elements/Human.svg" alt="Person Icon" class="me-2"/> Buat User
                         </button>

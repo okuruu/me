@@ -1,13 +1,16 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { db } from "../../../utils/db";
     import { rmib } from "../../../resources/rmib";
     import toast, { Toaster } from 'svelte-french-toast';
+    import ExampleRmib from "../sample/ExampleRMIB.svelte";
     import { userText, userConfig } from "../../../strings";
     import { getLocalStorage, updateCurrentTest } from "../../../utils/userStorage";
-    import ExampleRmib from "../sample/ExampleRMIB.svelte";
 
     let token: string;
     let enableTest: boolean = false;
+    let name: string = "" ;
+    let userGender: "Pria" | "Wanita" ="Pria";
 
     async function checkToken(): Promise <void> {
         const { status, message } = await db({
@@ -26,11 +29,17 @@
         toast.error(message);
         return;
     }
-    
-    const getLocal = getLocalStorage();
-    const name: string = getLocal.name;
-    const userGender: "Pria" | "Wanita" = getLocal.gender ?? "Pria";
 
+    onMount(() => {
+        try {
+            const getLocal = getLocalStorage();
+            name = getLocal.name;
+            userGender = getLocal.gender;
+        } catch {
+            // Do nothing
+        }
+    });
+    
     const newData: string[][] = rmib[userGender];
 
     async function doPost(): Promise<void> {
