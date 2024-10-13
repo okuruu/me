@@ -32,7 +32,7 @@ async function db(data: FormData | Record<string, any>, url: string): Promise <R
     return response;
 }
 
-async function postForms(forms: FormData, url: string): Promise<ResponseType> {
+async function postForms(forms: FormData, url: string): Promise <ResponseType> {
     try {
         const doPost = await fetch(userText.about + url, {
             method: 'post',
@@ -46,7 +46,7 @@ async function postForms(forms: FormData, url: string): Promise<ResponseType> {
     }
 }
 
-async function postJson(jsons: Record<string, any>, url: string): Promise<ResponseType> {
+async function postJson(jsons: Record<string, any>, url: string): Promise <ResponseType> {
     try {
         const doPost = await fetch(userText.url + url, {
             method: 'post',

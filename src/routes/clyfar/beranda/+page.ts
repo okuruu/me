@@ -1,11 +1,11 @@
-import { callRequest } from "../../../library/utils/db";
+// import { callRequest } from "../../../library/utils/db";
 
-export const load = async () => {
-    let testee = [];
+// export const load = async () => {
+//     let testee = [];
 
-    testee = await callRequest('Clyfar/Dashboard');
+//     testee = await callRequest('Clyfar/Dashboard');
 
-    return {
-        testee : testee
-    };
-}
+//     return {
+//         testee : testee
+//     };
+// }

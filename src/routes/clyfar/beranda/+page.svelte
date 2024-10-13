@@ -7,14 +7,16 @@
     import type { Testee } from '../../../library/interface/Clyfar.js';
     import Modal from '../../../library/components/partials/Modal.svelte';
 
-    export let data;
+    // export let data;
 
     let key:string;
     let searchBar: string = '';
     let searchBarController:HTMLElement;
 
-    let newData: Testee[] = data.testee ?? [];
-    let newDataDefault: Testee[] = data.testee ?? [];
+    let newData: Testee[] = [];
+    let newDataDefault: Testee[] = [];
+    // let newData: Testee[] = data.testee ?? [];
+    // let newDataDefault: Testee[] = data.testee ?? [];
 
     let userAmount: number = 1;
     let userGender: "Pria" | "Wanita" = "Pria";

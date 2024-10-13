@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-const isProduction: boolean = true;
+const isProduction: boolean = false;
 
 const userText = {
     url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
