@@ -26,7 +26,7 @@
     <div class="col-11">
         <div class="container">
             <div class="text-center">
-                <h1 class="mt-12 display-5">Good {moment} 👋</h1>
+                <h1 class="mt-12 display-5 text-warning">Good {moment} 👋</h1>
                 <p class="fw-semibold text-muted">Let's do better.</p>
             </div>
             {#if sidebar === 'home'}
