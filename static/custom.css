@@ -76,3 +76,9 @@ body {
 .svg-warning {
     filter: invert(55%) sepia(77%) saturate(421%) hue-rotate(336deg) brightness(102%) contrast(102%);
 }
+
+/* Button */
+
+.btn-gradient {
+    background-image: linear-gradient(to right, #B72024 , #F08519);
+}

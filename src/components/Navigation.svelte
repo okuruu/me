@@ -47,7 +47,7 @@
     }
 </style>
 <div class="shadow-sm container-relative">
-    <nav class="p-5">
+    <nav class="p-5 px-12">
         <div class="row">
             <div class="col mt-4">
                 <!-- <img src="/images/web/flat-logo.svg" class="h-20px" alt="Logo Dea Bakery" /> -->
@@ -55,7 +55,7 @@
             </div>
             <div class="col mt-4">
                 {#each navigation as nav }
-                    <a href="{nav.url}" class="me-10 {nav.active ? 'text-golden fw-bolder' : 'text-dark fw-bold '}">{nav.name}</a>
+                    <a href="{nav.url}" class="me-10 {nav.active ? 'text-warning fw-bolder' : 'text-dark fw-bold '}">{nav.name}</a>
                 {/each}
                 <button type="button" onclick={toggleMegaMenu} class="btn btn-sm btn-flush fw-bold text-dark mb-1">Lainnya</button>
             </div>
@@ -68,7 +68,7 @@
                         <img src="/icons/elements/black/Notification.svg" class="h-35px" alt="Notification" />
                     </div>
                     <div class="col-1 mt-2">
-                        <a href="/">
+                        <a href="/clyfar">
                             <img src="/images/avatar.jfif" class="h-30px rounded-circle" alt=""/>
                         </a>
                     </div>
