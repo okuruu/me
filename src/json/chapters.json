@@ -1,14 +1,11 @@
-import type { Chapters } from "../../library/interface/Quran"
-
-const chapters: Chapters[] = [
+[
     {
         "id": 1,
         "name": "الفاتحة",
         "transliteration": "Al-Fatihah",
         "translation": "Pembukaan",
         "type": "meccan",
-        "total_verses": 7,
-
+        "total_verses": 7
     },
     {
         "id": 2,
@@ -16,7 +13,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Baqarah",
         "translation": "Sapi Betina",
         "type": "medinan",
-        "total_verses": 286,
+        "total_verses": 286
 
     },
     {
@@ -25,8 +22,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ali 'Imran",
         "translation": "Keluarga Imran",
         "type": "medinan",
-        "total_verses": 200,
-
+        "total_verses": 200
     },
     {
         "id": 4,
@@ -34,8 +30,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nisa",
         "translation": "Wanita",
         "type": "medinan",
-        "total_verses": 176,
-
+        "total_verses": 176
     },
     {
         "id": 5,
@@ -43,8 +38,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ma'idah",
         "translation": "Jamuan (Hidangan Makanan)",
         "type": "medinan",
-        "total_verses": 120,
-
+        "total_verses": 120
     },
     {
         "id": 6,
@@ -52,8 +46,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-An'am",
         "translation": "Binatang Ternak",
         "type": "meccan",
-        "total_verses": 165,
-
+        "total_verses": 165
     },
     {
         "id": 7,
@@ -61,8 +54,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-A'raf",
         "translation": "Tempat-tempat Tinggi",
         "type": "meccan",
-        "total_verses": 206,
-
+        "total_verses": 206
     },
     {
         "id": 8,
@@ -70,8 +62,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Anfal",
         "translation": "Rampasan Perang",
         "type": "medinan",
-        "total_verses": 75,
-
+        "total_verses": 75
     },
     {
         "id": 9,
@@ -79,8 +70,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Tawbah",
         "translation": "Pengampunan",
         "type": "medinan",
-        "total_verses": 129,
-
+        "total_verses": 129
     },
     {
         "id": 10,
@@ -88,8 +78,7 @@ const chapters: Chapters[] = [
         "transliteration": "Yunus",
         "translation": "Yunus",
         "type": "meccan",
-        "total_verses": 109,
-
+        "total_verses": 109
     },
     {
         "id": 11,
@@ -97,8 +86,7 @@ const chapters: Chapters[] = [
         "transliteration": "Hud",
         "translation": "Hud",
         "type": "meccan",
-        "total_verses": 123,
-
+        "total_verses": 123
     },
     {
         "id": 12,
@@ -106,8 +94,7 @@ const chapters: Chapters[] = [
         "transliteration": "Yusuf",
         "translation": "Yusuf",
         "type": "meccan",
-        "total_verses": 111,
-
+        "total_verses": 111
     },
     {
         "id": 13,
@@ -115,8 +102,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ar-Ra'd",
         "translation": "Guruh (Petir)",
         "type": "medinan",
-        "total_verses": 43,
-
+        "total_verses": 43
     },
     {
         "id": 14,
@@ -124,8 +110,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ibrahim",
         "translation": "Ibrahim",
         "type": "meccan",
-        "total_verses": 52,
-
+        "total_verses": 52
     },
     {
         "id": 15,
@@ -133,8 +118,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Hijr",
         "translation": "Bukit",
         "type": "meccan",
-        "total_verses": 99,
-
+        "total_verses": 99
     },
     {
         "id": 16,
@@ -142,8 +126,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nahl",
         "translation": "Lebah Madu",
         "type": "meccan",
-        "total_verses": 128,
-
+        "total_verses": 128
     },
     {
         "id": 17,
@@ -151,8 +134,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Isra",
         "translation": "Perjalanan Malam",
         "type": "meccan",
-        "total_verses": 111,
-
+        "total_verses": 111
     },
     {
         "id": 18,
@@ -160,8 +142,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Kahf",
         "translation": "Para Penghuni Gua",
         "type": "meccan",
-        "total_verses": 110,
-
+        "total_verses": 110
     },
     {
         "id": 19,
@@ -169,8 +150,7 @@ const chapters: Chapters[] = [
         "transliteration": "Maryam",
         "translation": "Maryam",
         "type": "meccan",
-        "total_verses": 98,
-
+        "total_verses": 98
     },
     {
         "id": 20,
@@ -178,8 +158,7 @@ const chapters: Chapters[] = [
         "transliteration": "Taha",
         "translation": "Tha-Ha",
         "type": "meccan",
-        "total_verses": 135,
-
+        "total_verses": 135
     },
     {
         "id": 21,
@@ -187,8 +166,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Anbya",
         "translation": "Para Nabi",
         "type": "meccan",
-        "total_verses": 112,
-
+        "total_verses": 112
     },
     {
         "id": 22,
@@ -196,8 +174,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Hajj",
         "translation": "Haji",
         "type": "medinan",
-        "total_verses": 78,
-
+        "total_verses": 78
     },
     {
         "id": 23,
@@ -205,8 +182,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mu'minun",
         "translation": "Orang-orang Mukmin",
         "type": "meccan",
-        "total_verses": 118,
-
+        "total_verses": 118
     },
     {
         "id": 24,
@@ -214,8 +190,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nur",
         "translation": "Cahaya",
         "type": "medinan",
-        "total_verses": 64,
-
+        "total_verses": 64
     },
     {
         "id": 25,
@@ -223,8 +198,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Furqan",
         "translation": "Pembeda",
         "type": "meccan",
-        "total_verses": 77,
-
+        "total_verses": 77
     },
     {
         "id": 26,
@@ -232,8 +206,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ash-Shu'ara",
         "translation": "Penyair",
         "type": "meccan",
-        "total_verses": 227,
-
+        "total_verses": 227
     },
     {
         "id": 27,
@@ -241,8 +214,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Naml",
         "translation": "Semut",
         "type": "meccan",
-        "total_verses": 93,
-
+        "total_verses": 93
     },
     {
         "id": 28,
@@ -250,8 +222,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qasas",
         "translation": "Kisah-kisah",
         "type": "meccan",
-        "total_verses": 88,
-
+        "total_verses": 88
     },
     {
         "id": 29,
@@ -259,8 +230,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-'Ankabut",
         "translation": "Laba-laba",
         "type": "meccan",
-        "total_verses": 69,
-
+        "total_verses": 69
     },
     {
         "id": 30,
@@ -268,8 +238,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ar-Rum",
         "translation": "Bangsa Romawi",
         "type": "meccan",
-        "total_verses": 60,
-
+        "total_verses": 60
     },
     {
         "id": 31,
@@ -277,8 +246,7 @@ const chapters: Chapters[] = [
         "transliteration": "Luqman",
         "translation": "Luqman",
         "type": "meccan",
-        "total_verses": 34,
-
+        "total_verses": 34
     },
     {
         "id": 32,
@@ -286,8 +254,7 @@ const chapters: Chapters[] = [
         "transliteration": "As-Sajdah",
         "translation": "Sujud",
         "type": "meccan",
-        "total_verses": 30,
-
+        "total_verses": 30
     },
     {
         "id": 33,
@@ -295,8 +262,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ahzab",
         "translation": "Golongan yang Bersekutu",
         "type": "medinan",
-        "total_verses": 73,
-
+        "total_verses": 73
     },
     {
         "id": 34,
@@ -304,8 +270,7 @@ const chapters: Chapters[] = [
         "transliteration": "Saba",
         "translation": "Saba\\'",
         "type": "meccan",
-        "total_verses": 54,
-
+        "total_verses": 54
     },
     {
         "id": 35,
@@ -313,8 +278,7 @@ const chapters: Chapters[] = [
         "transliteration": "Fatir",
         "translation": "Pencipta",
         "type": "meccan",
-        "total_verses": 45,
-
+        "total_verses": 45
     },
     {
         "id": 36,
@@ -322,8 +286,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ya-Sin",
         "translation": "Yas Sin",
         "type": "meccan",
-        "total_verses": 83,
-
+        "total_verses": 83
     },
     {
         "id": 37,
@@ -331,8 +294,7 @@ const chapters: Chapters[] = [
         "transliteration": "As-Saffat",
         "translation": "Barisan-barisan",
         "type": "meccan",
-        "total_verses": 182,
-
+        "total_verses": 182
     },
     {
         "id": 38,
@@ -340,8 +302,7 @@ const chapters: Chapters[] = [
         "transliteration": "Sad",
         "translation": "Shad",
         "type": "meccan",
-        "total_verses": 88,
-
+        "total_verses": 88
     },
     {
         "id": 39,
@@ -349,8 +310,7 @@ const chapters: Chapters[] = [
         "transliteration": "Az-Zumar",
         "translation": "Para Rombongan",
         "type": "meccan",
-        "total_verses": 75,
-
+        "total_verses": 75
     },
     {
         "id": 40,
@@ -358,8 +318,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ghafir",
         "translation": "Sang Maha Pengampun",
         "type": "meccan",
-        "total_verses": 85,
-
+        "total_verses": 85
     },
     {
         "id": 41,
@@ -367,8 +326,7 @@ const chapters: Chapters[] = [
         "transliteration": "Fussilat",
         "translation": "Yang Dijelaskan",
         "type": "meccan",
-        "total_verses": 54,
-
+        "total_verses": 54
     },
     {
         "id": 42,
@@ -376,8 +334,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ash-Shuraa",
         "translation": "Musyawarah",
         "type": "meccan",
-        "total_verses": 53,
-
+        "total_verses": 53
     },
     {
         "id": 43,
@@ -385,8 +342,7 @@ const chapters: Chapters[] = [
         "transliteration": "Az-Zukhruf",
         "translation": "Perhiasan",
         "type": "meccan",
-        "total_verses": 89,
-
+        "total_verses": 89
     },
     {
         "id": 44,
@@ -394,8 +350,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ad-Dukhan",
         "translation": "Kabut",
         "type": "meccan",
-        "total_verses": 59,
-
+        "total_verses": 59
     },
     {
         "id": 45,
@@ -403,8 +358,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Jathiyah",
         "translation": "Yang Bertekuk Lutut",
         "type": "meccan",
-        "total_verses": 37,
-
+        "total_verses": 37
     },
     {
         "id": 46,
@@ -412,8 +366,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ahqaf",
         "translation": "Bukit-bukir Pasir",
         "type": "meccan",
-        "total_verses": 35,
-
+        "total_verses": 35
     },
     {
         "id": 47,
@@ -421,8 +374,7 @@ const chapters: Chapters[] = [
         "transliteration": "Muhammad",
         "translation": "Muhammad",
         "type": "medinan",
-        "total_verses": 38,
-
+        "total_verses": 38
     },
     {
         "id": 48,
@@ -430,8 +382,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Fath",
         "translation": "Kemenangan",
         "type": "medinan",
-        "total_verses": 29,
-
+        "total_verses": 29
     },
     {
         "id": 49,
@@ -439,8 +390,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Hujurat",
         "translation": "Kamar-kamar",
         "type": "medinan",
-        "total_verses": 18,
-
+        "total_verses": 18
     },
     {
         "id": 50,
@@ -448,8 +398,7 @@ const chapters: Chapters[] = [
         "transliteration": "Qaf",
         "translation": "Qaf",
         "type": "meccan",
-        "total_verses": 45,
-
+        "total_verses": 45
     },
     {
         "id": 51,
@@ -457,8 +406,7 @@ const chapters: Chapters[] = [
         "transliteration": "Adh-Dhariyat",
         "translation": "Angin yang Menerbangkan",
         "type": "meccan",
-        "total_verses": 60,
-
+        "total_verses": 60
     },
     {
         "id": 52,
@@ -466,8 +414,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Tur",
         "translation": "Bukit",
         "type": "meccan",
-        "total_verses": 49,
-
+        "total_verses": 49
     },
     {
         "id": 53,
@@ -475,8 +422,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Najm",
         "translation": "Bintang",
         "type": "meccan",
-        "total_verses": 62,
-
+        "total_verses": 62
     },
     {
         "id": 54,
@@ -484,8 +430,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qamar",
         "translation": "Bulan",
         "type": "meccan",
-        "total_verses": 55,
-
+        "total_verses": 55
     },
     {
         "id": 55,
@@ -493,8 +438,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ar-Rahman",
         "translation": "Yang Maha Pemurah",
         "type": "medinan",
-        "total_verses": 78,
-
+        "total_verses": 78
     },
     {
         "id": 56,
@@ -502,8 +446,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Waqi'ah",
         "translation": "Hari Kiamat",
         "type": "meccan",
-        "total_verses": 96,
-
+        "total_verses": 96
     },
     {
         "id": 57,
@@ -511,8 +454,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Hadid",
         "translation": "Besi",
         "type": "medinan",
-        "total_verses": 29,
-
+        "total_verses": 29
     },
     {
         "id": 58,
@@ -520,8 +462,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mujadila",
         "translation": "Wanita yang Menggugat",
         "type": "medinan",
-        "total_verses": 22,
-
+        "total_verses": 22
     },
     {
         "id": 59,
@@ -529,8 +470,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Hashr",
         "translation": "Pengusiran",
         "type": "medinan",
-        "total_verses": 24,
-
+        "total_verses": 24
     },
     {
         "id": 60,
@@ -538,8 +478,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mumtahanah",
         "translation": "Wanita yang Diuji",
         "type": "medinan",
-        "total_verses": 13,
-
+        "total_verses": 13
     },
     {
         "id": 61,
@@ -547,8 +486,7 @@ const chapters: Chapters[] = [
         "transliteration": "As-Saf",
         "translation": "Barisan",
         "type": "medinan",
-        "total_verses": 14,
-
+        "total_verses": 14
     },
     {
         "id": 62,
@@ -556,8 +494,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Jumu'ah",
         "translation": "Hari Jum\\'at",
         "type": "medinan",
-        "total_verses": 11,
-
+        "total_verses": 11
     },
     {
         "id": 63,
@@ -565,8 +502,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Munafiqun",
         "translation": "Kaum Munafik",
         "type": "medinan",
-        "total_verses": 11,
-
+        "total_verses": 11
     },
     {
         "id": 64,
@@ -574,8 +510,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Taghabun",
         "translation": "Hari Dinampakkan Kesalahan",
         "type": "medinan",
-        "total_verses": 18,
-
+        "total_verses": 18
     },
     {
         "id": 65,
@@ -583,8 +518,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Talaq",
         "translation": "Perceraian",
         "type": "medinan",
-        "total_verses": 12,
-
+        "total_verses": 12
     },
     {
         "id": 66,
@@ -592,8 +526,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Tahrim",
         "translation": "Mengharamkan",
         "type": "medinan",
-        "total_verses": 12,
-
+        "total_verses": 12
     },
     {
         "id": 67,
@@ -601,8 +534,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mulk",
         "translation": "Kerajaan",
         "type": "meccan",
-        "total_verses": 30,
-
+        "total_verses": 30
     },
     {
         "id": 68,
@@ -610,8 +542,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qalam",
         "translation": "Pena",
         "type": "meccan",
-        "total_verses": 52,
-
+        "total_verses": 52
     },
     {
         "id": 69,
@@ -619,8 +550,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Haqqah",
         "translation": "Kenyataan (Hari Kiamat)",
         "type": "meccan",
-        "total_verses": 52,
-
+        "total_verses": 52
     },
     {
         "id": 70,
@@ -628,8 +558,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ma'arij",
         "translation": "Tempat yang Naik",
         "type": "meccan",
-        "total_verses": 44,
-
+        "total_verses": 44
     },
     {
         "id": 71,
@@ -637,8 +566,7 @@ const chapters: Chapters[] = [
         "transliteration": "Nuh",
         "translation": "Nuh",
         "type": "meccan",
-        "total_verses": 28,
-
+        "total_verses": 28
     },
     {
         "id": 72,
@@ -646,8 +574,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Jinn",
         "translation": "Jin",
         "type": "meccan",
-        "total_verses": 28,
-
+        "total_verses": 28
     },
     {
         "id": 73,
@@ -655,8 +582,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Muzzammil",
         "translation": "Orang yang Berselimut",
         "type": "meccan",
-        "total_verses": 20,
-
+        "total_verses": 20
     },
     {
         "id": 74,
@@ -664,8 +590,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Muddaththir",
         "translation": "Orang yang Berkemul",
         "type": "meccan",
-        "total_verses": 56,
-
+        "total_verses": 56
     },
     {
         "id": 75,
@@ -673,8 +598,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qiyamah",
         "translation": "Hari Berbangkit",
         "type": "meccan",
-        "total_verses": 40,
-
+        "total_verses": 40
     },
     {
         "id": 76,
@@ -682,8 +606,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Insan",
         "translation": "Manusia",
         "type": "medinan",
-        "total_verses": 31,
-
+        "total_verses": 31
     },
     {
         "id": 77,
@@ -691,8 +614,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mursalat",
         "translation": "Malaikat-malaikan yang Diutus",
         "type": "meccan",
-        "total_verses": 50,
-
+        "total_verses": 50
     },
     {
         "id": 78,
@@ -700,8 +622,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Naba",
         "translation": "Berita Besar",
         "type": "meccan",
-        "total_verses": 40,
-
+        "total_verses": 40
     },
     {
         "id": 79,
@@ -709,8 +630,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nazi'at",
         "translation": "Malaikat yang Mencabut",
         "type": "meccan",
-        "total_verses": 46,
-
+        "total_verses": 46
     },
     {
         "id": 80,
@@ -718,8 +638,7 @@ const chapters: Chapters[] = [
         "transliteration": "'Abasa",
         "translation": "Ia Bermuka Masam",
         "type": "meccan",
-        "total_verses": 42,
-
+        "total_verses": 42
     },
     {
         "id": 81,
@@ -727,8 +646,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Takwir",
         "translation": "Menggulung",
         "type": "meccan",
-        "total_verses": 29,
-
+        "total_verses": 29
     },
     {
         "id": 82,
@@ -736,8 +654,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Infitar",
         "translation": "Terbelah",
         "type": "meccan",
-        "total_verses": 19,
-
+        "total_verses": 19
     },
     {
         "id": 83,
@@ -745,8 +662,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Mutaffifin",
         "translation": "Orang-orang Curang",
         "type": "meccan",
-        "total_verses": 36,
-
+        "total_verses": 36
     },
     {
         "id": 84,
@@ -754,8 +670,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Inshiqaq",
         "translation": "Terbelah",
         "type": "meccan",
-        "total_verses": 25,
-
+        "total_verses": 25
     },
     {
         "id": 85,
@@ -763,8 +678,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Buruj",
         "translation": "Gugusan Bintang",
         "type": "meccan",
-        "total_verses": 22,
-
+        "total_verses": 22
     },
     {
         "id": 86,
@@ -772,8 +686,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Tariq",
         "translation": "Yang Datang di Malam Hari",
         "type": "meccan",
-        "total_verses": 17,
-
+        "total_verses": 17
     },
     {
         "id": 87,
@@ -781,8 +694,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-A'la",
         "translation": "Yang Paling Tinggi",
         "type": "meccan",
-        "total_verses": 19,
-
+        "total_verses": 19
     },
     {
         "id": 88,
@@ -790,8 +702,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ghashiyah",
         "translation": "Hari Pembalasan",
         "type": "meccan",
-        "total_verses": 26,
-
+        "total_verses": 26
     },
     {
         "id": 89,
@@ -799,8 +710,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Fajr",
         "translation": "Fajar",
         "type": "meccan",
-        "total_verses": 30,
-
+        "total_verses": 30
     },
     {
         "id": 90,
@@ -808,8 +718,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Balad",
         "translation": "Negeri",
         "type": "meccan",
-        "total_verses": 20,
-
+        "total_verses": 20
     },
     {
         "id": 91,
@@ -817,8 +726,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ash-Shams",
         "translation": "Matahari",
         "type": "meccan",
-        "total_verses": 15,
-
+        "total_verses": 15
     },
     {
         "id": 92,
@@ -826,8 +734,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Layl",
         "translation": "Malam",
         "type": "meccan",
-        "total_verses": 21,
-
+        "total_verses": 21
     },
     {
         "id": 93,
@@ -835,8 +742,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ad-Duhaa",
         "translation": "Waktu Dhuha",
         "type": "meccan",
-        "total_verses": 11,
-
+        "total_verses": 11
     },
     {
         "id": 94,
@@ -844,8 +750,7 @@ const chapters: Chapters[] = [
         "transliteration": "Ash-Sharh",
         "translation": "Melapangkan",
         "type": "meccan",
-        "total_verses": 8,
-
+        "total_verses": 8
     },
     {
         "id": 95,
@@ -853,8 +758,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Tin",
         "translation": "Buah Tin",
         "type": "meccan",
-        "total_verses": 8,
-
+        "total_verses": 8
     },
     {
         "id": 96,
@@ -862,8 +766,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-'Alaq",
         "translation": "Segumpal Darah",
         "type": "meccan",
-        "total_verses": 19,
-
+        "total_verses": 19
     },
     {
         "id": 97,
@@ -871,8 +774,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qadr",
         "translation": "Kemuliaan",
         "type": "meccan",
-        "total_verses": 5,
-
+        "total_verses": 5
     },
     {
         "id": 98,
@@ -880,8 +782,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Bayyinah",
         "translation": "Pembuktian",
         "type": "medinan",
-        "total_verses": 8,
-
+        "total_verses": 8
     },
     {
         "id": 99,
@@ -889,8 +790,7 @@ const chapters: Chapters[] = [
         "transliteration": "Az-Zalzalah",
         "translation": "Kegoncangan",
         "type": "medinan",
-        "total_verses": 8,
-
+        "total_verses": 8
     },
     {
         "id": 100,
@@ -898,8 +798,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-'Adiyat",
         "translation": "Berlari Kencang",
         "type": "meccan",
-        "total_verses": 11,
-
+        "total_verses": 11
     },
     {
         "id": 101,
@@ -907,8 +806,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Qari'ah",
         "translation": "Hari Kiamat",
         "type": "meccan",
-        "total_verses": 11,
-
+        "total_verses": 11
     },
     {
         "id": 102,
@@ -916,8 +814,7 @@ const chapters: Chapters[] = [
         "transliteration": "At-Takathur",
         "translation": "Bermegah-megahan",
         "type": "meccan",
-        "total_verses": 8,
-
+        "total_verses": 8
     },
     {
         "id": 103,
@@ -925,8 +822,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-'Asr",
         "translation": "Waktu Sore",
         "type": "meccan",
-        "total_verses": 3,
-
+        "total_verses": 3
     },
     {
         "id": 104,
@@ -934,8 +830,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Humazah",
         "translation": "Pengumpat",
         "type": "meccan",
-        "total_verses": 9,
-
+        "total_verses": 9
     },
     {
         "id": 105,
@@ -943,8 +838,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Fil",
         "translation": "Gajah",
         "type": "meccan",
-        "total_verses": 5,
-
+        "total_verses": 5
     },
     {
         "id": 106,
@@ -952,8 +846,7 @@ const chapters: Chapters[] = [
         "transliteration": "Quraysh",
         "translation": "Suku Quraisy",
         "type": "meccan",
-        "total_verses": 4,
-
+        "total_verses": 4
     },
     {
         "id": 107,
@@ -961,8 +854,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ma'un",
         "translation": "Barang yang Berguna",
         "type": "meccan",
-        "total_verses": 7,
-
+        "total_verses": 7
     },
     {
         "id": 108,
@@ -970,8 +862,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Kawthar",
         "translation": "Nikmat Berlimpah",
         "type": "meccan",
-        "total_verses": 3,
-
+        "total_verses": 3
     },
     {
         "id": 109,
@@ -979,8 +870,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Kafirun",
         "translation": "Orang-orang Kafir",
         "type": "meccan",
-        "total_verses": 6,
-
+        "total_verses": 6
     },
     {
         "id": 110,
@@ -988,8 +878,7 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nasr",
         "translation": "Pertolongan",
         "type": "medinan",
-        "total_verses": 3,
-
+        "total_verses": 3
     },
     {
         "id": 111,
@@ -997,8 +886,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Masad",
         "translation": "Gejolak Api (Sabut)",
         "type": "meccan",
-        "total_verses": 5,
-
+        "total_verses": 5
     },
     {
         "id": 112,
@@ -1006,8 +894,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Ikhlas",
         "translation": "Ikhlash",
         "type": "meccan",
-        "total_verses": 4,
-
+        "total_verses": 4
     },
     {
         "id": 113,
@@ -1015,8 +902,7 @@ const chapters: Chapters[] = [
         "transliteration": "Al-Falaq",
         "translation": "Waktu Shubuh",
         "type": "meccan",
-        "total_verses": 5,
-
+        "total_verses": 5
     },
     {
         "id": 114,
@@ -1024,13 +910,6 @@ const chapters: Chapters[] = [
         "transliteration": "An-Nas",
         "translation": "Umat Manusia",
         "type": "meccan",
-        "total_verses": 6,
-
+        "total_verses": 6
     }
-];
-
-export const load = () => {
-    return {
-        quran : chapters
-    }
-}
+]

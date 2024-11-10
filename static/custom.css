@@ -70,3 +70,9 @@ body {
 .bg-clyfar {
     background-color: #CDDEFF;
 }
+
+/* SVG */
+
+.svg-warning {
+    filter: invert(55%) sepia(77%) saturate(421%) hue-rotate(336deg) brightness(102%) contrast(102%);
+}
