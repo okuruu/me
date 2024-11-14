@@ -1,10 +1,10 @@
 interface Testee {
     CREATED_AT: string;
-    ENABLE_TEST: "Yes" | "No";
-    GENDER: "Pria" | "Wanita" | null;
+    ENABLE_TEST: string;
+    GENDER: string;
     ID: number;
-    LEVEL: number;
-    LIST: string;
+    LEVEL: string | null;
+    LIST: string | null;
     NAMA: string | null;
     TOKEN: string;
     TTL: string | null;

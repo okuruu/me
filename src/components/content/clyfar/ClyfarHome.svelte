@@ -1,12 +1,8 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { db } from "../../../library/hooks/db";
     import Toggle from "../../shared/Toggle.svelte";
+    import Candidates from "./view/Candidates.svelte";
     import Searchbar from "../../shared/Searchbar.svelte";
-    import type { Testee } from "../../../interface/Clyfar";
     import DatePlaceholder from "../../shared/DatePlaceholder.svelte";
-
-    let newData: Testee[] = $state([]);
 
     let imageView: boolean = $state(false);
     let currentPagination: string = $state("10");
@@ -17,13 +13,6 @@
 
     function handleView(event: CustomEvent) {
         imageView = event.detail.message;
-    }
-
-    async function view(id: string): Promise<void> {
-        const { status, message, data } = await db({ token: id }, 'Clyfar/Check-Testee');
-        if (status === 'success') {
-            return goto(`/clyfar/beranda/${data}`);
-        }
     }
 </script>
 <div class="card shadow-sm bg-white my-7">
@@ -68,52 +57,7 @@
 
         <div class="separator my-5"></div>
 
-        <div class="table-responsive">
-            <table class="table align-middle table-striped table-hover">
-                <thead>
-                    <tr class="fw-bolder">
-                        <th>#</th>
-                        <th>Token</th>
-                        <th>Jenis Tes</th>
-                        <th>Nama</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tanggal Lahir / Usia</th>
-                        <th>WhatsApp</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#if newData.length === 0}
-                        <tr>
-                            <td colspan="8" class="text-center">Tidak ada data</td>
-                        </tr>
-                    {:else}
-                        {#each newData as data, index }
-                            <tr>
-                                <td>{index + 1}</td>
-                                <td>{data.TOKEN}</td>
-                                <td>{data.LIST === null ? '-' : JSON.parse(data.LIST).join(", ")}</td>
-                                <td>{data.NAMA ?? '-'}</td>
-                                <td>
-                                    {#if data.GENDER === "Pria"}
-                                        <span class="badge badge-primary">{data.GENDER}</span>
-                                    {:else if data.GENDER === "Wanita"}
-                                        <span class="badge badge-info">{data.GENDER}</span>
-                                    {:else}
-                                        -
-                                    {/if}
-                                </td>
-                                <td>{data.TTL ?? '-'}</td>
-                                <td>{data.WHATSAPP ?? '-'}</td>
-                                <td>
-                                    <button type="button" onclick={() => view(data.TOKEN)} class="btn btn-sm btn-primary">Lihat</button>
-                                </td>
-                            </tr>
-                        {/each}
-                    {/if}
-                </tbody>
-            </table>
-        </div>
+        <Candidates/>
 
     </div>
 </div>
