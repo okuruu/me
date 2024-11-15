@@ -2,8 +2,9 @@
     import { goto } from "$app/navigation";
     import { db } from "../../../../library/hooks/db";
     import type { Testee } from "../../../../interface/Clyfar";
+    import { Carbon } from "../../../../library/utils/useFormat";
     import sample_table from "../../../../json/sample_table.json";
-
+    
     let newData: Testee[] = $state([]);
 
     $effect(() => {
@@ -52,7 +53,7 @@
                                 -
                             {/if}
                         </td>
-                        <td>{data.TTL ?? '-'}</td>
+                        <td>{data.TTL == null ? '-' : `${Carbon(data.TTL, "date")} / ${Carbon(data.TTL, "age")}`}</td>
                         <td>{data.WHATSAPP ?? '-'}</td>
                         <td>
                             <button type="button" onclick={() => view(data.TOKEN)} class="btn btn-sm btn-primary">Lihat</button>

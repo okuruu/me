@@ -16,14 +16,14 @@
     ];
 
     const megaMenu: Navigation[] = [
+        { name: 'Psikotes: Kraepelin', url: '/bpjs', active: false, locked : false },
+        { name: 'Psikotes: Papi Kostick', url: '/bpjs', active: false, locked : false },
         { name: 'Psikotes: Koch Test [BAUM]', url: '/bpjs', active: false, locked : false },
         { name: 'Psikotes: Culture Fair Intelligence Test [CFIT]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Dominance, Influence, Steadiness, Conscientiousness [DISC]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Kraepelin', url: '/bpjs', active: false, locked : false },
         { name: 'Psikotes: Myers–Briggs Type Indicator [MBTI]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Management Style Diagnostic Tes [MSDT]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Papi Kostick', url: '/bpjs', active: false, locked : false },
         { name: 'Psikotes: Rothwell Miller Interest Blank [RMIB]', url: '/bpjs', active: false, locked : false },
+        { name: 'Psikotes: Management Style Diagnostic Tes [MSDT]', url: '/bpjs', active: false, locked : false },
+        { name: 'Psikotes: Dominance, Influence, Steadiness, Conscientiousness [DISC]', url: '/bpjs', active: false, locked : false },
     ];
     
     function toggleMegaMenu() {
@@ -50,8 +50,7 @@
     <nav class="p-5 px-12">
         <div class="row">
             <div class="col mt-4">
-                <!-- <img src="/images/web/flat-logo.svg" class="h-20px" alt="Logo Dea Bakery" /> -->
-                <h6>Staff Only!</h6>
+                <img src="/images/clyfar.webp" class="h-30px" alt="Clyfar" />
             </div>
             <div class="col mt-4">
                 {#each navigation as nav }

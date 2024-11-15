@@ -54,10 +54,7 @@
                 </div>
             </div>
         </div>
-
         <div class="separator my-5"></div>
-
         <Candidates/>
-
     </div>
 </div>
