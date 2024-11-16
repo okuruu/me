@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import { db } from "../../../../library/hooks/db";
     import type { Testee } from "../../../../interface/Clyfar";
-    import { Carbon } from "../../../../library/utils/useFormat";
+    import { capitalizeEachWord, Carbon } from "../../../../library/utils/useFormat";
     
     let { userList }: { userList: Testee[] } = $props();
 
@@ -50,7 +50,7 @@
                         <td>{index + 1}</td>
                         <td>{data.TOKEN}</td>
                         <td>{data.LIST === null ? '-' : JSON.parse(data.LIST).join(", ")}</td>
-                        <td>{data.NAMA ?? '-'}</td>
+                        <td>{data.NAMA === null ? '-' : capitalizeEachWord(data.NAMA)}</td>
                         <td>
                             {#if data.GENDER === "Pria"}
                                 <span class="badge badge-primary">{data.GENDER}</span>
@@ -64,8 +64,8 @@
                         <td>{data.WHATSAPP ?? '-'}</td>
                         <td>
                             {#if data.IS_EDITED}
-                                <button type="button" onclick={() => setRemove(index)} class="btn btn-sm btn-icon btn-gradient">
-                                    <img src="/icons/elements/Delete.svg" class="svg-white" alt=""/>
+                                <button type="button" onclick={() => setRemove(index)} class="btn btn-sm btn-xs btn-dark text-white">
+                                    <img src="/icons/elements/Delete.svg" class="svg-white me-2" alt=""/> Hapus
                                 </button>
                             {:else}
                                 {@render defaultView(index)}

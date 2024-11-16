@@ -87,4 +87,8 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
     return '';
 }
 
-export { likesCount, Carbon }
+function capitalizeEachWord(str: string): string {
+    return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+export { likesCount, Carbon, capitalizeEachWord }

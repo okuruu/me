@@ -1,6 +1,7 @@
 <script lang="ts">
     import Toggle from "../../shared/Toggle.svelte";
     import Candidates from "./view/Candidates.svelte";
+    import CreateUser from "./view/CreateUser.svelte";
     import Searchbar from "../../shared/Searchbar.svelte";
     import type { Testee } from "../../../interface/Clyfar";
     import sample_table from "../../../json/sample_table.json";
@@ -72,6 +73,10 @@
             </div>
         </div>
         <div class="separator my-5"></div>
-        <Candidates userList={newData}/>
+        {#if imageView}
+            <CreateUser/>
+        {:else}
+            <Candidates userList={newData}/>
+        {/if}
     </div>
 </div>
