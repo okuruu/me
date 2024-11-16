@@ -10,7 +10,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-19 09:31:43",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 56,
@@ -23,7 +24,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-19 09:28:06",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 55,
@@ -36,7 +38,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-19 09:28:34",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 54,
@@ -49,7 +52,8 @@
         "GENDER": "Pria",
         "LIST": "[\"CFIT\",\"KRAEPLIN\",\"DISC\",\"RMIB\"]",
         "CREATED_AT": "2024-09-19 08:23:00",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 53,
@@ -62,7 +66,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-19 09:28:15",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 52,
@@ -75,7 +80,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-18 09:32:24",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 51,
@@ -88,7 +94,8 @@
         "GENDER": "Wanita",
         "LIST": "[\"CFIT\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"RMIB\"]",
         "CREATED_AT": "2024-09-18 08:31:13",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 50,
@@ -101,7 +108,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-18 09:30:49",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 49,
@@ -114,7 +122,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-18 09:29:08",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 48,
@@ -127,7 +136,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-14 13:37:47",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 47,
@@ -140,7 +150,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-14 13:53:33",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 46,
@@ -153,7 +164,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-12 10:57:53",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 45,
@@ -166,7 +178,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-12 10:22:11",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 44,
@@ -179,7 +192,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-12 10:16:47",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 43,
@@ -192,7 +206,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-12 10:06:34",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 42,
@@ -205,7 +220,8 @@
         "GENDER": "Pria",
         "LIST": "[\"DISC\",\"RMIB\"]",
         "CREATED_AT": "2024-09-12 09:25:28",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 41,
@@ -218,7 +234,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-12 09:25:09",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 40,
@@ -231,7 +248,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-12 09:25:36",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 39,
@@ -244,7 +262,8 @@
         "GENDER": "Pria",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-12 08:25:42",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 38,
@@ -257,7 +276,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-19 09:27:40",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 37,
@@ -270,7 +290,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-12 09:25:17",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 36,
@@ -283,7 +304,8 @@
         "GENDER": "Pria",
         "LIST": "[\"CFIT\",\"KRAEPLIN\",\"DISC\",\"RMIB\"]",
         "CREATED_AT": "2024-09-14 13:37:58",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 35,
@@ -296,7 +318,8 @@
         "GENDER": "Pria",
         "LIST": null,
         "CREATED_AT": "2024-09-11 09:29:55",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 34,
@@ -309,7 +332,8 @@
         "GENDER": "Pria",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:21:24",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 33,
@@ -322,7 +346,8 @@
         "GENDER": "Wanita",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:20:41",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 32,
@@ -335,7 +360,8 @@
         "GENDER": "Wanita",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:20:22",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 31,
@@ -348,7 +374,8 @@
         "GENDER": "Wanita",
         "LIST": null,
         "CREATED_AT": "2024-09-11 09:29:08",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 30,
@@ -361,7 +388,8 @@
         "GENDER": "Wanita",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:18:57",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 29,
@@ -374,7 +402,8 @@
         "GENDER": "Pria",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:17:18",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     },
     {
         "ID": 28,
@@ -387,6 +416,7 @@
         "GENDER": "Pria",
         "LIST": "[\"MSDT\",\"CFIT\",\"MBTI\",\"KRAEPLIN\",\"BAUM\",\"DISC\",\"PAPI\",\"RMIB\"]",
         "CREATED_AT": "2024-09-11 09:16:59",
-        "UPDATED_AT": null
+        "UPDATED_AT": null,
+        "IS_EDITED" : false
     }
 ]

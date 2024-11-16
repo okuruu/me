@@ -3,19 +3,26 @@
     import { db } from "../../../../library/hooks/db";
     import type { Testee } from "../../../../interface/Clyfar";
     import { Carbon } from "../../../../library/utils/useFormat";
-    import sample_table from "../../../../json/sample_table.json";
     
-    let newData: Testee[] = $state([]);
+    let { userList }: { userList: Testee[] } = $props();
 
-    $effect(() => {
-        newData = sample_table;
-    })
     
-    async function view(id: string): Promise<void> {
-        const { status, message, data } = await db({ token: id }, 'Clyfar/Check-Testee');
+    async function view(id: number): Promise<void> {
+        const { status, message, data } = await db({ 
+            token: userList[id].TOKEN
+        }, 'Clyfar/Check-Testee');
         if (status === 'success') {
             return goto(`/clyfar/beranda/${data}`);
         }
+    }
+
+    function setEdit(id: number): boolean {
+        return userList[id].IS_EDITED = true
+    }
+    
+    function setRemove(id: number): Testee[] {
+        userList.splice(id, 1);
+        return userList;
     }
 </script>
 <div class="table-responsive">
@@ -33,12 +40,12 @@
             </tr>
         </thead>
         <tbody>
-            {#if newData.length === 0}
+            {#if userList.length === 0}
                 <tr>
                     <td colspan="8" class="text-center">Tidak ada data</td>
                 </tr>
             {:else}
-                {#each newData as data, index }
+                {#each userList as data, index }
                     <tr>
                         <td>{index + 1}</td>
                         <td>{data.TOKEN}</td>
@@ -56,7 +63,13 @@
                         <td>{data.TTL == null ? '-' : `${Carbon(data.TTL, "date")} / ${Carbon(data.TTL, "age")}`}</td>
                         <td>{data.WHATSAPP ?? '-'}</td>
                         <td>
-                            <button type="button" onclick={() => view(data.TOKEN)} class="btn btn-sm btn-primary">Lihat</button>
+                            {#if data.IS_EDITED}
+                                <button type="button" onclick={() => setRemove(index)} class="btn btn-sm btn-icon btn-gradient">
+                                    <img src="/icons/elements/Delete.svg" class="svg-white" alt=""/>
+                                </button>
+                            {:else}
+                                {@render defaultView(index)}
+                            {/if}
                         </td>
                     </tr>
                 {/each}
@@ -64,3 +77,12 @@
         </tbody>
     </table>
 </div>
+
+{#snippet defaultView(id: number)}
+    <button type="button" onclick={() => setEdit(id)} class="btn btn-sm btn-icon btn-gradient">
+        <img src="/icons/elements/Edit.svg" alt=""/>
+    </button>
+    <button type="button" onclick={() => view(id)} class="btn btn-sm btn-icon btn-gradient">
+        <img src="/icons/elements/Link-Out.svg" alt=""/>
+    </button>
+{/snippet}

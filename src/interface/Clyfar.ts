@@ -10,6 +10,7 @@ interface Testee {
     TTL: string | null;
     UPDATED_AT: string | null;
     WHATSAPP: string | null;
+    IS_EDITED : boolean;
 }
 
 interface RMIB {

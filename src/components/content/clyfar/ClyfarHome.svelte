@@ -2,7 +2,17 @@
     import Toggle from "../../shared/Toggle.svelte";
     import Candidates from "./view/Candidates.svelte";
     import Searchbar from "../../shared/Searchbar.svelte";
+    import type { Testee } from "../../../interface/Clyfar";
+    import sample_table from "../../../json/sample_table.json";
     import DatePlaceholder from "../../shared/DatePlaceholder.svelte";
+
+    let newData: Testee[] = $state([]);
+    let dataDefault: Testee[] = $state([]);
+    
+    $effect(() => {
+        newData = sample_table;
+        dataDefault = sample_table;
+    })
 
     let imageView: boolean = $state(false);
     let currentPagination: string = $state("10");
@@ -14,6 +24,13 @@
     function handleView(event: CustomEvent) {
         imageView = event.detail.message;
     }
+
+    function paginate(): Testee[]{
+        newData = dataDefault;
+        const rowsPerPage = parseInt(currentPagination);
+        newData = newData.slice(0, rowsPerPage);
+        return newData;
+    }
 </script>
 <div class="card shadow-sm bg-white my-7">
     <div class="card-body">
@@ -21,7 +38,7 @@
             <div class="col">
                 <div class="row">
                     <div class="col-2">
-                        <select bind:value={currentPagination} class="form-select form-select-sm form-select-transparent text-primary bg-light w-75">
+                        <select bind:value={currentPagination} onchange={paginate} class="form-select form-select-sm form-select-transparent text-primary bg-light w-75">
                             <option value=10>10</option>
                             <option value=25>25</option>
                             <option value=50>50</option>
@@ -55,6 +72,6 @@
             </div>
         </div>
         <div class="separator my-5"></div>
-        <Candidates/>
+        <Candidates userList={newData}/>
     </div>
 </div>
