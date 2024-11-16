@@ -48,12 +48,12 @@
         isDisabled = false;
     }
 </script>
-<h3 class="text-warning">Buat Akun</h3>
 <div class="row">
     <div class="col text-center">
         <img src="/assets/Token.svg" alt=""/>
     </div>
     <div class="col border-start ms-5">
+        <h3 class="text-warning mb-5">Buat Akun</h3>
         <div class="form-group my-2">
             <label for="jumlah" class="form-label fw-bold">Jumlah Kandidat</label>
             <input type="number" class="form-control form-control-sm" placeholder="Jumlah Kandidat">
@@ -71,13 +71,13 @@
         <div class="form-group my-2">
             <input type="checkbox" bind:checked={enableKraeplin} class="me-2"/>Kraepelin
         </div>
-        
+
         <div class="form-group my-2">
-            <input type="checkbox" bind:checked={enableBAUM} class="me-2"/>Koch Test [BAUM]
+            <input type="checkbox" bind:checked={enablePapikostick} class="me-2"/>Papi Kostick
         </div>
         
         <div class="form-group my-2">
-            <input type="checkbox" bind:checked={enablePapikostick} class="me-2"/>Papi Kostick
+            <input type="checkbox" bind:checked={enableBAUM} class="me-2"/>Koch Test [BAUM]
         </div>
         
         <div class="form-group my-2">
