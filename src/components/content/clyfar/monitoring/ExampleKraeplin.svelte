@@ -44,10 +44,10 @@
 </div>
 
 <div class="d-flex justify-content-end mt-12">
-    <span class="h4 text-white">{timer}</span>
+    <span class="h4">{timer}</span>
 </div>
 
-<h1 class=" text-center display-3 my-5 text-white">{expressions[expressionIndex]}</h1>
+<h1 class=" text-center display-3 my-5">{expressions[expressionIndex]}</h1>
 
 <div class="row mt-12">
     <div class="col-4"><button type="button" onclick={() => onTap(1)} class="btn btn-lg btn-bg-secondary w-100 fw-bold my-2 p-5"><span class="display-6">1</span></button></div>

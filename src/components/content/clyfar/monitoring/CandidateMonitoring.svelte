@@ -55,7 +55,7 @@
                         </tr>
                     {:else}
                         {#each userList as data, index }
-                            {#if data.LIST?.includes("RMIB")}
+                            {#if data.LIST?.includes(title)}
                                 <tr>
                                     <td>{index + 1}</td>
                                     <td>{data.TOKEN}</td>
