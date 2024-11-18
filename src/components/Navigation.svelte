@@ -15,14 +15,14 @@
     ];
 
     const megaMenu: Navigation[] = [
-        { name: 'Psikotes: Kraepelin', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Papi Kostick', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Koch Test [BAUM]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Culture Fair Intelligence Test [CFIT]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Myers–Briggs Type Indicator [MBTI]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Rothwell Miller Interest Blank [RMIB]', url: '/clyfar/beranda/rmib', active: false, locked : false },
-        { name: 'Psikotes: Management Style Diagnostic Tes [MSDT]', url: '/bpjs', active: false, locked : false },
-        { name: 'Psikotes: Dominance, Influence, Steadiness, Conscientiousness [DISC]', url: '/bpjs', active: false, locked : false },
+        { name: 'Psikotes: Kraepelin', url: '/clyfar/beranda/test/kraepelin', active: false, locked : false },
+        { name: 'Psikotes: Papi Kostick', url: '/clyfar/beranda/test/papikostick', active: false, locked : false },
+        { name: 'Psikotes: Koch Test [BAUM]', url: '/clyfar/beranda/test/baum', active: false, locked : false },
+        { name: 'Psikotes: Culture Fair Intelligence Test [CFIT]', url: '/clyfar/beranda/test/cfit', active: false, locked : false },
+        { name: 'Psikotes: Myers–Briggs Type Indicator [MBTI]', url: '/clyfar/beranda/test/mbti', active: false, locked : false },
+        { name: 'Psikotes: Rothwell Miller Interest Blank [RMIB]', url: '/clyfar/beranda/test/rmib', active: false, locked : false },
+        { name: 'Psikotes: Management Style Diagnostic Tes [MSDT]', url: '/clyfar/beranda/test/msdt', active: false, locked : false },
+        { name: 'Psikotes: Dominance, Influence, Steadiness, Conscientiousness [DISC]', url: '/clyfar/beranda/test/disc', active: false, locked : false },
     ];
     
     function toggleMegaMenu() {
