@@ -1,4 +1,5 @@
 <script lang="ts">
+    import rmib from "../../../../json/rmib.json";
     import { db } from "../../../../library/hooks/db";
     import { useString } from "../../../../library/config/useString";
     import { userConfig } from "../../../../library/config/baseConfiguration";
@@ -31,7 +32,7 @@
         // userGender = getLocal.gender;
     })
 
-    const newData: string[][] = useString.psychological.rmib[userGender];
+    const newData: string[][] = rmib[userGender];
 
     async function doPost(): Promise<void> {
         const form = new FormData(document.querySelector('form')!);
