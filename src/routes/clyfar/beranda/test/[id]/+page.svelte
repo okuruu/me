@@ -3,8 +3,9 @@
     import sample_table from "../../../../../json/sample_table.json";
     import Navigation from "../../../../../components/Navigation.svelte";
     import RMIB from "../../../../../components/content/clyfar/monitoring/RMIB.svelte";
-    import CandidateMonitoring from "../../../../../components/content/clyfar/monitoring/CandidateMonitoring.svelte";
     import Kraepelin from "../../../../../components/content/clyfar/monitoring/Kraepelin.svelte";
+    import CandidateMonitoring from "../../../../../components/content/clyfar/monitoring/CandidateMonitoring.svelte";
+    import Papikostick from "../../../../../components/content/clyfar/monitoring/Papikostick.svelte";
 
     const { data }: { data: { id: string; title: string; password: string; } } = $props();
 
@@ -30,6 +31,8 @@
                     <RMIB/>
                 {:else if data.id == "kraepelin"}
                     <Kraepelin/>
+                {:else if data.id == "papikostick"}
+                    <Papikostick/>
                 {/if}
             </div>
         </div>
