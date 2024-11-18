@@ -8,6 +8,7 @@
     import Papikostick from "../../../../../components/content/clyfar/monitoring/Papikostick.svelte";
     import Baum from "../../../../../components/content/clyfar/monitoring/Baum.svelte";
     import CFIT from "../../../../../components/content/clyfar/monitoring/CFIT.svelte";
+    import MBTI from "../../../../../components/content/clyfar/monitoring/MBTI.svelte";
 
     const { data }: { data: { id: string; title: string; password: string; } } = $props();
 
@@ -39,6 +40,8 @@
                     <Baum/>
                 {:else if data.id == "cfit"}
                     <CFIT/>
+                {:else if data.id == "mbti"}
+                    <MBTI/>
                 {/if}
             </div>
         </div>
