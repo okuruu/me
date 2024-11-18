@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { db } from "../../../utils/db";
     import { goto } from "$app/navigation";
-    import toast from "svelte-french-toast";
-    import { getLocalStorage } from "../../../utils/userStorage";
+    import { db } from "../../../../library/hooks/db";
+    import { getLocalStorage } from "../../../../library/utils/useStorage";
 
     async function endTest(): Promise <void> {
         const user = getLocalStorage();
@@ -17,7 +16,7 @@
             return goto('/clyfar');
         }
 
-        toast.error(message);
+        console.error(message);
     }
 </script>
 <div class="bg-clyfar vh-100">

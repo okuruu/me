@@ -1,7 +1,14 @@
 <script lang="ts">
-    import { logOut } from "../../../utils/auth";
+    import { goto } from "$app/navigation";
+
+    async function logOut(): Promise <void> {
+        localStorage.removeItem('localPIN');  
+        localStorage.removeItem('user');
+        console.log('See you soon!', { icon : '👋' }); 
+        return goto('/clyfar');
+    }
 </script>
-<div class="bg-clyfar vh-100">
+<div class="bg-light-warning vh-100">
     <div class="container-xs">
         <div class="card shadow-sm my-10 bg-white">
             <div class="card-body">
