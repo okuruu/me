@@ -6,6 +6,8 @@
     import Kraepelin from "../../../../../components/content/clyfar/monitoring/Kraepelin.svelte";
     import CandidateMonitoring from "../../../../../components/content/clyfar/monitoring/CandidateMonitoring.svelte";
     import Papikostick from "../../../../../components/content/clyfar/monitoring/Papikostick.svelte";
+    import Baum from "../../../../../components/content/clyfar/monitoring/Baum.svelte";
+    import CFIT from "../../../../../components/content/clyfar/monitoring/CFIT.svelte";
 
     const { data }: { data: { id: string; title: string; password: string; } } = $props();
 
@@ -33,6 +35,10 @@
                     <Kraepelin/>
                 {:else if data.id == "papikostick"}
                     <Papikostick/>
+                {:else if data.id == "baum"}
+                    <Baum/>
+                {:else if data.id == "cfit"}
+                    <CFIT/>
                 {/if}
             </div>
         </div>

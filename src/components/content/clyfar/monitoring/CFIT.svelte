@@ -1,14 +1,11 @@
 <script lang="ts">
-    import { run, preventDefault } from 'svelte/legacy';
+    import { preventDefault } from "svelte/legacy";
+    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { db } from "../../../../library/hooks/db";
+    import { updateCurrentTest } from "../../../../library/utils/useStorage";
+    import cfit from "../../../../json/cfit.json";
 
-    import { cfit } from '../../../resources/cfit';
-    import { db } from '../../../utils/db';
-    import toast, { Toaster } from 'svelte-french-toast';
-    import ExampleCFIT from '../sample/ExampleCFIT.svelte';
-    import { userConfig, userText } from '../../../strings';
-    import { updateCurrentTest } from '../../../utils/userStorage';
-
-    let token: string = $state(); 
+    let token: string = $state(''); 
     let enableTest: boolean = $state(false);
 
     let currentSecond:number    = $state(750);
@@ -17,9 +14,9 @@
     let thirdAnswers:any        = [];
     let fourthAnswers:any       = [];
 
-    let secondToken:string = $state();
-    let thirdToken:string = $state();
-    let fourthToken:string = $state();
+    let secondToken:string = $state('');
+    let thirdToken:string = $state('');
+    let fourthToken:string = $state('');
     
     let enableViewSecond:boolean    = $state(false);
     let enableViewThird:boolean     = $state(false);
@@ -47,12 +44,11 @@
             enableTest = true;
             isPaused = false;
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            toast.success(message);
             return;
         }
 
         token = '';
-        toast.error(message);
+        console.error(message);
         return;
     }
 
@@ -72,7 +68,7 @@
         }
 
         if(tokenType != currentToken){
-            return toast.error('Token tidak valid!',{ position : 'top-right' });
+            return console.error('Token tidak valid!',{ position : 'top-right' });
         }
 
         if(type == 'Second'){
@@ -134,66 +130,62 @@
             sortFourth  : filteredDataFourth.sort((min:number,max:number) => { return min.index - max.index }),
         }
 
-        console.log(finalAnswer)
-
-        const doPost = await fetch(userText.url + 'Clyfar/Test-Completion',{
-            method : 'post',
-            headers : { 'Content-Type' : 'application/json' },
-            body : JSON.stringify({
-                data : finalAnswer,
-                TIPE : 'CFIT',
-                localPIN : localStorage.getItem('localPIN') ?? null
-            })
-        });
-        const { status, message, redirectTo } = await doPost.json();
+        const { status, message, redirectTo } = await db({
+            data : finalAnswer,
+            TIPE : 'CFIT',
+            localPIN : localStorage.getItem('localPIN') ?? null
+        }, 'Clyfar/Test-Completion');
 
         if(status === 'success'){
             updateCurrentTest(redirectTo); 
             $userConfig.testPosition = redirectTo;
         } else {
-            toast.error(message);
+            console.error(message);
         }
     }
 
-    run(() => {
+    $effect(() => {
         if(currentSecond == 570){
             isPaused = true;
-            toast.success("Section 2 telah dibuka", { position : 'top-right' });
+            console.log("Section 2 telah dibuka", { position : 'top-right' });
         }
-    });
-    run(() => {
+
         if(currentSecond == 300){
             isPaused = true;
-            toast.success("Section 3 telah dibuka", { position : 'top-right' });
+            console.log("Section 3 telah dibuka", { position : 'top-right' });
         }
-    });
-    run(() => {
+
         if(currentSecond == 150){
             isPaused = true;
-            toast.success("Section 4 telah dibuka", { position : 'top-right' });
+            console.log("Section 4 telah dibuka", { position : 'top-right' });
         }
-    });
-    run(() => {
+
         if(currentSecond == 0){
             clearInterval(startInterval);
             doSubmit();
-            toast.success("Tes telah berakhir", { position: 'top-right' });
+            console.log("Tes telah berakhir", { position: 'top-right' });
         }
-    });
+    })
 </script>
-<Toaster/>
-<div class="bg-clyfar {!enableTest ? 'vh-100' : ''}">
+<div class="bg-light-warning {!enableTest ? 'vh-100' : ''}">
     <div class="container">
 
         {#if !enableTest}
-            <form class="mt-20" onsubmit={preventDefault(checkToken)}>
-                <ExampleCFIT/>
+            <form class="mt-7" onsubmit={checkToken}>
+                <div class="card shadow-sm bg-white mt-5">
+                    <div class="card-body">
+                        <h3 class="mb-5">Test Instruction</h3>
+                        <ul class="fw-semibold">
+                            <li class="mb-5">Tugas anda disini adalah mencari <b>gambar ke - 4</b> dari 5 gambar yang tersedia pada pilihan jawaban</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="p-5 rounded shadow-sm bg-white mt-5">
                     <div class="d-flex justify-content-center">
                         <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                        <button type="submit" class="btn btn-sm btn-gradient text-white w-100">Verifikasi Password</button>
                     </div>
                 </div>
             </form>

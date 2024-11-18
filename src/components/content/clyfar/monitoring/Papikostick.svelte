@@ -66,7 +66,7 @@
         }
     }
 </script>
-<div class="bg-clyfar">
+<div class="bg-light-warning">
     <div class="container-xs">
     {#if !enableTest}
         <form class="mt-5" onsubmit={checkToken}>
@@ -76,7 +76,7 @@
                     <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                    <button type="submit" class="btn btn-sm btn-gradient text-white w-100">Verifikasi Password</button>
                 </div>
             </div>
         </form>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             {/each}
-            <button type="submit" class="btn btn-sm btn-light-primary text-center shadow-sm w-100">Selesaikan Tes</button>
+            <button type="submit" class="btn btn-sm btn-gradient text-white text-center shadow-sm w-100">Selesaikan Tes</button>
         </form>
     {/if}
     </div>
