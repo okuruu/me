@@ -77,7 +77,7 @@
                         <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                        <button type="submit" class="btn btn-sm btn-gradient text-white w-100">Verifikasi Password</button>
                     </div>
                 </div>
             </form>

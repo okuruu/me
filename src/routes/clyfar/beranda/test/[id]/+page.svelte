@@ -9,6 +9,8 @@
     import Baum from "../../../../../components/content/clyfar/monitoring/Baum.svelte";
     import CFIT from "../../../../../components/content/clyfar/monitoring/CFIT.svelte";
     import MBTI from "../../../../../components/content/clyfar/monitoring/MBTI.svelte";
+    import MSDT from "../../../../../components/content/clyfar/monitoring/MSDT.svelte";
+    import Disc from "../../../../../components/content/clyfar/monitoring/DISC.svelte";
 
     const { data }: { data: { id: string; title: string; password: string; } } = $props();
 
@@ -42,6 +44,10 @@
                     <CFIT/>
                 {:else if data.id == "mbti"}
                     <MBTI/>
+                {:else if data.id == "msdt"}
+                    <MSDT/>
+                {:else if data.id == "disc"}
+                    <Disc/>
                 {/if}
             </div>
         </div>

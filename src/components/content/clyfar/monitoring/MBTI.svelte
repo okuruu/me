@@ -92,7 +92,7 @@
         }
     }
 </script>
-<div class="bg-clyfar {!enableTest ? 'vh-100' : ''}">
+<div class="bg-light-warning {!enableTest ? 'vh-100' : ''}">
     <div class="container-xs">
         {#if !enableTest}
             <form class="mt-20" onsubmit={checkToken}>
@@ -112,7 +112,7 @@
                         <input type="text" bind:value={token} class="form-control form-control-sm text-center mb-3" placeholder="Masukkan Password" required/>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-sm btn-primary w-100">Verifikasi Password</button>
+                        <button type="submit" class="btn btn-sm btn-gradient text-white w-100">Verifikasi Password</button>
                     </div>
                 </div>
             </form>
