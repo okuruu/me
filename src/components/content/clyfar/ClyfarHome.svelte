@@ -4,7 +4,7 @@
     import CreateUser from "./view/CreateUser.svelte";
     import Searchbar from "../../shared/Searchbar.svelte";
     import type { Testee } from "../../../interface/Clyfar";
-    import sample_table from "../../../json/sample_table.json";
+    import sample_table from "../../../json/psychological/sample_table.json";
     import DatePlaceholder from "../../shared/DatePlaceholder.svelte";
 
     let newData: Testee[] = $state([]);

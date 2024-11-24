@@ -3,7 +3,7 @@
     import { userConfig } from "../../../../library/config/baseConfiguration";
     import { db } from "../../../../library/hooks/db";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
-    import cfit from "../../../../json/cfit.json";
+    import cfit from "../../../../json/psychological/cfit.json";
 
     let token: string = $state(''); 
     let enableTest: boolean = $state(false);

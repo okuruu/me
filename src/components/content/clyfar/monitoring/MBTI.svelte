@@ -1,5 +1,5 @@
 <script lang="ts">
-    import mbti from "../../../../json/mbti.json";
+    import mbti from "../../../../json/psychological/mbti.json";
     import { db } from "../../../../library/hooks/db";
     import { capitalizeEachWord } from "../../../../library/utils/useFormat";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { db } from "../../../../library/hooks/db";
-    import kraepelin from "../../../../json/kraepelin.json";
+    import kraepelin from "../../../../json/psychological/kraepelin.json";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
     import { userConfig } from "../../../../library/config/baseConfiguration";
     import ExampleKraeplin from "./ExampleKraeplin.svelte";

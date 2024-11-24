@@ -1,5 +1,5 @@
 <script lang="ts">
-    import rmib from "../../../../json/rmib.json";
+    import rmib from "../../../../json/psychological/rmib.json";
     import { db } from "../../../../library/hooks/db";
     import { useString } from "../../../../library/config/useString";
     import { userConfig } from "../../../../library/config/baseConfiguration";

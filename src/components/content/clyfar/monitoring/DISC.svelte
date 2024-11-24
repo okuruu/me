@@ -1,5 +1,5 @@
 <script lang="ts">
-    import disc from "../../../../json/disc.json";
+    import disc from "../../../../json/psychological/disc.json";
     import ExampleDisc from "./ExampleDISC.svelte";
     import { db } from "../../../../library/hooks/db";
     import { userConfig } from "../../../../library/config/baseConfiguration";

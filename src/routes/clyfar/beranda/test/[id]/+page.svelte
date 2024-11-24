@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Testee } from "../../../../../interface/Clyfar";
-    import sample_table from "../../../../../json/sample_table.json";
+    import sample_table from "../../../../../json/psychological/sample_table.json";
     import Navigation from "../../../../../components/Navigation.svelte";
     import RMIB from "../../../../../components/content/clyfar/monitoring/RMIB.svelte";
     import Kraepelin from "../../../../../components/content/clyfar/monitoring/Kraepelin.svelte";

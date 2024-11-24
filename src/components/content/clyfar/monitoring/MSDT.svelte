@@ -1,5 +1,5 @@
 <script lang="ts">
-    import msdt from "../../../../json/msdt.json";
+    import msdt from "../../../../json/psychological/msdt.json";
     import { db } from "../../../../library/hooks/db";
     import { userConfig } from "../../../../library/config/baseConfiguration";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";

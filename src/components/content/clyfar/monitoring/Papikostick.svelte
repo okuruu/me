@@ -1,7 +1,7 @@
 <script lang="ts">
     import ExamplePapi from "./ExamplePapi.svelte";
     import { db } from "../../../../library/hooks/db";
-    import papikostick from "../../../../json/papikostick.json";
+    import papikostick from "../../../../json/psychological/papikostick.json";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
     import { userConfig } from "../../../../library/config/baseConfiguration";
 
