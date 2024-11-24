@@ -7,7 +7,7 @@ interface Threads {
 }
 
 async function useThreads() {
-    const modules = import.meta.glob('/src/json/threads/*.json');
+    const modules = import.meta.glob('/static/json/threads/*.json');
 
     const promises = Object.entries(modules).map(async ([path, loader]) => {
         const data: any = await loader();
@@ -20,7 +20,7 @@ async function useThreads() {
         };
     });
 
-    const results: Threads[] = await Promise.all(promises);
+    let results: Threads[] = await Promise.all(promises);
 
     return { results };
 }

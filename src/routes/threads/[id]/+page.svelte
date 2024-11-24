@@ -2,7 +2,7 @@
     import Navbar from '../../../components/Navbar.svelte';
     import { Carbon, likesCount } from '../../../library/utils/useFormat';
 
-    let { data } = $props();
+    let {data} = $props();
 </script>
 <div class="bg-dark { data.threads.reply.replies.length === 0 ? 'min-vh-100' : ''}">
     <div class="container-xs">
