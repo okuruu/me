@@ -1,7 +1,7 @@
-import { threadsTweets } from "../../resources/threads"
-
-export const load = () => {
+import { useThreads } from "../../library/hooks/threadsMounter";
+export async function load() {
+    const threads = await useThreads();
     return {
-        threads : threadsTweets
+        threads : threads.results
     }
 }

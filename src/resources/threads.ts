@@ -1,4 +1,4 @@
-import type { Threads } from '../interface/Threads';
-import threads from '../json/threads.json';
+// import type { Threads } from '../interface/Threads';
+// import threads from '../json/threads.json';
 
-export const threadsTweets: Threads[] = threads ;
+// export const threadsTweets: Threads[] = threads ;
