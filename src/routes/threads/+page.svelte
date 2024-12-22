@@ -19,9 +19,9 @@
                             <img src="./icons/elements/Verified.svg" alt="">
                             <span class="text-muted ms-1">{Carbon(threads.timestamp, "timestamp")}</span>
                         </div>
-                        <p class="mt-2">{threads.tweets}</p>
+                        <p class="mt-2">{@html threads.tweets}</p>
                         {#if threads.images !== null}
-                            <img src="/threads/{threads.images}" alt="{threads.tweets}" class="img-fluid w-full my-4" />
+                            <img src="/threads/{threads.images}" alt="{threads.tweets}" class="img-fluid w-full rounded my-4" />
                         {/if}
                         <div class="form-group">
                             <img src="/icons/elements/Heart.svg" class="h-15px cursor-not-allowed" alt="Likes"> <span class="me-3 ms-1">{likesCount(threads.likes)}</span>
