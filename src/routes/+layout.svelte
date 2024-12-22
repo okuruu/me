@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Toaster} from 'svelte-sonner';
     import { useString } from '../library/config/useString';
 </script>
 <svelte:head>
@@ -14,4 +15,5 @@
     <meta property="og:site_name" content="{useString.pageTitle}" />
     <meta property="og:image" content="/images/avatar.jfif" />
 </svelte:head>
+<Toaster/>
 <slot/>

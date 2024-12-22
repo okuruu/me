@@ -2,6 +2,7 @@
     import { goto } from "$app/navigation";
     import type { Quran } from "../../interface/Quran";
     import Navbar from "../../components/Navbar.svelte";
+    import { toast } from "svelte-sonner";
 
     let { data } = $props();
 
@@ -10,7 +11,7 @@
 
     function searchSurah(){
         const searchTerm = searchBar.toLowerCase();
-        console.log(searchTerm)
+
         let searchSurah = data.chapter.filter((quran: Quran) => {
             return quran.transliteration.toLowerCase().includes(searchTerm);
         });
@@ -30,8 +31,10 @@
     function lastRead(){
         const getLocalStorage = localStorage.getItem('lastRead');
         if(getLocalStorage == null){
+            toast.error("No bookmark found.")
             return;
         }
+
         const lastRead: { surahName: number; lastAyah: number } = JSON.parse(getLocalStorage);
         return goto(`/quran/${lastRead.surahName}#${lastRead.lastAyah}`);
     }
