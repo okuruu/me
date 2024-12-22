@@ -28,7 +28,7 @@ const useString = {
                     <li>Building POS, Internal Management System, and various projects</li>
                 </ul>
             `
-        }
+        },
     ],
 }
 

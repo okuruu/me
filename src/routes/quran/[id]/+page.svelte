@@ -1,7 +1,31 @@
 <script lang="ts">
     import Navbar from "../../../components/Navbar.svelte";
 
+    interface Chapters { 
+        arabic: string; 
+        transliteration: string; 
+    }
+
     let { data } = $props();
+    let quranChapters: Chapters[] = data.chapterContents;
+    let tajweedCorrection: Chapters[] = $state([]);
+
+    const tajweedRules: { pattern: RegExp; color: string; }[] = [
+        { pattern: /[ن|م]ّ/gu, color: '#FF6B6B' }, // Idgham bighunnah
+        { pattern: /[ب|ق|ط|د|ج]ْ/gu, color: '#6BCB77' }, // Qalqalah
+        { pattern: /نْ(?=[ثجتحخدذرزسشصضطظفقكملن])/gu, color: '#A16AE8' }, // Ikhfa
+        { pattern: /نْ(?=ب)/gu, color: '#4D96FF' }, // Iqlab
+        { pattern: /[اوي]ـ/gu, color: '#FFA500' }, // Madd
+        { pattern: /مْ(?=ب)/gu, color: '#FFD700' }, // Ikhfa Shafawi
+        { pattern: /لّ(?=[تثدذرزسشصضطظ])/gu, color: '#FF69B4' } // Lam Shamsiyyah
+    ];
+
+    $effect(() => {
+        tajweedCorrection = quranChapters.map(chapter => ({
+            arabic: applyTajweed(chapter.arabic),
+            transliteration: chapter.transliteration, 
+        }));
+    });
 
     async function setBookmark(aya: number) {
         const lastRead = {
@@ -11,14 +35,23 @@
 
         localStorage.setItem('lastRead', JSON.stringify(lastRead));
     }
+
+    function applyTajweed(ayah: string): string {
+        let result = ayah;
+        tajweedRules.forEach(rule => {
+            result = result.replace(rule.pattern, match => `<span style="color: ${rule.color}">${match}</span>`);
+        });
+        return result;
+    }
 </script>
 <div class="bg-dark">
     <div class="container-xs">
         <Navbar/>
-        {#each data.chapterContents as verse, index}
-        <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions (because of reasons) -->
+        {#each tajweedCorrection as verse, index}
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <div id="{index.toString()}" class="form-group" onclick={() => setBookmark(index)}>
-                <p class="text-muted text-end quran-font display-5 fw-bolder">{verse.arabic}</p>
+                <p class="text-muted text-end quran-font display-5 fw-bolder">{@html verse.arabic}</p>
                 <p class="text-gray-600 text-end">{index + 1}. {verse.transliteration}</p>
             </div>
             <div class="my-20"></div>

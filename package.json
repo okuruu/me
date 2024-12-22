@@ -22,6 +22,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"chart.js": "^4.4.3"
+		"chart.js": "^4.4.3",
+		"svelte-sonner": "^0.3.28"
 	}
 }
