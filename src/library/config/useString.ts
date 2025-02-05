@@ -1,4 +1,4 @@
-const isProduction: boolean = false;
+const isProduction: boolean = true;
 const useString = {
     url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
     rawURL : isProduction ? 'https://fae.deabakery.co.id/' : 'http://localhost:8000/',
