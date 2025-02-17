@@ -86,3 +86,183 @@ body {
 .btn-gradient {
     background-image: linear-gradient(to right, #B72024 , #F08519);
 }
+
+
+.bg-light-brown {
+    background: #FBF7E9;
+}
+
+.bg-dark-palette {
+    background-color: #454545;
+    border-radius: 5px;
+}
+
+.bg-light-green {
+    background: #76E75A;
+}
+
+.bg-light-orange {
+    background: #F6AE45;
+}
+
+.border-dea {
+    border: 1px solid #B72024 ;
+}
+
+.border-select-dea {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url('/icons/elements/select.svg') no-repeat right #B72024;
+    display: inline-block;
+    position: relative;
+    border: 2px solid #B72024 ;
+}
+
+.border-select-dea select {
+    border-color: #B72024;
+    outline: none;
+}
+
+.border-dea-total {
+    border: 1px solid #B72024 ;
+    box-shadow: 5px 0 0px 0px #B72024;
+    background-color: #FBF7E9;
+}
+
+.border-input-dea {
+    border: 2px solid #B72024 ;
+}
+
+.border-input-golden {
+    border: 2px solid #F08519 ;
+}
+
+/* Text Only */
+
+.small-text {
+    font-size: 10px !important;
+}
+
+.text-dea {
+    color: #B72024 !important;
+}
+
+.text-golden {
+    color: #F08519;
+}
+
+.vertical-text {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+/* Button & Input */
+
+.form-control-cart, .form-control-cart:focus {
+    font-size : 32px;
+    font-weight: bolder;
+    background-color: #F5F8FA;
+}
+
+.tabber-navbar {
+    width: 54px;height: 13px;
+    flex-shrink: 0;
+    border-radius: 0px 0px 5px 5px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: rgba(0, 0, 0, 0.80);
+    text-align: center;
+    font-family: Lato;
+    font-size: 10px;
+    font-style: normal;
+    line-height: normal;
+    border:none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.button-small {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: none;
+    width: 15px;
+    height: 31px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
+}
+
+.btn-shadow {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
+}
+
+.btn-dea-background:hover{
+    background-color: #B72024;
+}
+
+.btn-gradient {
+    background-image: linear-gradient(to right, #B72024 , #F08519);
+}
+
+.btn-dea:hover{
+    color: #FFFFFF !important;
+    background-color: #B72024 !important;
+}
+
+.btn-dea-piutang {
+    width: 153.5215606689453px,;
+    height: 40px;
+    top: 614px;
+    left: 225px;
+    border-radius: 5px;
+    background-color: #B72024;
+    border-radius: 10px;
+    border: none;
+    color: #FFFFFF;
+}
+
+.image-menu {
+    width: 145px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #B72024; */
+    background-color: #FFF;
+    /* color: #fff; */
+    color: #000000c7;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s; /* Add transition for smooth effect */
+}
+
+.image-menu img {
+    width: 20%;
+    height: 75%;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.image-menu span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.image-menu:hover {
+    background-color: #B72024;
+    color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.image-menu:active {
+    background-color: #8C1519; /* Change the background color for the pressing effect */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}

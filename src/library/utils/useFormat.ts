@@ -109,8 +109,15 @@ function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" |
     return '';
 }
 
+const rupiahFormatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    // maximumSignificantDigits: 5,
+    minimumFractionDigits: 0
+});
+
 function capitalizeEachWord(str: string): string {
     return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export { likesCount, Carbon, capitalizeEachWord }
+export { likesCount, Carbon, capitalizeEachWord, rupiahFormatter }
