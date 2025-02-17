@@ -11,19 +11,19 @@
         endDate: initializeDate("last")
     } as Search);
 
-    interface IK {
+    interface IM {
         NO_TRANSAKSI: string;
         TANGGAL: string;
         KETERANGAN: string;
     }
 
-    let newData: IK[] = $state([]);
+    let newData: IM[] = $state([]);
 </script>
 <Ud84Navigation/>
 <div class="container-fluid">
     <div class="card shadow-sm bg-white my-3">
         <div class="card-body">
-            <h3 class="text-decoration-underline fw-bolder">Item Keluar</h3>
+            <h3 class="text-decoration-underline fw-bolder">Item Masuk</h3>
             <div class="row">
                 <div class="col-9">
                     <form class="row">
@@ -83,7 +83,7 @@
                             {#each newData as data, index }
                                 <tr>
                                     <td>{index + 1}</td>
-                                    <td>IK/{data.NO_TRANSAKSI}</td>
+                                    <td>IM/{data.NO_TRANSAKSI}</td>
                                     <td>{Carbon(data.TANGGAL, "timestamp")}</td>
                                     <td>{data.KETERANGAN}</td>
                                 </tr>

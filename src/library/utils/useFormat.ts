@@ -8,7 +8,11 @@ function likesCount(likes: number): string {
     }
 }
 
-function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age" | "year" | "day"): string {
+function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" | "time" | "age" | "year" | "day" | "detailed-age"): string {
+    if (date === undefined || date === null || date === "") {
+        return "-";
+    }
+
     let dateFormat: Intl.DateTimeFormatOptions = {
         day: 'numeric',
         month: 'long',
@@ -17,7 +21,6 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
 
     let dateObj: Date;
 
-    // Check if the input is a time string
     if (typeof date === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(date)) {
         const [hours, minutes, seconds] = date.split(':').map(Number);
         dateObj = new Date();
@@ -26,12 +29,17 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
         dateObj = typeof date === 'string' ? new Date(date) : date;
     }
 
-    // Format for "date" type
     if (type === "date") {
         return dateObj.toLocaleDateString('id-ID', dateFormat);
     }
 
-    // Format for "timestamp" type (date and time)
+    if (type === "date-short") {
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
     if (type === "timestamp") {
         let formattedDate = dateObj.toLocaleDateString('id-ID', dateFormat);
         let timeFormat: Intl.DateTimeFormatOptions = {
@@ -43,7 +51,6 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
         return `${formattedDate} ${formattedTime}`;
     }
 
-    // Format for "time" type (time only)
     if (type === "time") {
         let timeFormat: Intl.DateTimeFormatOptions = {
             hour: '2-digit',
@@ -53,14 +60,12 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
         return dateObj.toLocaleTimeString('id-ID', timeFormat);
     }
 
-    // Calculate "age" based on the date
     if (type === "age") {
         const today = new Date();
         let age = today.getFullYear() - dateObj.getFullYear();
         const monthDiff = today.getMonth() - dateObj.getMonth();
         const dayDiff = today.getDate() - dateObj.getDate();
 
-        // Adjust age if the birthday hasn't occurred yet this year
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
             age--;
         }
@@ -68,14 +73,12 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
         return `${age} tahun`;
     }
 
-    // Calculate "year" difference without birthday adjustment
     if (type === "year") {
         const today = new Date();
         const yearsSince = today.getFullYear() - dateObj.getFullYear();
         return `${yearsSince} tahun`;
     }
 
-    // Calculate "day" difference
     if (type === "day") {
         const today = new Date();
         const diffTime = Math.abs(today.getTime() - dateObj.getTime());
@@ -83,7 +86,26 @@ function Carbon(date: string | Date, type: "date" | "timestamp" | "time" | "age"
         return `${daysPassed} hari`;
     }
 
-    // Default return (optional, based on your needs)
+    if (type === "detailed-age") {
+        const today = new Date();
+        let years = today.getFullYear() - dateObj.getFullYear();
+        let months = today.getMonth() - dateObj.getMonth();
+        let days = today.getDate() - dateObj.getDate();
+
+        if (days < 0) {
+            months--;
+            const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            days += previousMonth;
+        }
+
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        return `${years} tahun, ${months} bulan, ${days} hari`;
+    }
+
     return '';
 }
 
