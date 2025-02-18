@@ -1,8 +1,8 @@
 export async function load({params}) {
-    let pageTitle: string = 'Tambah Item Keluar';
+    let pageTitle: string = 'Item Keluar';
 
     if (params.id === "item-masuk") {
-        pageTitle = 'Tambah Item Masuk';
+        pageTitle = 'Item Masuk';
     }
 
     return {
