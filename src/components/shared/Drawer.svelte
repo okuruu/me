@@ -71,3 +71,15 @@
 </div>
 
 <svelte:window on:keydown={handleKeyNavigation} />
+<!-- 
+<script lang="ts">
+    let isDrawer: boolean = $state(false);
+    let currentSidebar: string = $state("useItem");
+</script>
+<Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
+    <div class="form-group w-100 p-5">
+        {#if currentSidebar === "useItem"}
+            {@render useItem()}
+        {/if}
+    </div>
+</Drawer> -->

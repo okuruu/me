@@ -55,6 +55,10 @@
             <label for="notePOS" class="form-label fw-bold pe-7">Keterangan</label>
             <textarea id="notePOS" class="form-control" placeholder="Belum ada catatan"></textarea>
         </div>
+
+        <button type="button" class="btn btn-danger w-100" onclick={() => isDrawer = !isDrawer}>Open</button>
+
+
     </div>
     <div class="col-8">
         <div class="border-dea-total rounded-1 d-flex align-items-center justify-content-end">
@@ -195,10 +199,8 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-danger w-100" onclick={() => isDrawer = !isDrawer}>Open</button>
-
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
+    <div class="p-5">
         Hi!
     </div>
 </Drawer>
