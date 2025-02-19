@@ -8,13 +8,24 @@
     import Rupiah from "../../../../../components/shared/Rupiah.svelte";
     import type { CartsModal } from "../../../../../interface/Carts";
 
+    interface Carts {
+        ID: number;
+        NAMA: string;
+        STOK: number;
+        SATUAN: string;
+        HARGA: number;
+        JUMLAH_PER_ITEM: number;
+        JUMLAH: number;
+        TOTAL_HARGA: number;
+    }
+
     let { data } = $props();
 
     let searchInput: HTMLInputElement;
     let searchQuery: string = $state('');
     let searchAmount: number = $state(1);
 
-    let cartData: any = $state([]);
+    let cartData: Carts[] = $state([]);
     let cartSearch: CartsModal[] = $state([]);
     
     let isDrawer: boolean = $state(false);
@@ -68,13 +79,49 @@
     }
 
     async function selectionModal(id: number) {
-        // 
+        searchQuery = id.toString();
+        const searchQueries = cartData.find((element) => element.ID.toString() === searchQuery);
+        if(searchQueries != undefined ){
+            toast.error("Item sudah ada di keranjang!");
+            return;
+        }
+
+        handleSearch();
+        resetSearch();
+        currentSidebar = "useCart";
+        isDrawer = !isDrawer;
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     async function handleSearch(): Promise <void> {
         const { status, data } = await db({
             productName: searchQuery,
         }, 'UD84/Master-Produk/Single');
+
+        if(status === "success") {
+            const searchQueries = cartData.find((element) => element.ID === searchQuery);
+            if(searchQueries != undefined) {
+                searchQueries.JUMLAH += searchAmount;
+                searchQueries.TOTAL_HARGA = searchQueries.HARGA * searchQueries.JUMLAH;
+                cartData = cartData;
+        		resetSearch();
+                // return recalculateAll(cartData);
+            }
+
+            cartData.push({
+                ID : data.ID,
+                NAMA : data.NAMA ?? '-',
+                STOK: data.STOK,
+                SATUAN : data.SATUAN,
+                HARGA : data.HARGA,
+                JUMLAH_PER_ITEM: data.JUMLAH_PER_ITEM,
+                JUMLAH : searchAmount ?? 0,
+                TOTAL_HARGA : Number(searchAmount) * Number(data.HARGA),
+            })
+            // recalculateAll(cartData);
+    		resetSearch();
+            return;
+        }
 
         currentSidebar = "useItem";
         isDrawer = !isDrawer;
@@ -193,9 +240,8 @@
             <thead>
                 <tr class="fw-bolder text-muted">
                     <th>#</th>
-                    <th>Kode Item</th>
                     <th>Nama - Satuan</th>
-                    <th>Harga</th>
+                    <th class="texdt-center">Harga</th>
                     <th class="text-center">Jumlah</th>
                     <th class="text-center">Action</th>
                 </tr>
@@ -209,7 +255,6 @@
                     {#each cartData as cartItem, index }
                         <tr>
                             <td class="fw-bolder">{index + 1}</td>
-                            <td class="fw-bolder text-danger">{cartItem.KODE}</td>
                             <td>
                                 <span class="fw-bolder">{ cartItem.NAMA } - </span>
                                 <span class="fw-bolder text-warning">{ cartItem.SATUAN }</span>
@@ -220,9 +265,9 @@
                                     <input type="number" min="1" id="quantity_{index}" class="form-control form-control-sm text-center w-50" placeholder="Qty"/>
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <button type="button" class="btn btn-icon btn-sm btn-dark">
-                                    <img src="/assets/images/icons/Delete.svg" alt="" height="38" />
+                                    <img src="/icons/elements/Delete.svg" alt="" class="h-15px svg-white" />
                                 </button>
                             </td>
                         </tr>
