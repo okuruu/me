@@ -235,6 +235,11 @@
                             return;
                         }
 
+                        if (pageTitle == "Item Keluar" && responsiblePerson.length == 0) {
+                            toast.error("Pilih Penanggung Jawab Item Keluar");
+                            return;
+                        } 
+
                         const { status, message } = await db({
                             tipe : pageTitle,
                             catatan : notes,
