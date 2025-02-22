@@ -1,12 +1,15 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { db, useFetch } from "../../../../../library/hooks/db";
-    import Drawer from "../../../../../components/shared/Drawer.svelte";
-    import { rupiahFormatter } from "../../../../../library/utils/useFormat";
-    import Ud84Navigation from "../../../../../components/content/ud84/UD84Navigation.svelte";
     import { toast } from "svelte-sonner";
-    import Rupiah from "../../../../../components/shared/Rupiah.svelte";
+    import { goto } from "$app/navigation";
+    import { db, useFetch } from "../../../../../library/hooks/db";
+    import { rupiahFormatter } from "../../../../../library/utils/useFormat";
+    
     import type { CartsModal } from "../../../../../interface/Carts";
+
+    import Rupiah from "../../../../../components/shared/Rupiah.svelte";
+    import Drawer from "../../../../../components/shared/Drawer.svelte";
+    import Ud84Navigation from "../../../../../components/content/ud84/UD84Navigation.svelte";
 
     interface Carts {
         ID: number;
@@ -17,9 +20,15 @@
         JUMLAH_PER_ITEM: number;
         JUMLAH: number;
         TOTAL_HARGA: number;
+        DISTRIBUTOR: string;
+        INPUT_STOK: number;
+        DESKRIPSI: string;
     }
 
     let { data } = $props();
+
+    const pageTitle: string = data.pageTitle;
+    const pageUrl: string = data.pageUrl;
 
     let searchInput: HTMLInputElement;
     let searchQuery: string = $state('');
@@ -34,6 +43,8 @@
 
     let currentIndex: number = $state(0);
     let currentIndexModal: number = $state(0);
+
+    let totalProducts: number = $state(0);
     
     let currentSidebar: string = $state('selectPIC');
     
@@ -43,6 +54,8 @@
     let kategoriAfkir: string[] = $state([
         'Afkir', 'Retur', 'Dikembalikan', 'Free', 'Trial', 'Dimusnahkan'
     ]);
+
+    let notes: string = $state('');
 
     onMount( async () => {
         userList = await useFetch("UD84/Stocks/Staff");
@@ -75,7 +88,6 @@
     function doErase(id: number): void {
         responsiblePerson.splice(id, 1);
         responsiblePerson = responsiblePerson
-        // recalculateAfkir(responsiblePerson);
     }
 
     async function selectionModal(id: number) {
@@ -99,13 +111,14 @@
         }, 'UD84/Master-Produk/Single');
 
         if(status === "success") {
-            const searchQueries = cartData.find((element) => element.ID === searchQuery);
+            const searchQueries = cartData.find((element) => element.ID.toString() === searchQuery);
             if(searchQueries != undefined) {
                 searchQueries.JUMLAH += searchAmount;
                 searchQueries.TOTAL_HARGA = searchQueries.HARGA * searchQueries.JUMLAH;
                 cartData = cartData;
         		resetSearch();
-                // return recalculateAll(cartData);
+                recalculatePrice(cartData);
+                return;
             }
 
             cartData.push({
@@ -117,8 +130,11 @@
                 JUMLAH_PER_ITEM: data.JUMLAH_PER_ITEM,
                 JUMLAH : searchAmount ?? 0,
                 TOTAL_HARGA : Number(searchAmount) * Number(data.HARGA),
+                DISTRIBUTOR: data.DISTRIBUTOR,
+                INPUT_STOK: 0,
+                DESKRIPSI: data.DESKRIPSI
             })
-            // recalculateAll(cartData);
+            recalculatePrice(cartData);
     		resetSearch();
             return;
         }
@@ -184,8 +200,62 @@
         }
 	}
 
+    function editCartQuantity(id: number,value: number) {
+        const findOnCart = cartData[id];
+        cartData[id].TOTAL_HARGA = cartData[id].INPUT_STOK * findOnCart.HARGA
+        return recalculatePrice(cartData);
+    }
+
+    function removeFromList(index: number){
+        cartData.splice(index,1);
+        cartData = cartData;
+        recalculatePrice(cartData);
+        return;
+    }
+
+    function recalculatePrice(cartData: any){
+        totalProducts = 0;
+        const sumTotal = cartData.reduce( (accumulator: any,object: { TOTAL_HARGA: any; }) => {
+            return accumulator + Number(object.TOTAL_HARGA);
+        }, 0 );
+        totalProducts = sumTotal;
+        return totalProducts;
+    }
+
     async function completeTransaction(): Promise <void> {
-        // 
+
+        toast(pageTitle, {
+            description: 'Apakah anda yakin?',
+            action: {
+            label: 'Ya, Simpan',
+            onClick: async () => {
+                    try {
+                        if (cartData.length === 0) {
+                            toast.error("Keranjang tidak boleh kosong");
+                            return;
+                        }
+
+                        const { status, message } = await db({
+                            tipe : pageTitle,
+                            catatan : notes,
+                            penanggungJawabAfkir : responsiblePerson,
+                            cart : cartData,
+                        }, 'UD84/Stocks/Manipulate');
+
+                        if (status === "error") {
+                            toast.error(message);
+                            return;
+                        }
+
+                        toast.success(message);
+                        return goto(`/ud84/panel/${pageUrl}`)
+                    } catch (error) {
+                        toast.error("Ada masalah dengan koneksi internet.");
+                        return;
+                    }
+                }
+            },
+        });
     }
 </script>
 <Ud84Navigation/>
@@ -208,41 +278,45 @@
             <button type="submit" hidden>Search</button>
         </form>
 
-        <div class="row my-2">
-            <div class="col mt-2">
-                <label class="form-label fw-bolder text-golden" for="tipeAfkir">Tipe Item Keluar</label>
+        {#if pageUrl === "item-keluar"}
+            <div class="row my-2">
+                <div class="col mt-2">
+                    <label class="form-label fw-bolder text-golden" for="tipeAfkir">Tipe Item Keluar</label>
+                </div>
+                <div class="col">
+                    <select class="form-select form-select-sm">
+                        <option value="" selected disabled>Pilih Salah Satu</option>
+                        {#each kategoriAfkir as kategori }
+                            <option value={kategori}>{kategori}</option>
+                        {/each}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-sm btn-danger" onclick={() => openSidebar('selectPIC')}>Pilih PIC</button>
+                </div>
             </div>
-            <div class="col">
-                <select class="form-select form-select-sm">
-                    <option value="" selected disabled>Pilih Salah Satu</option>
-                    {#each kategoriAfkir as kategori }
-                        <option value={kategori}>{kategori}</option>
-                    {/each}
-                </select>
-            </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-sm btn-danger" onclick={() => openSidebar('selectPIC')}>Pilih PIC</button>
-            </div>
-        </div>
+        {/if}
+
         <div class="form-group mt-2">
             <label for="notePOS" class="form-label fw-bold pe-7">Keterangan</label>
-            <textarea id="notePOS" class="form-control" placeholder="Belum ada catatan"></textarea>
+            <textarea id="notePOS" bind:value={notes} class="form-control" placeholder="Belum ada catatan"></textarea>
         </div>
 
-        <button type="button" class="btn btn-danger w-100 my-5" onclick={() => openSidebar('save')}>Simpan {data.pageTitle}</button>
+        <button type="button" class="btn btn-danger w-100 my-5" onclick={completeTransaction}>Simpan {data.pageTitle}</button>
 
     </div>
     <div class="col-8">
         <div class="border-dea-total rounded-1 d-flex align-items-center justify-content-end">
-            <h1 class="display-6 text-dea me-3 m-2">Rp. 24.000</h1>
+            <h1 class="display-6 text-dea me-3 m-2">{rupiahFormatter.format(totalProducts)}</h1>
         </div>
         <table class="table table-row-dashed table-row-gray-300 align-middle gx-1 gy-1">
             <thead>
                 <tr class="fw-bolder text-muted">
                     <th>#</th>
                     <th>Nama - Satuan</th>
-                    <th class="texdt-center">Harga</th>
-                    <th class="text-center">Jumlah</th>
+                    <th class="text-center">Harga</th>
+                    <th class="text-center">Jumlah Per Pcs</th>
+                    <th class="text-center">Total Harga</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -262,13 +336,21 @@
                             <td class="text-center"><span class="text-dea fw-bolder">{ rupiahFormatter.format(cartItem.HARGA) }</span></td>
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    <input type="number" min="1" id="quantity_{index}" class="form-control form-control-sm text-center w-50" placeholder="Qty"/>
+                                    <input type="number" min="1" id="quantity_{index}" bind:value={cartItem.INPUT_STOK}  onkeyup={() => editCartQuantity(index,cartItem.JUMLAH)}  class="form-control form-control-sm text-center w-50" placeholder="Pcs"/>
                                 </div>
                             </td>
+                            <td class="text-center fw-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-icon btn-sm btn-dark">
+                                <button type="button" onclick={() => removeFromList(index)} class="btn btn-icon btn-sm btn-dark">
                                     <img src="/icons/elements/Delete.svg" alt="" class="h-15px svg-white" />
                                 </button>
+                            </td>
+                        </tr>
+                        <tr class="text-start text-gray-400 small-text">
+                            <td>
+                                Distributor:<b class="text-warning ms-2"> {cartItem.DISTRIBUTOR}</b> | 
+                                Stok Sekarang:<b class="text-danger ms-2"> {cartItem.STOK}</b> | 
+                                Deskripsi:<b class="text-info ms-2"> {cartItem.DESKRIPSI}</b>
                             </td>
                         </tr>
                     {/each}
@@ -281,8 +363,6 @@
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
         {#if currentSidebar === "selectPIC"}
             {@render choosePIC()}
-        {:else if currentSidebar === "save"}
-            {@render save()}
         {:else if currentSidebar === "useItem"}
             {@render useItem()}
         {/if}
@@ -300,7 +380,7 @@
     </div>
 
     <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-sm btn-success">Total Tagihan: Rp. 24.000</button>
+        <button type="button" class="btn btn-sm btn-success">Total Tagihan: {rupiahFormatter.format(totalProducts)}</button>
     </div>
 
     <div class="separator my-2 mt-3"></div>
@@ -347,26 +427,15 @@
             </tbody>
         </table>
     </div>
-    
-    <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-sm btn-danger">Hapus Semua</button>
-        <button type="button" class="btn btn-sm btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger">Rp. 24.000</button>
-    </div>
 
     <div class="separator my-3"></div>
 
     <div class="d-flex justify-content-end">
         <div class="me-2">
-            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick={() => isDrawer = !isDrawer} >Tutup</button>
         </div>
     </div>
 </div>
-{/snippet}
-
-{#snippet save()}
-    <h1>Apakah anda yakin akan menyimpan Item Keluar berikut?</h1>
-    <button type="button" class="btn btn-sm btn-danger">Simpan</button>
-    <button type="button" class="btn btn-sm btn-secondary">Kembali</button>
 {/snippet}
 
 {#snippet useItem()}
@@ -399,6 +468,14 @@
                                 </button>
                             </td>
                         </tr>
+                        <tr class="text-start text-gray-400 small-text">
+                            <td></td>
+                            <td>
+                                Distributor:<b class="text-warning ms-2"> {cartSearch.DISTRIBUTOR}</b> | 
+                                Stok Sekarang:<b class="text-danger ms-2"> {cartSearch.STOK}</b> | 
+                                Deskripsi:<b class="text-info ms-2"> {cartSearch.DESKRIPSI}</b>
+                            </td>
+                        </tr>
                     {/each}
                 {/if}
             </tbody>
@@ -406,4 +483,4 @@
     </div>
 {/snippet}
 
-<svelte:window on:keydown={handleKeyNavigation} />
+<svelte:window onkeydown={handleKeyNavigation} />
