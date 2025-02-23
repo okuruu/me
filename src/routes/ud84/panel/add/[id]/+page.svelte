@@ -352,7 +352,7 @@
                             </td>
                         </tr>
                         <tr class="text-start text-gray-400 small-text">
-                            <td>
+                            <td colspan=6>
                                 Distributor:<b class="text-warning ms-2"> {cartItem.DISTRIBUTOR}</b> | 
                                 Stok Sekarang:<b class="text-danger ms-2"> {cartItem.STOK}</b> | 
                                 Deskripsi:<b class="text-info ms-2"> {cartItem.DESKRIPSI}</b>

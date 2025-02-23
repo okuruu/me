@@ -8,7 +8,7 @@ function likesCount(likes: number): string {
     }
 }
 
-function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" | "time" | "age" | "year" | "day" | "detailed-age"): string {
+function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" | "time" | "age" | "year" | "day" | "detailed-age" | "date-short-with-time"): string {
     if (date === undefined || date === null || date === "") {
         return "-";
     }
@@ -38,6 +38,15 @@ function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" |
         const month = String(dateObj.getMonth() + 1).padStart(2, '0');
         const year = dateObj.getFullYear();
         return `${day}/${month}/${year}`;
+    }
+
+    if (type === "date-short-with-time") {
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        const hours = String(dateObj.getHours()).padStart(2, '0');
+        const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
 
     if (type === "timestamp") {
