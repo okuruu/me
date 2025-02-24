@@ -79,6 +79,15 @@
         newData = newData.reverse();
         return newData;
     }
+
+    async function preparePrint() {
+        if (newData.length === 0) {
+            toast.error("Tidak ada data untuk dicetak");
+            return;
+        }
+
+        window.print();
+    }
 </script>
 <Ud84Navigation/>
 <div class="container-fluid">
@@ -114,6 +123,9 @@
                                 <button type="submit" class="btn btn-sm btn-icon btn-primary">
                                     <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
                                 </button>
+                                <button type="button" onclick={preparePrint} class="btn btn-sm btn-icon btn-info">
+                                    <img src="/icons/elements/Printer.svg" class="h-30px svg-white" alt="Print Button" />
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -130,40 +142,38 @@
 
             <div class="separator my-3"></div>
 
-            <div class="table-responsive">
-                <table class="table table-row-dashed table-row-gray-300 gy-1 table-hover align-middle text-center text-dark">
-                    <thead>
+            <table class="table table-row-dashed table-row-gray-300 gy-1 table-hover align-middle text-center text-dark">
+                <thead>
+                    <tr class="fw-bolder">
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Asal</th>
+                        <th>Masuk</th>
+                        <th>Keluar</th>
+                        <th>Stok Final</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#if newData.length === 0}
                         <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Asal</th>
-                            <th>Masuk</th>
-                            <th>Keluar</th>
-                            <th>Stok Final</th>
-                            <th>Tanggal</th>
+                            <td colspan="7" class="text-center">Tidak ada data.</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {#if newData.length === 0}
+                    {:else}
+                        {#each newData as data, index}
                             <tr>
-                                <td colspan="7" class="text-center">Tidak ada data.</td>
+                                <td>{index + 1}</td>
+                                <td>{capitalizeEachWord(data.NAMA)}</td>
+                                <td>{data.ASAL}</td>
+                                <td class="text-primary">{data.MASUK}</td>
+                                <td class="text-danger">{data.KELUAR}</td>
+                                <td class="text-info">{data.STOK}</td>
+                                <td>{Carbon(data.CREATED_AT, "timestamp")}</td>
                             </tr>
-                        {:else}
-                            {#each newData as data, index}
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td>{capitalizeEachWord(data.NAMA)}</td>
-                                    <td>{data.ASAL}</td>
-                                    <td class="text-primary">{data.MASUK}</td>
-                                    <td class="text-danger">{data.KELUAR}</td>
-                                    <td class="text-info">{data.STOK}</td>
-                                    <td>{Carbon(data.CREATED_AT, "timestamp")}</td>
-                                </tr>
-                            {/each}
-                        {/if}
-                    </tbody>
-                </table>
-            </div>
+                        {/each}
+                    {/if}
+                </tbody>
+            </table>
 
         </div>
     </div>
