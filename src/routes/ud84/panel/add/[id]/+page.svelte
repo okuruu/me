@@ -253,7 +253,7 @@
                         }
 
                         toast.success(message);
-                        return goto(`/ud84/panel/${pageUrl}`)
+                        return goto(`/ud84/panel/logistic`);
                     } catch (error) {
                         toast.error("Ada masalah dengan koneksi internet.");
                         return;

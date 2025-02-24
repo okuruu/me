@@ -62,6 +62,11 @@
         isDrawer = !isDrawer;
     }
 
+    function reverseData(): Report[] {
+        newData = newData.reverse();
+        return newData;
+    }
+
     async function doPost(): Promise <void> {
         const { status, message, data } = await db({
             searchBar: useInput.searchBar,
@@ -118,11 +123,20 @@
                 <div class="col-3">
                     <div class="d-flex justify-content-end">
                         <label class="form-check form-switch form-check-custom form-check-solid mt-11">
-                            <input class="form-check-input" type="checkbox"/>
+                            <input class="form-check-input" type="checkbox" onchange={reverseData}/>
                             <span class="form-check-label fw-bolder ms-5">A-Z</span>
                         </label>
                     </div>
                 </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <a href="/ud84/panel/add/item-masuk" class="btn btn-sm btn-primary">
+                    <img src="/icons/elements/Cart-Plus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Masuk
+                </a>
+                <a href="/ud84/panel/add/item-keluar" class="btn btn-sm btn-danger">
+                    <img src="/icons/elements/Cart-Minus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Keluar
+                </a>
             </div>
 
             <div class="separator my-3"></div>
