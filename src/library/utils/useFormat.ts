@@ -129,4 +129,10 @@ function capitalizeEachWord(str: string): string {
     return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export { likesCount, Carbon, capitalizeEachWord, rupiahFormatter }
+function currencySanitizer(input: string | null): number {
+    if (!input) return 0;
+    const sanitizedAmount = Number(input.toString().replace(/\D/g, ''));
+    return sanitizedAmount;
+}
+
+export { likesCount, Carbon, capitalizeEachWord, rupiahFormatter, currencySanitizer }
