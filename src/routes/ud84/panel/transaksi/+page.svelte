@@ -6,6 +6,8 @@
     import Drawer from "../../../../components/shared/Drawer.svelte";
     import Rupiah from "../../../../components/shared/Rupiah.svelte";
     import { toast } from "svelte-sonner";
+    import DatePlaceholder from "../../../../components/shared/DatePlaceholder.svelte";
+    import { initializeDate } from "../../../../library/utils/useDefault";
 
     interface Transaksi {
         ID: string;
@@ -67,8 +69,14 @@
     let useDP: string = $state('');;
 
     let isDrawer: boolean = $state(false);
+    
+    type Search = Record<"startDate" | "endDate", string>;
+    const useInput: Search = $state({
+        startDate: initializeDate("first"),
+        endDate: initializeDate("last"),
+    } as Search);
 
-    onMount(async () => initializePage());
+    onMount(async () => doPost());
 
     async function initializePage(): Promise <void>{
         const doResponse    = await useFetch('UD84/Daftar-Transaksi');
@@ -112,74 +120,137 @@
         })
     }
 
+    async function doPost(): Promise <void> {
+        const { status, message, data } = await db({
+            start: useInput.startDate,
+            end: useInput.endDate,
+        }, 'UD84/Daftar-Transaksi/Search');
+
+        if (status === "error") {
+            toast.error(message);
+            return;
+        }
+
+        daftarTransaksi     = data.data;
+        nominalTransaksi    = data.TRANSAKSI;
+        nominalDP           = data.DP;
+        nominalTunai        = data.BAYAR_TUNAI
+    }
+
+    function reverseData(): Transaksi[] {
+        daftarTransaksi = daftarTransaksi.reverse();
+        return daftarTransaksi;
+    }
 </script>
 <Ud84Navigation/>
-<div class="card shadow-sm">
-    <div class="card-header">
-        <h3 class="card-title fw-bold">Daftar Transaksi: Rekap Penjualan</h3>
-    </div>
-    <div class="card-body">
-        
-        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
-            <thead>
-                <tr class="fw-bold">
-                    <th>#</th>
-                    <th>Tanggal Transaksi</th>
-                    <th>Jatuh Tempo</th>
-                    <th>Nama Pelanggan</th>
-                    <th>Nominal Transaksi</th>
-                    <th>DP</th>
-                    <th>Bayar Tunai</th>
-                    <th>Cetak Ulang</th>
-                    <th>Lihat Detail Transaksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each daftarTransaksi as data, index}
-                    <tr>
-                        <td>
-                            {#if data.JATUH_TEMPO !== '-'}
-                                {#if data.DP == data.NOMINAL}
-                                    <span class="badge badge-circle badge-success">{index + 1}</span>
-                                {:else}
-                                    <span class="badge badge-circle badge-danger">{index + 1}</span>
-                                {/if}
-                            {:else}
-                                {index + 1}
-                            {/if}
-                        </td>
-                        <td>{data.TANGGAL}</td>
-                        <td>{data.JATUH_TEMPO}</td>
-                        <td>{data.NAMA}</td>
-                        <td>{rupiahFormatter.format(data.NOMINAL)}</td>
-                        <td>
-                            {#if data.DP !== 0}
-                                <span class="badge badge-warning">{rupiahFormatter.format(data.DP)}</span>
-                            {:else}
-                                {rupiahFormatter.format(data.DP)}
-                            {/if}
-                        </td>
-                        <td>{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-info">
-                                <img src="/icons/elements/Printer.svg" alt="Print" class="h-20px svg-white" />
-                                Cetak Ulang Nota
-                            </button>
-                        </td>
-                        <td>
-                            <button type="button" onclick={() => getDetail(data.ID)} class="btn btn-sm btn-primary">Lihat Detail</button>
-                        </td>
-                    </tr>
-                {/each}
-                <tr>
-                    <td colspan="4" class="fw-bolder">Total</td>
-                    <td class="text-success fw-bolder">{ rupiahFormatter.format(nominalTransaksi) }</td>
-                    <td>{ rupiahFormatter.format(nominalDP) }</td>
-                    <td>{ rupiahFormatter.format(nominalTunai) }</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="container-fluid">
+    <div class="card shadow-sm my-7">
+        <div class="card-header">
+            <h3 class="card-title fw-bold">Daftar Transaksi: Rekap Penjualan</h3>
+        </div>
+    
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-9">
+                    <form class="row" onsubmit={doPost}>
+                        <div class="col me-2">
+                            <label for="startDate" class="form-label fw-bolder mt-2">Pencarian Awal</label>
+                            <DatePlaceholder bind:value={useInput.startDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Awal"/>
+                        </div>
+                        <div class="col me-2">
+                            <label for="endDate" class="form-label fw-bolder mt-2">Pencarian Akhir</label>
+                            <DatePlaceholder bind:value={useInput.endDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Akhir"/>
+                        </div>
+                        <div class="col">
+                            <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-icon btn-primary">
+                                    <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-3">
+                    <div class="d-flex justify-content-end">
+                        <label class="form-check form-switch form-check-custom form-check-solid mt-11">
+                            <input class="form-check-input" type="checkbox" onchange={reverseData}/>
+                            <span class="form-check-label fw-bolder ms-5">A-Z</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
 
+            <div class="separator my-3"></div>
+
+            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+                <thead>
+                    <tr class="fw-bold">
+                        <th>#</th>
+                        <th>Tanggal Transaksi</th>
+                        <th>Jatuh Tempo</th>
+                        <th>Nama Pelanggan</th>
+                        <th>Nominal Transaksi</th>
+                        <th>DP</th>
+                        <th>Bayar Tunai</th>
+                        <th>Cetak Ulang</th>
+                        <th>Lihat Detail Transaksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#if daftarTransaksi.length === 0}
+                        <tr>
+                            <td colspan="9">Tidak ada data transaksi</td>
+                        </tr>
+                    {:else}
+                        {#each daftarTransaksi as data, index}
+                            <tr>
+                                <td>
+                                    {#if data.JATUH_TEMPO !== '-'}
+                                        {#if data.DP == data.NOMINAL}
+                                            <span class="badge badge-circle badge-success">{index + 1}</span>
+                                        {:else}
+                                            <span class="badge badge-circle badge-danger">{index + 1}</span>
+                                        {/if}
+                                    {:else}
+                                        {index + 1}
+                                    {/if}
+                                </td>
+                                <td>{data.TANGGAL}</td>
+                                <td>{data.JATUH_TEMPO}</td>
+                                <td>{data.NAMA}</td>
+                                <td>{rupiahFormatter.format(data.NOMINAL)}</td>
+                                <td>
+                                    {#if data.DP !== 0}
+                                        <span class="badge badge-warning">{rupiahFormatter.format(data.DP)}</span>
+                                    {:else}
+                                        {rupiahFormatter.format(data.DP)}
+                                    {/if}
+                                </td>
+                                <td>{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
+                                <td>
+                                    <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
+                                        <img src="/icons/elements/Printer.svg" alt="Print" class="h-20px svg-white" />
+                                        Cetak Ulang Nota
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" onclick={() => getDetail(data.ID)} class="btn btn-sm btn-primary">Lihat Detail</button>
+                                </td>
+                            </tr>
+                        {/each}
+                        <tr>
+                            <td colspan="4" class="fw-bolder">Total</td>
+                            <td class="text-success fw-bolder">{ rupiahFormatter.format(nominalTransaksi) }</td>
+                            <td>{ rupiahFormatter.format(nominalDP) }</td>
+                            <td>{ rupiahFormatter.format(nominalTunai) }</td>
+                        </tr>
+                    {/if}
+                </tbody>
+            </table>
+    
+        </div>
     </div>
 </div>
 
@@ -262,51 +333,3 @@
         </div>
     </div>
 </Drawer>
-
-<!-- Show Detail -->
-<!-- 
-<div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" id="showDetail">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Detail Transaksi</h3>
-                <button type="button" on:click={() => detailTransaksi = []} class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">X</button>
-            </div>
-
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
-                        <thead>
-                            <tr class="fw-bolder">
-                                <th>#</th>
-                                <th>Nama Produk</th>
-                                <th>Jumlah</th>
-                                <th>Harga Asli</th>
-                                <th>Harga Terjual</th>
-                                <th>Potongan Persen</th>
-                                <th>Potongan Rupiah</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each detailTransaksi as detail,index }
-                                <tr>
-                                    <td>{ index + 1 }</td>
-                                    <td>{ detail.NAMA }</td>
-                                    <td>{ detail.JUMLAH }</td>
-                                    <td>{ rupiahFormatter.format(detail.HARGA_ASLI) }</td>
-                                    <td>{ rupiahFormatter.format(detail.HARGA_TERJUAL) }</td>
-                                    <td>{ rupiahFormatter.format(detail.POTONGAN_PERSEN) }</td>
-                                    <td>{ rupiahFormatter.format(detail.POTONGAN_RUPIAH) }</td>
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" on:click={() => detailTransaksi = []} class="btn btn-light" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div> -->
