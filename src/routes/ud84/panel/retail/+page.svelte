@@ -5,6 +5,7 @@
     import { currencySanitizer, rupiahFormatter } from "../../../../library/utils/useFormat";
 
     import Rupiah from "../../../../components/shared/Rupiah.svelte";
+    import Ud84Navigation from "../../../../components/content/ud84/UD84Navigation.svelte";
 
     interface Master {
         ID: number;
@@ -243,7 +244,7 @@
     }
 
 </script>
-<Toaster />
+<Ud84Navigation/>
 <div class="card shadow-sm">
     <div class="card-body">
         
