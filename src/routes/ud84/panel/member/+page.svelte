@@ -2,9 +2,9 @@
     import { onMount } from "svelte";
     import { toast } from "svelte-sonner";
     import { db, useFetch } from "../../../../library/hooks/db";
+    import Drawer from "../../../../components/shared/Drawer.svelte";
     import { rupiahFormatter } from "../../../../library/utils/useFormat";
     import Ud84Navigation from "../../../../components/content/ud84/UD84Navigation.svelte";
-
 
     interface Master {
         ID: number;
@@ -23,6 +23,14 @@
         UPDATED_AT: string | null;
     }
 
+    interface Member {
+        ID: number;
+        NAMA: string;
+        LOKASI: string;
+        ALAMAT: string;
+        WHATSAPP: string;
+    }
+
     let masterProduk: Master[] = $state([]);
 
     let namaLengkap: string = $state('');
@@ -30,9 +38,20 @@
     let alamatToko: string = $state('');
     let whatsAppToko: string = $state('');
 
-    onMount(async () => {
-        masterProduk = await useFetch('Master-Produk/Retrieve');
-    });
+    let isDrawer: boolean = $state(false);
+
+    let dataMember: Member[] = $state([]);
+
+    onMount(async () => initializePage());
+
+    async function initializePage(): Promise <void> {
+        masterProduk = await useFetch('UD84/Master-Produk/Retrieve');
+    }
+    
+    async function viewMember(): Promise <void> {
+        dataMember = await useFetch('UD84/Member/Retrieve');
+        isDrawer = !isDrawer;
+    }
 
     async function doPost(){
         if(namaLengkap == null || lokasiToko == null || alamatToko == null || whatsAppToko == null){
@@ -49,7 +68,7 @@
             priceValue  = [...priceValue,priceList[index].value];
         }
 
-        const { status, message, data } = await db({
+        const { status, message } = await db({
             NAMA        : namaLengkap,
             LOKASI      : lokasiToko,
             ALAMAT      : alamatToko,
@@ -74,12 +93,40 @@
         whatsAppToko    = '';
     }
 
+    async function deleteMember(id: number): Promise <void> {
+        toast('Apakah anda yakin untuk menghapus?', {
+            action: {
+                label: 'Ya, Hapus',
+                onClick: async () => {
+                    if (id === null) {
+                        toast.error("Tidak ada data yang dipilih.");
+                        return;
+                    }
+
+                    const { status, message } = await db({
+                        ID: id
+                    }, 'UD84/Member/Delete');
+
+                    if (status === "error") {
+                        toast.error(message);
+                        return;
+                    }
+
+                    toast.info(message);
+                }
+            },
+        });
+    }
+
 </script>
 <Ud84Navigation/>
 <div class="container-fluid">
     <div class="card shadow-sm my-7">
         <div class="card-header">
-            <h3 class="card-title fw-bold">Input Data: Member</h3>
+            <h3 class="card-title fw-bold">Membership</h3>
+            <div class="card-toolbar">
+                <button type="button" onclick={viewMember} class="btn btn-sm btn-info">Lihat Semua Member</button>
+            </div>
         </div>
         <div class="card-body">
     
@@ -144,9 +191,50 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" onclick={doPost} class="btn btn-primary">Simpan Data Member</button>
+                    <button type="submit" class="btn btn-primary">Simpan Data Member</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
+    <div class="form-group w-100 p-5">
+
+        <h3>Daftar Member</h3>
+
+        <div class="table-responsive">
+            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+                <thead>
+                    <tr class="fw-bold">
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Lokasi</th>
+                        <th>Nomor WhatsApp</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each dataMember as data,index }
+                        <tr>
+                            <td>{ index + 1 }</td>
+                            <td>{ data.NAMA }</td>
+                            <td>{ data.ALAMAT }</td>
+                            <td>{ data.LOKASI }</td>
+                            <td>
+                                <a href="https://wa.me/62{ data.WHATSAPP }" target="_blank" class="btn btn-sm btn-success" >0{ data.WHATSAPP }</a>
+                            </td>
+                            <td>
+                                <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-sm btn-icon btn-dark">
+                                    <img src="/icons/elements/Delete.svg" class="h-20px svg-white" alt="Delete"/>
+                                </button>
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</Drawer>

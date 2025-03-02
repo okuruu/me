@@ -55,6 +55,7 @@
                         <a href="/ud84/panel/transaksi" class="btn btn-sm fw-bolder {activeMenu ===  'Transaksi' ? 'text-golden' : 'text-gray-600' }">Transaksi</a>
                         <a href="/ud84/panel/member" class="btn btn-sm fw-bolder {activeMenu ===  'Member' ? 'text-golden' : 'text-gray-600' }">Member</a>
                         <a href="/ud84/panel/master-produk" class="btn btn-sm fw-bolder {activeMenu ===  'Master Produk' ? 'text-golden' : 'text-gray-600' }">Master Produk</a>
+                        <a href="/ud84/panel/analisa" class="btn btn-sm fw-bolder {activeMenu ===  'Analisa' ? 'text-golden' : 'text-gray-600' }">Analisa</a>
                         <a href="/ud84/panel/logistic" class="btn btn-sm fw-bolder {activeMenu ===  'Logistic' ? 'text-golden' : 'text-gray-600' }">Logistik</a>
                         <a href="/ud84/panel/kartu-stok" class="btn btn-sm fw-bolder {activeMenu ===  'Stock-Cards' ? 'text-golden' : 'text-gray-600' }">Kartu Stok</a>
                     </div>
