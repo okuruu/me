@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { useFetch } from '../../library/hooks/db';
+    import { db, useFetch } from '../../library/hooks/db';
     import { capitalizeEachWord } from '../../library/utils/useFormat';
     import { toast } from 'svelte-sonner';
 
@@ -114,6 +114,50 @@
         carts.splice(id, 1);
         return carts;
     }
+
+    async function completeTransaction(): Promise <void> {
+        toast('Anda akan membuat pesanan.', {
+            description: 'Apakah anda yakin?',
+            action: {
+                label: 'Ya, Ajukan Pesanan',
+                onClick: async () => {
+                    if (carts.length === 0) {
+                        toast.error("Keranjang tidak boleh kosong");
+                        return;
+                    }
+
+                    if (useForms.whatsapp == '' || useForms.nama == '') {
+                        toast.error("Informasi pelanggan tidak boleh kosong");
+                        return;
+                    }
+
+                    const { status, message, data } = await db({
+                        NAMA: useForms.nama,
+                        WHATSAPP: useForms.nama,
+                        SALES: useForms.nama,
+                        CARTS: carts
+                    }, 'UD84/Penjualan/Order-Online');
+
+                    if (status === "error") {
+                        toast.error(message);
+                        return;
+                    }
+
+                    toast.success(message);
+                    console.log(data);
+
+                    useForms = {
+                        nama: '',
+                        whatsapp: '',
+                        sales: '',
+                        kode: ''
+                    };
+                    carts = [];
+
+                }
+            },
+        })
+    }
 </script>
 <div class="bg-dark {katalog.length <= 1 || !isCatalogue ? 'min-vh-100' : ''}">
     <div class="container-xs">
@@ -217,6 +261,8 @@
         </div>
     </div>
 
+    <button type="button" onclick={completeTransaction} class="btn btn-primary w-100">Simpan Pesanan</button>
+
     <div class="separator my-5"></div>
     <h3 class="fw-bold text-white">Keranjang Belanja</h3>
 
@@ -241,7 +287,9 @@
                     <tr>
                         <td>{ index + 1 }</td>
                         <td>{carts.NAMA}</td>
-                        <td class="text-center">{carts.QUANTITY}</td>
+                        <td class="text-center">
+                            <input type="number" min="1" class="form-control text-center" placeholder="Qty" bind:value={carts.QUANTITY} />
+                        </td>
                         <td class="text-center">
                             <button type="button" onclick={() => removeItem(index)} class="btn btn-sm btn-icon">
                                 <img src="icons/elements/Delete.svg" class="h-15px" alt="View" />
