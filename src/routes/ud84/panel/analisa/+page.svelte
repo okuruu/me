@@ -1,13 +1,13 @@
 <script lang="ts">
     import { toast } from "svelte-sonner";
-    import { db, useFetch } from "../../../../library/hooks/db";
+    import { db } from "../../../../library/hooks/db";
     import UD84Omset from "../../../../components/content/ud84/analisa/UD84Omset.svelte";
+    import Ud84Navigation from "../../../../components/content/ud84/UD84Navigation.svelte";
     import UD84Analisa from "../../../../components/content/ud84/analisa/UD84Analisa.svelte";
     import UD84Operasional from "../../../../components/content/ud84/analisa/UD84Operasional.svelte";
-    import Ud84Navigation from "../../../../components/content/ud84/UD84Navigation.svelte";
     
     let password: string = $state('');
-    let contents: "Password" | "Omset" | "Analisa" | "Operasional" = $state("Omset");
+    let contents: "Password" | "Omset" | "Analisa" | "Operasional" = $state("Password");
 
     async function verifyPassword(): Promise <void> {
         const { status, message } = await db({
@@ -21,7 +21,6 @@
 
         contents = "Omset"
     }
-
 </script>
 <Ud84Navigation/>
 <div class="container-fluid">
