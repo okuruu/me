@@ -52,6 +52,7 @@
                 <div class="col">
                     <div class="form-group mt-1">
                         <a href="/ud84/panel/retail" class="btn btn-sm fw-bolder {activeMenu ===  'Retail' ? 'text-golden' : 'text-gray-600' }">Retail</a>
+                        <a href="/ud84/panel/pesanan" class="btn btn-sm fw-bolder {activeMenu ===  'Pesanan' ? 'text-golden' : 'text-gray-600' }">Pesanan</a>
                         <a href="/ud84/panel/transaksi" class="btn btn-sm fw-bolder {activeMenu ===  'Transaksi' ? 'text-golden' : 'text-gray-600' }">Transaksi</a>
                         <a href="/ud84/panel/member" class="btn btn-sm fw-bolder {activeMenu ===  'Member' ? 'text-golden' : 'text-gray-600' }">Member</a>
                         <a href="/ud84/panel/master-produk" class="btn btn-sm fw-bolder {activeMenu ===  'Master Produk' ? 'text-golden' : 'text-gray-600' }">Master Produk</a>

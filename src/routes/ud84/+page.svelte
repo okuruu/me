@@ -131,10 +131,10 @@
                         return;
                     }
 
-                    const { status, message, data } = await db({
+                    const { status, message } = await db({
                         NAMA: useForms.nama,
-                        WHATSAPP: useForms.nama,
-                        SALES: useForms.nama,
+                        WHATSAPP: useForms.whatsapp,
+                        SALES: useForms.sales,
                         CARTS: carts
                     }, 'UD84/Penjualan/Order-Online');
 
@@ -144,7 +144,6 @@
                     }
 
                     toast.success(message);
-                    console.log(data);
 
                     useForms = {
                         nama: '',
