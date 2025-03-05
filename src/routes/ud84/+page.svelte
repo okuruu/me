@@ -34,12 +34,13 @@
     let isImage: boolean = $state(false);
     let isCatalogue: boolean = $state(false);
 
-    type Forms = Record<"nama" | "whatsapp" | "sales" | "kode", string>;
+    type Forms = Record<"nama" | "whatsapp" | "sales" | "kode" | "notes", string>;
     let useForms: Forms = $state({
         nama: '',
         whatsapp: '',
         sales: '',
-        kode: ''
+        kode: '',
+        notes: ''
     } as Forms);
 
     let carts: Carts[] = $state([]);
@@ -135,6 +136,7 @@
                         NAMA: useForms.nama,
                         WHATSAPP: useForms.whatsapp,
                         SALES: useForms.sales,
+                        NOTES: useForms.notes,
                         CARTS: carts
                     }, 'UD84/Penjualan/Order-Online');
 
@@ -149,7 +151,8 @@
                         nama: '',
                         whatsapp: '',
                         sales: '',
-                        kode: ''
+                        kode: '',
+                        notes: ''
                     };
                     carts = [];
 
@@ -239,6 +242,11 @@
                 <option value={sales.ID}>{sales.NAMA}</option>
             {/each}
         </select>
+    </div>
+
+    <div class="form-group my-3">
+        <label for="keterangan" class="form-label fw-bold text-white">Catatan</label>
+        <textarea class="form-control" rows="3" placeholder="Masukkan Catatan" bind:value={useForms.notes} required></textarea>
     </div>
 
     <div class="form-group my-3">
