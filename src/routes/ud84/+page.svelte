@@ -28,9 +28,12 @@
     let katalogDefault: Katalog[] = $state([]);
     let sales: Staff[] = $state([]);
 
+    let salesPassword: string = $state('');
+    
     let searchBar: string = $state('');
     let imagePath: string = $state('');
     
+    let cartPass: boolean = $state(false);
     let isImage: boolean = $state(false);
     let isCatalogue: boolean = $state(true);
 
@@ -127,6 +130,19 @@
         carts = [];
     }
 
+    async function passwordSales(): Promise <void> {
+        const { status, message } = await db({
+            password: salesPassword
+        }, 'UD84/Charts/Sales-Password');
+
+        if (status === "error") {
+            toast.error(message);
+            return;
+        }
+
+        cartPass = true;
+    }
+
     async function completeTransaction(): Promise <void> {
         toast('Anda akan membuat pesanan.', {
             description: 'Apakah anda yakin?',
@@ -207,7 +223,23 @@
         {#if isCatalogue}
             {@render mainCatalogue()}
         {:else}
-            {@render useCarts()}
+            {#if cartPass}
+                {@render useCarts()}
+            {:else}
+            
+                <form class="form-group" onsubmit={passwordSales}>
+                    <label for="pass" class="form-label fw-bold text-white">Masukkan Password</label>
+                    <div class="row">
+                        <div class="col-8">
+                            <input type="password" bind:value={salesPassword} class="form-control" placeholder="Password Sales" required/>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary">Buka</button>
+                        </div>
+                    </div>
+                </form>
+
+            {/if}
         {/if}
     </div>
 </div>
