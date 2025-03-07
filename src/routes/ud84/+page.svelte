@@ -32,7 +32,7 @@
     let imagePath: string = $state('');
     
     let isImage: boolean = $state(false);
-    let isCatalogue: boolean = $state(true);
+    let isCatalogue: boolean = $state(false);
 
     type Forms = Record<"nama" | "whatsapp" | "sales" | "kode" | "notes", string>;
     let useForms: Forms = $state({
@@ -116,6 +116,17 @@
         return carts;
     }
 
+    function removeAll(): void {
+        useForms = {
+            nama: '',
+            whatsapp: '',
+            sales: '',
+            kode: '',
+            notes: ''
+        };
+        carts = [];
+    }
+
     async function completeTransaction(): Promise <void> {
         toast('Anda akan membuat pesanan.', {
             description: 'Apakah anda yakin?',
@@ -146,16 +157,37 @@
                     }
 
                     toast.success(message);
+                    removeAll();
+                }
+            },
+        })
+    }
 
-                    useForms = {
-                        nama: '',
-                        whatsapp: '',
-                        sales: '',
-                        kode: '',
-                        notes: ''
-                    };
-                    carts = [];
+    async function saveMember(): Promise <void> {
+        toast('Buat Member.', {
+            description: 'Apakah anda yakin?',
+            action: {
+                label: 'Ya, Buat Member',
+                onClick: async () => {
+                    if (useForms.whatsapp == '' || useForms.nama == '') {
+                        toast.error("Informasi member tidak boleh kosong");
+                        return;
+                    }
 
+                    const { status, message } = await db({
+                        NAMA: useForms.nama,
+                        WHATSAPP: useForms.whatsapp,
+                        SALES: useForms.sales,
+                        NOTES: useForms.notes,
+                    }, 'UD84/Member/Create-Sales');
+
+                    if (status === "error") {
+                        toast.error(message);
+                        return;
+                    }
+
+                    toast.success(message);
+                    removeAll();
                 }
             },
         })
@@ -245,7 +277,7 @@
     </div>
 
     <div class="form-group my-3">
-        <label for="keterangan" class="form-label fw-bold text-white">Catatan</label>
+        <label for="keterangan" class="form-label fw-bold text-white">Catatan / Alamat</label>
         <textarea class="form-control" rows="3" placeholder="Masukkan Catatan" bind:value={useForms.notes} required></textarea>
     </div>
 
@@ -268,7 +300,15 @@
         </div>
     </div>
 
-    <button type="button" onclick={completeTransaction} class="btn btn-primary w-100">Simpan Pesanan</button>
+    <div class="row">
+        <div class="col">
+            <button type="button" onclick={saveMember} class="btn btn-info w-100">Simpan Member</button>
+        </div>
+        <div class="col">
+            <button type="button" onclick={completeTransaction} class="btn btn-primary w-100">Simpan Pesanan</button>
+        </div>
+    </div>
+
 
     <div class="separator my-5"></div>
     <h3 class="fw-bold text-white">Keranjang Belanja</h3>
