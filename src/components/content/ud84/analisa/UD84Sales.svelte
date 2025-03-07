@@ -36,7 +36,6 @@
         sales = await useFetch('UD84/Stocks/Staff');
     });
 
-
     async function doPost(): Promise <void> {
         if(useForms.sales === ''){
             toast.error("Silahkan pilih sales.");
@@ -100,7 +99,6 @@
             <button type="submit" class="btn btn-sm btn-primary">Analisa Hasil Kinerja</button>
         </div>
     </form>
-
 
     <div class="separator my-10"></div>
 

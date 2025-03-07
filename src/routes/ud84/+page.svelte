@@ -32,7 +32,7 @@
     let imagePath: string = $state('');
     
     let isImage: boolean = $state(false);
-    let isCatalogue: boolean = $state(false);
+    let isCatalogue: boolean = $state(true);
 
     type Forms = Record<"nama" | "whatsapp" | "sales" | "kode" | "notes", string>;
     let useForms: Forms = $state({
