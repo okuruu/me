@@ -55,6 +55,7 @@
     // Paid Method
     let payDP: string = $state('');
     let payCash: string = $state('');
+    let cutMoney: string = $state('');
     let dueDate: Date | null = $state(null);
     let additionalInformation: string = $state('');
 
@@ -188,6 +189,7 @@
         const { status, message } = await db({
             DP: currencySanitizer(payDP),
             CASH: currencySanitizer(payCash),
+            POTONGAN: currencySanitizer(cutMoney),
             JATUH_TEMPO: dueDate,
             TOTAL: totalProducts,
             KETERANGAN: additionalInformation,
@@ -202,6 +204,7 @@
             return;
         }
 
+        masterProduk = await useFetch('UD84/Master-Produk/Retrieve');
         toast.success(message);
         removeAll();
     }
@@ -335,10 +338,10 @@
             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
 
                 <div class="border border-primary rounded-1 d-flex align-items-center justify-content-end">
-                    <h1 class="display-6 text-dea me-3 m-2">{ rupiahFormatter.format(totalProducts) }</h1>
+                    <h1 class="display-6 text-dea me-3 m-2">{ rupiahFormatter.format(totalProducts - currencySanitizer(cutMoney)) }</h1>
                 </div>
 
-                <div class="overflow-auto" style="height: 50vh;">
+                <div class="overflow-auto" style="height: 40vh;">
                     <div class="table-responsive">
                         <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
                             <thead>
@@ -381,6 +384,11 @@
                         <label for="inputTunai" class="form-label fw-bold">Tunai</label>
                         <Rupiah id="payCash" bind:value={payCash} useClass="form-control form-control-sm"/>
                     </div>
+                </div>
+
+                <div class="form-group my-3">
+                    <label for="inputTunai" class="form-label fw-bold">Potongan Lainnya</label>
+                    <Rupiah id="payCash" bind:value={cutMoney} useClass="form-control form-control-sm"/>
                 </div>
 
                 <div class="my-3">

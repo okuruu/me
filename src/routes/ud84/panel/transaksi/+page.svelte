@@ -17,6 +17,8 @@
         NOMINAL: number;
         DP: number;
         BAYAR_TUNAI: number;
+        POTONGAN: number;
+        KEMBALIAN: number;
     }
 
     interface Rekap {
@@ -62,9 +64,11 @@
     });
     let detailTransaksi: Detail[] = $state([]);
 
-    let nominalTransaksi:number = $state(0);
-    let nominalDP:number        = $state(0);
-    let nominalTunai:number     = $state(0);
+    let nominalTransaksi:number     = $state(0);
+    let nominalDP:number            = $state(0);
+    let nominalTunai:number         = $state(0);
+    let nominalPotongan: number     = $state(0);
+    let nominalKembalian: number    = $state(0);
 
     let useDP: string = $state('');;
 
@@ -83,7 +87,9 @@
         daftarTransaksi     = doResponse.data;
         nominalTransaksi    = doResponse.TRANSAKSI;
         nominalDP           = doResponse.DP;
-        nominalTunai        = doResponse.BAYAR_TUNAI
+        nominalTunai        = doResponse.BAYAR_TUNAI;
+        nominalPotongan     = doResponse.POTONGAN;
+        nominalKembalian    = doResponse.KEMBALIAN;
     } 
 
     async function getDetail(id: string): Promise <Array<Detail>>{
@@ -135,6 +141,8 @@
         nominalTransaksi    = data.TRANSAKSI;
         nominalDP           = data.DP;
         nominalTunai        = data.BAYAR_TUNAI
+        nominalPotongan     = data.POTONGAN;
+        nominalKembalian    = data.KEMBALIAN;
     }
 
     function reverseData(): Transaksi[] {
@@ -192,7 +200,9 @@
                         <th>Jatuh Tempo</th>
                         <th>Nama Pelanggan</th>
                         <th>Nominal Transaksi</th>
+                        <th>Potongan Lain</th>
                         <th>DP</th>
+                        <th>Kembalian</th>
                         <th>Bayar Tunai</th>
                         <th>Cetak Ulang</th>
                         <th>Lihat Detail Transaksi</th>
@@ -228,6 +238,8 @@
                                         {rupiahFormatter.format(data.DP)}
                                     {/if}
                                 </td>
+                                <td>{rupiahFormatter.format(data.POTONGAN)}</td>
+                                <td>{rupiahFormatter.format(data.KEMBALIAN)}</td>
                                 <td>{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
                                 <td>
                                     <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
@@ -243,8 +255,10 @@
                         <tr>
                             <td colspan="4" class="fw-bolder">Total</td>
                             <td class="text-success fw-bolder">{ rupiahFormatter.format(nominalTransaksi) }</td>
-                            <td>{ rupiahFormatter.format(nominalDP) }</td>
-                            <td>{ rupiahFormatter.format(nominalTunai) }</td>
+                            <td class="text-danger fw-bolder">{ rupiahFormatter.format(nominalPotongan) }</td>
+                            <td class="text-warning fw-bolder">{ rupiahFormatter.format(nominalDP) }</td>
+                            <td class="text-info fw-bolder">{ rupiahFormatter.format(nominalKembalian) }</td>
+                            <td class="text-primary fw-bolder">{ rupiahFormatter.format(nominalTunai) }</td>
                         </tr>
                     {/if}
                 </tbody>
