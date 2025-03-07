@@ -1,8 +1,24 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { redirect } from "@sveltejs/kit";
+    import { onMount } from "svelte";
+
 
     let time: Date = $state(new Date());
     let activeMenu: string = $state('Transaksi');
     let isOption: boolean = $state(false);
+
+    let isLogin: boolean | null = $state(null);
+
+    onMount(() => {
+        const getStorage = localStorage.getItem('Auth');
+        isLogin = getStorage ? JSON.parse(getStorage) : null;
+
+        if(isLogin == null) {
+            return logOut();
+        }
+
+    });
 
     $effect(() => {
         const timeInterval = setInterval(() => {
@@ -14,31 +30,9 @@
         };
     });
 
-    function openSidebar(id: string){
-        activeMenu = id;
-    }
-
     async function logOut() {
-    //     <div class="p-4">
-    //     <h2>Retail</h2>
-    //     <a href="/ud84/panel/retail" class="btn btn-sm w-100 text-start">Retail</a>
-    //     <a href="/ud84/panel/transaksi" class="btn btn-sm w-100 text-start">Transaksi</a>
-    //     <a href="/ud84/panel/member" class="btn btn-sm w-100 text-start">Member</a>
-    //     <a href="/ud84/panel/master-produk" class="btn btn-sm w-100 text-start">Master Produk</a>
-
-    //     <h2>Stok</h2>
-    //     <a href="/ud84/panel/item-masuk" class="btn btn-sm w-100 text-start">Item Masuk</a>
-    //     <a href="/ud84/panel/item-keluar" class="btn btn-sm w-100 text-start">Item Keluar</a>
-    //     <a href="/ud84/panel/kartu-stok" class="btn btn-sm w-100 text-start">Kartu Stok</a>
-
-    //     <h2>Analisa</h2>
-    //     <a href="/ud84/panel/omset-perusahaan" class="btn btn-sm w-100 text-start">Omset Perusahaan</a>
-    //     <a href="/ud84/panel/biaya-operasional" class="btn btn-sm w-100 text-start">Biaya Operasional</a>
-    //     <a href="/ud84/panel/analisa-item" class="btn btn-sm w-100 text-start">Analisa Item</a>
-
-    //     <h2>Showcase</h2>
-    //     <a href="/ud84/panel/katalog-pelanggan" class="btn btn-sm w-100 text-start">Katalog Pelanggan</a>
-    // </div>
+        localStorage.removeItem('Auth');
+        return goto('/ud84/panel');
     }
 </script>
 <nav class="p-2 shadow-sm">
@@ -79,7 +73,7 @@
                     </small>
                 </div>
                 <div class="col-2">
-                    <button class="btn btn-sm btn-flush" type="button">
+                    <button class="btn btn-sm btn-flush" onclick={logOut} type="button">
                         <img src="/images/avatar.jfif" alt="Richie" class="h-35px w-35px rounded">
                     </button>
                 </div>
