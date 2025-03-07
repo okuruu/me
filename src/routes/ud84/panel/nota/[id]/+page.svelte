@@ -103,7 +103,7 @@
 <div class="container mt-20 p-4" style="max-width: 148mm;">
     <div class="row mb-3">
         <div class="col text-start">
-            <h2 class="text-danger">UD84</h2>
+            <h2 class="text-danger fw-bolder">UD84</h2>
         </div>
         <div class="col text-end no-print">
             <button type="button" class="btn btn-sm btn-icon btn-primary" onclick={() => window.print()}>
@@ -118,6 +118,15 @@
         <div class="col">
             <p><strong>Tanggal:</strong> {getInvoices.tanggal}</p>
             <p><strong>Pelanggan:</strong> {getInvoices.tuan}</p>
+        </div>
+    </div>
+
+    <div class="separator my-2"></div>
+    <h3 class="mb-7">Metode Pembayaran</h3>
+    <div class="row">
+        <div class="col">
+            <p><strong>(BRI)</strong> 0516-0101-4682-504 a.n <b>SHOBIRUL HAQ</b></p>
+            <p><strong>(BCA)</strong> 3170-4041-21 a.n <b>SHOBIRUL HAQ</b></p>
         </div>
     </div>
 

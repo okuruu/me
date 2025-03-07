@@ -55,10 +55,6 @@
         newData = await useFetch('UD84/Master-Produk/Retrieve');
         staticData = newData;
         useSatuan = await useFetch("UD84/Master-Produk/Satuan")
-        console.log({
-            data: newData,
-            a: "asd"
-        })
     });
 
     function doSearch(searchString:string){

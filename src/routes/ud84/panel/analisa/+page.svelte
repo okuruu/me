@@ -9,7 +9,7 @@
     import Ud84Member from "../../../../components/content/ud84/analisa/UD84Member.svelte";
     
     let password: string = $state('');
-    let contents: "Password" | "Omset" | "Analisa" | "Operasional" | "Sales" | "Member" = $state("Omset");
+    let contents: "Password" | "Omset" | "Analisa" | "Operasional" | "Sales" | "Member" = $state("Password");
 
     async function verifyPassword(): Promise <void> {
         const { status, message } = await db({

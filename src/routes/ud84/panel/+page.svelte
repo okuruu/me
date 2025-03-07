@@ -8,42 +8,17 @@
 	let currentEmail:string = $state('');
 	let currentPassword:string = $state('');
 
-	async function startAuth(){
-		buttonProcess = 'Silahkan tunggu';
-		disableButton = true;
-		toast.loading('Authenticating..', {position : 'top-right' , duration: 2000 });
-		const doPost = await fetch( 'https://esdelfron.deabakery.co.id/api/Log-In',{
-			method : 'POST',
-			headers : { 'Content-Type' : 'application/json' },
-			credentials : 'include',
-			body : JSON.stringify({
-				email 		: currentEmail,
-				password 	: currentPassword
-			})
-		});
-		const doResponse = await doPost.json();
-		console.log(doResponse)
-		if(doResponse.status == 'Authenticated'){
-			disableButton = false;
-
-			if(doResponse.privilege == 'Administrator'){
-				return goto('/master-produk');
-			} else {
-				return goto('/staff');
-			}
-
-		} else {
-			buttonProcess = 'Masuk';
-			disableButton = false;
-			return toast.error('Auth failed.', { position : 'top-right' });
-		}
-	}
-
     async function doPost(): Promise <void> {
-        const { status, message, data } = await db({
+		disableButton = true;
+		buttonProcess = 'Memuat...';
+
+        const { status, message } = await db({
             email: currentEmail,
             password: currentPassword
         }, 'UD84/Auth');
+
+		disableButton = false;
+		buttonProcess = 'Masuk';
 
         if(status === "Unauthorized") {
             toast.error(message);

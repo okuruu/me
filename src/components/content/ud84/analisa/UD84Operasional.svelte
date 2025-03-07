@@ -15,7 +15,6 @@
 
     async function initializePage(): Promise <void> {
         dataOperasional = await useFetch("UD84/Operasional/Retrieve");
-        console.log(dataOperasional);
     }
 
     function removeAll():void {
