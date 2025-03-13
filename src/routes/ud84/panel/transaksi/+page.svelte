@@ -111,7 +111,7 @@
                     const { status, message } = await db({
                         KODE: rekapTransaksi.UNIQUE,
                         DP: currencySanitizer(useDP),
-                        OLD_DP: rekapTransaksi.DP
+                        OLD_DP: rekapTransaksi.DP,
                     }, 'UD84/Daftar-Transaksi/Update-DP');
 
                     if (status === "error") {
@@ -231,6 +231,7 @@
                                 <td>{data.JATUH_TEMPO}</td>
                                 <td>{data.NAMA}</td>
                                 <td>{rupiahFormatter.format(data.NOMINAL)}</td>
+                                <td>{rupiahFormatter.format(data.POTONGAN)}</td>
                                 <td>
                                     {#if data.DP !== 0}
                                         <span class="badge badge-warning">{rupiahFormatter.format(data.DP)}</span>
@@ -238,17 +239,16 @@
                                         {rupiahFormatter.format(data.DP)}
                                     {/if}
                                 </td>
-                                <td>{rupiahFormatter.format(data.POTONGAN)}</td>
                                 <td>{rupiahFormatter.format(data.KEMBALIAN)}</td>
                                 <td>{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
                                 <td>
                                     <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
                                         <img src="/icons/elements/Printer.svg" alt="Print" class="h-20px svg-white" />
-                                        Cetak Ulang Nota
+                                        Cetak Ulang
                                     </a>
                                 </td>
                                 <td>
-                                    <button type="button" onclick={() => getDetail(data.ID)} class="btn btn-sm btn-primary">Lihat Detail</button>
+                                    <button type="button" onclick={() => getDetail(data.ID)} class="btn btn-sm btn-primary">Lihat</button>
                                 </td>
                             </tr>
                         {/each}

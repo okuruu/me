@@ -275,13 +275,11 @@
                 <div class="overflow-auto" style="height: 50vh;">
 
                     <div class="table-responsive">
-                        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+                        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
                             <thead>
                                 <tr class="fw-bold">
-                                    <th>#</th>
                                     <th>Nama Item</th>
-                                    <th>Tipe</th>
-                                    <th>Stok</th>
+                                    <th class="text-center">Stok</th>
                                     <th class="fw-bolder text-danger">Harga Item (Pabrik)</th>
                                     <th class="fw-bolder text-info">Harga Item (Satuan)</th>
                                     <th class="fw-bolder text-success">Harga Item (Pcs)</th>
@@ -295,10 +293,11 @@
                             <tbody>
                                 {#each masterProduk as data, index }
                                     <tr>
-                                        <td>{ index + 1 }</td>
-                                        <td>{ data.NAMA }</td>
-                                        <td>{ data.TIPE }</td>
                                         <td>
+                                            <span class="text-golden fw-bolder">[{ data.TIPE }] - </span>
+                                            { data.NAMA }
+                                        </td>
+                                        <td class="text-center">
                                             {#if data.STOK < 30}
                                                 <button type="button" class="btn btn-sm btn-danger">{ data.STOK }</button>
                                             {:else}
