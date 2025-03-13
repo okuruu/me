@@ -1,8 +1,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { toast } from 'svelte-sonner';
     import { db, useFetch } from '../../library/hooks/db';
     import { capitalizeEachWord } from '../../library/utils/useFormat';
-    import { toast } from 'svelte-sonner';
+    import Ud84Katalog from '../../components/content/ud84/UD84Katalog.svelte';
+    import Ud84History from '../../components/content/ud84/UD84History.svelte';
 
     interface Katalog {
         ID: number;
@@ -10,6 +12,8 @@
         KETERANGAN: string;
         KETERSEDIAAN_PRODUK: string;
         GAMBAR: string | null;
+        HARGA_JUAL: number;
+        HARGA_PCS: number;
     }
 
     interface Staff { 
@@ -37,6 +41,9 @@
     let isImage: boolean = $state(false);
     let isCatalogue: boolean = $state(true);
 
+    let isAdministrator: boolean = $state(false);
+    let isHistory: boolean = $state(false);
+
     type Forms = Record<"nama" | "whatsapp" | "sales" | "kode" | "notes", string>;
     let useForms: Forms = $state({
         nama: '',
@@ -56,6 +63,11 @@
 
     function switchCatalogue(): boolean {
         isCatalogue = !isCatalogue;
+
+        if(cartPass) {
+            cartPass = false;
+        }
+
         return isCatalogue;
     }
 
@@ -131,7 +143,7 @@
     }
 
     async function passwordSales(): Promise <void> {
-        const { status, message } = await db({
+        const { status, message, data } = await db({
             password: salesPassword
         }, 'UD84/Charts/Sales-Password');
 
@@ -140,7 +152,12 @@
             return;
         }
 
-        cartPass = true;
+        if (data === "Standard") {
+            cartPass = true;
+            return;
+        }
+
+        isAdministrator = true;
     }
 
     async function completeTransaction(): Promise <void> {
@@ -209,38 +226,54 @@
         })
     }
 </script>
-<div class="bg-dark {katalog.length <= 1 || !isCatalogue ? 'min-vh-100' : ''}">
-    <div class="container-xs">
-        <div class="d-flex justify-content-between">
-            <h3 class="text-white mt-2">Katalog UD84</h3>
-            {#if isImage}
-                <button type="button" class="btn btn-sm btn-icon text-white border border-rounded border-light" onclick={closeImage}> X </button>
-            {:else}
-                <button type="button" onclick={switchCatalogue} class="btn btn-sm text-white border border-rounded border-light">Pesan Online</button>
-            {/if}
+<div class="{katalog.length <= 1 || !isCatalogue ? 'min-vh-100' : ''}">
+    <div class="container">
+        <div class="card shadow my-7">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h3 class=" mt-2">Katalog UD84</h3>
+                    {#if isImage}
+                        <button type="button" class="btn btn-sm btn-icon btn-dark" onclick={closeImage}> X </button>
+                    {:else}
+                        <div class="form-group">
+                            {#if isAdministrator}
+                                <button type="button" onclick={() => isHistory = !isHistory} class="btn btn-sm btn-icon btn-dark">
+                                    <img src="/icons/elements/Quiz.svg" class="h-20px svg-white" alt="History"/>
+                                </button>
+                            {/if}
+                            <button type="button" onclick={switchCatalogue} class="btn btn-sm btn-primary">Pesan Online</button>
+                        </div>
+                    {/if}
+                </div>
+                <div class="separator my-3"></div>
+                
+                {#if isAdministrator && isHistory}
+                    <Ud84History staff={sales}/>
+                {:else if isAdministrator}
+                    <Ud84Katalog katalog={katalog}/>
+                {:else}
+                    {#if isCatalogue}
+                        {@render mainCatalogue()}
+                    {:else}
+                        {#if cartPass}
+                            {@render useCarts()}
+                        {:else}
+                            <form class="form-group" onsubmit={passwordSales}>
+                                <label for="pass" class="form-label fw-bold ">Masukkan Password</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="password" bind:value={salesPassword} class="form-control" placeholder="Password Sales" required/>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary">Buka</button>
+                                    </div>
+                                </div>
+                            </form>
+                        {/if}
+                    {/if}
+                {/if}
+            </div>
         </div>
-        <div class="separator my-3"></div>
-        {#if isCatalogue}
-            {@render mainCatalogue()}
-        {:else}
-            {#if cartPass}
-                {@render useCarts()}
-            {:else}
-            
-                <form class="form-group" onsubmit={passwordSales}>
-                    <label for="pass" class="form-label fw-bold text-white">Masukkan Password</label>
-                    <div class="row">
-                        <div class="col-8">
-                            <input type="password" bind:value={salesPassword} class="form-control" placeholder="Password Sales" required/>
-                        </div>
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary">Buka</button>
-                        </div>
-                    </div>
-                </form>
-
-            {/if}
-        {/if}
     </div>
 </div>
 
@@ -261,45 +294,47 @@
 {#snippet viewCatalogue()}
     <input type="text" bind:value={searchBar} onkeyup={searchItem} class="form-control mb-3" placeholder="Cari Produk" />
     <div class="separator my-3"></div>
-    <table class="table text-white align-middle">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nama Produk</th>
-                <th>Keterangan</th>
-                <th>Gambar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each katalog as katalog, index }
-                <tr>
-                    <td>{ index + 1 }</td>
-                    <td>{capitalizeEachWord(katalog.NAMA_PRODUK)}</td>
-                    <td>{katalog.KETERANGAN}</td>
-                    <td class="text-center">
-                        <button type="button" onclick={() => openImage(index)} class="btn btn-sm btn-icon">
-                            <img src="icons/elements/Share.svg" class="h-15px" alt="View" />
-                        </button>
-                    </td>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr class="fw-bolder">
+                    <th>#</th>
+                    <th>Nama Produk</th>
+                    <th>Keterangan</th>
+                    <th>Gambar</th>
                 </tr>
-            {/each}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {#each katalog as katalog, index }
+                    <tr>
+                        <td>{ index + 1 }</td>
+                        <td>{katalog.NAMA_PRODUK}</td>
+                        <td>{katalog.KETERANGAN}</td>
+                        <td class="text-center">
+                            <button type="button" onclick={() => openImage(index)} class="btn btn-sm btn-icon btn-primary">
+                                <img src="/icons/elements/Share.svg" class="h-15px svg-white" alt="View" />
+                            </button>
+                        </td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    </div>
 {/snippet}
 
 {#snippet useCarts()}
     <div class="form-group mt-10">
-        <label for="chooseNama" class="form-label fw-bold text-white">Nama Anda</label>
+        <label for="chooseNama" class="form-label fw-bold ">Nama Anda</label>
         <input type="text" bind:value={useForms.nama} class="form-control" placeholder="Masukkan Nama" required/>
     </div>
 
     <div class="form-group my-3">
-        <label for="whatsApp" class="form-label fw-bold text-white">Nomor WhatsApp Anda</label>
+        <label for="whatsApp" class="form-label fw-bold ">Nomor WhatsApp Anda</label>
         <input type="text" bind:value={useForms.whatsapp} class="form-control" placeholder="Contoh: 089887665432" required/>
     </div>
 
     <div class="form-group my-3">
-        <label for="kodeSales" class="form-label fw-bold text-white">Kode Sales</label>
+        <label for="kodeSales" class="form-label fw-bold ">Kode Sales</label>
         <select bind:value={useForms.sales} class="form-select" required>
             <option value="" selected>Tanpa Sales</option>
             {#each sales as sales }
@@ -309,12 +344,12 @@
     </div>
 
     <div class="form-group my-3">
-        <label for="keterangan" class="form-label fw-bold text-white">Catatan / Alamat</label>
+        <label for="keterangan" class="form-label fw-bold ">Catatan / Alamat</label>
         <textarea class="form-control" rows="3" placeholder="Masukkan Catatan" bind:value={useForms.notes} required></textarea>
     </div>
 
     <div class="form-group my-3">
-        <label for="chooseItem" class="form-label fw-bold text-white">Pilih Item</label>
+        <label for="chooseItem" class="form-label fw-bold ">Pilih Item</label>
         <div class="row">
             <div class="col-10">
                 <select bind:value={useForms.kode} class="form-select">
@@ -325,8 +360,8 @@
                 </select>
             </div>
             <div class="col-2">
-                <button type="button" onclick={addToCarts} class="btn btn-xs border border-rounded border-light">
-                    <img src="icons/elements/Cart-Plus.svg" class="h-30px svg-white" alt="View" />
+                <button type="button" onclick={addToCarts} class="btn btn-icon btn-primary">
+                    <img src="icons/elements/Cart-Plus.svg" class="h-25px svg-white" alt="View" />
                 </button>
             </div>
         </div>
@@ -343,11 +378,11 @@
 
 
     <div class="separator my-5"></div>
-    <h3 class="fw-bold text-white">Keranjang Belanja</h3>
+    <h3 class="fw-bold ">Keranjang Belanja</h3>
 
     <div class="table-responsive"></div>
     
-    <table class="table text-white align-middle">
+    <table class="table  align-middle">
         <thead>
             <tr class="fw-bolder">
                 <th>#</th>
