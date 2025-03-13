@@ -7,6 +7,8 @@
         tanggal: string;
         tuan: string;
         total: number;
+        alamat: string;
+        point: number;
         data: Detail[];
         rekap: Rekap;
     }
@@ -38,6 +40,8 @@
         tuan: "",
         total: 0,
         data: [],
+        alamat: '',
+        point: 0,
         rekap: {
             ID: 0,
             UNIQUE: "",
@@ -70,20 +74,16 @@
         getInvoices     = await useFetch(`UD84/Get-Invoices/${data.id}`);
         invoicesDetail  = getInvoices.data;
         invoicesRekap   = getInvoices.rekap;
+        console.log(getInvoices)
     });
 </script>
 
 <style>
     @media print {
-        body {
-            margin: 0;
-            padding: 0;
-            font-size: 12pt;
-        }
         .no-print, .no-print * {
             display: none !important;
         }
-        .container {
+        /* .container {
             width: 100%;
             max-width: 148mm;
             padding: 10mm;
@@ -96,11 +96,11 @@
             border: 1px solid #000;
             padding: 5px;
             text-align: left;
-        }
+        } */
     }
 </style>
 
-<div class="container mt-20 p-4" style="max-width: 148mm;">
+<div class="container mt-20 p-4">
     <div class="row mb-3">
         <div class="col text-start">
             <h2 class="text-danger fw-bolder">UD84</h2>
@@ -112,32 +112,34 @@
         </div>
     </div>
 
-    <div class="separator my-2"></div>
+    <div class="d-flex justify-content-between my-3">
+        <span class="fs-4">Nomor Rekening a.n <b class="fw-bolder">SHOBIRUL HAQ</b></span>
+        <span class="fs-5">Tanggal: <b>{getInvoices.tanggal}</b></span>
+    </div>
 
-    <div class="row">
-        <div class="col">
-            <p><strong>Tanggal:</strong> {getInvoices.tanggal}</p>
-            <p><strong>Pelanggan:</strong> {getInvoices.tuan}</p>
-        </div>
+    <div class="d-flex justify-content-between my-3">
+        <span class="fs-4">BRI <b class="fw-bolder">0516-0101-4682-504</b></span>
+        <span class="fs-5">Pelanggan: <b>{getInvoices.tuan}</b></span>
+    </div>
+
+    <div class="d-flex justify-content-between my-3">
+        <span class="fs-4">BCA <b class="fw-bolder">3170-4041-21</b></span>
+        <span class="fs-5">Alamat: <b>{getInvoices.alamat}</b></span>
+    </div>
+
+    <div class="d-flex justify-content-between my-3">
+        <span class="fs-4">WhatsApp Admin <b class="fw-bolder">0858-5500-9169</b></span>
+        <span class="fs-5">Poin Anda: <b>{getInvoices.point}</b></span>
     </div>
 
     <div class="separator my-2"></div>
-    <h3 class="mb-7">Metode Pembayaran</h3>
-    <div class="row">
-        <div class="col">
-            <p><strong>(BRI)</strong> 0516-0101-4682-504 a.n <b>SHOBIRUL HAQ</b></p>
-            <p><strong>(BCA)</strong> 3170-4041-21 a.n <b>SHOBIRUL HAQ</b></p>
-        </div>
-    </div>
 
-    <div class="separator my-2"></div>
-
-    <table class="table table-bordered">
+    <table class="table table-bordered fs-5">
         <thead>
             <tr class="fw-bolder">
                 <th class="text-center">Qty</th>
                 <th>Nama Barang</th>
-                <th>Harga</th>
+                <th class="text-end">Harga</th>
                 <th>Jumlah</th>
             </tr>
         </thead>
@@ -146,7 +148,7 @@
                 <tr>
                     <td class="text-center">{item.QUANTITY}</td>
                     <td>{item.NAMA}</td>
-                    <td>{rupiahFormatter.format(item.HARGA)}</td>
+                    <td class="text-end">{rupiahFormatter.format(item.HARGA)}</td>
                     <td>{rupiahFormatter.format(item.JUMLAH)}</td>
                 </tr>
             {/each}
@@ -155,7 +157,7 @@
 
     <div class="separator my-5"></div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 fs-5">
         <div class="col-9 text-end">
             <h4>Total: </h4>
         </div>
@@ -164,7 +166,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 fs-5">
         <div class="col-9 text-end">
             <h4>Pembayaran Cash: </h4>
         </div>
@@ -173,7 +175,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 fs-5">
         <div class="col-9 text-end">
             <h4>Pembayaran DP: </h4>
         </div>

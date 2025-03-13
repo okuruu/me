@@ -226,16 +226,16 @@
             return;
         }
 
-        const { status, message, data } = await db({
-            ID : memberDropdown
-        }, 'UD84/Master-Produk/Retrieve/Member');
+        // const { status, message, data } = await db({
+        //     ID : memberDropdown
+        // }, 'UD84/Master-Produk/Retrieve/Member');
 
-        if (status === "error"){
-            toast.error(message);
-            return;
-        }
+        // if (status === "error"){
+        //     toast.error(message);
+        //     return;
+        // }
 
-        masterProduk = data;
+        // masterProduk = data;
     }
 
     function runKeyPress(eventPressed:any): void{
