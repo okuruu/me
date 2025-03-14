@@ -113,28 +113,28 @@
     </div>
 
     <div class="d-flex justify-content-between my-3">
-        <span class="fs-4">Nomor Rekening a.n <b class="fw-bolder">SHOBIRUL HAQ</b></span>
-        <span class="fs-5">Tanggal: <b>{getInvoices.tanggal}</b></span>
+        <span class="fs-5">Nomor Rekening a.n <b class="fw-bolder">SHOBIRUL HAQ</b></span>
+        <span class="fs-6">Tanggal: <b>{getInvoices.tanggal}</b></span>
     </div>
 
     <div class="d-flex justify-content-between my-3">
-        <span class="fs-4">BRI <b class="fw-bolder">0516-0101-4682-504</b></span>
-        <span class="fs-5">Pelanggan: <b>{getInvoices.tuan}</b></span>
+        <span class="fs-5">BRI <b class="fw-bolder">0516-0101-4682-504</b></span>
+        <span class="fs-6">Pelanggan: <b>{getInvoices.tuan}</b></span>
     </div>
 
     <div class="d-flex justify-content-between my-3">
-        <span class="fs-4">BCA <b class="fw-bolder">3170-4041-21</b></span>
-        <span class="fs-5">Alamat: <b>{getInvoices.alamat}</b></span>
+        <span class="fs-5">BCA <b class="fw-bolder">3170-4041-21</b></span>
+        <span class="fs-6">Alamat: <b>{getInvoices.alamat}</b></span>
     </div>
 
     <div class="d-flex justify-content-between my-3">
-        <span class="fs-4">WhatsApp Admin <b class="fw-bolder">0858-5500-9169</b></span>
-        <span class="fs-5">Poin Anda: <b>{getInvoices.point}</b></span>
+        <span class="fs-5">WhatsApp Admin <b class="fw-bolder">0858-5500-9169</b></span>
+        <span class="fs-6">Poin Anda: <b>{getInvoices.point}</b></span>
     </div>
 
     <div class="separator my-2"></div>
 
-    <table class="table table-bordered fs-5">
+    <table class="table table-bordered fs-6">
         <thead>
             <tr class="fw-bolder">
                 <th class="text-center">Qty</th>
@@ -157,7 +157,7 @@
 
     <div class="separator my-5"></div>
 
-    <div class="row mt-3 fs-5">
+    <div class="row mt-3 fs-6">
         <div class="col-9 text-end">
             <h4>Total: </h4>
         </div>
@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 fs-5">
+    <div class="row mt-3 fs-6">
         <div class="col-9 text-end">
             <h4>Pembayaran Cash: </h4>
         </div>
@@ -175,7 +175,7 @@
         </div>
     </div>
 
-    <div class="row mt-3 fs-5">
+    <div class="row mt-3 fs-6 mb-20">
         <div class="col-9 text-end">
             <h4>Pembayaran DP: </h4>
         </div>
@@ -184,6 +184,10 @@
         </div>
     </div>
 
-    <div class="separator my-5"></div>
+    <div class="d-flex justify-content-between mt-20">
+        <span>(..........................................................)</span>
+        <span>(..........................................................)</span>
+    </div>
+
 
 </div>
