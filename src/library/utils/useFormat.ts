@@ -8,7 +8,20 @@ function likesCount(likes: number): string {
     }
 }
 
-function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" | "time" | "age" | "year" | "day" | "detailed-age" | "date-short-with-time"): string {
+function Carbon(
+    date: string | Date,
+    type:
+        | "date"
+        | "date-short"
+        | "timestamp"
+        | "time"
+        | "age"
+        | "year"
+        | "day"
+        | "detailed-age"
+        | "date-short-with-time"
+        | "countdown"
+): string {
     if (date === undefined || date === null || date === "") {
         return "-";
     }
@@ -28,6 +41,8 @@ function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" |
     } else {
         dateObj = typeof date === 'string' ? new Date(date) : date;
     }
+
+    const now = new Date();
 
     if (type === "date") {
         return dateObj.toLocaleDateString('id-ID', dateFormat);
@@ -113,6 +128,21 @@ function Carbon(date: string | Date, type: "date" | "date-short" | "timestamp" |
         }
 
         return `${years} tahun, ${months} bulan, ${days} hari`;
+    }
+
+    if (type === "countdown") {
+        const diff = dateObj.getTime() - now.getTime();
+
+        if (diff <= 0) {
+            return '00:00:00';
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        return `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
     }
 
     return '';

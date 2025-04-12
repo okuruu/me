@@ -2,16 +2,26 @@
     import Navbar from "../../components/Navbar.svelte";
     import { Carbon, likesCount } from "../../library/utils/useFormat";
 
+    interface Threads {
+        tweets: string;
+        images: string[] | null;
+        timestamp: string;
+        replies: number;
+        likes: number;
+    }
+
     const { data } = $props();
+
+    let threads: Threads[] = $state(data.threads);
 </script>
 <div class="bg-dark">
     <div class="container-xs">
         <Navbar/>
-        {#each data.threads as threads, index }
+        {#each threads as threads, index }
             <a href="/threads/{index}">
                 <div class="row">
                     <div class="col-2">
-                        <img src="/images/avatar.jfif" alt="" class="avatar h-30px" />
+                        <img src="/images/avatar.jpg" alt="" class="avatar h-30px" />
                     </div>
                     <div class="col-10 text-white">
                         <div class="form-group">

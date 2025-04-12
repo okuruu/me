@@ -6,7 +6,7 @@
     <div class="container-xs">
         <Navbar/>
         <div class="d-flex justify-content-evenly">
-            <img src="/images/avatar.jfif" alt="" class="avatar h-100px" />
+            <img src="/images/avatar.jpg" alt="" class="avatar h-100px" />
             <div class="form-group mt-4">
                 <h1 class="text-white">{useString.name}</h1>
                 <span class="text-white">{useString.bio}</span>
@@ -20,7 +20,7 @@
         <h1 class="font-bold text-white">About</h1>
         <p class="mt-2 text-muted">{useString.about}</p>
         <div class="separator my-5"></div>
-         {#each useString.experience as experience }
+        {#each useString.experience as experience }
             <div class="row text-white mb-3">
                 <div class="col-4">
                     <b>{experience.name} - {experience.year}</b>
@@ -32,6 +32,6 @@
                     </div>
                 </div>
             </div>
-         {/each}
+        {/each}
     </div>
 </div>

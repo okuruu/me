@@ -2,14 +2,14 @@
     import Navbar from '../../../components/Navbar.svelte';
     import { Carbon, likesCount } from '../../../library/utils/useFormat';
 
-    let {data} = $props();
+    let { data } = $props();
 </script>
 <div class="bg-dark { data.threads.reply.replies.length === 0 ? 'min-vh-100' : ''}">
     <div class="container-xs">
         <Navbar/>
         <div class="row">
             <div class="col-2">
-                <img src="/images/avatar.jfif" alt="" class="avatar h-30px" />
+                <img src="/images/avatar.jpg" alt="" class="avatar h-30px" />
             </div>
             <div class="col-10 text-white">
                 {@render tweets()}
@@ -31,14 +31,14 @@
                 {#each data.threads.reply.replies as replies, indexes }
                     <div class="row">
                         <div class="col-2">
-                            <img src="/images/avatar.jfif" alt="" class="avatar h-30px" />
+                            <img src="/images/avatar.jpg" alt="" class="avatar h-30px" />
                         </div>
                         <div class="col-10 text-white">
                             {@render tweets()}
-                            <p class="mt-2">{replies.tweets}</p>
+                            <p class="mt-2">{@html replies.tweets}</p>
     
                             {#if replies.images !== null}
-                                <img src="/threads/{replies.images}" alt="{replies.tweets}" class="img-fluid w-full my-4" />
+                                <img src="/threads/{replies.images}" alt="{ replies.tweets}" class="img-fluid w-full my-4" />
                             {/if}
                 
                             <p class="text-muted">
