@@ -1,7 +1,7 @@
 <script lang="ts">
     import rmib from "../../../../json/psychological/rmib.json";
     import { db } from "../../../../library/hooks/db";
-    import { useString } from "../../../../library/config/useString";
+    import { useString } from "../../../../library/resources/useString";
     import { userConfig } from "../../../../library/config/useConfiguration";
     import { getLocalStorage, updateCurrentTest } from "../../../../library/utils/useStorage";
 

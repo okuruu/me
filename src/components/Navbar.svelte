@@ -5,7 +5,7 @@
         { icon: 'Threads.svg', redirect: '/threads', alt : 'Quran' },
     ];
 </script>
-<div class="navbar d-flex justify-between-end mb-5">
+<nav class="navbar sticky-top d-flex bg-dark justify-between-end mb-5 shadow-sm">
     <div class="form-group">
         <a href="/">
             <img src="/icons/elements/Function.svg" alt="Site Icon" class="h-30px" /> <span class="text-white">okuruu</span>
@@ -18,4 +18,4 @@
             </a>
         {/each}
     </div>
-</div>
+</nav>

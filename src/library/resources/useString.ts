@@ -1,4 +1,4 @@
-import { phraseBox } from "../resources/phraseBox"
+import { phraseBox } from "./phraseBox"
 
 const useString = {
     url : phraseBox.url,

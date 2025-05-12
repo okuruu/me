@@ -1,6 +1,6 @@
 <script lang="ts">
     import Navbar from "../components/Navbar.svelte";
-    import { useString } from "../library/config/useString";
+    import { useString } from "../library/resources/useString";
 </script>
 <div class="bg-dark vh-100 wh-100">
     <div class="container-xs">

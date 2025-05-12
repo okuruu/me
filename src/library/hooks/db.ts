@@ -1,4 +1,4 @@
-import { useString } from "../config/useString";
+import { useString } from "../resources/useString";
 
 interface ResponseType {
     data : any;
