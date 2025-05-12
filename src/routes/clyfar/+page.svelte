@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { db } from "../../library/hooks/db";
-    import { userConfig } from "../../library/config/baseConfiguration";
+    import { userConfig } from "../../library/config/useConfiguration";
 
     let token: string = $state('');
     let isDisabled: boolean = $state(false);

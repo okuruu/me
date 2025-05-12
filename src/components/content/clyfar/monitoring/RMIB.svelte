@@ -2,7 +2,7 @@
     import rmib from "../../../../json/psychological/rmib.json";
     import { db } from "../../../../library/hooks/db";
     import { useString } from "../../../../library/config/useString";
-    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { userConfig } from "../../../../library/config/useConfiguration";
     import { getLocalStorage, updateCurrentTest } from "../../../../library/utils/useStorage";
 
     let token: string = $state("");

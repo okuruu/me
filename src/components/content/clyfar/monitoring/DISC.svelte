@@ -2,7 +2,7 @@
     import disc from "../../../../json/psychological/disc.json";
     import ExampleDisc from "./ExampleDISC.svelte";
     import { db } from "../../../../library/hooks/db";
-    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { userConfig } from "../../../../library/config/useConfiguration";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
 
     let token: string = $state(''); 

@@ -1,7 +1,8 @@
-const isProduction: boolean = true;
+import { phraseBox } from "../resources/phraseBox"
+
 const useString = {
-    url : isProduction ? 'https://fae.deabakery.co.id/api/' : 'http://localhost:8000/api/',
-    rawURL : isProduction ? 'https://fae.deabakery.co.id/' : 'http://localhost:8000/',
+    url : phraseBox.url,
+    rawURL : phraseBox.rawLink,
     pageTitle : 'okuruu - hello there',
     name : 'Esdelfron',
     bio : 'Lórien Loremaster of Languages',

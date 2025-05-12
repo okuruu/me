@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { userConfig } from "../config/baseConfiguration";
+import { userConfig } from "../config/useConfiguration";
 
 function getLocalStorage(){
     const userStorage = localStorage.getItem('user');

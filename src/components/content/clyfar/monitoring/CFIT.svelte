@@ -1,6 +1,6 @@
 <script lang="ts">
     import { preventDefault } from "svelte/legacy";
-    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { userConfig } from "../../../../library/config/useConfiguration";
     import { db } from "../../../../library/hooks/db";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
     import cfit from "../../../../json/psychological/cfit.json";

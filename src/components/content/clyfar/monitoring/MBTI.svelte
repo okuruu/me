@@ -3,7 +3,7 @@
     import { db } from "../../../../library/hooks/db";
     import { capitalizeEachWord } from "../../../../library/utils/useFormat";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
-    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { userConfig } from "../../../../library/config/useConfiguration";
 
     let token: string = $state(''); 
     let enableTest: boolean = $state(false);

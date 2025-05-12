@@ -2,7 +2,7 @@
     import { db } from "../../../../library/hooks/db";
     import kraepelin from "../../../../json/psychological/kraepelin.json";
     import { updateCurrentTest } from "../../../../library/utils/useStorage";
-    import { userConfig } from "../../../../library/config/baseConfiguration";
+    import { userConfig } from "../../../../library/config/useConfiguration";
     import ExampleKraeplin from "./ExampleKraeplin.svelte";
 
     let token: string = $state('');
