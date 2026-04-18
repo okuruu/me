@@ -39,40 +39,71 @@
         return goto(`/quran/${lastRead.surahName}#${lastRead.lastAyah}`);
     }
 </script>
-<div class="bg-dark {quranChapters.length < 9 ? 'min-vh-100' : ''}">
-    <div class="container-xs">
+
+<div class="min-vh-100 bg-base-300 pb-12">
+    <div class="max-w-md mx-auto px-4">
         <Navbar/>
-        <div class="row ">
-            <div class="col-9">
-                <input type="text" bind:value={searchBar} onkeyup={searchSurah} class="form-control form-control-transparent bg-dark text-white shadow" placeholder="[ESC] Cari Ayat" />
+        
+        <!-- Search and Bookmark Section -->
+        <div class="flex gap-2 mb-8">
+            <div class="relative flex-grow">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 opacity-40">🔍</span>
+              <input 
+                type="text" 
+                bind:value={searchBar} 
+                onkeyup={searchSurah} 
+                class="input input-bordered w-full pl-10 bg-base-100/50 focus:bg-base-100 transition-all shadow-md rounded-2xl border-white/5" 
+                placeholder="[ESC] Cari Surat..." 
+              />
             </div>
-            <div class="col-3">
-                <button type="button" onclick={lastRead} class="btn btn-icon shadow-sm text-white w-100">
-                    <img src="/icons/Quran-book.svg" class="svg-warning" alt=""  />
-                </button>
-            </div>
+            <button 
+              type="button" 
+              onclick={lastRead} 
+              class="btn btn-primary shadow-lg rounded-2xl w-14 shrink-0"
+              title="Terakhir Dibaca"
+            >
+                <img src="/icons/Quran-book.svg" class="h-6 w-6 brightness-0 invert" alt="Last Read" />
+            </button>
         </div>
     
         {#if quranChapters.length === 0}
-            <span>
-                <div class="shadow-sm p-5 my-3 text-white">
-                    <img src="/icons/Quran-book.svg" class="h-20px svg-white me-2" alt="Quran Icon" /> Surat tidak ditemukan.
+            <div class="card bg-base-100 shadow-xl border border-dashed border-white/10">
+                <div class="card-body items-center text-center p-12">
+                    <img src="/icons/Quran-book.svg" class="h-16 w-16 opacity-20 mb-4" alt="Quran Icon" />
+                    <h2 class="text-xl font-bold opacity-50">Surat tidak ditemukan</h2>
+                    <p class="text-sm opacity-30 mt-1">Coba kata kunci lain</p>
                 </div>
-            </span>
+            </div>
         {:else}
-            {#each quranChapters as chapters }
-                <a href="/quran/{chapters.id}">
-                    <div class="shadow-sm p-5 my-3">
-                        <div class="d-flex justify-content-between">
-                            <div class="form-group">
-                                <span class="fw-bold text-white">{chapters.transliteration}</span>
-                                <p class="text-muted">{chapters.type === 'meccan' ? 'Makkiyah' : 'Madaniyah'} | {chapters.total_verses} ayat</p>
+            <div class="grid grid-cols-1 gap-4 text-white">
+                {#each quranChapters as chapters }
+                    <a href="/quran/{chapters.id}" class="group">
+                        <div class="card bg-base-100 shadow-md hover:shadow-xl hover:bg-base-200 ring-1 ring-white/5 transition-all duration-300 rounded-2xl">
+                            <div class="card-body p-6">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-inner shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                                        {chapters.id}
+                                      </div>
+                                      <div>
+                                          <h3 class="font-bold text-lg leading-tight">{chapters.transliteration}</h3>
+                                          <div class="flex items-center gap-2 mt-1">
+                                            <span class="badge badge-neutral badge-xs font-bold text-[9px] uppercase tracking-wider h-auto py-0.5">{chapters.type === 'meccan' ? 'Makkiyah' : 'Madaniyah'}</span>
+                                            <span class="text-[11px] opacity-40 font-medium">{chapters.total_verses} Ayat</span>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="text-2xl font-quran opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4 transition-all duration-300">
+                                      →
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            {/each}
+                    </a>
+                {/each}
+            </div>
         {/if}
     </div>
 </div>
+
 <svelte:window onkeydown={keyboardEvents} />

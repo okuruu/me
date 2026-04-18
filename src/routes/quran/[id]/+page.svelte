@@ -35,7 +35,7 @@
         };
 
         localStorage.setItem('lastRead', JSON.stringify(lastRead));
-        toast.success("Bookmarked.");
+        toast.success("Bookmark disimpan!");
     }
 
     function applyTajweed(ayah: string): string {
@@ -46,22 +46,52 @@
         return result;
     }
 </script>
-<div class="bg-dark">
-    <div class="container-xs">
-        <Navbar/>
-        {#each tajweedCorrection as verse, index}
-        <div id="{index.toString()}" class="form-group">
-            <p class="text-muted text-end quran-font display-5 fw-bolder">{@html verse.arabic}</p>
 
-            <div class="d-flex justify-content-end mb-5">
-                <button type="button" onclick={() => setBookmark(index)} class="btn btn-xs btn-icon border border-white">
-                    <img src="/icons/Bookmark.svg" alt="" class="w-15px"/>
-                </button>
-            </div>
-            <p class="text-gray-600 text-end">{index + 1}. {verse.transliteration}</p>
-            
+<div class="min-vh-100 bg-base-300 pb-20">
+    <div class="max-w-md mx-auto px-4">
+        <Navbar/>
+        
+        <div class="card bg-base-100 shadow-xl mb-12 rounded-2xl overflow-hidden ring-1 ring-white/5">
+          <div class="card-body p-8 items-center text-center">
+            <h1 class="text-3xl font-bold text-primary tracking-tight">{data.pageTitle}</h1>
+            <p class="text-xs opacity-40 font-bold uppercase tracking-[0.2em] mt-2">Surah Nomor {data.pageChapter}</p>
+          </div>
         </div>
-        <div class="my-20"></div>
-        {/each}
+
+        <div class="space-y-12">
+            {#each tajweedCorrection as verse, index}
+            <div id="{index.toString()}" class="group relative">
+                <!-- Verse Number Wrapper -->
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-xs ring-1 ring-primary/20">
+                      {index + 1}
+                    </div>
+                    <button 
+                      type="button" 
+                      onclick={() => setBookmark(index)} 
+                      class="btn btn-ghost btn-circle btn-xs opacity-30 hover:opacity-100 hover:text-primary transition-all"
+                      title="Bookmark Ayat"
+                    >
+                        <img src="/icons/Bookmark.svg" alt="Bookmark" class="w-4 h-4"/>
+                    </button>
+                  </div>
+                  <div class="h-px flex-grow bg-gradient-to-r from-primary/20 to-transparent mx-4 opacity-10"></div>
+                </div>
+
+                <!-- Arabic Text -->
+                <p class="text-right quran-font text-4xl leading-[2.5] text-white opacity-90 drop-shadow-sm transition-all hover:opacity-100 select-all tracking-normal">
+                  {@html verse.arabic}
+                </p>
+
+                <!-- Transliteration -->
+                <div class="mt-8 bg-base-100/30 p-4 rounded-xl border border-white/5 group-hover:bg-base-100 transition-colors">
+                  <p class="text-base-content/70 italic text-sm leading-relaxed text-right font-medium">
+                    {verse.transliteration}
+                  </p>
+                </div>
+            </div>
+            {/each}
+        </div>
     </div>
 </div>

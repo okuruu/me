@@ -1,33 +1,33 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { redirect } from "@sveltejs/kit";
     import { onMount } from "svelte";
-
 
     let time: Date = $state(new Date());
     let activeMenu: string = $state('Transaksi');
-    let isOption: boolean = $state(false);
-
     let isLogin: boolean | null = $state(null);
+
+    const menus = [
+      { name: 'Retail', path: '/ud84/panel/retail' },
+      { name: 'Pesanan', path: '/ud84/panel/pesanan' },
+      { name: 'Transaksi', path: '/ud84/panel/transaksi' },
+      { name: 'Member', path: '/ud84/panel/member' },
+      { name: 'Master Produk', path: '/ud84/panel/master-produk' },
+      { name: 'Analisa', path: '/ud84/panel/analisa' },
+      { name: 'Logistik', path: '/ud84/panel/logistic' },
+      { name: 'Kartu Stok', path: '/ud84/panel/kartu-stok' },
+    ];
 
     onMount(() => {
         const getStorage = localStorage.getItem('Auth');
         isLogin = getStorage ? JSON.parse(getStorage) : null;
-
-        if(isLogin == null) {
-            return logOut();
-        }
-
+        if(isLogin == null) return logOut();
     });
 
     $effect(() => {
         const timeInterval = setInterval(() => {
             time = new Date();
         }, 1000)
-
-        return () => {
-            clearInterval(timeInterval);
-        };
+        return () => clearInterval(timeInterval);
     });
 
     async function logOut() {
@@ -35,62 +35,65 @@
         return goto('/ud84/panel');
     }
 </script>
-<nav class="p-2 shadow-sm">
-    <div class="row">
+
+<div class="navbar bg-base-100 shadow-xl px-4 sticky top-0 z-[100] border-b border-white/5">
+    <!-- Brand / Logo -->
+    <div class="flex-none">
+        <h1 class="text-2xl font-black text-warning tracking-tighter">UD84</h1>
+    </div>
+
+    <!-- User Info and Logout -->
+    <div class="flex-grow flex justify-end gap-3 items-center">
+        <div class="text-right hidden sm:block">
+            <div class="text-[10px] font-bold text-error uppercase tracking-widest">Administrator</div>
+            <div class="text-xs font-bold text-white">Hello, <span class="text-warning">Richie</span></div>
+        </div>
         
-        <div class="col">
-            <div class="row">
-                <div class="col-1">
-                    <h1 class="text-warning fw-bolder ms-4 mt-2">UD84</h1>
-                </div>
-                <div class="col">
-                    <div class="form-group mt-1">
-                        <a href="/ud84/panel/retail" class="btn btn-sm fw-bolder {activeMenu ===  'Retail' ? 'text-golden' : 'text-gray-600' }">Retail</a>
-                        <a href="/ud84/panel/pesanan" class="btn btn-sm fw-bolder {activeMenu ===  'Pesanan' ? 'text-golden' : 'text-gray-600' }">Pesanan</a>
-                        <a href="/ud84/panel/transaksi" class="btn btn-sm fw-bolder {activeMenu ===  'Transaksi' ? 'text-golden' : 'text-gray-600' }">Transaksi</a>
-                        <a href="/ud84/panel/member" class="btn btn-sm fw-bolder {activeMenu ===  'Member' ? 'text-golden' : 'text-gray-600' }">Member</a>
-                        <a href="/ud84/panel/master-produk" class="btn btn-sm fw-bolder {activeMenu ===  'Master Produk' ? 'text-golden' : 'text-gray-600' }">Master Produk</a>
-                        <a href="/ud84/panel/analisa" class="btn btn-sm fw-bolder {activeMenu ===  'Analisa' ? 'text-golden' : 'text-gray-600' }">Analisa</a>
-                        <a href="/ud84/panel/logistic" class="btn btn-sm fw-bolder {activeMenu ===  'Logistic' ? 'text-golden' : 'text-gray-600' }">Logistik</a>
-                        <a href="/ud84/panel/kartu-stok" class="btn btn-sm fw-bolder {activeMenu ===  'Stock-Cards' ? 'text-golden' : 'text-gray-600' }">Kartu Stok</a>
-                    </div>
-                </div>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="avatar cursor-pointer">
+            <div class="w-10 rounded-xl ring ring-warning ring-offset-base-100 ring-offset-2">
+              <img src="/images/avatar.jfif" alt="Admin" />
             </div>
-        </div>
-
-        <div class="col-3">
-            <div class="row">
-                <div class="col text-end">
-                    <span class="fw-bolder">
-                        <span class="text-danger fw-bolder">[Administrator]</span> 
-                        Hello, <span class="text-golden">Richie</span>
-                    </span> <br/>
-                    <small class="fw-bolder text-gray-500">
-                        <span class="text-info">[2.0]</span>
-                        {new Intl.DateTimeFormat('id-ID', { weekday: 'long' }).format(time)}, 
-                        {`${String(time.getDate()).padStart(2, '0')}/${String(time.getMonth() + 1).padStart(2, '0')}/${time.getFullYear()}`} - 
-                        {`${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}:${String(time.getSeconds()).padStart(2, '0')}`} WIB
-                    </small>
-                </div>
-                <div class="col-2">
-                    <button class="btn btn-sm btn-flush" onclick={logOut} type="button">
-                        <img src="/images/avatar.jfif" alt="Richie" class="h-35px w-35px rounded">
-                    </button>
-                </div>
-            </div>
+          </div>
+          <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-base-200 rounded-2xl w-52 mt-4 ring-1 ring-white/10 uppercase font-bold text-[10px] tracking-widest">
+            <li><a href="/ud84/pengaturan" class="py-3"><img src="/icons/Gear.svg" class="w-4 h-4 opacity-70" alt="Settings" /> Pengaturan</a></li>
+            <li><button onclick={logOut} class="py-3 text-error"><img src="/icons/Log-Out.svg" class="w-4 h-4 opacity-70 brightness-0 invert" alt="Logout" /> Keluar</button></li>
+          </ul>
         </div>
     </div>
-</nav>
+</div>
 
-{#if isOption}
-    <div class="d-flex justify-content-end rounded-bottom" style="position: absolute; z-index: 1000;left: 0; right: 0;top: 52px;">
-        <div class="p-5 rounded-bottom bg-white" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2)">
-            <a href="/ud84/pengaturan" class="btn btn-flush btn-sm w-100 text-start mb-2">
-                <img src="/icons/Gear.svg" class="h-20px me-3" alt="Pengaturan" /> Pengaturan
-            </a>
-            <button type="button" onclick={logOut} class="btn btn-flush btn-sm w-100 mt-1 text-start">
-                 <img src="/icons/Log-Out.svg" class="h-15px me-5" alt="Keluar" /> Keluar
-            </button>
-        </div>
+<!-- Horizontal Scrollable Menu -->
+<div class="bg-base-200/50 backdrop-blur-md sticky top-16 z-50 border-b border-white/5 px-4 overflow-x-auto no-scrollbar">
+    <div class="flex gap-2 py-3">
+        {#each menus as menu}
+          <a 
+            href={menu.path} 
+            class="btn btn-sm rounded-xl font-bold border-none transition-all h-9 px-4 whitespace-nowrap
+                   {activeMenu === menu.name ? 'btn-warning shadow-lg shadow-warning/20' : 'bg-base-100 hover:bg-base-100/80 text-base-content/60'}"
+          >
+            {menu.name}
+          </a>
+        {/each}
     </div>
-{/if}
+</div>
+
+<!-- Time Info -->
+<div class="bg-base-300 px-4 py-1 flex justify-between items-center text-[10px] font-bold opacity-30 uppercase tracking-widest">
+    <span>v2.0 Stable</span>
+    <span>
+      {new Intl.DateTimeFormat('id-ID', { weekday: 'short' }).format(time)}, 
+      {String(time.getDate()).padStart(2, '0')}/{String(time.getMonth() + 1).padStart(2, '0')} - 
+      {`${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')}:${String(time.getSeconds()).padStart(2, '0')}`}
+    </span>
+</div>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
