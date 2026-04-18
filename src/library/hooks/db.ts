@@ -15,7 +15,7 @@ interface FetchOptions extends RequestInit {
 }
 
 // 🔐 Authorization (move to .env later)
-const AUTH_KEY = "x9Fz!weird-fuzzy-key-123";
+const AUTH_KEY = "yeah-i-do-it-on-purpose";
 
 // Track previous requests so we can abort them
 const activeControllers = new Map<string, AbortController>();
@@ -121,6 +121,7 @@ export async function useFetch(id: string): Promise<any> {
 // 🔹 POST handler (like old db)
 export async function db(data: FormData | Record<string, any>, url: string): Promise<ResponseType> {
     try {
+        console.log(phraseBox.url + url)
         if (data instanceof FormData) {
             return await postForms(data, url);
         } else {

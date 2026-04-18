@@ -89,7 +89,7 @@
                 <img src="/icons/Gear.svg" class="h-20px me-3" alt="Pengaturan" /> Pengaturan
             </a>
             <button type="button" onclick={logOut} class="btn btn-flush btn-sm w-100 mt-1 text-start">
-                 <img src="/icons/elements/Log-Out.svg" class="h-15px me-5" alt="Keluar" /> Keluar
+                 <img src="/icons/Log-Out.svg" class="h-15px me-5" alt="Keluar" /> Keluar
             </button>
         </div>
     </div>

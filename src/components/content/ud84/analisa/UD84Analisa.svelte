@@ -99,7 +99,7 @@
             <label for="nominalPengeluaran" class="col-lg-4 col-form-label fw-bold fs-6"></label>
             <div class="col-lg-8 fv-row">
                 <button type="submit" class="btn btn-primary w-100">
-                    <img src="/icons/elements/Search.svg" alt="Search Toggle" class="h-30px svg-white me-2" />
+                    <img src="/icons/Search.svg" alt="Search Toggle" class="h-30px svg-white me-2" />
                     Mulai Pencarian
                 </button>
             </div>

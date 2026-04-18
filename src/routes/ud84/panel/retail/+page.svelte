@@ -318,12 +318,12 @@
                                         </td>
                                         <td>
                                             <button type="button" onclick={() => addToCart(index)} class="btn btn-sm btn-icon btn-success">
-                                                <img src="/icons/elements/Add-Arrow.svg" alt="Add to cart" height="20" />
+                                                <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
                                             </button>
                                         </td>
                                         <td>
                                             <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-sm btn-icon btn-dark">
-                                                <img src="/icons/elements/Add-Arrow.svg" alt="Add to cart" height="20" />
+                                                <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
                                             </button>
                                         </td>
                                     </tr>

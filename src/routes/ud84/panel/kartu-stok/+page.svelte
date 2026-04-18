@@ -121,10 +121,10 @@
                             <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
+                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
                                 </button>
                                 <button type="button" onclick={preparePrint} class="btn btn-sm btn-icon btn-info">
-                                    <img src="/icons/elements/Printer.svg" class="h-30px svg-white" alt="Print Button" />
+                                    <img src="/icons/Printer.svg" class="h-30px svg-white" alt="Print Button" />
                                 </button>
                             </div>
                         </div>

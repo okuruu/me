@@ -238,7 +238,7 @@
                         <div class="form-group">
                             {#if isAdministrator}
                                 <button type="button" onclick={() => isHistory = !isHistory} class="btn btn-sm btn-icon btn-dark">
-                                    <img src="/icons/elements/Quiz.svg" class="h-20px svg-white" alt="History"/>
+                                    <img src="/icons/Quiz.svg" class="h-20px svg-white" alt="History"/>
                                 </button>
                             {/if}
                             <button type="button" onclick={switchCatalogue} class="btn btn-sm btn-primary">Pesan Online</button>
@@ -312,7 +312,7 @@
                         <td>{katalog.KETERANGAN}</td>
                         <td class="text-center">
                             <button type="button" onclick={() => openImage(index)} class="btn btn-sm btn-icon btn-primary">
-                                <img src="/icons/elements/Share.svg" class="h-15px svg-white" alt="View" />
+                                <img src="/icons/Share.svg" class="h-15px svg-white" alt="View" />
                             </button>
                         </td>
                     </tr>

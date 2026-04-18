@@ -48,7 +48,7 @@
             </div>
             <div class="col-3">
                 <button type="button" onclick={lastRead} class="btn btn-icon shadow-sm text-white w-100">
-                    <img src="/icons/elements/Quran.svg" class="svg-warning" alt=""  />
+                    <img src="/icons/Quran-book.svg" class="svg-warning" alt=""  />
                 </button>
             </div>
         </div>
@@ -56,7 +56,7 @@
         {#if quranChapters.length === 0}
             <span>
                 <div class="shadow-sm p-5 my-3 text-white">
-                    <img src="/icons/elements/Quran.svg" class="h-20px svg-white me-2" alt="Quran Icon" /> Surat tidak ditemukan.
+                    <img src="/icons/Quran-book.svg" class="h-20px svg-white me-2" alt="Quran Icon" /> Surat tidak ditemukan.
                 </div>
             </span>
         {:else}

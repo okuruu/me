@@ -241,10 +241,10 @@
                             <td>
                                 <div class="me-2">
                                     <button type="button" onclick={() => startEdit(index)} class="btn btn-sm btn-icon btn-warning my-2">
-                                        <img src="/icons/elements/Edit.svg" alt="Edit Button" height="20" />
+                                        <img src="/icons/Edit.svg" alt="Edit Button" height="20" />
                                     </button>
                                     <button type="button" onclick={() => doDelete(index)} class="btn btn-sm btn-icon btn-light my-2" data-bs-toggle="modal" data-bs-target="#promptDelete">
-                                        <img src="/icons/elements/Delete.svg" alt="Delete Button" height="20" />
+                                        <img src="/icons/Delete.svg" alt="Delete Button" height="20" />
                                     </button>
                                 </div>
                             </td>

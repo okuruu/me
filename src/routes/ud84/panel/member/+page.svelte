@@ -227,7 +227,7 @@
                             </td>
                             <td>
                                 <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-sm btn-icon btn-dark">
-                                    <img src="/icons/elements/Delete.svg" class="h-20px svg-white" alt="Delete"/>
+                                    <img src="/icons/Delete.svg" class="h-20px svg-white" alt="Delete"/>
                                 </button>
                             </td>
                         </tr>

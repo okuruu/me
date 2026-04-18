@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Toaster} from 'svelte-sonner';
     import { useString } from '../library/resources/useString';
+    import '../app.css';
 </script>
 <svelte:head>
     <title>{useString.pageTitle}</title>

@@ -72,7 +72,7 @@
     </div>
     <div class="col-3">
         <button type="submit" class="btn btn-primary btn-icon mt-8">
-            <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Cari" />
+            <img src="/icons/Search.svg" class="h-30px svg-white" alt="Cari" />
         </button>
     </div>
 </form>
@@ -98,7 +98,7 @@
                         <td>{CATATAN}</td>
                         <td>
                             <button type="button" onclick={() => viewHistory(KODE)} class="btn btn-sm btn-icon btn-primary">
-                                <img src="/icons/elements/Share.svg" class="h-15px svg-white" alt="View" />
+                                <img src="/icons/Share.svg" class="h-15px svg-white" alt="View" />
                             </button>
                         </td>
                     </tr>

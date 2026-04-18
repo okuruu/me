@@ -73,7 +73,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary w-100">
-        <img src="/icons/elements/Add.svg" alt="Simpan Semua" class="h-25px svg-white me-2" />
+        <img src="/icons/Add.svg" alt="Simpan Semua" class="h-25px svg-white me-2" />
         Catat Biaya Operasional
     </button>
 </form>

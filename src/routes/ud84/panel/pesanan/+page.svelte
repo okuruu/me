@@ -137,7 +137,7 @@
                             <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
+                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
                                 </button>
                             </div>
                         </div>
@@ -184,17 +184,17 @@
                                     <td>{data.CATATAN}</td>
                                     <td>
                                         <button type="button" onclick={() => removeItem(data.KODE, index)} class="btn btn-sm btn-icon btn-danger">
-                                            <img src="/icons/elements/Delete.svg" class="h-15px svg-white" alt="Lihat Item"/>
+                                            <img src="/icons/Delete.svg" class="h-15px svg-white" alt="Lihat Item"/>
                                         </button>
                                         {#if data.VALID === null}
                                             <button type="button" onclick={() => isValid(data.KODE, index)} class="btn btn-sm btn-icon btn-primary">
-                                                <img src="/icons/elements/Add.svg" class="h-25px svg-white" alt="Lihat Item"/>
+                                                <img src="/icons/Add.svg" class="h-25px svg-white" alt="Lihat Item"/>
                                             </button>
                                         {:else}
                                             <button type="button" class="btn btn-sm btn-success">Verified</button>
                                         {/if}
                                         <button type="button" onclick={() => viewItem(data.KODE)} class="btn btn-sm btn-icon btn-info">
-                                            <img src="/icons/elements/Share.svg" class="h-15px svg-white" alt="Lihat Item"/>
+                                            <img src="/icons/Share.svg" class="h-15px svg-white" alt="Lihat Item"/>
                                         </button>
                                     </td>
                                 </tr>

@@ -55,7 +55,7 @@
 
             <div class="d-flex justify-content-end mb-5">
                 <button type="button" onclick={() => setBookmark(index)} class="btn btn-xs btn-icon border border-white">
-                    <img src="/icons/elements/Bookmark.svg" alt="" class="w-15px"/>
+                    <img src="/icons/Bookmark.svg" alt="" class="w-15px"/>
                 </button>
             </div>
             <p class="text-gray-600 text-end">{index + 1}. {verse.transliteration}</p>

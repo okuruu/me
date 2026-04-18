@@ -114,7 +114,7 @@
                             <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
+                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
                                 </button>
                             </div>
                         </div>
@@ -132,10 +132,10 @@
 
             <div class="form-group mt-3">
                 <a href="/ud84/panel/add/item-masuk" class="btn btn-sm btn-primary">
-                    <img src="/icons/elements/Cart-Plus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Masuk
+                    <img src="/icons/Cart-Plus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Masuk
                 </a>
                 <a href="/ud84/panel/add/item-keluar" class="btn btn-sm btn-danger">
-                    <img src="/icons/elements/Cart-Minus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Keluar
+                    <img src="/icons/Cart-Minus.svg" class="h-20px svg-white me-2" alt="" /> Tambah Item Keluar
                 </a>
             </div>
 
@@ -166,7 +166,7 @@
                                     <td>{data.KETERANGAN}</td>
                                     <td>
                                         <button type="button" onclick={() => viewLogistic(data.ID)} class="btn btn-sm btn-primary">
-                                            <img src="/icons/elements/Link-Out.svg" class="h-20px me-2" alt="View" /> Lihat Detail
+                                            <img src="/icons/Link-Out.svg" class="h-20px me-2" alt="View" /> Lihat Detail
                                         </button>
                                     </td>
                                 </tr>

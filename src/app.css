@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'Quran';
+    src: url('/fonts/fatiha/quran.ttf') format('truetype');
+    font-weight: 700;
+    font-style: bold;
+}
+
+body {
+    @apply antialiased text-white bg-base-300;
+    font-family: 'Inter', sans-serif;
+}
+
+.quran-font {
+    font-family: Quran;   
+    line-height: 5.0;
+    white-space: pre-line;
+}
+
+/* Custom Utilities that might still be needed */
+.svg-warning {
+    filter: invert(55%) sepia(77%) saturate(421%) hue-rotate(336deg) brightness(102%) contrast(102%);
+}
+
+.svg-white {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(247deg) brightness(101%) contrast(100%);
+}

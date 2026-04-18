@@ -174,7 +174,7 @@
                             <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/elements/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
+                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
                                 </button>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                                 <td>{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
                                 <td>
                                     <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
-                                        <img src="/icons/elements/Printer.svg" alt="Print" class="h-20px svg-white" />
+                                        <img src="/icons/Printer.svg" alt="Print" class="h-20px svg-white" />
                                         Cetak Ulang
                                     </a>
                                 </td>

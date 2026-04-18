@@ -107,7 +107,7 @@
         </div>
         <div class="col text-end no-print">
             <button type="button" class="btn btn-sm btn-icon btn-primary" onclick={() => window.print()}>
-                <img src="/icons/elements/Printer.svg" class="h-20px svg-white" alt="" />
+                <img src="/icons/Printer.svg" class="h-20px svg-white" alt="" />
             </button>
         </div>
     </div>

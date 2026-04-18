@@ -347,7 +347,7 @@
                             <td class="text-center fw-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
                             <td class="text-center">
                                 <button type="button" onclick={() => removeFromList(index)} class="btn btn-icon btn-sm btn-dark">
-                                    <img src="/icons/elements/Delete.svg" alt="" class="h-15px svg-white" />
+                                    <img src="/icons/Delete.svg" alt="" class="h-15px svg-white" />
                                 </button>
                             </td>
                         </tr>
@@ -469,7 +469,7 @@
                             </td>
                             <td class="text-center">
                                 <button type="button" id="cartModal_{index}" onclick={() => selectionModal(cartSearch.ID)} class="btn btn-sm btn-icon btn-active-primary">
-                                    <img src="/icons/elements/Add.svg" class="h-20px" alt="Tambahkan ke Keranjang" />
+                                    <img src="/icons/Add.svg" class="h-20px" alt="Tambahkan ke Keranjang" />
                                 </button>
                             </td>
                         </tr>
