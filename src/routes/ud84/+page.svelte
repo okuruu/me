@@ -219,7 +219,7 @@
     }
 </script>
 
-<div class="min-vh-100 bg-base-300 pb-20">
+<div class="min-vh-100 bg-base-100 pb-20">
     <div class="max-w-md mx-auto px-4 pt-8">
         <div class="card bg-base-100 shadow-xl overflow-hidden rounded-3xl ring-1 ring-white/5">
             {#if isImage && imagePath}

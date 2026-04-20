@@ -3,7 +3,7 @@
     import { useString } from "../library/resources/useString";
 </script>
 
-<div class="min-vh-100 bg-base-300 pb-12">
+<div class="min-vh-100 bg-base-100 pb-12">
     <div class="max-w-md mx-auto px-4">
         <Navbar/>
         
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Divider -->
-        <div class="divider opacity-20 my-10 px-12 text-primary uppercase font-bold text-xs tracking-widest">About Me</div>
+        <div class="divider divider-neutral my-10 px-12 text-primary uppercase font-bold text-xs tracking-widest">About Me</div>
 
         <!-- About Section -->
         <div class="card bg-base-100 shadow-md mb-8 ring-1 ring-white/5">
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="divider opacity-20 my-10 px-12 text-primary uppercase font-bold text-xs tracking-widest">Experience</div>
+        <div class="divider divider-neutral my-10 px-12 text-primary uppercase font-bold text-xs tracking-widest">Experience</div>
 
         <!-- Experience List -->
         <div class="space-y-4">

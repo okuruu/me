@@ -79,7 +79,7 @@
 </div>
 
 <!-- Time Info -->
-<div class="bg-base-300 px-4 py-1 flex justify-between items-center text-[10px] font-bold opacity-30 uppercase tracking-widest">
+<div class="bg-base-100 px-4 py-1 flex justify-between items-center text-[10px] font-bold opacity-30 uppercase tracking-widest">
     <span>v2.0 Stable</span>
     <span>
       {new Intl.DateTimeFormat('id-ID', { weekday: 'short' }).format(time)}, 

@@ -47,7 +47,7 @@
     }
 </script>
 
-<div class="min-vh-100 bg-base-300 pb-20">
+<div class="min-vh-100 bg-base-100 pb-20">
     <div class="max-w-md mx-auto px-4">
         <Navbar/>
         

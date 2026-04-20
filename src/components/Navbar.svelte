@@ -1,8 +1,8 @@
 <script lang="ts">
     const navigation = [
         { icon: 'github.svg', redirect: 'https://github.com/okuruu', alt : 'Github' },
-        { icon: 'Quran.svg', redirect: '/quran', alt : 'Quran' },
-        { icon: 'Threads.svg', redirect: '/threads', alt : 'Threads' },
+        { icon: 'Quran-book.svg', redirect: '/quran', alt : 'Quran' },
+        { icon: 'Thread.svg', redirect: '/threads', alt : 'Threads' },
     ];
 </script>
 

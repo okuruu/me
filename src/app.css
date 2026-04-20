@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-base-100: #111215;
+  --color-base-200: #111215;
+  --color-base-300: #111215;
+  --color-primary: #3b82f6;
+  --color-primary-content: #ffffff;
+}
 
 @font-face {
     font-family: 'Inter';
@@ -44,9 +51,29 @@
     font-style: bold;
 }
 
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  
+  /* Force DaisyUI internal variables to #111215 */
+  --b1: 226.7 10.3% 7.3%; /* #111215 in OKLCH/HSL style used by DaisyUI */
+  --b2: 226.7 10.3% 7.3%;
+  --b3: 226.7 10.3% 7.3%;
+  
+  /* Ensure Tailwind 4 variables are also forced at this specificity */
+  --color-base-100: #111215 !important;
+  --color-base-200: #111215 !important;
+  --color-base-300: #111215 !important;
+}
+
 body {
-    @apply antialiased text-white bg-base-300;
+    @apply antialiased text-white min-h-screen selection:bg-primary/30;
     font-family: 'Inter', sans-serif;
+    background-color: #111215 !important;
+}
+
+/* Ensure all cards and base-level containers use the forced color */
+.card, .bg-base-100, .bg-base-200, .bg-base-300 {
+    background-color: #111215 !important;
 }
 
 .quran-font {
@@ -55,11 +82,22 @@ body {
     white-space: pre-line;
 }
 
-/* Custom Utilities that might still be needed */
+/* Custom Utilities */
 .svg-warning {
     filter: invert(55%) sepia(77%) saturate(421%) hue-rotate(336deg) brightness(102%) contrast(102%);
 }
 
 .svg-white {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(247deg) brightness(101%) contrast(100%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20;
 }

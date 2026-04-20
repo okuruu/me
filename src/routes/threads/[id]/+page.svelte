@@ -5,7 +5,7 @@
     let { data } = $props();
 </script>
 
-<div class="min-vh-100 bg-base-300 pb-20">
+<div class="min-vh-100 bg-base-100 pb-20">
     <div class="max-w-md mx-auto px-4">
         <Navbar/>
         
@@ -32,7 +32,7 @@
                   
                   {#if data.threads.images !== null}
                     <div class="rounded-2xl overflow-hidden border border-white/5 my-4">
-                      <img src="/threads/{data.threads.images}" alt="Main thread image" class="w-full h-auto" />
+                      <img src="/threads/{data.threads.images}" alt="Main thread" class="w-full h-auto" />
                     </div>
                   {/if}
 
@@ -77,7 +77,7 @@
                         
                         {#if reply.images !== null}
                           <div class="rounded-2xl overflow-hidden border border-white/5 my-4">
-                            <img src="/threads/{reply.images}" alt="Reply image" class="w-full h-auto" />
+                            <img src="/threads/{reply.images}" alt="Reply content" class="w-full h-auto" />
                           </div>
                         {/if}
 
