@@ -1,4 +1,4 @@
-const isProduction: boolean = false;
+const isProduction: boolean = true;
 const ip: string = isProduction ? 'https://fae.deabakery.co.id' : 'http://localhost';
 const port: string = isProduction ? '' : '8000';
 export const phraseBox = {
