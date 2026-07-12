@@ -66,46 +66,39 @@
         return sum;
     }
 </script>
-<div class="container">
-    <h3 class="fw-bold mb-7">Analisa Hasil Kerja Sales</h3>
-    
-    <form onsubmit={doPost}>
-        <div class="row mb-6">
-            <label for="nominalPengeluaran" class="col-lg-4 col-form-label required fw-bold fs-6">Pilih Sales</label>
-            <div class="col-lg-8 fv-row">
-                <select bind:value={useForms.sales} class="form-select">
+<div>
+    <h3 class="mb-6 text-lg font-bold">Analisa Hasil Kerja Sales</h3>
+
+    <form onsubmit={doPost} class="space-y-4">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label for="pilihSales" class="label-text mb-1 block font-medium">Pilih Sales</label>
+                <select bind:value={useForms.sales} class="select select-bordered w-full">
                     <option value="" disabled selected>Pilih Sales</option>
                     {#each sales as sales }
                         <option value={sales.ID}>{sales.NAMA}</option>
                     {/each}
                 </select>
             </div>
-        </div>
-        
-        <div class="row mb-6">
-            <label for="nominalPengeluaran" class="col-lg-4 col-form-label required fw-bold fs-6">Rentang Tanggal</label>
-            <div class="col-lg-8 fv-row">
-                <div class="row gap-2">
-                    <div class="col">
-                        <DatePlaceholder bind:value={useForms.start} />
-                    </div>
-                    <div class="col">
-                        <DatePlaceholder bind:value={useForms.end} />
-                    </div>
+            <div>
+                <label for="rentangTanggal" class="label-text mb-1 block font-medium">Rentang Tanggal</label>
+                <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <DatePlaceholder bind:value={useForms.start} />
+                    <DatePlaceholder bind:value={useForms.end} />
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end">
+        <div class="flex justify-end">
             <button type="submit" class="btn btn-sm btn-primary">Analisa Hasil Kinerja</button>
         </div>
     </form>
 
-    <div class="separator my-10"></div>
+    <div class="divider my-8"></div>
 
-    <div class="table-responsive">
-        <table class="table align-middle table-hover table-striped">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra align-middle">
             <thead>
-                <tr class="fw-bold">
+                <tr class="font-bold">
                     <th>#</th>
                     <th>Nama</th>
                     <th>Distributor</th>
@@ -133,12 +126,12 @@
                         </tr>
                     {/each}
                     <tr>
-                        <td colspan="6" class="text-end">Total Item</td>
-                        <td class="fw-bolder">{`${getSum("Total Item")} Pcs`}</td>
+                        <td colspan="6" class="text-right">Total Item</td>
+                        <td class="font-extrabold">{`${getSum("Total Item")} Pcs`}</td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="text-end">Total Transaksi</td>
-                        <td class="fw-bolder">{rupiahFormatter.format(getSum("Total Transaksi"))}</td>
+                        <td colspan="6" class="text-right">Total Transaksi</td>
+                        <td class="font-extrabold">{rupiahFormatter.format(getSum("Total Transaksi"))}</td>
                     </tr>
                 {/if}
             </tbody>

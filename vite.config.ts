@@ -1,10 +1,18 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [
-		sveltekit(),
-		tailwindcss(),
-	]
+    plugins: [sveltekit()],
+    build: {
+        target: 'esnext',
+    },
+    server: {
+        warmup: {
+            clientFiles: [
+                './src/routes/+page.svelte',
+                './src/routes/+layout.svelte',
+                './src/routes/projects/[slug]/+page.svelte',
+            ],
+        },
+    },
 });

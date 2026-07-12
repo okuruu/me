@@ -51,16 +51,17 @@
     }
 
 </script>
-<h3 class="card-title fw-bold">Analisa Omset: Perusahaan</h3>
-<Charts />
-<div class="row">
-    <div class="col">
-
-        <h1 class="mb-5">Omset Item Tertinggi: {currentMonth}</h1>
-        <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+<h3 class="card-title text-lg font-bold">Analisa Omset: Perusahaan</h3>
+<div class="mt-4">
+    <Charts />
+</div>
+<div class="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
+    <div>
+        <h1 class="mb-4 text-xl font-bold">Omset Item Tertinggi: {currentMonth}</h1>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle">
                 <thead>
-                    <tr class="fw-bold">
+                    <tr class="font-bold">
                         <th>#</th>
                         <th>Nama Produk</th>
                         <th>Total Terjual</th>
@@ -76,22 +77,20 @@
                             <td>{ data.JUMLAH } Pcs</td>
                             <td>{ rupiahFormatter.format(Number(data.TOTAL)) }</td>
                             <td>
-                                <button type="button" onclick={() => showItems(data.NAMA)} class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#omsetExplanation">Lihat Track Record</button>
+                                <button type="button" onclick={() => showItems(data.NAMA)} class="btn btn-sm btn-primary">Lihat Track Record</button>
                             </td>
                         </tr>
                     {/each}
                 </tbody>
             </table>
         </div>
-
     </div>
-    <div class="col">
-
-        <h1 class="mb-5">Biaya Operasional Tertinggi: {currentMonth}</h1>
-        <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+    <div>
+        <h1 class="mb-4 text-xl font-bold">Biaya Operasional Tertinggi: {currentMonth}</h1>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle">
                 <thead>
-                    <tr class="fw-bold">
+                    <tr class="font-bold">
                         <th>#</th>
                         <th>Tanggal Pengeluaran</th>
                         <th>Nama Kegiatan</th>
@@ -110,23 +109,22 @@
                         </tr>
                     {/each}
                     <tr>
-                        <td colspan="3" class="text-center fw-bold">Total Biaya Operasional</td>
-                        <td class="fw-bold text-white bg-danger">{ rupiahFormatter.format(operationalAmount) }</td>
+                        <td colspan="3" class="text-center font-bold">Total Biaya Operasional</td>
+                        <td class="bg-error font-bold text-error-content">{ rupiahFormatter.format(operationalAmount) }</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
-        <h3 class="fw-bolder">{itemName}</h3>
-        <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+    <div class="w-full p-5">
+        <h3 class="text-lg font-extrabold">{itemName}</h3>
+        <div class="mt-4 overflow-x-auto">
+            <table class="table table-zebra align-middle">
                 <thead>
-                    <tr class="fw-bolder">
+                    <tr class="font-extrabold">
                         <th>#</th>
                         <th>Nama</th>
                         <th>Jumlah</th>

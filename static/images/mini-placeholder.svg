@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- Framed placeholder area -->
+  <rect x="80" y="60" width="480" height="240" rx="8" fill="#1A1714" stroke="#2D2720" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <!-- Image glyph -->
+  <rect x="276" y="138" width="88" height="68" rx="6" fill="#1E1B17" stroke="#3D3228" stroke-width="1.5"/>
+  <circle cx="300" cy="160" r="8" fill="#D8704A" opacity="0.7"/>
+  <path d="M286 198 L312 172 L330 190 L344 178 L354 198 Z" fill="#3D3228"/>
+  <text x="320" y="350" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">PREVIEW COMING SOON</text>
+  <text x="320" y="372" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">ARTWORK PENDING</text>
+</svg>

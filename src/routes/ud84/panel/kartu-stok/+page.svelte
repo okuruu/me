@@ -90,61 +90,55 @@
     }
 </script>
 <Ud84Navigation/>
-<div class="container-fluid">
-    <div class="card shadow-sm my-3 bg-white">
-        <div class="card-body">
-            <h3 class="text-decoration-underline fw-bolder">Kartu Stok</h3>
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <h3 class="card-title text-lg font-bold">Kartu Stok</h3>
+        </div>
 
-            <div class="row">
-                <div class="col-9">
-                    <form class="row" onsubmit={doPost}>
-                        <div class="col-6">
-                            <label for="inputPencarian" class="form-label fw-bolder mt-2">Pencarian</label>
-                            <select bind:value={useInput.searchBar} class="form-select form-select-sm" required>
-                                <option value="" disabled selected>Pilih Item</option>
-                                {#each useItem as {ID, NAMA ,DISTRIBUTOR}}
-                                    <option value={ID}>
-                                        {NAMA} - [{DISTRIBUTOR}]
-                                    </option>
-                                {/each}
-                            </select>
-                        </div>
-                        <div class="col me-2">
-                            <label for="startDate" class="form-label fw-bolder mt-2">Pencarian Awal</label>
-                            <DatePlaceholder bind:value={useInput.startDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Awal"/>
-                        </div>
-                        <div class="col me-2">
-                            <label for="endDate" class="form-label fw-bolder mt-2">Pencarian Akhir</label>
-                            <DatePlaceholder bind:value={useInput.endDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Akhir"/>
-                        </div>
-                        <div class="col">
-                            <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
-                                </button>
-                                <button type="button" onclick={preparePrint} class="btn btn-sm btn-icon btn-info">
-                                    <img src="/icons/Printer.svg" class="h-30px svg-white" alt="Print Button" />
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <form class="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" onsubmit={doPost}>
+                <div>
+                    <label for="inputPencarian" class="label-text mb-1 block font-medium">Pencarian</label>
+                    <select id="inputPencarian" bind:value={useInput.searchBar} class="select select-bordered select-sm w-full" required>
+                        <option value="" disabled selected>Pilih Item</option>
+                        {#each useItem as {ID, NAMA ,DISTRIBUTOR}}
+                            <option value={ID}>
+                                {NAMA} - [{DISTRIBUTOR}]
+                            </option>
+                        {/each}
+                    </select>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex justify-content-end">
-                        <label class="form-check form-switch form-check-custom form-check-solid mt-11">
-                            <input class="form-check-input" type="checkbox" onchange={reverseData}/>
-                            <span class="form-check-label fw-bolder ms-5">A-Z</span>
-                        </label>
-                    </div>
+                <div>
+                    <label for="startDate" class="label-text mb-1 block font-medium">Pencarian Awal</label>
+                    <DatePlaceholder bind:value={useInput.startDate} class="input input-bordered input-sm w-full" placeholder="Tanggal Awal"/>
                 </div>
-            </div>
+                <div>
+                    <label for="endDate" class="label-text mb-1 block font-medium">Pencarian Akhir</label>
+                    <DatePlaceholder bind:value={useInput.endDate} class="input input-bordered input-sm w-full" placeholder="Tanggal Akhir"/>
+                </div>
+                <div class="flex items-end gap-2">
+                    <button type="submit" class="btn btn-square btn-primary btn-sm">
+                        <img src="/icons/Search.svg" class="h-5 w-5" alt="Search Toggle" />
+                    </button>
+                    <button type="button" onclick={preparePrint} class="btn btn-square btn-info btn-sm">
+                        <img src="/icons/Printer.svg" class="h-5 w-5" alt="Print Button" />
+                    </button>
+                </div>
+            </form>
+            <label class="flex cursor-pointer items-center gap-2 lg:pb-1">
+                <input type="checkbox" class="toggle toggle-sm" onchange={reverseData}/>
+                <span class="label-text font-bold">A-Z</span>
+            </label>
+        </div>
 
-            <div class="separator my-3"></div>
+        <div class="divider my-3"></div>
 
-            <table class="table table-row-dashed table-row-gray-300 gy-1 table-hover align-middle text-center text-dark">
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
                 <thead>
-                    <tr class="fw-bolder">
+                    <tr class="font-bold">
                         <th>#</th>
                         <th>Nama</th>
                         <th>Asal</th>
@@ -157,7 +151,7 @@
                 <tbody>
                     {#if newData.length === 0}
                         <tr>
-                            <td colspan="7" class="text-center">Tidak ada data.</td>
+                            <td colspan="7" class="text-center text-base-content/60">Tidak ada data.</td>
                         </tr>
                     {:else}
                         {#each newData as data, index}
@@ -166,7 +160,7 @@
                                 <td>{capitalizeEachWord(data.NAMA)}</td>
                                 <td>{data.ASAL}</td>
                                 <td class="text-primary">{data.MASUK}</td>
-                                <td class="text-danger">{data.KELUAR}</td>
+                                <td class="text-error">{data.KELUAR}</td>
                                 <td class="text-info">{data.STOK}</td>
                                 <td>{Carbon(data.CREATED_AT, "timestamp")}</td>
                             </tr>
@@ -174,7 +168,8 @@
                     {/if}
                 </tbody>
             </table>
-
         </div>
+
     </div>
+</div>
 </div>

@@ -4,7 +4,7 @@
     import { goto } from "$app/navigation";
     import { db, useFetch } from "../../../../../library/hooks/db";
     import { rupiahFormatter } from "../../../../../library/utils/useFormat";
-    
+
     import type { CartsModal } from "../../../../../interface/Carts";
 
     import Rupiah from "../../../../../components/shared/Rupiah.svelte";
@@ -36,7 +36,7 @@
 
     let cartData: Carts[] = $state([]);
     let cartSearch: CartsModal[] = $state([]);
-    
+
     let isDrawer: boolean = $state(false);
     let isDisabled: boolean = $state(false);
     let isModalSearch: boolean = $state(false);
@@ -45,9 +45,9 @@
     let currentIndexModal: number = $state(0);
 
     let totalProducts: number = $state(0);
-    
+
     let currentSidebar: string = $state('selectPIC');
-    
+
     let selectPIC: string = $state('');
     let responsiblePerson: any = $state([]);
     let userList: { ID: number; NAMA: string; NOMINAL: number }[] = $state([]);
@@ -182,7 +182,7 @@
                 document.getElementById(`cartModal_${currentIndexModal}`)?.focus();
                 return;
             }
-            
+
 			event.preventDefault();
 			currentIndex = (currentIndex - 1 + cartData.length) % cartData.length;
 			document.getElementById(`cart_${currentIndex}`)?.focus();
@@ -238,7 +238,7 @@
                         if (pageTitle == "Item Keluar" && responsiblePerson.length == 0) {
                             toast.error("Pilih Penanggung Jawab Item Keluar");
                             return;
-                        } 
+                        }
 
                         const { status, message } = await db({
                             tipe : pageTitle,
@@ -264,105 +264,108 @@
     }
 </script>
 <Ud84Navigation/>
-<div class="row p-5">
-    <div class="col-4">
-        <div class="d-flex justify-content-between">
-            <h4 class="fw-bolder text-dea">{data.pageTitle}</h4>
-        </div>
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+        <div class="card bg-base-100 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title text-lg font-bold">{data.pageTitle}</h4>
 
-        <form onsubmit={handleSearch} class="row">
-            <div class="col">
-                <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text border-transparent" id="cariProduk">🔍</span>
-                    <input type="text" bind:this={searchInput} bind:value={searchQuery} class="form-control form-control-sm" placeholder="[ESC] Search items" required />
-                </div>
-            </div>
-            <div class="col">
-                <input type="number" bind:value={searchAmount} min="1" class="form-control form-control-sm" placeholder="[TAB] Jumlah" required />
-            </div>
-            <button type="submit" hidden>Search</button>
-        </form>
+                <form onsubmit={handleSearch} class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+                    <div class="flex-1">
+                        <label for="searchQuery" class="label-text mb-1 block font-medium">Cari Produk</label>
+                        <input id="searchQuery" type="text" bind:this={searchInput} bind:value={searchQuery} class="input input-bordered input-sm w-full" placeholder="[ESC] Search items" required />
+                    </div>
+                    <div class="sm:w-28">
+                        <label for="searchAmount" class="label-text mb-1 block font-medium">Jumlah</label>
+                        <input id="searchAmount" type="number" bind:value={searchAmount} min="1" class="input input-bordered input-sm w-full" placeholder="[TAB] Jumlah" required />
+                    </div>
+                    <button type="submit" hidden>Search</button>
+                </form>
 
-        {#if pageUrl === "item-keluar"}
-            <div class="row my-2">
-                <div class="col mt-2">
-                    <label class="form-label fw-bolder text-golden" for="tipeAfkir">Tipe Item Keluar</label>
-                </div>
-                <div class="col">
-                    <select class="form-select form-select-sm">
-                        <option value="" selected disabled>Pilih Salah Satu</option>
-                        {#each kategoriAfkir as kategori }
-                            <option value={kategori}>{kategori}</option>
-                        {/each}
-                    </select>
-                </div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-sm btn-danger" onclick={() => openSidebar('selectPIC')}>Pilih PIC</button>
-                </div>
-            </div>
-        {/if}
-
-        <div class="form-group mt-2">
-            <label for="notePOS" class="form-label fw-bold pe-7">Keterangan</label>
-            <textarea id="notePOS" bind:value={notes} class="form-control" placeholder="Belum ada catatan"></textarea>
-        </div>
-
-        <button type="button" class="btn btn-danger w-100 my-5" onclick={completeTransaction}>Simpan {data.pageTitle}</button>
-
-    </div>
-    <div class="col-8">
-        <div class="border-dea-total rounded-1 d-flex align-items-center justify-content-end">
-            <h1 class="display-6 text-dea me-3 m-2">{rupiahFormatter.format(totalProducts)}</h1>
-        </div>
-        <table class="table table-row-dashed table-row-gray-300 align-middle gx-1 gy-1">
-            <thead>
-                <tr class="fw-bolder text-muted">
-                    <th>#</th>
-                    <th>Nama - Satuan</th>
-                    <th class="text-center">Harga</th>
-                    <th class="text-center">Jumlah Per Pcs</th>
-                    <th class="text-center">Total Harga</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#if cartData.length == 0}
-                    <tr>
-                        <td>Tidak ada data</td>
-                    </tr>
-                {:else }
-                    {#each cartData as cartItem, index }
-                        <tr>
-                            <td class="fw-bolder">{index + 1}</td>
-                            <td>
-                                <span class="fw-bolder">{ cartItem.NAMA } - </span>
-                                <span class="fw-bolder text-warning">{ cartItem.SATUAN }</span>
-                            </td>
-                            <td class="text-center"><span class="text-dea fw-bolder">{ rupiahFormatter.format(cartItem.HARGA) }</span></td>
-                            <td>
-                                <div class="d-flex justify-content-center">
-                                    <input type="number" min="1" id="quantity_{index}" bind:value={cartItem.INPUT_STOK}  onkeyup={() => editCartQuantity(index,cartItem.JUMLAH)}  class="form-control form-control-sm text-center w-50" placeholder="Pcs"/>
-                                </div>
-                            </td>
-                            <td class="text-center fw-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
-                            <td class="text-center">
-                                <button type="button" onclick={() => removeFromList(index)} class="btn btn-icon btn-sm btn-dark">
-                                    <img src="/icons/Delete.svg" alt="" class="h-15px svg-white" />
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="text-start text-gray-400 small-text">
-                            <td colspan=6>
-                                Distributor:<b class="text-warning ms-2"> {cartItem.DISTRIBUTOR}</b> | 
-                                Stok Sekarang:<b class="text-danger ms-2"> {cartItem.STOK}</b> | 
-                                Deskripsi:<b class="text-info ms-2"> {cartItem.DESKRIPSI}</b>
-                            </td>
-                        </tr>
-                    {/each}
+                {#if pageUrl === "item-keluar"}
+                    <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+                        <div class="flex-1">
+                            <label class="label-text mb-1 block font-medium text-warning" for="tipeAfkir">Tipe Item Keluar</label>
+                            <select id="tipeAfkir" class="select select-bordered select-sm w-full">
+                                <option value="" selected disabled>Pilih Salah Satu</option>
+                                {#each kategoriAfkir as kategori }
+                                    <option value={kategori}>{kategori}</option>
+                                {/each}
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-error btn-sm" onclick={() => openSidebar('selectPIC')}>Pilih PIC</button>
+                    </div>
                 {/if}
-            </tbody>
-        </table>
+
+                <div class="mt-4">
+                    <label for="notePOS" class="label-text mb-1 block font-medium">Keterangan</label>
+                    <textarea id="notePOS" bind:value={notes} class="textarea textarea-bordered w-full" placeholder="Belum ada catatan"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-error mt-6 w-full" onclick={completeTransaction}>Simpan {data.pageTitle}</button>
+            </div>
+        </div>
     </div>
+    <div class="lg:col-span-8">
+        <div class="card bg-base-100 shadow-sm">
+            <div class="card-body">
+                <div class="flex items-center justify-end rounded-lg bg-base-200 px-4 py-3">
+                    <h1 class="text-2xl font-bold text-primary sm:text-3xl">{rupiahFormatter.format(totalProducts)}</h1>
+                </div>
+
+                <div class="mt-4 overflow-x-auto">
+                    <table class="table table-zebra align-middle text-center">
+                        <thead>
+                            <tr class="font-bold">
+                                <th>#</th>
+                                <th class="text-left">Nama - Satuan</th>
+                                <th>Harga</th>
+                                <th>Jumlah Per Pcs</th>
+                                <th>Total Harga</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#if cartData.length == 0}
+                                <tr>
+                                    <td colspan="6" class="text-center text-base-content/60">Tidak ada data</td>
+                                </tr>
+                            {:else }
+                                {#each cartData as cartItem, index }
+                                    <tr>
+                                        <td class="font-bold">{index + 1}</td>
+                                        <td class="text-left">
+                                            <span class="font-bold">{ cartItem.NAMA } - </span>
+                                            <span class="font-bold text-warning">{ cartItem.SATUAN }</span>
+                                        </td>
+                                        <td><span class="font-bold text-primary">{ rupiahFormatter.format(cartItem.HARGA) }</span></td>
+                                        <td>
+                                            <input type="number" min="1" id="quantity_{index}" bind:value={cartItem.INPUT_STOK}  onkeyup={() => editCartQuantity(index,cartItem.JUMLAH)}  class="input input-bordered input-sm mx-auto w-20 text-center" placeholder="Pcs"/>
+                                        </td>
+                                        <td class="font-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
+                                        <td>
+                                            <button type="button" onclick={() => removeFromList(index)} class="btn btn-ghost btn-square btn-sm text-error">
+                                                <img src="/icons/Delete.svg" alt="" class="h-4 w-4" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="text-left text-sm text-base-content/60">
+                                        <td colspan="6">
+                                            Distributor:<b class="ml-2 text-warning"> {cartItem.DISTRIBUTOR}</b> |
+                                            Stok Sekarang:<b class="ml-2 text-error"> {cartItem.STOK}</b> |
+                                            Deskripsi:<b class="ml-2 text-info"> {cartItem.DESKRIPSI}</b>
+                                        </td>
+                                    </tr>
+                                {/each}
+                            {/if}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
@@ -374,46 +377,39 @@
 </Drawer>
 
 {#snippet choosePIC()}
-<div class="container mt-7">
-    <div class="d-flex bg-light-brown rounded w-100">
-        <div class="p-2 text-center w-100">
-            <h1 class="fw-bolder bg-light-brown ms-13 mt-3">Pilih Penanggung Jawab</h1>
-        </div>
-        <div class="p-2 flex-shrink-1 bg-light-brown rounded">
-            <button type="button" id="transactionModal" class="btn btn-sm btn-icon btn-danger mt-2" data-bs-dismiss="modal" aria-label="Close">X</button>
-        </div>
+<div class="w-full p-5">
+    <div class="flex items-center justify-between gap-3 rounded-lg bg-base-200 px-4 py-3">
+        <h1 class="text-lg font-bold">Pilih Penanggung Jawab</h1>
+        <button type="button" id="transactionModal" class="btn btn-square btn-neutral btn-sm" aria-label="Close">X</button>
     </div>
 
-    <div class="d-flex justify-content-end mt-3">
+    <div class="mt-3 flex justify-end">
         <button type="button" class="btn btn-sm btn-success">Total Tagihan: {rupiahFormatter.format(totalProducts)}</button>
     </div>
 
-    <div class="separator my-2 mt-3"></div>
+    <div class="divider my-3"></div>
 
-    <div class="fv-row my-4">
-        <label for="ItemKeluar" class="form-label fs-6 fw-bolder mb-3">Pilih Penanggung Jawab</label>
-        <div class="row">
-            <div class="col">
-                <select bind:value={selectPIC} class="form-select form-select-sm text-capitalize">
-                    <option value="" disabled selected>Pilih Penanggung Jawab</option>
-                    {#each userList as {ID, NAMA}}
-                        <option value={ID}>{NAMA}</option>
-                    {/each}
-                </select>
-            </div>
-            <div class="col">
-                <button type="button"  onclick={addPersonInCharge} class="btn btn-sm btn-info">Tambahkan</button>
-            </div>
+    <div class="my-4">
+        <label for="ItemKeluar" class="label-text mb-2 block font-medium">Pilih Penanggung Jawab</label>
+        <div class="flex flex-col gap-2 sm:flex-row">
+            <select id="ItemKeluar" bind:value={selectPIC} class="select select-bordered select-sm w-full capitalize">
+                <option value="" disabled selected>Pilih Penanggung Jawab</option>
+                {#each userList as {ID, NAMA}}
+                    <option value={ID}>{NAMA}</option>
+                {/each}
+            </select>
+            <button type="button" onclick={addPersonInCharge} class="btn btn-info btn-sm">Tambahkan</button>
         </div>
     </div>
 
-    <div class="table-responsive my-3">
-        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra align-middle text-center">
             <thead>
-                <tr class="fw-bolder">
+                <tr class="font-bold">
                     <th>#</th>
                     <th>Nama Penanggung Jawab</th>
                     <th>Potongan Afkir</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -422,10 +418,10 @@
                         <td>{index + 1}</td>
                         <td>{person.NAMA}</td>
                         <td>
-                            <Rupiah id={`setRupiah_${index}`} bind:value={responsiblePerson[index].NOMINAL} useClass="form-control form-control-sm text-center" />
+                            <Rupiah id={`setRupiah_${index}`} bind:value={responsiblePerson[index].NOMINAL} useClass="input input-bordered input-sm w-full text-center" />
                         </td>
                         <td>
-                            <button type="button" onclick={() => doErase(index)} class="btn btn-sm btn-dark">Hapus</button>
+                            <button type="button" onclick={() => doErase(index)} class="btn btn-ghost btn-square btn-sm text-error">Hapus</button>
                         </td>
                     </tr>
                 {/each}
@@ -433,58 +429,58 @@
         </table>
     </div>
 
-    <div class="separator my-3"></div>
+    <div class="divider my-3"></div>
 
-    <div class="d-flex justify-content-end">
-        <div class="me-2">
-            <button type="button" class="btn btn-sm btn-secondary" onclick={() => isDrawer = !isDrawer} >Tutup</button>
-        </div>
+    <div class="flex justify-end">
+        <button type="button" class="btn btn-ghost btn-sm" onclick={() => isDrawer = !isDrawer} >Tutup</button>
     </div>
 </div>
 {/snippet}
 
 {#snippet useItem()}
-    <div class="table-responsive w-100 mx-2 my-2">
-        <table class="table table-row-dashed table-hover table-row-gray-300 align-middle gx-1 gy-1">
-            <thead>
-                <tr class="fw-bold">
-                    <th class="text-center">#</th>
-                    <th>Nama</th>
-                    <th class="text-center ">Satuan</th>
-                    <th class="text-center ">Tambahkan Item</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#if cartSearch.length == 0}
-                    <tr>
-                        <td colspan="8" class="text-center">Item tidak ditemukan. Tekan <b>[ESC]</b> untuk kembali ke keranjang.</td>
+    <div class="w-full p-5">
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
+                <thead>
+                    <tr class="font-bold">
+                        <th>#</th>
+                        <th class="text-left">Nama</th>
+                        <th>Satuan</th>
+                        <th>Tambahkan Item</th>
                     </tr>
-                {:else}
-                    {#each cartSearch as cartSearch, index }
+                </thead>
+                <tbody>
+                    {#if cartSearch.length == 0}
                         <tr>
-                            <td class="text-center fw-bolder">{index + 1}</td>
-                            <td class="fw-bolder text-start">{cartSearch.NAMA} - <b class="text-danger">[{cartSearch.SATUAN}]</b></td>
-                            <td class="text-center text-golden fw-bolder">
-                                <span class="text-golden">{rupiahFormatter.format(cartSearch.HARGA)}</span>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" id="cartModal_{index}" onclick={() => selectionModal(cartSearch.ID)} class="btn btn-sm btn-icon btn-active-primary">
-                                    <img src="/icons/Add.svg" class="h-20px" alt="Tambahkan ke Keranjang" />
-                                </button>
-                            </td>
+                            <td colspan="4" class="text-center text-base-content/60">Item tidak ditemukan. Tekan <b>[ESC]</b> untuk kembali ke keranjang.</td>
                         </tr>
-                        <tr class="text-start text-gray-400 small-text">
-                            <td></td>
-                            <td>
-                                Distributor:<b class="text-warning ms-2"> {cartSearch.DISTRIBUTOR}</b> | 
-                                Stok Sekarang:<b class="text-danger ms-2"> {cartSearch.STOK}</b> | 
-                                Deskripsi:<b class="text-info ms-2"> {cartSearch.DESKRIPSI}</b>
-                            </td>
-                        </tr>
-                    {/each}
-                {/if}
-            </tbody>
-        </table>
+                    {:else}
+                        {#each cartSearch as cartSearch, index }
+                            <tr>
+                                <td class="font-bold">{index + 1}</td>
+                                <td class="text-left font-bold">{cartSearch.NAMA} - <b class="text-error">[{cartSearch.SATUAN}]</b></td>
+                                <td class="font-bold text-warning">
+                                    <span class="text-warning">{rupiahFormatter.format(cartSearch.HARGA)}</span>
+                                </td>
+                                <td>
+                                    <button type="button" id="cartModal_{index}" onclick={() => selectionModal(cartSearch.ID)} class="btn btn-ghost btn-square btn-sm text-primary">
+                                        <img src="/icons/Add.svg" class="h-5 w-5" alt="Tambahkan ke Keranjang" />
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="text-left text-sm text-base-content/60">
+                                <td></td>
+                                <td colspan="3">
+                                    Distributor:<b class="ml-2 text-warning"> {cartSearch.DISTRIBUTOR}</b> |
+                                    Stok Sekarang:<b class="ml-2 text-error"> {cartSearch.STOK}</b> |
+                                    Deskripsi:<b class="ml-2 text-info"> {cartSearch.DESKRIPSI}</b>
+                                </td>
+                            </tr>
+                        {/each}
+                    {/if}
+                </tbody>
+            </table>
+        </div>
     </div>
 {/snippet}
 

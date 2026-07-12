@@ -1,103 +1,90 @@
-@import "tailwindcss";
-@plugin "daisyui";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --color-base-100: #111215;
-  --color-base-200: #111215;
-  --color-base-300: #111215;
-  --color-primary: #3b82f6;
-  --color-primary-content: #ffffff;
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
+html {
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: bold;
+@layer utilities {
+    .label-text-sm {
+        @apply text-xs font-medium tracking-widest uppercase text-base-content/50;
+    }
+
+    .accent-bar {
+        @apply w-8 h-0.5 bg-accent mb-4;
+    }
+
+    .cs-section {
+        @apply py-10 border-b border-base-300;
+    }
+
+    .fade-up {
+        @apply opacity-0 translate-y-4;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-up.visible {
+        @apply opacity-100 translate-y-0;
+    }
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-    font-style: bold;
+.code-block {
+    @apply rounded-lg overflow-hidden border border-base-300 my-2;
 }
 
-@font-face {
-    font-family: 'Inter';
-    src: url('/fonts/Inter-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: bold;
+.code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: #1e1e1e;
+    color: #858585;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
-@font-face {
-    font-family: 'Quran';
-    src: url('/fonts/fatiha/quran.ttf') format('truetype');
-    font-weight: 700;
-    font-style: bold;
+.code-block pre {
+    margin: 0;
+    padding: 1.25rem 1rem;
+    background: #141414;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    color: #d4d4d4;
 }
 
-:root, [data-theme="dark"] {
-  color-scheme: dark;
-  
-  /* Force DaisyUI internal variables to #111215 */
-  --b1: 226.7 10.3% 7.3%; /* #111215 in OKLCH/HSL style used by DaisyUI */
-  --b2: 226.7 10.3% 7.3%;
-  --b3: 226.7 10.3% 7.3%;
-  
-  /* Ensure Tailwind 4 variables are also forced at this specificity */
-  --color-base-100: #111215 !important;
-  --color-base-200: #111215 !important;
-  --color-base-300: #111215 !important;
+.code-block code {
+    font-family: inherit;
+    color: inherit;
+    white-space: pre;
 }
 
-body {
-    @apply antialiased text-white min-h-screen selection:bg-primary/30;
-    font-family: 'Inter', sans-serif;
-    background-color: #111215 !important;
-}
-
-/* Ensure all cards and base-level containers use the forced color */
-.card, .bg-base-100, .bg-base-200, .bg-base-300 {
-    background-color: #111215 !important;
-}
-
-.quran-font {
-    font-family: Quran;   
-    line-height: 5.0;
-    white-space: pre-line;
-}
-
-/* Custom Utilities */
-.svg-warning {
-    filter: invert(55%) sepia(77%) saturate(421%) hue-rotate(336deg) brightness(102%) contrast(102%);
-}
-
-.svg-white {
-    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(2%) hue-rotate(247deg) brightness(101%) contrast(100%);
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20;
-}
+/* ─── Highlight.js – VS Code Dark+ theme ───────────────────── */
+.hljs { color: #d4d4d4; background: transparent; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section, .hljs-name { color: #569cd6; }
+.hljs-string, .hljs-attr { color: #ce9178; }
+.hljs-number, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #b5cea8; }
+.hljs-comment, .hljs-quote, .hljs-meta.hljs-keyword { color: #6a9955; font-style: italic; }
+.hljs-built_in, .hljs-class .hljs-title, .hljs-type { color: #4ec9b0; }
+.hljs-title.class_, .hljs-title.class_.inherited { color: #4ec9b0; }
+.hljs-title.function_, .hljs-function > .hljs-title { color: #dcdcaa; }
+.hljs-title { color: #dcdcaa; }
+.hljs-variable, .hljs-template-variable, .hljs-property, .hljs-params { color: #9cdcfe; }
+.hljs-meta { color: #9cdcfe; }
+.hljs-tag { color: #569cd6; }
+.hljs-attribute { color: #9cdcfe; }
+.hljs-selector-class, .hljs-selector-id { color: #d7ba7d; }
+.hljs-regexp, .hljs-link, .hljs-deletion { color: #d16969; }
+.hljs-operator, .hljs-punctuation { color: #d4d4d4; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }

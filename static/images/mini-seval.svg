@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- Evaluation / form feel -->
+  <rect x="170" y="90" width="300" height="220" rx="8" fill="#2D2720"/>
+  <rect x="186" y="108" width="120" height="10" rx="3" fill="#D8704A" opacity="0.5"/>
+  <rect x="186" y="128" width="200" height="6" rx="3" fill="#3D3228"/>
+  <!-- Radio options -->
+  <circle cx="198" cy="154" r="6" fill="none" stroke="#D8704A" stroke-width="1.5"/>
+  <rect x="212" y="149" width="80" height="8" rx="3" fill="#3D3228"/>
+  <circle cx="198" cy="176" r="6" fill="#D8704A"/>
+  <rect x="212" y="171" width="100" height="8" rx="3" fill="#3D3228"/>
+  <circle cx="198" cy="198" r="6" fill="none" stroke="#3D3228" stroke-width="1.5"/>
+  <rect x="212" y="193" width="70" height="8" rx="3" fill="#3D3228"/>
+  <circle cx="198" cy="220" r="6" fill="none" stroke="#3D3228" stroke-width="1.5"/>
+  <rect x="212" y="215" width="90" height="8" rx="3" fill="#3D3228"/>
+  <!-- Submit -->
+  <rect x="300" y="274" width="140" height="24" rx="5" fill="#D8704A" opacity="0.6"/>
+  <text x="370" y="290" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff">SUBMIT</text>
+  <text x="320" y="344" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">seVAL</text>
+  <text x="320" y="363" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">UNIVERSITAS WIDYAGAMA</text>
+</svg>

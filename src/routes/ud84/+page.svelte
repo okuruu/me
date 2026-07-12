@@ -61,12 +61,17 @@
         sales = await useFetch('UD84/Stocks/Staff');
     })
 
-    function switchCatalogue() {
+    function switchCatalogue(): boolean {
         isCatalogue = !isCatalogue;
-        if(cartPass) cartPass = false;
+
+        if(cartPass) {
+            cartPass = false;
+        }
+
+        return isCatalogue;
     }
 
-    function searchItem() {
+    function searchItem(): Katalog[] {
         if (searchBar === '') {
             katalog = katalogDefault;
         } else {
@@ -74,21 +79,23 @@
                 return item.NAMA_PRODUK.toLowerCase().includes(searchBar.toLowerCase());
             });
         }
+
+        return katalog;
     }
 
-    async function openImage(index: number) {
+    async function openImage(index: number): Promise <void> {
         imagePath = `https://esdelfron.deabakery.co.id/public/UD84/Images/${katalog[index].GAMBAR}`;
         isImage = true;
     }
 
-    function closeImage() {
+    function closeImage(): void {
         isImage = false
         imagePath = '';
         searchBar = '';
         searchItem();
     }
 
-    function addToCarts() {
+    function addToCarts(): void | Carts[] {
         if (useForms.kode == '') {
             toast.error("Pilih item terlebih dahulu!");
             return;
@@ -115,14 +122,16 @@
         }];
 
         useForms.kode = '';
+
+        return carts;
     }
 
-    function removeItem(id: number) {
+    function removeItem(id: number): Carts[] {
         carts.splice(id, 1);
-        carts = carts;
+        return carts;
     }
 
-    function removeAll() {
+    function removeAll(): void {
         useForms = {
             nama: '',
             whatsapp: '',
@@ -133,8 +142,7 @@
         carts = [];
     }
 
-    async function passwordSales(e: Event) {
-        e.preventDefault();
+    async function passwordSales(): Promise <void> {
         const { status, message, data } = await db({
             password: salesPassword
         }, 'UD84/Charts/Sales-Password');
@@ -152,11 +160,11 @@
         isAdministrator = true;
     }
 
-    async function completeTransaction() {
-        toast('Konfirmasi Pesanan', {
-            description: 'Apakah Anda yakin ingin mengajukan pesanan ini?',
+    async function completeTransaction(): Promise <void> {
+        toast('Anda akan membuat pesanan.', {
+            description: 'Apakah anda yakin?',
             action: {
-                label: 'Ya, Pesan',
+                label: 'Ya, Ajukan Pesanan',
                 onClick: async () => {
                     if (carts.length === 0) {
                         toast.error("Keranjang tidak boleh kosong");
@@ -188,9 +196,9 @@
         })
     }
 
-    async function saveMember() {
-        toast('Konfirmasi Member', {
-            description: 'Buat member baru dengan data ini?',
+    async function saveMember(): Promise <void> {
+        toast('Buat Member.', {
+            description: 'Apakah anda yakin?',
             action: {
                 label: 'Ya, Buat Member',
                 onClick: async () => {
@@ -218,42 +226,27 @@
         })
     }
 </script>
-
-<div class="min-vh-100 bg-base-100 pb-20">
-    <div class="max-w-md mx-auto px-4 pt-8">
-        <div class="card bg-base-100 shadow-xl overflow-hidden rounded-3xl ring-1 ring-white/5">
-            {#if isImage && imagePath}
-              <div class="relative group">
-                <img src={imagePath} class="w-full h-auto max-h-[500px] object-cover" alt="Produk"/>
-                <button type="button" class="btn btn-circle btn-sm btn-glass absolute right-4 top-4 shadow-lg text-white" onclick={closeImage}>✕</button>
-              </div>
-            {/if}
-
-            <div class="card-body p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                      <h3 class="text-2xl font-bold text-white tracking-tight">UD84 Catalogue</h3>
-                      <p class="text-xs text-primary font-bold uppercase tracking-widest mt-1 opacity-60">
-                        {isAdministrator ? 'ADMIN MODE' : (isCatalogue ? 'PREVIEW MODE' : 'ORDER MODE')}
-                      </p>
-                    </div>
-                    
-                    {#if !isImage}
-                      <div class="flex gap-2">
-                          {#if isAdministrator}
-                              <button type="button" onclick={() => isHistory = !isHistory} class="btn btn-square btn-ghost btn-sm">
-                                  <img src="/icons/Quiz.svg" class="h-5 w-5 brightness-0 invert" alt="History"/>
-                              </button>
-                          {/if}
-                          <button type="button" onclick={switchCatalogue} class="btn btn-primary btn-sm rounded-xl px-4 font-bold shadow-lg">
-                            {isCatalogue ? 'Pesan Online' : 'Lihat Katalog'}
-                          </button>
-                      </div>
+<div class="{katalog.length <= 1 || !isCatalogue ? 'min-h-screen' : ''}">
+    <div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+        <div class="card bg-base-100 shadow-sm">
+            <div class="card-body">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h3 class="card-title text-xl font-bold">Katalog UD84</h3>
+                    {#if isImage}
+                        <button type="button" class="btn btn-sm btn-square btn-neutral" onclick={closeImage}> X </button>
+                    {:else}
+                        <div class="flex items-center gap-2">
+                            {#if isAdministrator}
+                                <button type="button" onclick={() => isHistory = !isHistory} class="btn btn-sm btn-square btn-neutral">
+                                    <img src="/icons/Quiz.svg" class="h-5 w-5" alt="History"/>
+                                </button>
+                            {/if}
+                            <button type="button" onclick={switchCatalogue} class="btn btn-sm btn-primary">Pesan Online</button>
+                        </div>
                     {/if}
                 </div>
+                <div class="divider my-3"></div>
 
-                <div class="divider opacity-5 my-0 mb-6"></div>
-                
                 {#if isAdministrator && isHistory}
                     <Ud84History staff={sales}/>
                 {:else if isAdministrator}
@@ -265,18 +258,11 @@
                         {#if cartPass}
                             {@render useCarts()}
                         {:else}
-                            <form class="space-y-4" onsubmit={passwordSales}>
-                                <div class="form-control">
-                                    <label for="pass" class="label">
-                                      <span class="label-text font-bold text-base-content/60">Akses Terbatas</span>
-                                    </label>
-                                    <div class="flex gap-2">
-                                        <input type="password" bind:value={salesPassword} class="input input-bordered flex-grow bg-base-200/50 rounded-2xl" placeholder="Password Sales" required/>
-                                        <button type="submit" class="btn btn-primary rounded-2xl w-24">Buka</button>
-                                    </div>
-                                    <label class="label mt-1">
-                                      <span class="label-text-alt opacity-30 italic">Masukkan password sales untuk memesan.</span>
-                                    </label>
+                            <form class="space-y-2" onsubmit={passwordSales}>
+                                <label for="pass" class="label-text font-medium">Masukkan Password</label>
+                                <div class="flex flex-col gap-2 sm:flex-row">
+                                    <input type="password" bind:value={salesPassword} class="input input-bordered w-full" placeholder="Password Sales" required/>
+                                    <button type="submit" class="btn btn-primary sm:shrink-0">Buka</button>
                                 </div>
                             </form>
                         {/if}
@@ -288,107 +274,125 @@
 </div>
 
 {#snippet mainCatalogue()}
-    {#if !isImage}
-        <div class="relative mb-6">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 opacity-30">🔍</span>
-          <input type="text" bind:value={searchBar} onkeyup={searchItem} class="input input-bordered w-full pl-10 bg-base-200/50 rounded-2xl focus:bg-base-200 transition-all border-white/5" placeholder="Cari Produk..." />
-        </div>
-        
-        <div class="space-y-4">
-            {#each katalog as item, index }
-                <div class="group bg-base-200/40 p-5 rounded-2xl border border-white/5 hover:bg-base-200/80 transition-all hover:shadow-lg">
-                    <div class="flex justify-between items-start gap-4">
-                        <div class="flex-grow">
-                            <h4 class="font-bold text-white text-lg leading-tight mb-1">{item.NAMA_PRODUK}</h4>
-                            <p class="text-sm opacity-50 line-clamp-2 leading-relaxed">{item.KETERANGAN}</p>
-                        </div>
-                        <button type="button" onclick={() => openImage(index)} class="btn btn-primary btn-sm btn-square rounded-xl shrink-0 shadow-md">
-                            <img src="/icons/Share.svg" class="h-4 w-4 brightness-0 invert" alt="View" />
-                        </button>
-                    </div>
-                </div>
-            {/each}
-        </div>
+    {#if isImage}
+        {@render viewImage()}
+    {:else}
+        {@render viewCatalogue()}
     {/if}
 {/snippet}
 
-{#snippet useCarts()}
-    <div class="space-y-6">
-        <div class="space-y-4">
-            <div class="form-control">
-                <label class="label py-1"><span class="label-text font-bold opacity-50 text-[10px] uppercase tracking-widest">Informasi Pelanggan</span></label>
-                <div class="grid grid-cols-1 gap-3">
-                    <input type="text" bind:value={useForms.nama} class="input input-bordered bg-base-200/50 rounded-2xl" placeholder="Nama Anda" required/>
-                    <input type="text" bind:value={useForms.whatsapp} class="input input-bordered bg-base-200/50 rounded-2xl" placeholder="Nomor WhatsApp" required/>
+{#snippet viewImage()}
+    {#if imagePath !== ''}
+        <img src={imagePath} class="mx-auto h-auto max-w-full rounded-lg" alt="Gambar Produk"/>
+    {/if}
+{/snippet}
+
+{#snippet viewCatalogue()}
+    <div class="mb-4">
+        <input type="text" bind:value={searchBar} onkeyup={searchItem} class="input input-bordered w-full max-w-md" placeholder="Cari Produk" />
+    </div>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {#each katalog as katalog, index }
+            <div class="card border border-base-200 bg-base-100 shadow-sm">
+                <div class="card-body flex flex-col gap-2 p-4">
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="badge badge-ghost badge-sm">{ index + 1 }</span>
+                        <button type="button" onclick={() => openImage(index)} class="btn btn-ghost btn-square btn-sm text-primary">
+                            <img src="/icons/Share.svg" class="h-4 w-4" alt="View" />
+                        </button>
+                    </div>
+                    <h4 class="card-title text-base font-bold leading-tight">{katalog.NAMA_PRODUK}</h4>
+                    <p class="text-sm text-base-content/60">{katalog.KETERANGAN}</p>
                 </div>
             </div>
+        {/each}
+    </div>
+{/snippet}
 
-            <div class="form-control">
-                <label class="label py-1"><span class="label-text font-bold opacity-50 text-[10px] uppercase tracking-widest">Koneksi Sales</span></label>
-                <select bind:value={useForms.sales} class="select select-bordered bg-base-200/50 rounded-2xl w-full">
-                    <option value="" selected>Tanpa Sales (Default)</option>
-                    {#each sales as s }
-                        <option value={s.ID}>{s.NAMA}</option>
+{#snippet useCarts()}
+    <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+            <label for="chooseNama" class="label-text mb-1 block font-medium">Nama Anda</label>
+            <input type="text" bind:value={useForms.nama} class="input input-bordered w-full" placeholder="Masukkan Nama" required/>
+        </div>
+
+        <div>
+            <label for="whatsApp" class="label-text mb-1 block font-medium">Nomor WhatsApp Anda</label>
+            <input type="text" bind:value={useForms.whatsapp} class="input input-bordered w-full" placeholder="Contoh: 089887665432" required/>
+        </div>
+
+        <div>
+            <label for="kodeSales" class="label-text mb-1 block font-medium">Kode Sales</label>
+            <select bind:value={useForms.sales} class="select select-bordered w-full" required>
+                <option value="" selected>Tanpa Sales</option>
+                {#each sales as sales }
+                    <option value={sales.ID}>{sales.NAMA}</option>
+                {/each}
+            </select>
+        </div>
+
+        <div>
+            <label for="chooseItem" class="label-text mb-1 block font-medium">Pilih Item</label>
+            <div class="flex gap-2">
+                <select bind:value={useForms.kode} class="select select-bordered w-full">
+                    <option value="" selected disabled>Pilih Item</option>
+                    {#each katalogDefault as katalog }
+                        <option value={katalog.ID}>{katalog.NAMA_PRODUK}</option>
                     {/each}
                 </select>
-            </div>
-
-            <div class="form-control">
-                <label class="label py-1"><span class="label-text font-bold opacity-50 text-[10px] uppercase tracking-widest">Catatan / Alamat</span></label>
-                <textarea class="textarea textarea-bordered bg-base-200/50 rounded-2xl leading-relaxed" rows="3" placeholder="Detail pengiriman atau instruksi khusus..." bind:value={useForms.notes} required></textarea>
-            </div>
-
-            <div class="form-control">
-                <label class="label py-1"><span class="label-text font-bold opacity-50 text-[10px] uppercase tracking-widest">Tambah Pesanan</span></label>
-                <div class="flex gap-2">
-                    <select bind:value={useForms.kode} class="select select-bordered bg-base-200/50 rounded-2xl flex-grow overflow-hidden text-ellipsis">
-                        <option value="" selected disabled>Pilih Produk</option>
-                        {#each katalogDefault as item }
-                            <option value={item.ID}>{item.NAMA_PRODUK}</option>
-                        {/each}
-                    </select>
-                    <button type="button" onclick={addToCarts} class="btn btn-primary rounded-2xl px-6 shadow-lg">
-                        <img src="/icons/Cart-Plus.svg" class="h-6 w-6 brightness-0 invert" alt="Add" />
-                    </button>
-                </div>
+                <button type="button" onclick={addToCarts} class="btn btn-primary btn-square shrink-0">
+                    <img src="icons/elements/Cart-Plus.svg" class="h-6 w-6" alt="View" />
+                </button>
             </div>
         </div>
 
-        <div class="divider opacity-5"></div>
-
-        <div class="space-y-4">
-            <h3 class="font-bold text-white text-base flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              Keranjang ({carts.length})
-            </h3>
-
-            <div class="space-y-3">
-                {#if carts.length === 0}
-                    <div class="p-8 text-center bg-base-200/30 rounded-3xl border border-dashed border-white/10 opacity-30 italic text-sm">
-                        Belum ada item ditambahkan.
-                    </div>
-                {:else}
-                    {#each carts as item, index }
-                        <div class="flex items-center gap-4 bg-base-200/50 p-4 rounded-2xl ring-1 ring-white/5 shadow-inner">
-                            <div class="flex-grow">
-                                <h4 class="font-bold text-white text-sm line-clamp-1">{item.NAMA}</h4>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <input type="number" min="1" class="input input-ghost input-xs w-16 bg-base-100/50 text-center font-bold text-primary px-0 rounded-lg" bind:value={item.QUANTITY} />
-                                    <span class="text-[10px] opacity-40 uppercase font-bold tracking-tighter">Pcs</span>
-                                </div>
-                            </div>
-                            <button type="button" onclick={() => removeItem(index)} class="btn btn-ghost btn-circle btn-sm hover:bg-error/20 hover:text-error transition-all">
-                                <img src="/icons/Delete.svg" class="h-4 w-4" alt="Delete" />
-                            </button>
-                        </div>
-                    {/each}
-                {/if}
-            </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mt-8">
-            <button type="button" onclick={saveMember} class="btn btn-neutral rounded-2xl font-bold border-white/5">Simpan Member</button>
-            <button type="button" onclick={completeTransaction} class="btn btn-primary rounded-2xl font-bold shadow-lg shadow-primary/20">Konfirmasi</button>
+        <div class="md:col-span-2">
+            <label for="keterangan" class="label-text mb-1 block font-medium">Catatan / Alamat</label>
+            <textarea class="textarea textarea-bordered w-full" rows="3" placeholder="Masukkan Catatan" bind:value={useForms.notes} required></textarea>
         </div>
     </div>
+
+    <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <button type="button" onclick={saveMember} class="btn btn-info w-full">Simpan Member</button>
+        <button type="button" onclick={completeTransaction} class="btn btn-primary w-full">Simpan Pesanan</button>
+    </div>
+
+    <div class="divider my-5"></div>
+    <h3 class="mb-3 text-lg font-bold">Keranjang Belanja</h3>
+
+    <div class="overflow-x-auto">
+        <table class="table table-zebra align-middle">
+            <thead>
+                <tr class="font-bold">
+                    <th>#</th>
+                    <th>Nama Produk</th>
+                    <th class="text-center">Jumlah (Pcs)</th>
+                    <th class="text-center">Hapus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#if carts.length === 0}
+                    <tr>
+                        <td colspan="3" class="text-center">Keranjang Kosong</td>
+                    </tr>
+                {:else}
+                    {#each carts as carts, index }
+                        <tr>
+                            <td>{ index + 1 }</td>
+                            <td>{carts.NAMA}</td>
+                            <td class="text-center">
+                                <input type="number" min="1" class="input input-bordered input-sm w-24 text-center" placeholder="Qty" bind:value={carts.QUANTITY} />
+                            </td>
+                            <td class="text-center">
+                                <button type="button" onclick={() => removeItem(index)} class="btn btn-ghost btn-square btn-sm text-error">
+                                    <img src="icons/elements/Delete.svg" class="h-4 w-4" alt="View" />
+                                </button>
+                            </td>
+                        </tr>
+                    {/each}
+                {/if}
+            </tbody>
+        </table>
+    </div>
+
 {/snippet}

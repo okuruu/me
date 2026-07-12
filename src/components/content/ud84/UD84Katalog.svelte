@@ -28,25 +28,27 @@
         return katalog;
     }
 </script>
-<input type="text" bind:value={searchBar} onkeyup={searchItem} class="form-control mb-3" placeholder="Cari Produk" />
-<div class="table-responsive">
-    <table class="table align-middle">
+<div class="mb-4">
+    <input type="text" bind:value={searchBar} onkeyup={searchItem} class="input input-bordered w-full max-w-sm" placeholder="Cari Produk" />
+</div>
+<div class="overflow-x-auto">
+    <table class="table table-zebra align-middle">
         <thead>
-            <tr class="fw-bolder">
+            <tr class="font-bold">
                 <th>Nama Produk</th>
-                <th class="text-end">Harga Sat.</th>
-                <th class="text-end">Harga Pcs</th>
+                <th class="text-right">Harga Sat.</th>
+                <th class="text-right">Harga Pcs</th>
             </tr>
         </thead>
         <tbody>
             {#each katalog as katalog }
                 <tr>
                     <td>
-                        <span class="fw-bold">{katalog.NAMA_PRODUK}</span><br/>
-                        <span class="text-muted">{katalog.KETERANGAN}</span>
+                        <span class="font-bold">{katalog.NAMA_PRODUK}</span><br/>
+                        <span class="text-base-content/60">{katalog.KETERANGAN}</span>
                     </td>
-                    <td class="text-end">{rupiahFormatter.format(katalog.HARGA_JUAL)}</td>
-                    <td class="text-end">{rupiahFormatter.format(katalog.HARGA_PCS)}</td>
+                    <td class="text-right">{rupiahFormatter.format(katalog.HARGA_JUAL)}</td>
+                    <td class="text-right">{rupiahFormatter.format(katalog.HARGA_PCS)}</td>
                 </tr>
             {/each}
         </tbody>

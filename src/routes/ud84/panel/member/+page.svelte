@@ -47,7 +47,7 @@
     async function initializePage(): Promise <void> {
         masterProduk = await useFetch('UD84/Master-Produk/Retrieve');
     }
-    
+
     async function viewMember(): Promise <void> {
         dataMember = await useFetch('UD84/Member/Retrieve');
         isDrawer = !isDrawer;
@@ -120,93 +120,83 @@
 
 </script>
 <Ud84Navigation/>
-<div class="container-fluid">
-    <div class="card shadow-sm my-7">
-        <div class="card-header">
-            <h3 class="card-title fw-bold">Membership</h3>
-            <div class="card-toolbar">
-                <button type="button" onclick={viewMember} class="btn btn-sm btn-info">Lihat Semua Member</button>
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <h3 class="card-title text-lg font-bold">Membership</h3>
+            <button type="button" onclick={viewMember} class="btn btn-sm btn-info">Lihat Semua Member</button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label for="namaLengkap" class="label-text mb-1 block font-medium">Nama Lengkap</label>
+                <input type="text" id="namaLengkap" bind:value={namaLengkap} class="input input-bordered w-full" placeholder="Wahyu Sugiharto"/>
+            </div>
+            <div>
+                <label for="lokasiToko" class="label-text mb-1 block font-medium">Lokasi</label>
+                <input type="text" id="lokasiToko" bind:value={lokasiToko} class="input input-bordered w-full" placeholder="Cth: Singosari"/>
+            </div>
+            <div>
+                <label for="alamatToko" class="label-text mb-1 block font-medium">Alamat</label>
+                <input type="text" id="alamatToko" bind:value={alamatToko} class="input input-bordered w-full" placeholder="JL. Soekarno Hatta XV. No.2"/>
+            </div>
+            <div>
+                <label for="whatsAppToko" class="label-text mb-1 block font-medium">WhatsApp</label>
+                <input type="number" id="whatsAppToko" bind:value={whatsAppToko} class="input input-bordered w-full" placeholder="08984170335"/>
             </div>
         </div>
-        <div class="card-body">
-    
-            <div class="row mb-6">
-                <label for="namaLokasi" class="col-lg-4 col-form-label required fw-bold fs-6">Nama Lengkap & Lokasi</label>
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-lg-6 fv-row">
-                            <input type="text" bind:value={namaLengkap} class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="Wahyu Sugiharto"/>
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <input type="text" bind:value={lokasiToko} class="form-control form-control-lg form-control-solid" placeholder="Cth: Singosari"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="row mb-6">
-                <label for="alamatMember" class="col-lg-4 col-form-label required fw-bold fs-6">Alamat & WhatsApp</label>
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-lg-6 fv-row">
-                            <input type="text" bind:value={alamatToko} class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="JL. Soekarno Hatta XV. No.2"/>
-                        </div>
-                        <div class="col-lg-6 fv-row">
-                            <input type="number" bind:value={whatsAppToko} class="form-control form-control-lg form-control-solid" placeholder="08984170335"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="separator separator-content border-dark my-15"><span class="w-250px fw-bold">Set Harga</span></div>
-    
-            <form onsubmit={doPost}>
-                <div class="table-responsive">
-                    <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
-                        <thead>
-                            <tr class="fw-bold">
-                                <th>#</th>
-                                <th>Nama Produk</th>
-                                <th>Harga Beli (Pabrik)</th>
-                                <th>Harga Item (Jual)</th>
-                                <th>Harga Jual Produk (Untuk Pelanggan)</th>
+
+        <div class="divider my-5">Set Harga</div>
+
+        <form onsubmit={doPost}>
+            <div class="overflow-x-auto">
+                <table class="table table-zebra align-middle text-center">
+                    <thead>
+                        <tr class="font-bold">
+                            <th>#</th>
+                            <th>Nama Produk</th>
+                            <th>Harga Beli (Pabrik)</th>
+                            <th>Harga Item (Jual)</th>
+                            <th>Harga Jual Produk (Untuk Pelanggan)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each masterProduk as data,index }
+                            <tr>
+                                <td>
+                                    { index + 1 }
+                                    <input type="number" class="idValue" value="{data.ID}" hidden readonly />
+                                </td>
+                                <td>{ data.NAMA }</td>
+                                <td>{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
+                                <td>{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
+                                <td>
+                                    <input type="number" class="input input-bordered input-sm priceValue" placeholder="Rp.0,00-">
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {#each masterProduk as data,index }
-                                <tr>
-                                    <td>
-                                        { index + 1 }
-                                        <input type="number" class="idValue" value="{data.ID}" hidden readonly />
-                                    </td>
-                                    <td>{ data.NAMA }</td>
-                                    <td>{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
-                                    <td>{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
-                                    <td>
-                                        <input type="number" class="form-control form-control-sm priceValue" placeholder="Rp.0,00-">
-                                    </td>
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Simpan Data Member</button>
-                </div>
-            </form>
-        </div>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 flex justify-end">
+                <button type="submit" class="btn btn-primary">Simpan Data Member</button>
+            </div>
+        </form>
     </div>
+</div>
 </div>
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
+    <div class="w-full p-5">
 
-        <h3>Daftar Member</h3>
+        <h3 class="text-lg font-bold">Daftar Member</h3>
+        <div class="divider my-3"></div>
 
-        <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
                 <thead>
-                    <tr class="fw-bold">
+                    <tr class="font-bold">
                         <th>#</th>
                         <th>Nama</th>
                         <th>Alamat</th>
@@ -226,8 +216,8 @@
                                 <a href="https://wa.me/62{ data.WHATSAPP }" target="_blank" class="btn btn-sm btn-success" >0{ data.WHATSAPP }</a>
                             </td>
                             <td>
-                                <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-sm btn-icon btn-dark">
-                                    <img src="/icons/Delete.svg" class="h-20px svg-white" alt="Delete"/>
+                                <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-ghost btn-square btn-sm text-error">
+                                    <img src="/icons/Delete.svg" alt="Delete" height="20"/>
                                 </button>
                             </td>
                         </tr>

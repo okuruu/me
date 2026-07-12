@@ -195,61 +195,58 @@
 </script>
 <Ud84Navigation/>
 <!-- Table Content -->
-<div class="card shadow-sm my-5">
-    <div class="card-header">
-        <h3 class="card-title fw-bolder">Master Produk: All Item</h3>
-        <div class="card-toolbar">
-            <div class="me-2">
-                <button type="button" class="btn btn-sm btn-primary" onclick={() => openDrawer("New")}>Item Baru</button>
-            </div>
-        </div>
-    </div>
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="card bg-base-100 shadow-sm">
     <div class="card-body">
-
-        <div class="form-group mb-5">
-            <label for="searchItem" class="form-label fw-bolder">Cari Item Master Produk</label>
-            <input type="text" bind:this={searchBar} bind:value={searchBarValue} onkeyup={() => doSearch(searchBarValue)} class="form-control w-25" placeholder="Cari Item..." />
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <h3 class="card-title text-lg font-bold">Master Produk: All Item</h3>
+            <button type="button" class="btn btn-sm btn-primary" onclick={() => openDrawer("New")}>Item Baru</button>
         </div>
-        
-        <div class="table-responsive">
-            <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-center text-dark">
+
+        <div class="mb-5">
+            <label for="searchItem" class="label-text mb-1 block font-medium">Cari Item Master Produk</label>
+            <input type="text" bind:this={searchBar} bind:value={searchBarValue} onkeyup={() => doSearch(searchBarValue)} class="input input-bordered w-full max-w-sm" placeholder="Cari Item..." />
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
                 <thead>
-                    <tr class="fw-bold">
+                    <tr class="font-bold">
                         <th>#</th>
-                        <th>Nama Item</th>
+                        <th class="text-left">Nama Item</th>
                         <th>Stok</th>
-                        <th>Tipe Item</th>
-                        <th>Status Jual</th>
-                        <th>Nama Distributor</th>
-                        <th>Harga Produk (Dari Pabrik)</th>
-                        <th>Harga Jual Produk (Untuk Toko)</th>
+                        <th class="hidden lg:table-cell">Tipe Item</th>
+                        <th class="hidden lg:table-cell">Status Jual</th>
+                        <th class="hidden lg:table-cell">Nama Distributor</th>
+                        <th class="hidden md:table-cell">Harga Produk (Dari Pabrik)</th>
+                        <th class="hidden md:table-cell">Harga Jual Produk (Untuk Toko)</th>
                         <th>Action</th>
-                        <th>Upload Gambar</th>
+                        <th class="hidden sm:table-cell">Upload Gambar</th>
                     </tr>
                 </thead>
                 <tbody>
                     {#each newData as data, index }
                         <tr>
                             <td>{ index + 1 }</td>
-                            <td>{ data.NAMA }</td>
+                            <td class="text-left font-medium">{ data.NAMA }</td>
                             <td>{ data.STOK }</td>
-                            <td>{ data.TIPE }</td>
-                            <td>{ data.STATUS_JUAL }</td>
-                            <td>{ data.DISTRIBUTOR }</td>
-                            <td>{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
-                            <td>{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
+                            <td class="hidden lg:table-cell">{ data.TIPE }</td>
+                            <td class="hidden lg:table-cell">{ data.STATUS_JUAL }</td>
+                            <td class="hidden lg:table-cell">{ data.DISTRIBUTOR }</td>
+                            <td class="hidden md:table-cell">{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
+                            <td class="hidden md:table-cell">{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
                             <td>
-                                <div class="me-2">
-                                    <button type="button" onclick={() => startEdit(index)} class="btn btn-sm btn-icon btn-warning my-2">
+                                <div class="flex items-center justify-center gap-1">
+                                    <button type="button" onclick={() => startEdit(index)} class="btn btn-ghost btn-square btn-sm text-primary">
                                         <img src="/icons/Edit.svg" alt="Edit Button" height="20" />
                                     </button>
-                                    <button type="button" onclick={() => doDelete(index)} class="btn btn-sm btn-icon btn-light my-2" data-bs-toggle="modal" data-bs-target="#promptDelete">
+                                    <button type="button" onclick={() => doDelete(index)} class="btn btn-ghost btn-square btn-sm text-error">
                                         <img src="/icons/Delete.svg" alt="Delete Button" height="20" />
                                     </button>
                                 </div>
                             </td>
-                            <td>
-                                <input type="file" id="imageUpload_{data.ID}" onchange={() => imageUpload(data.ID)} class="form-control form-control-sm" accept="image/png, image/jpeg"/>
+                            <td class="hidden sm:table-cell">
+                                <input type="file" id="imageUpload_{data.ID}" onchange={() => imageUpload(data.ID)} class="file-input file-input-bordered file-input-sm w-full min-w-[12rem]" accept="image/png, image/jpeg"/>
                             </td>
                         </tr>
                     {/each}
@@ -259,9 +256,10 @@
 
     </div>
 </div>
+</div>
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
+    <div class="w-full p-5">
         {#if currentSidebar === "New"}
             {@render addNew()}
         {:else if currentSidebar === "Edit"}
@@ -271,153 +269,127 @@
 </Drawer>
 
 {#snippet addNew()}
-    <h3 class="fw-bolder">Master Produk: Tambah Baru</h3>
-    <div class="separator my-3"></div>
+    <h3 class="text-lg font-bold">Master Produk: Tambah Baru</h3>
+    <div class="divider my-3"></div>
     <form onsubmit={() => completeTransaction("Create")}>
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaProduk" class="form-label fw-bold">Nama Item</label>
-                <input type="text" bind:value={namaItem} class="form-control" placeholder="Nama Item"  required/>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="namaProduk" class="label-text mb-1 block font-medium">Nama Item</label>
+                <input type="text" bind:value={namaItem} class="input input-bordered w-full" placeholder="Nama Item"  required/>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold">Stok Item</label>
-                <input type="number" bind:value={stokItem} class="form-control" placeholder="Jumlah Stok"  required/>
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium">Stok Item</label>
+                <input type="number" bind:value={stokItem} class="input input-bordered w-full" placeholder="Jumlah Stok"  required/>
             </div>
-        </div>
-        
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaDistributor" class="form-label fw-bold">Nama Distributor</label>
-                <input type="text" bind:value={namaDistributor} class="form-control" placeholder="Cth: PT. Sumber Agung Bader Mas"  required/>
+            <div>
+                <label for="namaDistributor" class="label-text mb-1 block font-medium">Nama Distributor</label>
+                <input type="text" bind:value={namaDistributor} class="input input-bordered w-full" placeholder="Cth: PT. Sumber Agung Bader Mas"  required/>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold">Harga Produk (Dari Pabrik)</label>
-                <Rupiah id="hargaPabrik" bind:value={hargaPabrik} useClass="form-control" />
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium">Harga Produk (Dari Pabrik)</label>
+                <Rupiah id="hargaPabrik" bind:value={hargaPabrik} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaProduk" class="form-label fw-bold">Pilih Tipe Item</label>
-                <select bind:value={tipeItem} class="form-select" required>
+            <div>
+                <label for="namaProduk" class="label-text mb-1 block font-medium">Pilih Tipe Item</label>
+                <select bind:value={tipeItem} class="select select-bordered w-full" required>
                     <option value="" selected disabled>Pilih salah satu</option>
                     {#each useSatuan as satuan }
                         <option value={satuan}>{satuan}</option>
                     {/each}
                 </select>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold text-danger">Harga Jual Produk (Untuk Satuan)</label>
-                <Rupiah id="hargaJual" bind:value={hargaJual} useClass="form-control" />
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium text-error">Harga Jual Produk (Untuk Satuan)</label>
+                <Rupiah id="hargaJual" bind:value={hargaJual} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col">
-                <label for="perPieces" class="form-label fw-bold">Jumlah Setiap Satuan</label>
-                <input type="number" bind:value={jumlahPerItem} class="form-control" placeholder="Misal: 1 Box isi 12 Pcs" required/>
+            <div>
+                <label for="perPieces" class="label-text mb-1 block font-medium">Jumlah Setiap Satuan</label>
+                <input type="number" bind:value={jumlahPerItem} class="input input-bordered w-full" placeholder="Misal: 1 Box isi 12 Pcs" required/>
             </div>
-            <div class="col">
-                <label for="hargaPerPieces" class="form-label fw-bold text-info">Harga Per Pieces(Per Item)</label>
-                <Rupiah id="hargaPerPieces" bind:value={hargaPerItem} useClass="form-control" />
+            <div>
+                <label for="hargaPerPieces" class="label-text mb-1 block font-medium text-info">Harga Per Pieces(Per Item)</label>
+                <Rupiah id="hargaPerPieces" bind:value={hargaPerItem} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <label for="statusItem" class="form-label fw-bold">Status Jual</label>
-                <select bind:value={statusJual} class="form-select" required>
+            <div>
+                <label for="statusItem" class="label-text mb-1 block font-medium">Status Jual</label>
+                <select bind:value={statusJual} class="select select-bordered w-full" required>
                     <option value="" selected>Pilih salah satu</option>
                     <option value="Katalog dan Penjualan">Aktif, Muncul di Katalog & Penjualan</option>
                     <option value="Penjualan">Aktif, Muncul di Penjualan saja</option>
                     <option value="Tidak Aktif">Tidak aktif di Katalog & Penjualan</option>
                 </select>
             </div>
-            <div class="col">
-                <label for="deskripsiProduk" class="form-label fw-bold">Deskripsi Produk</label>
-                <textarea class="form-control" bind:value={deskripsiProduk} rows="5" placeholder="Deskripsi Produk" required></textarea>
+            <div>
+                <label for="deskripsiProduk" class="label-text mb-1 block font-medium">Deskripsi Produk</label>
+                <textarea class="textarea textarea-bordered w-full" bind:value={deskripsiProduk} rows="5" placeholder="Deskripsi Produk" required></textarea>
             </div>
         </div>
 
-        <div class="form-group">
-            <button type="reset" class="btn btn-light" onclick={removeAll}>Tutup</button>
+        <div class="mt-6 flex justify-end gap-2">
+            <button type="reset" class="btn btn-ghost" onclick={removeAll}>Tutup</button>
             <button type="submit" class="btn btn-primary">Simpan Item</button>
         </div>
     </form>
 {/snippet}
 
 {#snippet editForm()}
-    <h3 class="fw-bolder">Master Produk: Edit Data</h3>
-    <div class="separator my-3"></div>
+    <h3 class="text-lg font-bold">Master Produk: Edit Data</h3>
+    <div class="divider my-3"></div>
     <form onsubmit={() => completeTransaction("Edit")}>
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaProduk" class="form-label fw-bold">Nama Item</label>
-                <input type="text" bind:value={namaItem} class="form-control" placeholder="Nama Item"  required/>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="namaProduk" class="label-text mb-1 block font-medium">Nama Item</label>
+                <input type="text" bind:value={namaItem} class="input input-bordered w-full" placeholder="Nama Item"  required/>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold">Stok Item</label>
-                <input type="number" bind:value={stokItem} class="form-control" placeholder="Jumlah Stok"  required/>
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium">Stok Item</label>
+                <input type="number" bind:value={stokItem} class="input input-bordered w-full" placeholder="Jumlah Stok"  required/>
             </div>
-        </div>
-        
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaDistributor" class="form-label fw-bold">Nama Distributor</label>
-                <input type="text" bind:value={namaDistributor} class="form-control" placeholder="Cth: PT. Sumber Agung Bader Mas"  required/>
+            <div>
+                <label for="namaDistributor" class="label-text mb-1 block font-medium">Nama Distributor</label>
+                <input type="text" bind:value={namaDistributor} class="input input-bordered w-full" placeholder="Cth: PT. Sumber Agung Bader Mas"  required/>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold">Harga Produk (Dari Pabrik)</label>
-                <Rupiah id="hargaPabrik" bind:value={hargaPabrik} useClass="form-control" />
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium">Harga Produk (Dari Pabrik)</label>
+                <Rupiah id="hargaPabrik" bind:value={hargaPabrik} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col">
-                <label for="namaProduk" class="form-label fw-bold">Pilih Tipe Item</label>
-                <select bind:value={tipeItem} class="form-select" required>
+            <div>
+                <label for="namaProduk" class="label-text mb-1 block font-medium">Pilih Tipe Item</label>
+                <select bind:value={tipeItem} class="select select-bordered w-full" required>
                     <option value="" selected disabled>Pilih salah satu</option>
                     {#each useSatuan as satuan }
                         <option value={satuan}>{satuan}</option>
                     {/each}
                 </select>
             </div>
-            <div class="col">
-                <label for="hargaProduk" class="form-label fw-bold">Harga Jual Produk (Untuk Satuan)</label>
-                <Rupiah id="hargaJual" bind:value={hargaJual} useClass="form-control" />
+            <div>
+                <label for="hargaProduk" class="label-text mb-1 block font-medium">Harga Jual Produk (Untuk Satuan)</label>
+                <Rupiah id="hargaJual" bind:value={hargaJual} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row mb-4">
-            <div class="col">
-                <label for="perPieces" class="form-label fw-bold">Jumlah Setiap Satuan</label>
-                <input type="number" bind:value={jumlahPerItem} class="form-control" placeholder="Misal: 1 Box isi 12 Pcs" required/>
+            <div>
+                <label for="perPieces" class="label-text mb-1 block font-medium">Jumlah Setiap Satuan</label>
+                <input type="number" bind:value={jumlahPerItem} class="input input-bordered w-full" placeholder="Misal: 1 Box isi 12 Pcs" required/>
             </div>
-            <div class="col">
-                <label for="hargaPerPieces" class="form-label fw-bold text-info">Harga Per Pieces(Per Item)</label>
-                <Rupiah id="hargaPerPieces" bind:value={hargaPerItem} useClass="form-control" />
+            <div>
+                <label for="hargaPerPieces" class="label-text mb-1 block font-medium text-info">Harga Per Pieces(Per Item)</label>
+                <Rupiah id="hargaPerPieces" bind:value={hargaPerItem} useClass="input input-bordered w-full" />
             </div>
-        </div>
-
-        <div class="row mb-4">
-
-            <div class="col">
-                <label for="statusItem" class="form-label fw-bold">Status Jual</label>
-                <select bind:value={statusJual} class="form-select" required>
+            <div>
+                <label for="statusItem" class="label-text mb-1 block font-medium">Status Jual</label>
+                <select bind:value={statusJual} class="select select-bordered w-full" required>
                     <option value="" selected>Pilih salah satu</option>
                     <option value="Katalog dan Penjualan">Aktif, Muncul di Katalog & Penjualan</option>
                     <option value="Penjualan">Aktif, Muncul di Penjualan saja</option>
                     <option value="Tidak Aktif">Tidak aktif di Katalog & Penjualan</option>
                 </select>
             </div>
+            <div class="md:col-span-2">
+                <label for="deskripsiProduk" class="label-text mb-1 block font-medium">Deskripsi Produk</label>
+                <textarea class="textarea textarea-bordered w-full" bind:value={deskripsiProduk} rows="5" placeholder="Deskripsi Produk" required></textarea>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="deskripsiProduk" class="form-label fw-bold">Deskripsi Produk</label>
-            <textarea class="form-control" bind:value={deskripsiProduk} rows="5" placeholder="Deskripsi Produk" required></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100 my-2">Simpan Item</button>
+        <button type="submit" class="btn btn-primary w-full my-2">Simpan Item</button>
     </form>
 {/snippet}
 

@@ -19,9 +19,10 @@
     let lastActiveElement: HTMLElement | null = null;
 
     // Reactive declaration for styles based on props
-    // This will automatically update when width or height changes
+    // This will automatically update when width or height changes.
+    // Clamp to the viewport so a passed width/height never overflows the screen.
     let drawerStyles = $derived(
-        `width: ${width ?? 'auto'}; height: ${height ?? 'auto'};`
+        `width: ${width ? `min(${width}, 100vw)` : 'auto'}; height: ${height ? `min(${height}, 100vh)` : 'auto'};`
     );
 
     // Handles clicks outside the drawer to close it
@@ -87,7 +88,7 @@
 </script>
 
 {#if isOpen}
-    <div class="modal-backdrop visible" onclick={onClose} role="presentation"></div>
+    <div class="modal-backdrop {isOpen ? 'visible' : ''}" onclick={onClose} role="presentation"></div>
 {/if}
 
 <div bind:this={drawerRef} class="drawer {position} {isOpen ? 'open' : ''}" style={drawerStyles} role="dialog" aria-modal="true">
@@ -96,8 +97,62 @@
 
 <svelte:window on:keydown={handleKeyNavigation} />
 
-<!-- <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
-        dasdas
-    </div>
-</Drawer> -->
+<style>
+    /* Full-screen dimmed backdrop behind the drawer panel. */
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    /*
+      A fixed slide-in panel. Width/height come from the inline style
+      (clamped to the viewport in the component script), and are additionally
+      capped here so the panel can never overflow the screen on any device.
+    */
+    .drawer {
+        position: fixed;
+        z-index: 100;
+        display: block;
+        background: #ffffff;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-width: 100vw;
+        max-height: 100vh;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .drawer.left {
+        left: 0;
+        top: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+    }
+
+    .drawer.right {
+        right: 0;
+        top: 0;
+        height: 100vh;
+        transform: translateX(100%);
+    }
+
+    .drawer.top {
+        left: 0;
+        top: 0;
+        width: 100vw;
+        transform: translateY(-100%);
+    }
+
+    .drawer.bottom {
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        transform: translateY(100%);
+    }
+
+    .drawer.open {
+        transform: translate(0, 0);
+    }
+</style>

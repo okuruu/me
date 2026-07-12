@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- WA bubble left -->
+  <rect x="100" y="110" width="180" height="70" rx="12" fill="#2D2720"/>
+  <rect x="100" y="164" width="20" height="16" rx="0" fill="#2D2720"/>
+  <polygon points="100,180 120,164 120,180" fill="#2D2720"/>
+  <rect x="116" y="126" width="140" height="8" rx="3" fill="#3D3228"/>
+  <rect x="116" y="142" width="100" height="8" rx="3" fill="#3D3228"/>
+  <!-- TG bubble right -->
+  <rect x="360" y="200" width="180" height="70" rx="12" fill="#1E2830"/>
+  <rect x="420" y="254" width="20" height="16" rx="0" fill="#1E2830"/>
+  <polygon points="540,280 520,264 520,280" fill="#1E2830"/>
+  <rect x="376" y="216" width="140" height="8" rx="3" fill="#2A3540"/>
+  <rect x="376" y="232" width="110" height="8" rx="3" fill="#2A3540"/>
+  <!-- Arrow connecting -->
+  <line x1="320" y1="200" x2="360" y2="220" stroke="#D8704A" stroke-width="1.5" stroke-dasharray="5" opacity="0.5"/>
+  <text x="320" y="316" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">BOT MICROSERVICES</text>
+  <text x="320" y="335" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">WHATSAPP &amp; TELEGRAM</text>
+</svg>

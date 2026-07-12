@@ -43,48 +43,39 @@
     }
 
 </script>
-<form onsubmit={doPost}>
-    <div class="row mb-6">
-        <label class="col-lg-4 col-form-label required fw-bold fs-6" for="keteranganOperasional">Nama Kegiatan & Tanggal Pengeluaran</label>
-        <div class="col-lg-8">
-            <div class="row">
-                <div class="col-lg-6 fv-row">
-                    <input type="text" bind:value={namaKegiatan} class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" placeholder="Nama Kegiatan" required/>
-                </div>
-                <div class="col-lg-6 fv-row">
-                    <input type="date" bind:value={tanggalKegiatan} class="form-control form-control-lg form-control-solid" required/>
-                </div>
-            </div>
+<form onsubmit={doPost} class="space-y-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div>
+            <label class="label-text mb-1 block font-medium" for="namaKegiatan">Nama Kegiatan</label>
+            <input type="text" bind:value={namaKegiatan} class="input input-bordered w-full" placeholder="Nama Kegiatan" required/>
+        </div>
+        <div>
+            <label class="label-text mb-1 block font-medium" for="tanggalKegiatan">Tanggal Pengeluaran</label>
+            <input type="date" bind:value={tanggalKegiatan} class="input input-bordered w-full" required/>
+        </div>
+        <div>
+            <label for="nominalPengeluaran" class="label-text mb-1 block font-medium">Nominal Pengeluaran</label>
+            <input type="number" bind:value={nominalKegiatan} class="input input-bordered w-full" placeholder="Rp. 0,00-" required/>
+        </div>
+        <div class="md:col-span-2">
+            <label for="keteranganKegiatan" class="label-text mb-1 block font-medium">Keterangan</label>
+            <textarea bind:value={keteranganKegiatan} class="textarea textarea-bordered w-full" rows="6" placeholder="Keterangan Pengeluaran" required></textarea>
         </div>
     </div>
 
-    <div class="row mb-6">
-        <label for="nominalPengeluaran" class="col-lg-4 col-form-label required fw-bold fs-6">Nominal Pengeluaran</label>
-        <div class="col-lg-8 fv-row">
-            <input type="number" bind:value={nominalKegiatan} class="form-control form-control-lg form-control-solid" placeholder="Rp. 0,00-" required/>
-        </div>
-    </div>
-
-    <div class="row mb-6">
-        <label for="nominalPengeluaran" class="col-lg-4 col-form-label required fw-bold fs-6">Keterangan</label>
-        <div class="col-lg-8 fv-row">
-            <textarea bind:value={keteranganKegiatan} class="form-control form-control-solid" rows="6" placeholder="Keterangan Pengeluaran" required></textarea>
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100">
-        <img src="/icons/Add.svg" alt="Simpan Semua" class="h-25px svg-white me-2" />
+    <button type="submit" class="btn btn-primary w-full">
+        <img src="/icons/Add.svg" alt="Simpan Semua" class="mr-2 h-5" />
         Catat Biaya Operasional
     </button>
 </form>
 
-<div class="separator my-7"></div>
+<div class="divider my-7"></div>
 
-<h3 class="fw-bolder my-3">Log Catatan Operasional</h3>
-<div class="table-responsive">
-    <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+<h3 class="my-3 text-lg font-extrabold">Log Catatan Operasional</h3>
+<div class="overflow-x-auto">
+    <table class="table table-zebra align-middle">
         <thead>
-            <tr class="fw-bolder">
+            <tr class="font-extrabold">
                 <th>#</th>
                 <th>Tanggal Pengeluaran</th>
                 <th>Nama Kegiatan</th>

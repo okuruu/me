@@ -31,24 +31,24 @@
 
     }
 </script>
-<div class="d-flex align-items-center justify-content-center vh-100">
-	<div class="card shadow-sm">
+<div class="flex min-h-screen w-full items-center justify-center bg-base-200 px-4 py-10">
+	<div class="card w-full max-w-sm bg-base-100 shadow-sm">
 		<div class="card-body">
 
-			<div class="text-center mb-5">
-				<h1 class="fw-bolder">UD . 84!</h1>
+			<div class="mb-5 text-center">
+				<h1 class="text-2xl font-extrabold">UD . 84!</h1>
 			</div>
-			
-			<form onsubmit={doPost}>
-				<div class="form-group my-3">
-					<label for="inputEmail" class="form-label fw-bold">Email</label>
-					<input type="email" bind:value={currentEmail} class="form-control" placeholder="Email Anda" required/>
+
+			<form onsubmit={doPost} class="space-y-4">
+				<div>
+					<label for="inputEmail" class="label-text mb-1 block font-medium">Email</label>
+					<input type="email" bind:value={currentEmail} class="input input-bordered w-full" placeholder="Email Anda" required/>
 				</div>
-				<div class="form-group my-3">
-					<label for="inputPassword" class="form-label fw-bold">Password</label>
-					<input type="password" bind:value={currentPassword} class="form-control" placeholder="Password Anda" required/>
+				<div>
+					<label for="inputPassword" class="label-text mb-1 block font-medium">Password</label>
+					<input type="password" bind:value={currentPassword} class="input input-bordered w-full" placeholder="Password Anda" required/>
 				</div>
-				<button type="submit" class="btn btn-primary w-100" disabled={disableButton}>{buttonProcess}</button>
+				<button type="submit" class="btn btn-primary w-full" disabled={disableButton}>{buttonProcess}</button>
 			</form>
 
 		</div>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- Desktop window -->
+  <rect x="80" y="50" width="480" height="280" rx="8" fill="#1A1714" stroke="#2D2720" stroke-width="1.5"/>
+  <!-- Titlebar -->
+  <rect x="80" y="50" width="480" height="28" rx="8" fill="#2D2720"/>
+  <rect x="80" y="64" width="480" height="14" rx="0" fill="#2D2720"/>
+  <!-- Window controls -->
+  <circle cx="100" cy="64" r="5" fill="#3D3228"/>
+  <circle cx="116" cy="64" r="5" fill="#3D3228"/>
+  <circle cx="132" cy="64" r="5" fill="#3D3228"/>
+  <!-- Sidebar -->
+  <rect x="80" y="78" width="110" height="252" fill="#1E1B17"/>
+  <!-- Sidebar nav items -->
+  <rect x="92" y="96" width="86" height="7" rx="3" fill="#D8704A" opacity="0.7"/>
+  <rect x="92" y="114" width="70" height="7" rx="3" fill="#3D3228"/>
+  <rect x="92" y="130" width="80" height="7" rx="3" fill="#3D3228"/>
+  <rect x="92" y="146" width="65" height="7" rx="3" fill="#3D3228"/>
+  <rect x="92" y="162" width="75" height="7" rx="3" fill="#3D3228"/>
+  <rect x="92" y="178" width="60" height="7" rx="3" fill="#3D3228"/>
+  <!-- Content table header -->
+  <rect x="206" y="90" width="336" height="14" rx="3" fill="#2D2720"/>
+  <!-- Table rows -->
+  <rect x="206" y="112" width="336" height="12" rx="2" fill="#261E1A"/>
+  <rect x="206" y="131" width="336" height="12" rx="2" fill="#2D2720" opacity="0.6"/>
+  <rect x="206" y="150" width="336" height="12" rx="2" fill="#261E1A"/>
+  <rect x="206" y="169" width="336" height="12" rx="2" fill="#2D2720" opacity="0.6"/>
+  <rect x="206" y="188" width="336" height="12" rx="2" fill="#261E1A"/>
+  <rect x="206" y="207" width="336" height="12" rx="2" fill="#2D2720" opacity="0.6"/>
+  <!-- Accent row highlight -->
+  <rect x="206" y="131" width="4" height="12" fill="#D8704A"/>
+  <text x="320" y="362" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">HRIS DESKTOP</text>
+  <text x="320" y="380" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">TAURI + SVELTEKIT</text>
+</svg>

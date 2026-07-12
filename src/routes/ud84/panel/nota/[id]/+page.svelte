@@ -100,94 +100,88 @@
     }
 </style>
 
-<div class="container mt-20 p-4">
-    <div class="row mb-3">
-        <div class="col text-start">
-            <h2 class="text-danger fw-bolder">UD84</h2>
+<div class="mx-auto w-full max-w-md px-4 py-8 sm:px-0">
+    <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+
+            <div class="mb-4 flex items-center justify-between gap-3">
+                <h2 class="text-xl font-extrabold text-error sm:text-2xl">UD84</h2>
+                <button type="button" class="btn btn-sm btn-primary no-print" onclick={() => window.print()}>
+                    <img src="/icons/Printer.svg" class="h-5 w-5" alt="" />
+                </button>
+            </div>
+
+            <div class="space-y-2 text-sm">
+                <div class="flex flex-wrap justify-between gap-x-3 gap-y-1">
+                    <span>Nomor Rekening a.n <b class="font-extrabold">SHOBIRUL HAQ</b></span>
+                    <span>Tanggal: <b>{getInvoices.tanggal}</b></span>
+                </div>
+
+                <div class="flex flex-wrap justify-between gap-x-3 gap-y-1">
+                    <span>BRI <b class="font-extrabold">0516-0101-4682-504</b></span>
+                    <span>Pelanggan: <b>{getInvoices.tuan}</b></span>
+                </div>
+
+                <div class="flex flex-wrap justify-between gap-x-3 gap-y-1">
+                    <span>BCA <b class="font-extrabold">3170-4041-21</b></span>
+                    <span>Alamat: <b>{getInvoices.alamat}</b></span>
+                </div>
+
+                <div class="flex flex-wrap justify-between gap-x-3 gap-y-1">
+                    <span>WhatsApp Admin <b class="font-extrabold">0858-5500-9169</b></span>
+                    <span>Poin Anda: <b>{getInvoices.point}</b></span>
+                </div>
+            </div>
+
+            <div class="divider my-3"></div>
+
+            <div class="overflow-x-auto">
+                <table class="table table-sm text-sm">
+                    <thead>
+                        <tr class="font-bold">
+                            <th class="text-center">Qty</th>
+                            <th>Nama Barang</th>
+                            <th class="text-right">Harga</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each invoicesDetail as item}
+                            <tr>
+                                <td class="text-center">{item.QUANTITY}</td>
+                                <td>{item.NAMA}</td>
+                                <td class="text-right">{rupiahFormatter.format(item.HARGA)}</td>
+                                <td>{rupiahFormatter.format(item.JUMLAH)}</td>
+                            </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="divider my-3"></div>
+
+            <div class="space-y-2 text-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <h4 class="font-bold">Total:</h4>
+                    <span>{rupiahFormatter.format(getInvoices.total)}</span>
+                </div>
+
+                <div class="flex items-center justify-between gap-3">
+                    <h4 class="font-bold">Pembayaran Cash:</h4>
+                    <span>{rupiahFormatter.format(invoicesRekap.CASH)}</span>
+                </div>
+
+                <div class="flex items-center justify-between gap-3">
+                    <h4 class="font-bold">Pembayaran DP:</h4>
+                    <span>{rupiahFormatter.format(invoicesRekap.DP)}</span>
+                </div>
+            </div>
+
+            <div class="mt-10 flex flex-wrap justify-between gap-6 text-sm">
+                <span>(..........................................................)</span>
+                <span>(..........................................................)</span>
+            </div>
+
         </div>
-        <div class="col text-end no-print">
-            <button type="button" class="btn btn-sm btn-icon btn-primary" onclick={() => window.print()}>
-                <img src="/icons/Printer.svg" class="h-20px svg-white" alt="" />
-            </button>
-        </div>
     </div>
-
-    <div class="d-flex justify-content-between my-3">
-        <span class="fs-5">Nomor Rekening a.n <b class="fw-bolder">SHOBIRUL HAQ</b></span>
-        <span class="fs-6">Tanggal: <b>{getInvoices.tanggal}</b></span>
-    </div>
-
-    <div class="d-flex justify-content-between my-3">
-        <span class="fs-5">BRI <b class="fw-bolder">0516-0101-4682-504</b></span>
-        <span class="fs-6">Pelanggan: <b>{getInvoices.tuan}</b></span>
-    </div>
-
-    <div class="d-flex justify-content-between my-3">
-        <span class="fs-5">BCA <b class="fw-bolder">3170-4041-21</b></span>
-        <span class="fs-6">Alamat: <b>{getInvoices.alamat}</b></span>
-    </div>
-
-    <div class="d-flex justify-content-between my-3">
-        <span class="fs-5">WhatsApp Admin <b class="fw-bolder">0858-5500-9169</b></span>
-        <span class="fs-6">Poin Anda: <b>{getInvoices.point}</b></span>
-    </div>
-
-    <div class="separator my-2"></div>
-
-    <table class="table table-bordered fs-6">
-        <thead>
-            <tr class="fw-bolder">
-                <th class="text-center">Qty</th>
-                <th>Nama Barang</th>
-                <th class="text-end">Harga</th>
-                <th>Jumlah</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each invoicesDetail as item}
-                <tr>
-                    <td class="text-center">{item.QUANTITY}</td>
-                    <td>{item.NAMA}</td>
-                    <td class="text-end">{rupiahFormatter.format(item.HARGA)}</td>
-                    <td>{rupiahFormatter.format(item.JUMLAH)}</td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
-
-    <div class="separator my-5"></div>
-
-    <div class="row mt-3 fs-6">
-        <div class="col-9 text-end">
-            <h4>Total: </h4>
-        </div>
-        <div class="col-3 text-start">
-            {rupiahFormatter.format(getInvoices.total)}
-        </div>
-    </div>
-
-    <div class="row mt-3 fs-6">
-        <div class="col-9 text-end">
-            <h4>Pembayaran Cash: </h4>
-        </div>
-        <div class="col-3 text-start">
-            {rupiahFormatter.format(invoicesRekap.CASH)}
-        </div>
-    </div>
-
-    <div class="row mt-3 fs-6 mb-20">
-        <div class="col-9 text-end">
-            <h4>Pembayaran DP: </h4>
-        </div>
-        <div class="col-3 text-start">
-            {rupiahFormatter.format(invoicesRekap.DP)}
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-between mt-20">
-        <span>(..........................................................)</span>
-        <span>(..........................................................)</span>
-    </div>
-
-
 </div>

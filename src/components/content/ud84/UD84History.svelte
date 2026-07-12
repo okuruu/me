@@ -58,31 +58,27 @@
         carts = data;
     }
 </script>
-<form onsubmit={doPost} class="row">
-    <div class="col">
-        <div class="form-group">
-            <label for="chooseSales" class="form-label fw-bold">Pilih Sales</label>
-            <select bind:value={sales} class="form-select" required>
-                <option value="" selected disabled>Tanpa Sales</option>
-                {#each staff as {ID, NAMA} }
-                    <option value={ID}>{NAMA}</option>
-                {/each}
-            </select>
-        </div>
+<form onsubmit={doPost} class="flex flex-col gap-3 sm:flex-row sm:items-end">
+    <div class="w-full">
+        <label for="chooseSales" class="label-text mb-1 block font-medium">Pilih Sales</label>
+        <select bind:value={sales} class="select select-bordered w-full" required>
+            <option value="" selected disabled>Tanpa Sales</option>
+            {#each staff as {ID, NAMA} }
+                <option value={ID}>{NAMA}</option>
+            {/each}
+        </select>
     </div>
-    <div class="col-3">
-        <button type="submit" class="btn btn-primary btn-icon mt-8">
-            <img src="/icons/Search.svg" class="h-30px svg-white" alt="Cari" />
-        </button>
-    </div>
+    <button type="submit" class="btn btn-primary btn-square shrink-0">
+        <img src="/icons/Search.svg" class="h-5 w-5" alt="Cari" />
+    </button>
 </form>
 
-<div class="separator my-3"></div>
+<div class="divider my-3"></div>
 
-<div class="table-responsive">
-    <table class="table align-middle">
+<div class="overflow-x-auto">
+    <table class="table table-zebra align-middle">
         <thead>
-            <tr class="fw-bolder">
+            <tr class="font-bold">
                 <th>Catatan</th>
                 <th>Lihat</th>
             </tr>
@@ -97,8 +93,8 @@
                     <tr>
                         <td>{CATATAN}</td>
                         <td>
-                            <button type="button" onclick={() => viewHistory(KODE)} class="btn btn-sm btn-icon btn-primary">
-                                <img src="/icons/Share.svg" class="h-15px svg-white" alt="View" />
+                            <button type="button" onclick={() => viewHistory(KODE)} class="btn btn-sm btn-square btn-primary">
+                                <img src="/icons/Share.svg" class="h-4 w-4" alt="View" />
                             </button>
                         </td>
                     </tr>
@@ -107,17 +103,17 @@
         </tbody>
     </table>
 </div>
-<Drawer isOpen={isDrawer} position="right" width="wh-100" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
-        <div class="d-flex justify-content-between">
-            <h3>Detail Pesanan</h3>
-            <button type="button" class="btn btn-sm btn-icon btn-dark" onclick={() => isDrawer = !isDrawer}>X</button>
+<Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
+    <div class="w-full p-5">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold">Detail Pesanan</h3>
+            <button type="button" class="btn btn-sm btn-square btn-neutral" onclick={() => isDrawer = !isDrawer}>X</button>
         </div>
-        <div class="separator my-3"></div>
-        <div class="table-responsive">
-            <table class="table align-middle gy-1 gx-1 table-striped table-hover">
+        <div class="divider my-3"></div>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle">
                 <thead>
-                    <tr class="fw-bolder">
+                    <tr class="font-bold">
                         <th>#</th>
                         <th>Nama</th>
                         <th class="text-center">Jumlah Pesanan (Pcs)</th>
@@ -137,12 +133,12 @@
                             <tr>
                                 <td>
                                     {carts.NAMA} <br/>
-                                    <span class="text-golden fw-bolder">[{carts.DISTRIBUTOR}]</span>
+                                    <span class="text-secondary font-bold">[{carts.DISTRIBUTOR}]</span>
                                 </td>
                                 <td class="text-center">{carts.JUMLAH}</td>
                                 <td class="text-center">
                                     {#if carts.STOK < 30}
-                                        <span class="text-danger fw-bolder">{ carts.STOK }</span>
+                                        <span class="text-error font-bold">{ carts.STOK }</span>
                                     {:else}
                                         { carts.STOK }
                                     {/if}

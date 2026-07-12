@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- Table rows representing 5M records -->
+  <rect x="120" y="100" width="400" height="24" rx="3" fill="#2D2720"/>
+  <rect x="120" y="100" width="60" height="24" rx="0" fill="#D8704A" opacity="0.2"/>
+  <rect x="120" y="132" width="400" height="18" rx="3" fill="#261E1A"/>
+  <rect x="120" y="158" width="400" height="18" rx="3" fill="#2D2720" opacity="0.6"/>
+  <rect x="120" y="184" width="400" height="18" rx="3" fill="#261E1A"/>
+  <rect x="120" y="210" width="400" height="18" rx="3" fill="#2D2720" opacity="0.6"/>
+  <rect x="120" y="236" width="400" height="18" rx="3" fill="#261E1A"/>
+  <!-- Accent line on selected row -->
+  <rect x="120" y="158" width="4" height="18" rx="0" fill="#D8704A"/>
+  <text x="320" y="296" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">CHOCOA</text>
+  <text x="320" y="316" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">5M+ RECORD DATA SYSTEM</text>
+</svg>

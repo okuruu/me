@@ -26,7 +26,7 @@
 
     interface Cart {
         ID: number;
-        NAMA: string;        
+        NAMA: string;
         QUANTITY: number,
         TOTAL: number,
         HARGA_ASLI: number,
@@ -248,20 +248,21 @@
 
 </script>
 <Ud84Navigation/>
-<div class="card shadow-sm">
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="card bg-base-100 shadow-sm">
     <div class="card-body">
-        
-        <div class="row">
-            <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
 
-                <div class="row">
-                    <div class="col">
-                        <label for="inputSearch" class="form-label fw-bold">Cari Nama Produk</label>
-                        <input type="text" bind:this={searchBar} bind:value={searchBarValue} onkeyup={() => doSearch(searchBarValue)} class="form-control form-control-sm" placeholder="Nama Produk" />
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+            <div class="lg:col-span-9">
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div>
+                        <label for="inputSearch" class="label-text mb-1 block font-medium">Cari Nama Produk</label>
+                        <input type="text" bind:this={searchBar} bind:value={searchBarValue} onkeyup={() => doSearch(searchBarValue)} class="input input-bordered input-sm w-full" placeholder="Nama Produk" />
                     </div>
-                    <div class="col">
-                        <label for="pilihMember" class="form-label fw-bold">Pilih Member</label>
-                        <select bind:value={memberDropdown} onchange={memberPrice} class="form-select form-select-sm">
+                    <div>
+                        <label for="pilihMember" class="label-text mb-1 block font-medium">Pilih Member</label>
+                        <select bind:value={memberDropdown} onchange={memberPrice} class="select select-bordered select-sm w-full">
                             <option value="UMUM" selected>UMUM</option>
                             {#each listMember as memberData }
                                 <option value="{memberData.ID}">{memberData.NAMA}</option>
@@ -270,19 +271,18 @@
                     </div>
                 </div>
 
-                <div class="separator my-5"></div>
+                <div class="divider my-3"></div>
 
-                <div class="overflow-auto" style="height: 50vh;">
-
-                    <div class="table-responsive">
-                        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+                <div class="overflow-y-auto" style="max-height: 55vh;">
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra align-middle">
                             <thead>
-                                <tr class="fw-bold">
-                                    <th>Nama Item</th>
+                                <tr class="font-bold">
+                                    <th class="text-left">Nama Item</th>
                                     <th class="text-center">Stok</th>
-                                    <th class="fw-bolder text-danger">Harga Item (Pabrik)</th>
-                                    <th class="fw-bolder text-info">Harga Item (Satuan)</th>
-                                    <th class="fw-bolder text-success">Harga Item (Pcs)</th>
+                                    <th class="hidden font-extrabold text-error lg:table-cell">Harga Item (Pabrik)</th>
+                                    <th class="font-extrabold text-info">Harga Item (Satuan)</th>
+                                    <th class="font-extrabold text-success">Harga Item (Pcs)</th>
                                     <th>Potongan (Rp)</th>
                                     <th>Potongan (%)</th>
                                     <th>Jumlah Item</th>
@@ -293,36 +293,36 @@
                             <tbody>
                                 {#each masterProduk as data, index }
                                     <tr>
-                                        <td>
-                                            <span class="text-golden fw-bolder">[{ data.TIPE }] - </span>
+                                        <td class="text-left">
+                                            <span class="font-extrabold text-warning">[{ data.TIPE }] - </span>
                                             { data.NAMA }
                                         </td>
                                         <td class="text-center">
                                             {#if data.STOK < 30}
-                                                <button type="button" class="btn btn-sm btn-danger">{ data.STOK }</button>
+                                                <button type="button" class="btn btn-xs btn-error">{ data.STOK }</button>
                                             {:else}
                                                 { data.STOK }
                                             {/if}
                                         </td>
-                                        <td>{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
+                                        <td class="hidden lg:table-cell">{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
                                         <td>{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
                                         <td>{ rupiahFormatter.format(data.HARGA_PER_ITEM) }</td>
                                         <td>
-                                            <input type="number" id="potonganRupiah_{index}" class="form-control form-control-sm" placeholder="Rp. 0,00-" />
+                                            <input type="number" id="potonganRupiah_{index}" class="input input-bordered input-sm w-full" placeholder="Rp. 0,00-" />
                                         </td>
                                         <td>
-                                            <input type="number" id="potonganPersen_{index}" min=1 max="100" class="form-control form-control-sm" placeholder="0%" />
+                                            <input type="number" id="potonganPersen_{index}" min=1 max="100" class="input input-bordered input-sm w-full" placeholder="0%" />
                                         </td>
                                         <td>
-                                            <input type="number" id="potonganQuantity_{index}" value="1" min=1 class="form-control form-control-sm" placeholder="Jumlah Item" />
+                                            <input type="number" id="potonganQuantity_{index}" value="1" min=1 class="input input-bordered input-sm w-full" placeholder="Jumlah Item" />
                                         </td>
                                         <td>
-                                            <button type="button" onclick={() => addToCart(index)} class="btn btn-sm btn-icon btn-success">
+                                            <button type="button" onclick={() => addToCart(index)} class="btn btn-sm btn-square btn-success">
                                                 <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
                                             </button>
                                         </td>
                                         <td>
-                                            <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-sm btn-icon btn-dark">
+                                            <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-sm btn-square btn-neutral">
                                                 <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
                                             </button>
                                         </td>
@@ -334,36 +334,34 @@
                 </div>
 
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+            <div class="lg:col-span-3">
 
-                <div class="border border-primary rounded-1 d-flex align-items-center justify-content-end">
-                    <h1 class="display-6 text-dea me-3 m-2">{ rupiahFormatter.format(totalProducts - currencySanitizer(cutMoney)) }</h1>
+                <div class="flex items-center justify-end rounded-lg border border-primary p-3">
+                    <h1 class="text-2xl font-bold text-primary sm:text-3xl">{ rupiahFormatter.format(totalProducts - currencySanitizer(cutMoney)) }</h1>
                 </div>
 
-                <div class="overflow-auto" style="height: 40vh;">
-                    <div class="table-responsive">
-                        <table class="table table-row-dashed table-row-gray-300 gy-2 table-hover align-middle text-dark">
+                <div class="my-3 overflow-y-auto" style="max-height: 40vh;">
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra align-middle">
                             <thead>
-                                <tr class="fw-bolder">
-                                    <th class="w-50">Nama Item</th>
-                                    <td class="w-25 text-center">Jumlah</td>
-                                    <th class="w-25">Hapus</th>
+                                <tr class="font-bold">
+                                    <th class="w-1/2 text-left">Nama Item</th>
+                                    <th class="w-1/4 text-center">Jumlah</th>
+                                    <th class="w-1/4">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {#each currentCart as carts, index}
                                     <tr>
-                                        <td>
-                                            <div class="form-group">
-                                                <span class="fw-bold text-dark">{ carts.NAMA }</span><br/>
-                                                <span class="fw-bolder text-danger">{ rupiahFormatter.format(carts.TOTAL) }</span>
-                                            </div>
+                                        <td class="text-left">
+                                            <span class="font-bold">{ carts.NAMA }</span><br/>
+                                            <span class="font-extrabold text-error">{ rupiahFormatter.format(carts.TOTAL) }</span>
                                         </td>
                                         <td class="text-center">
-                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} onkeyup={() => editCartQuantity(index, carts.QUANTITY)} class="form-control form-control-sm text-center" placeholder="Qty">
+                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} onkeyup={() => editCartQuantity(index, carts.QUANTITY)} class="input input-bordered input-sm w-full text-center" placeholder="Qty">
                                         </td>
                                         <td>
-                                            <button type="button" onclick={() => removeItem(index)} class="btn btn-sm btn-dark">X</button>
+                                            <button type="button" onclick={() => removeItem(index)} class="btn btn-sm btn-neutral">X</button>
                                         </td>
                                     </tr>
                                 {/each}
@@ -372,35 +370,35 @@
                     </div>
                 </div>
 
-                <div class="separator my-5"></div>
+                <div class="divider my-3"></div>
 
-                <div class="row">
-                    <div class="col">
-                        <label for="inputDP" class="form-label fw-bold">DP</label>
-                        <Rupiah id="payCash" bind:value={payDP} useClass="form-control form-control-sm"/>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                        <label for="inputDP" class="label-text mb-1 block font-medium">DP</label>
+                        <Rupiah id="payCash" bind:value={payDP} useClass="input input-bordered input-sm w-full"/>
                     </div>
-                    <div class="col">
-                        <label for="inputTunai" class="form-label fw-bold">Tunai</label>
-                        <Rupiah id="payCash" bind:value={payCash} useClass="form-control form-control-sm"/>
+                    <div>
+                        <label for="inputTunai" class="label-text mb-1 block font-medium">Tunai</label>
+                        <Rupiah id="payCash" bind:value={payCash} useClass="input input-bordered input-sm w-full"/>
                     </div>
-                </div>
-
-                <div class="form-group my-3">
-                    <label for="inputTunai" class="form-label fw-bold">Potongan Lainnya</label>
-                    <Rupiah id="payCash" bind:value={cutMoney} useClass="form-control form-control-sm"/>
                 </div>
 
                 <div class="my-3">
-                    <label for="dpBerjangka" class="form-label fw-bold">Jatuh Tempo (Opsional)</label>
-                    <input type="date" bind:value={dueDate} class="form-control form-control-sm" />
+                    <label for="inputTunai" class="label-text mb-1 block font-medium">Potongan Lainnya</label>
+                    <Rupiah id="payCash" bind:value={cutMoney} useClass="input input-bordered input-sm w-full"/>
                 </div>
 
                 <div class="my-3">
-                    <label for="keterangan" class="form-label fw-bold">Keterangan</label>
-                    <textarea bind:value={additionalInformation} class="form-control" placeholder="Masukkan Keterangan"></textarea>
+                    <label for="dpBerjangka" class="label-text mb-1 block font-medium">Jatuh Tempo (Opsional)</label>
+                    <input type="date" bind:value={dueDate} class="input input-bordered input-sm w-full" />
                 </div>
 
-                <button type="button" onclick={doSubmit} class="btn btn-sm btn-primary w-100" disabled={enableSubmit}>
+                <div class="my-3">
+                    <label for="keterangan" class="label-text mb-1 block font-medium">Keterangan</label>
+                    <textarea bind:value={additionalInformation} class="textarea textarea-bordered w-full" placeholder="Masukkan Keterangan"></textarea>
+                </div>
+
+                <button type="button" onclick={doSubmit} class="btn btn-sm btn-primary w-full" disabled={enableSubmit}>
                     Simpan Transaksi
                 </button>
 
@@ -408,6 +406,7 @@
         </div>
 
     </div>
+</div>
 </div>
 
 <svelte:window onkeydown={runKeyPress} />

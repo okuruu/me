@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <rect width="640" height="400" fill="#211E1A"/>
+  <rect x="0" y="0" width="640" height="4" fill="#D8704A"/>
+  <!-- Bank building columns -->
+  <rect x="200" y="200" width="240" height="120" rx="0" fill="#2D2720"/>
+  <rect x="180" y="190" width="280" height="20" rx="4" fill="#3D3228"/>
+  <!-- Columns -->
+  <rect x="220" y="200" width="20" height="120" rx="2" fill="#3D3228"/>
+  <rect x="260" y="200" width="20" height="120" rx="2" fill="#3D3228"/>
+  <rect x="300" y="200" width="20" height="120" rx="2" fill="#3D3228"/>
+  <rect x="340" y="200" width="20" height="120" rx="2" fill="#3D3228"/>
+  <rect x="380" y="200" width="20" height="120" rx="2" fill="#3D3228"/>
+  <!-- Roof triangle -->
+  <polygon points="320,120 170,190 470,190" fill="#261E1A" stroke="#3D3228" stroke-width="1.5"/>
+  <!-- Accent -->
+  <rect x="280" y="155" width="80" height="6" rx="3" fill="#D8704A" opacity="0.4"/>
+  <!-- Steps -->
+  <rect x="175" y="316" width="290" height="10" rx="2" fill="#3D3228"/>
+  <rect x="185" y="326" width="270" height="10" rx="2" fill="#2D2720"/>
+  <text x="320" y="360" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" fill="#6A5A50" letter-spacing="3">BANK DAUS</text>
+  <text x="320" y="378" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#4A3A30" letter-spacing="2">PLN INTERNAL SYSTEM</text>
+</svg>

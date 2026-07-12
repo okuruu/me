@@ -1,20 +1,48 @@
 <script lang="ts">
-    import { Toaster} from 'svelte-sonner';
-    import { useString } from '../library/resources/useString';
     import '../app.css';
+    import { afterNavigate } from '$app/navigation';
+    import { theme } from '$library/stores/theme';
+    import content from '$library/json/content.json';
+
+    const { maintenanceMode, name, title, bio, siteUrl } = content.personal;
+    const defaultDesc = bio[0];
+    const base = siteUrl ?? '';
+
+    let pageEl: HTMLDivElement;
+
+    afterNavigate(() => {
+        pageEl?.animate(
+            [
+                { opacity: 0, transform: 'translateY(10px)' },
+                { opacity: 1, transform: 'translateY(0)' }
+            ],
+            { duration: 280, easing: 'ease-out' }
+        );
+    });
 </script>
+
 <svelte:head>
-    <title>{useString.pageTitle}</title>
-    <meta charset="utf-8" />
-    <meta name="description" content="{useString.about}" />
-    <meta name="keywords" content="{useString.keywords}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:locale" content="id_ID" />
+    <meta name="description" content={defaultDesc} />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{useString.pageTitle}" />
-    <meta property="og:url" content="https://okuruu.vercel.app" />
-    <meta property="og:site_name" content="{useString.pageTitle}" />
-    <meta property="og:image" content="/images/avatar.jfif" />
+    <meta property="og:site_name" content="{name} – Portfolio" />
+    <meta property="og:description" content={defaultDesc} />
+    {#if base}<meta property="og:url" content={base} />{/if}
+    {#if base}<meta property="og:image" content="{base}/images/profile.jfif" />{/if}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:description" content={defaultDesc} />
+    <meta name="twitter:title" content="{name} – {title}" />
 </svelte:head>
-<Toaster/>
-<slot/>
+
+{#if maintenanceMode}
+    <div data-theme={$theme} class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        <p class="label-text-sm mb-4">Under Maintenance</p>
+        <h1 class="font-display text-3xl font-bold text-base-content mb-3">{name}</h1>
+        <p class="text-base text-base-content/60 max-w-sm">This portfolio is currently undergoing updates. Check back soon.</p>
+    </div>
+{:else}
+    <div data-theme={$theme}>
+        <div bind:this={pageEl}>
+            <slot />
+        </div>
+    </div>
+{/if}

@@ -1,0 +1,1320 @@
+{
+    "personal": {
+        "name": "Gilby",
+        "title": "Head of IT Development",
+        "bio": [
+            "Head of IT Development with 5+ years of experience building scalable web, desktop, mobile, and AI applications.",
+            "Currently leading development at Dea Bakery — shipping systems that power real business operations across 55+ locations."
+        ],
+        "email": "phantom_ghost@outlook.co.id",
+        "phone": "+62 898-4170-335",
+        "linkedin": "https://www.linkedin.com/in/gilbydhilega/",
+        "github": "https://github.com/okuruu",
+        "available": true,
+        "availabilityLabel": "Open to work & freelance",
+        "maintenanceMode": false,
+        "currentFocus": "Shipping an AI-powered analytics dashboard and a Flutter membership app for Dea Bakery",
+        "siteUrl": ""
+    },
+
+    "about": {
+        "intro": [
+            "I'm Head of IT Development at Dea Bakery, based in Greater Malang, Indonesia, with 5+ years of experience shipping production systems — from high-volume retail POS to on-premise AI dashboards.",
+            "I work across the full stack: TypeScript, PHP, Python, and Dart on the backend; SvelteKit, Flutter, and Tauri on the frontend. I lead teams, own architecture, and care deeply about shipping things that hold up in the real world."
+        ],
+        "services": [
+            {
+                "title": "Web Development",
+                "description": "Full-stack web applications with SvelteKit, Laravel, and TypeScript — from architecture to production deployment."
+            },
+            {
+                "title": "Mobile Development",
+                "description": "Cross-platform mobile apps with Flutter and Dart, integrated with robust backend APIs and real-time data."
+            },
+            {
+                "title": "AI & Automation",
+                "description": "LLM integrations, chatbots, and workflow automation — including on-premise AI pipelines with Ollama and Mastra."
+            },
+            {
+                "title": "Systems Architecture",
+                "description": "Designing scalable systems that handle real load — from multi-location retail infrastructure to 5M+ record datasets."
+            }
+        ],
+        "process": [
+            {
+                "step": 1,
+                "title": "Discover",
+                "description": "Understand the problem space: requirements, constraints, and what a successful outcome actually looks like."
+            },
+            {
+                "step": 2,
+                "title": "Build",
+                "description": "Iterative development with regular checkpoints — architecture first, then features, then polish."
+            },
+            {
+                "step": 3,
+                "title": "Deploy",
+                "description": "Ship to production with monitoring in place. Iterate on real usage, not assumptions."
+            }
+        ],
+        "stats": [
+            { "value": "10+", "label": "Production systems actively in use" },
+            { "value": "1k+", "label": "Employees using my systems daily" },
+            { "value": "55+", "label": "Business locations powered by my infrastructure" },
+            { "value": "5M+", "label": "Records handled in live data pipelines" },
+            { "value": "~17ms", "label": "Average VPS query response across production systems" },
+            { "value": "~8MB", "label": "Native desktop binary vs 80–150MB Electron baseline" },
+            { "value": "80%", "label": "Reduction in manual customer message handling" },
+            { "value": "Rp 0", "label": "Cloud inference spend — analytics AI runs on local Ollama" }
+        ]
+    },
+
+    "resume": {
+        "experience": [
+            {
+                "title": "Head of Information Technology",
+                "company": "Dea Bakery",
+                "period": "Aug 2022 – Present",
+                "description": "Leading IT strategy and operations across 55+ locations. Shipped an Outlet System (35% productivity gain), an HRIS used by all 1,000+ employees, a high-performance POS used by 500+ outlet staff, a Membership App with payment integrations, and an AI-driven internal assistant. Lead a 6-person team — 2 full-stack, 1 backend, 1 mobile, 1 UI/UX designer, and 1 IT admin support — plus up to 3 interns."
+            },
+            {
+                "title": "Founder",
+                "company": "okuruu labworks!",
+                "period": "Sep 2016 – Present",
+                "description": "Creative studio blending code and design. Leading a team of 13 across brand identity, mobile development, custom software, UI/UX design, and F&B branding."
+            },
+            {
+                "title": "Private Tutor",
+                "company": "Self-employed",
+                "period": "Oct 2021 – Present",
+                "description": "Personalized programming tutorials focused on web and mobile development with Laravel and SvelteKit."
+            },
+            {
+                "title": "Web Developer",
+                "company": "Dea Bakery",
+                "period": "Feb 2021 – Aug 2022",
+                "description": "Built recruitment, psychological assessment, training, and approval workflow systems. Integrated third-party APIs and migrated legacy data to MySQL."
+            },
+            {
+                "title": "Software Engineer Intern",
+                "company": "Perum Jasa Tirta I",
+                "period": "Sep 2019 – Mar 2020",
+                "description": "Built a KPI tracking system with CodeIgniter 3. Supported Proxmox Linux server setup and SAP ERP deployment."
+            }
+        ],
+        "education": [
+            {
+                "degree": "Bachelor of Electronic Engineering with Honours",
+                "school": "Universiti Tun Hussein Onn Malaysia",
+                "period": "",
+                "scholarship": "Scholarship"
+            }
+        ],
+        "skills": [
+            {
+                "category": "Languages",
+                "tools": ["TypeScript", "PHP", "Rust", "Python", "Dart", "SQL", "Java"]
+            },
+            {
+                "category": "Frameworks",
+                "tools": ["SvelteKit", "Laravel", "Flutter", "Tauri", "Node.js", "Bun", "CodeIgniter", "Bootstrap", "DaisyUI", "Rocket", "Mastra"]
+            },
+            {
+                "category": "Databases",
+                "tools": ["MySQL", "PostgreSQL", "SQLite", "Supabase", "Firestore"]
+            },
+            {
+                "category": "Tools",
+                "tools": ["Git", "Docker", "Figma", "Photoshop", "Premiere", "Cursor", "Android Studio", "Pandas", "Looker Studio", "Grafana", "Jira", "Notion", "Coda", "Trello", "Antigravity"]
+            },
+            {
+                "category": "Environment",
+                "tools": ["CachyOS (Current)", "CentOS", "Debian", "Ubuntu", "Mint"]
+            }
+        ]
+    },
+
+    "projects": [
+        {
+            "slug": "hris-personal-account",
+            "number": "01",
+            "tab": "systems",
+            "category": "Team Leadership & Engineering",
+            "status": "Shipped",
+            "title": "Personal Account — HRIS Client App",
+            "subtitle": "Leading a cross-functional team to build a company-facing HRIS mobile app for all 1,000+ staff across multiple departments and locations.",
+            "tags": ["Flutter", "Laravel", "MySQL", "Team Leadership"],
+            "miniImage": "/images/mini-hris.svg",
+            "meta": {
+                "team": "2 full-stack, 1 backend, 1 mobile, 1 UI/UX designer, 1 IT admin support",
+                "role": "Team Lead & Developer",
+                "tools": "Flutter, Laravel, MySQL",
+                "status": "Shipped"
+            },
+            "links": {
+                "playStore": "https://play.google.com/store/apps/details?id=com.personal_account.deabakery&hl=id"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "With 1,000+ staff spread across departments and locations, every HR request — attendance disputes, leave approvals, payslip checks — was being routed manually through the HR team. Staff had no visibility into their own records without calling HR directly. The HR department was spending most of its time fielding routine requests instead of doing actual HR work. We needed to put that control in the hands of staff themselves."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Mobile-first, not a web portal",
+                            "description": "Our staff are field workers on Android devices, not office workers at desks. A browser-based portal wouldn't reach them. The app had to be on their phones."
+                        },
+                        {
+                            "title": "Self-service as the goal",
+                            "description": "The aim wasn't to digitize what HR was already doing — it was to remove HR from the loop entirely for routine requests. That shaped every feature decision."
+                        },
+                        {
+                            "title": "GPS validated at the API, not the client",
+                            "description": "Client-side attendance validation can be bypassed. Enforcing the geofence at the API level meant staff couldn't check in from home regardless of the app state."
+                        },
+                        {
+                            "title": "Phased rollout over a single launch",
+                            "description": "1,000+ users at once is a support nightmare. We onboarded HR staff first, then department heads, then all employees — catching edge cases before they became widespread issues."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "📍 GPS Attendance",
+                            "description": "Check-in validated against office coordinates. Out-of-range attempts are blocked with the actual distance shown to the employee — transparent, not just rejected."
+                        },
+                        {
+                            "title": "📋 Leave Management",
+                            "description": "Submit, track, and approve leave requests through a multi-level approval flow. Supervisors receive push notifications for pending approvals."
+                        },
+                        {
+                            "title": "💰 Payslip Viewer",
+                            "description": "Monthly payslip with full deduction breakdown, generated server-side and accessible to each employee without involving HR."
+                        },
+                        {
+                            "title": "📢 HR Announcements",
+                            "description": "HR broadcasts to all staff or specific departments with read-receipt tracking — replacing informal group chats for official communications."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "1,000+", "label": "Staff using the app daily" },
+                        { "value": "3×", "label": "Faster leave approval cycle" },
+                        { "value": "0", "label": "Paper-based HR forms after launch" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "hris-platform",
+            "number": "02",
+            "tab": "systems",
+            "category": "HR Management System",
+            "status": "In Production",
+            "title": "HRIS — HR Management Platform",
+            "subtitle": "A full-stack HR platform — a Tauri + SvelteKit desktop client over a Laravel back office — running payroll, leave, benefits, BPJS, and discipline for 1,000+ staff from one system.",
+            "tags": ["Tauri", "SvelteKit", "Svelte 5", "TypeScript", "Laravel", "MySQL"],
+            "miniImage": "/images/mini-hris-platform.svg",
+            "meta": {
+                "team": "2 full-stack, 1 backend, 1 mobile, 1 UI/UX designer, 1 IT admin support",
+                "role": "Project Manager, Tech Lead & Frontend Developer",
+                "tools": "Tauri v2, SvelteKit v2, Svelte 5, TypeScript, Laravel, MySQL, Google Sheets API",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "HR was running 1,000+ employees across spreadsheets, separate trackers, and printed documents. Payroll took days to consolidate, benefit claims lived in Excel files nobody fully trusted, and BPJS coverage was maintained separately — often out of sync with the employee list. Approvals crawled through chat and paper, every report was rebuilt by hand, and with staff spread across many outlets, nobody had a single current view of the workforce. The HR team spent its time moving data between files instead of doing HR."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Desktop client over a web system",
+                            "description": "HR staff work at fixed workstations and need tight OS integration for printing and exports. A native Tauri client — an ~8MB binary versus the 80–150MB Electron baseline — also removes the browser as a failure point on mid-range company hardware."
+                        },
+                        {
+                            "title": "One dashboard over every HR process",
+                            "description": "The Laravel back office unifies payroll, leave, BPJS, overtime, warning letters, benefits, and recruitment screening so HR stops switching tools and the data stops diverging between them. Consolidation was the whole point — scattered tools were the disease, not the symptom."
+                        },
+                        {
+                            "title": "Keep the spreadsheets HR trusts",
+                            "description": "Instead of forcing the team off the spreadsheets finance already audits in, the backend syncs data to Google Sheets via API. We met the team where they work rather than demanding they abandon a tool that wasn't broken."
+                        },
+                        {
+                            "title": "Approvals and policy that run themselves",
+                            "description": "Leave and overtime route to the right approver per outlet with tracked status, while scheduled jobs reset allowances, expire warning letters, and update employee status — policy enforcement on a clock, not someone's memory."
+                        },
+                        {
+                            "title": "Role-based access, one API client",
+                            "description": "Visibility rules live in the auth layer so no one stumbles into payroll or HR-only modules, and every mutation flows through a single client that handles auth, timeouts, and Indonesian-language errors once — not across 90+ components."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "👤 Employee Profiles",
+                            "description": "Full records per employee: personal info, family data, career history, warning letters, BPJS coverage, and document attachments — all in one place."
+                        },
+                        {
+                            "title": "💵 Payroll & Bonuses",
+                            "description": "Per-outlet salary slips and holiday bonuses with gross pay, deductions, and benefits summary — generated, switchable, exportable, and PIN-protected on sensitive figures."
+                        },
+                        {
+                            "title": "🌴 Leave & Overtime",
+                            "description": "Requests route to the right approver per outlet and land in tracked, exportable records instead of a lost chat thread."
+                        },
+                        {
+                            "title": "🛡️ Benefits & BPJS",
+                            "description": "Marriage, maternity, and education-fund claims plus BPJS enrollment, each with its own approval workflow and full audit trail."
+                        },
+                        {
+                            "title": "📄 Discipline & Recruitment",
+                            "description": "Warning letters issued, tracked, and auto-expired by policy; candidate intake, psychotest results, and recommendations funneled in one place."
+                        },
+                        {
+                            "title": "📊 Dashboards & Sheets Sync",
+                            "description": "Demographics, benefit distribution, and headcount trends for HR leadership, with workforce data synced to Google Sheets so finance works from live figures, not stale copies."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "After Deployment",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "1,000+", "label": "Employees managed in one platform" },
+                        { "value": "10", "label": "Major HR modules live in production" },
+                        { "value": "0", "label": "Standalone spreadsheets maintained by hand" },
+                        { "value": "Auto", "label": "Leave, voucher & status resets run on schedule" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "chocoa-pos",
+            "number": "03",
+            "tab": "systems",
+            "category": "Point of Sale & Retail ERP",
+            "status": "In Production",
+            "title": "Chocoa — POS & Retail ERP",
+            "subtitle": "A full-stack retail platform — an offline-first Tauri desktop POS over a Laravel + Elasticsearch back office, with an on-register resilience pod — running sales, inventory, accounting, and kitchen ops across 55+ bakery outlets — used by 500+ staff daily — from one source of truth.",
+            "tags": ["Tauri", "SvelteKit", "TypeScript", "Laravel", "MySQL", "Elasticsearch", "Offline-First"],
+            "miniImage": "/images/mini-chocoa.svg",
+            "meta": {
+                "team": "2 full-stack, 1 backend, 1 mobile, 1 UI/UX designer, 1 IT admin support",
+                "role": "Project Manager, Tech Lead & Frontend Developer",
+                "tools": "Tauri, SvelteKit, TypeScript, Laravel, MySQL, Elasticsearch, Bun, SQLite",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "A bakery chain was running 55+ outlets on disconnected tools — sales in one place, stock counts in spreadsheets, cash and receivables by hand, kitchen orders on paper. The numbers an outlet reported never matched head office, shrinkage went unnoticed until month-end, and closing the books meant chasing every store for figures. Worse, counters sat on shaky internet and the point of sale depended on a central server, so a network blip could stop the line mid-rush — staff turning customers away or writing sales on paper to re-key later."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "One system, every function",
+                            "description": "Instead of stitching together a separate POS, inventory tool, and accounting package, we built a single source of truth where a sale instantly moves stock, cash, and the ledger together. A bigger surface to build, but it removed the reconciliation gap behind every dispute."
+                        },
+                        {
+                            "title": "Offline-first desktop at the counter",
+                            "description": "Counters needed to keep selling when the network dropped, so the Tauri desktop client runs locally on cheap hardware, starts instantly, and captures transactions offline to reconcile afterward — a dropped connection during a busy hour costs nothing."
+                        },
+                        {
+                            "title": "A resilience pod on every register",
+                            "description": "A tiny local service runs on each cashier PC, bound to 127.0.0.1, that the POS falls back to when the central server is unreachable. Offline sales carry a UUIDv7 key so a retry after reconnect can never double-charge, and the pod self-heals — pinging server health and draining its queue automatically the moment the server returns."
+                        },
+                        {
+                            "title": "The stock card is the spine",
+                            "description": "Every movement — sale, purchase, transfer, adjustment, waste — writes to an auditable stock-card ledger instead of overwriting a balance, so a discrepancy traces back to the exact transaction that caused it rather than surfacing as a mystery at stock-take."
+                        },
+                        {
+                            "title": "Correct, never silently delete",
+                            "description": "A dedicated transaction-repair layer with admin confirmation lets outlets fix mistakes without erasing history. When money and stock are involved, audit-safe correction beats hard edits every time."
+                        },
+                        {
+                            "title": "Push data out, don't rebuild dashboards",
+                            "description": "Heavy analytics don't belong on a POS terminal. The platform feeds clean data to Grafana, Looker Studio, and Telegram/WhatsApp bots instead of carrying its own reporting weight — owners watch the business from tools built for it."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🛒 Sell anything fast",
+                            "description": "Cashiers ring up retail, custom orders, deposits, and credit (piutang) from one checkout that keeps working whether or not the internet does — stock and cash update the moment a sale closes."
+                        },
+                        {
+                            "title": "👨‍🍳 Kitchen & production",
+                            "description": "Outlets place and track production orders, drafts, forecasts, and rejects with recipe and portion data, so the kitchen makes to actual demand instead of guesswork."
+                        },
+                        {
+                            "title": "📦 Inventory that explains itself",
+                            "description": "Per-outlet stock, transfers, conversions, adjustments, waste, and opname all leave an auditable trail on the stock card, so a wrong number always has a cause."
+                        },
+                        {
+                            "title": "💰 Books that close themselves",
+                            "description": "Cash sessions, cash-in/cash-out ledgers, receivables, and outlet accounts roll up to head office automatically with setoran and reconciliation — retiring the end-of-day paper count."
+                        },
+                        {
+                            "title": "🟢 Keep selling through outages",
+                            "description": "When the central server drops, the on-register pod keeps the POS transacting against a local cache and syncs every queued sale back in order the instant the server returns — no cashier action, no lost transactions, no duplicates."
+                        },
+                        {
+                            "title": "🔗 Reporting, dashboards & messaging",
+                            "description": "Per-item sales, purchasing, ledgers, and cash variance export cleanly, while data flows to Grafana, Looker Studio, and Telegram/WhatsApp bots where the team already works."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "55+", "label": "Outlets running on Chocoa daily" },
+                        { "value": "1", "label": "Source of truth for sales, stock & books" },
+                        { "value": "0", "label": "Sales lost when the network drops" },
+                        { "value": "2×", "label": "Faster daily cash close" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "membership-app",
+            "number": "04",
+            "tab": "systems",
+            "category": "Customer Loyalty & Ordering",
+            "status": "In Production",
+            "title": "Membership — Loyalty & Ordering App",
+            "subtitle": "A customer-facing loyalty and ordering app — points, vouchers, and in-app payment — backed by a Laravel API that bridges the legacy POS without touching it.",
+            "tags": ["Laravel", "PHP", "MySQL", "Sanctum", "QRIS + BCA"],
+            "miniImage": "/images/mini-membership-api.svg",
+            "meta": {
+                "team": "2 full-stack, 1 backend, 1 mobile, 1 UI/UX designer, 1 IT admin support",
+                "role": "Project Manager, Tech Lead & Backend Developer",
+                "tools": "Laravel, PHP, MySQL, Laravel Sanctum, BCA & QRIS Payments",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "The bakery had no direct line to its customers — people bought, left, and were forgotten, with no loyalty and no way to reach a regular who'd just walked out. The loyalty data that did exist lived inside a legacy POS that was never built for customer-facing features, and there was no way to let members check points, browse the catalog, or order from a phone without either rebuilding the POS or exposing its database directly. The app needed a modern membership layer on top of infrastructure that couldn't be modified."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Async notifications, instant checkout",
+                            "description": "Checkout confirms the moment the order is committed; WhatsApp order notifications are dispatched as queued background jobs, so the customer gets an instant response while the messaging happens after the fact."
+                        },
+                        {
+                            "title": "Read-only bridge to the legacy POS",
+                            "description": "Modifying the POS database was off the table. The API reads from POS tables but only writes to its own membership schema — new features without touching existing infrastructure."
+                        },
+                        {
+                            "title": "Outlet-aware everything",
+                            "description": "Products, stock, carts, and claims all resolve against the customer's chosen outlet, because a bakery's catalog and availability genuinely differ by location. We refused to fake a single national catalog that would show customers items their store doesn't have."
+                        },
+                        {
+                            "title": "Loyalty as a first-class part of ordering",
+                            "description": "Points, vouchers, product claims, and favorites are built into the order path itself — not bolted on afterward — so every purchase naturally feeds the reason to come back."
+                        },
+                        {
+                            "title": "HMAC IDs to block enumeration attacks",
+                            "description": "Sequential integer PKs in a public API are an open invitation to iterate through every record. Every exposed ID is encoded with HMAC-SHA256 — forged or iterated IDs fail before the DB is queried."
+                        },
+                        {
+                            "title": "Real payment rails, not 'pay at counter'",
+                            "description": "We integrated BCA virtual accounts and QRIS so checkout finishes inside the app. That closes the loop from browsing to paid without a manual counter step in the middle."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "📲 WhatsApp OTP Registration",
+                            "description": "Phone-based sign-up via WA API gateway — no passwords, no email, just the number customers already use to contact the bakery."
+                        },
+                        {
+                            "title": "🛒 Order by outlet",
+                            "description": "Customers see what's actually available at their chosen store and build a cart they can trust, then check out in an atomic transaction — cart validation, voucher check, order creation, and async notification, all or nothing."
+                        },
+                        {
+                            "title": "🎁 Earn and spend",
+                            "description": "Points accrue on orders while vouchers and product claims redeem right inside the app, with history and a rewards catalog read from the legacy POS schema — without writing a single row to POS tables."
+                        },
+                        {
+                            "title": "💳 Pay in the app",
+                            "description": "Checkout completes through BCA virtual account or QRIS — no separate step at the counter."
+                        },
+                        {
+                            "title": "🔒 Cryptographic ID Layer",
+                            "description": "All public-facing IDs encoded via HMAC-SHA256. Enumeration attacks fail at the API boundary — zero sequential PKs ever exposed."
+                        },
+                        {
+                            "title": "⭐ Favorites & history",
+                            "description": "Regulars save what they love and reorder in seconds instead of hunting through the catalog."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "After Deployment",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "2", "label": "In-app payment rails live (BCA + QRIS)" },
+                        { "value": "0", "label": "Direct integer ID exposures — all PKs HMAC-obfuscated" },
+                        { "value": "30+", "label": "Tables mapped across membership & legacy POS schema" },
+                        { "value": "0", "label": "Counter steps to finish a paid order" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "fars-erp",
+            "number": "05",
+            "tab": "systems",
+            "category": "Enterprise Resource Planning",
+            "status": "In Production",
+            "title": "FARS — Multi-Department Operations Platform",
+            "subtitle": "A single internal platform that runs HR, finance, procurement approvals, IT support, marketing, and general services across a multi-outlet bakery enterprise — replacing scattered chats, paper forms, and spreadsheets with one auditable workflow.",
+            "tags": ["Laravel 11", "PHP 8.2", "MySQL", "Laravel Sanctum", "Firebase", "PhpSpreadsheet"],
+            "miniImage": "/images/mini-placeholder.svg",
+            "meta": {
+                "team": "Small in-house team",
+                "role": "Backend / Full-Stack Developer",
+                "tools": "Laravel 11, PHP 8.2, MySQL (multi-connection), Laravel Sanctum, Firebase, Telegram Bot API, Google Data Studio",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "The business ran dozens of retail outlets, a production factory, and a head office — yet almost every internal request still moved by hand. Budget approvals, procurement orders, facility repairs, IT tickets, leave requests: each travelled through chat messages, phone calls, and paper that nobody could trace later. There was no record of who approved what, when, or why, so accountability evaporated the moment a decision was made. Managers had no real-time view of their teams, leadership had no cross-location picture, and financial mistakes only surfaced days later in reconciliation — after the money had already moved and the cost was locked in."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "One platform, every department behind one login",
+                            "description": "Rather than commission separate tools for HR, finance, IT, marketing, and general services, I built them as modules of one application with role-based routing keyed to each user's position and outlet. Everyone sees only their own work, but it all lives in one database — so cross-department flows, like a repair needing finance sign-off, stop falling through the gaps between systems."
+                        },
+                        {
+                            "title": "Approvals modeled as explicit, recorded workflow steps",
+                            "description": "Budgets and procurement pass through defined stages — department manager, general manager, finance/purchasing, then cashier clearance — and every step is timestamped and attributed. The tradeoff was heavier upfront modeling of who can approve what, but it turned approvals from a verbal favor into an auditable trail and, critically, stopped money from moving before the right people had actually signed off."
+                        },
+                        {
+                            "title": "Three databases split by purpose, not by convenience",
+                            "description": "Operational data, production data, and analytics each sit on their own connection. Heavy reporting queries run against the analytics database and never slow down the screens people use all day, and dashboards can be fed from a copy of the data without ever touching live records. It cost more setup, but it kept day-to-day operations fast under load."
+                        },
+                        {
+                            "title": "Meet non-technical staff in the tool they already trust",
+                            "description": "The people doing payroll, leave, and reporting lived in Excel. So I built bulk import and export into every module instead of forcing a new data-entry habit. Staff kept working the way they knew, while the system quietly became the single source of truth underneath them — adoption without a fight."
+                        },
+                        {
+                            "title": "A token-secured API so other systems can plug in",
+                            "description": "The whole platform exposes a versioned, Sanctum-protected API. That let the HRIS, the mobile app, and external services read and write the same data without screen-scraping or duplicate entry — for example, creating an IT/member account directly from approved HR records rather than re-typing a new hire's details by hand."
+                        },
+                        {
+                            "title": "Push critical events to where people already are",
+                            "description": "Instead of hoping staff refresh a dashboard, the system fires Telegram and WhatsApp alerts on the events that matter — a new request, a status change, an unauthorized access attempt. Security and approvals move at the speed of a notification, not the speed of someone noticing."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🧑‍💼 HR command center",
+                            "description": "Employee master data, resignation tracking, leave, overtime assessment (SPKL), competency ratings, BPJS social-insurance management, and workforce-planning hiring requests all sit in one dashboard. HR stops chasing forms across departments and finally sees the whole workforce — and its paperwork — in a single place."
+                        },
+                        {
+                            "title": "✅ Multi-level approval engine",
+                            "description": "Budget proposals and procurement requests move through a clear chain of sign-offs — manager, general manager, finance, cashier — with every step logged. Nobody has to ask 'who approved this?' after the fact, and nothing gets paid before it's cleared."
+                        },
+                        {
+                            "title": "🛠️ IT support & account provisioning",
+                            "description": "Outlets raise IT tickets by category, priority, and status, and the IT team can create member and outlet accounts with auto-generated codes, manage FTP file storage, and re-send missed notifications — turning ad-hoc 'can you fix my POS' messages into a tracked queue."
+                        },
+                        {
+                            "title": "🧰 General Services & maintenance tracking",
+                            "description": "Outlets log facility complaints and maintenance needs with photo evidence, categorized by region (Java / non-Java) and routed through an approval and verification flow. Repairs become projects with proof of completion instead of forgotten requests."
+                        },
+                        {
+                            "title": "🛒 Marketing & online order management",
+                            "description": "Customer-service (CS Online) orders and webstore sales are tracked from order to fulfillment with invoice generation and sales-point tracking, searchable by status (pending, taken, done) — so marketing always knows exactly what's outstanding."
+                        },
+                        {
+                            "title": "📊 Analytics pipeline into Google Data Studio",
+                            "description": "Product master data, sales detail, inventory movement, outlet expenses, and sales recaps are pushed into a reporting pipeline that feeds live Google Data Studio dashboards, giving management a real-time picture across every location."
+                        },
+                        {
+                            "title": "📑 Excel reporting across every module",
+                            "description": "Comprehensive Excel export for HR transactions, marketing orders, IT tickets, GS reports, and employee evaluations means stakeholders can pull the exact slice of data they need without a developer in the loop."
+                        },
+                        {
+                            "title": "🔐 Role-based access for 14+ functions",
+                            "description": "Access is scoped by position and outlet across FA, HRD, Marketing, GS, IT, GA, Operational, Sales, and executive levels, with security alerts on unauthorized attempts — one platform that shows each role only what it should, and flags anyone reaching where they shouldn't."
+                        },
+                        {
+                            "title": "📱 Mobile & HRIS integration",
+                            "description": "A Firebase-backed mobile app and a versioned API tie FARS into the wider company stack, so approved data flows straight into the staff-facing app and the HRIS instead of being re-entered by hand."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "6", "label": "Departments running on one platform" },
+                        { "value": "14+", "label": "Role-based access levels" },
+                        { "value": "4-stage", "label": "Auditable approval chain on every request" },
+                        { "value": "0", "label": "Paper-based approval chains" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "pusdiklat-training-center",
+            "number": "06",
+            "tab": "systems",
+            "category": "Training Management System",
+            "status": "In Production",
+            "title": "Pusdiklat — Training Center Management System",
+            "subtitle": "An integrated platform that runs a vocational training center end to end — enrollment, daily attendance, milestone competency scoring, accommodation, equipment inventory, and learning videos — replacing a dozen spreadsheets with one living record per trainee.",
+            "tags": ["Laravel 12", "PHP 8.2", "Tailwind CSS 4", "Vite 7", "MySQL", "Laravel Sanctum"],
+            "miniImage": "/images/mini-placeholder.svg",
+            "meta": {
+                "team": "Small in-house team",
+                "role": "Full-Stack Developer",
+                "tools": "Laravel 12, PHP 8.2, Tailwind CSS 4, Vite 7, MySQL (views + triggers), Blade components",
+                "status": "In Production"
+            },
+            "links": {
+                "github": "https://github.com/Dea-Bakery/Pusdiklat-v2"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Running the training center meant juggling people across a dozen disconnected spreadsheets, each owned by a different person and never quite in sync. Who showed up, who passed their day-3 and day-7 checkpoints, who graduated or quietly resigned, where each trainee was staying, which equipment had gone missing — all of it lived in separate files reconciled by hand. Trainers spent hours stitching notes together instead of teaching, and assessment was inconsistent: one evaluator's idea of 'discipline' wasn't another's, so graduation came down to whoever read the notes that week. With no single view of a trainee's full story, the center was always one lost spreadsheet away from losing the thread entirely."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "One record per trainee, from intake to graduation",
+                            "description": "I modeled the trainee lifecycle explicitly — waiting, in education, graduated, failed, resigned — so a single profile carries attendance, assessment scores, accommodation, and assigned tasks together. The trainee becomes the unit of truth, instead of being scattered as a row across five different sheets that never agree with each other."
+                        },
+                        {
+                            "title": "Let the scores decide the status, automatically",
+                            "description": "Assessment averages drive pass/fail status directly — high enough means pass, below the threshold means fail — rather than a manager eyeballing handwritten notes. It took the bias and the guesswork out of graduation decisions and made the bar identical for every trainee, regardless of who was evaluating."
+                        },
+                        {
+                            "title": "Standardize the assessment framework itself",
+                            "description": "Rather than free-text evaluations, I built a structured framework — learning style (visual/auditory/kinesthetic), IQ, and roughly a dozen behavioral and operational criteria like discipline, trustworthiness, service, teamwork, and 5S compliance, captured at day-3, day-7, and final milestones. Now two evaluators are scoring the same things on the same scale, so the numbers actually mean something across trainees."
+                        },
+                        {
+                            "title": "Push inventory math into the database",
+                            "description": "Stock levels are maintained by database triggers against a full movement log rather than calculated in application code. Even when several people record items in and out at the same time, the running stock stays correct — the integrity lives where the data lives, not in a race-prone controller."
+                        },
+                        {
+                            "title": "Isolate the rules most likely to change",
+                            "description": "Attendance logic lives in its own service layer rather than buried inside a controller, and complex read screens are backed by database views. It's a deliberate bet: the parts of a training center that change most often — attendance rules, reporting shapes — can evolve without rewriting the screens around them."
+                        },
+                        {
+                            "title": "Soft-delete instead of destroy",
+                            "description": "Records are flagged deleted rather than physically removed, so a trainee, an inventory item, or an assessment can be recovered and the history stays intact. In a system that drives graduation and compliance decisions, keeping the audit trail mattered more than a clean table."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🎓 Trainee lifecycle dashboard",
+                            "description": "Every trainee's status, full profile, and auto-generated CV in one view. Staff always know exactly where each person stands — who's waiting, who's mid-program, who graduated, who left — without hunting through files."
+                        },
+                        {
+                            "title": "🧑‍🏫 Recruitment & intake",
+                            "description": "Internal and external candidate recruitment runs through a unified approval workflow, so getting a new trainee into the program is a tracked process rather than an off-system conversation."
+                        },
+                        {
+                            "title": "📋 Milestone competency assessments",
+                            "description": "Day-3, day-7, and final evaluations across discipline, teamwork, service, trustworthiness, 5S, and more — alongside learning-style and IQ tracking — turn subjective impressions into a comparable, score-driven record that decides status automatically."
+                        },
+                        {
+                            "title": "🕒 Daily attendance",
+                            "description": "Present, leave, sick, absent, holiday, and vacation are recorded per trainee with a full year of rolling history and trainer assignment, so an attendance dispute ends with a lookup instead of an argument."
+                        },
+                        {
+                            "title": "📦 Equipment & material inventory",
+                            "description": "Training items are logged in and out with reasons and unique codes, backed by a trigger-maintained movement log, so the center always knows what it has, where it went, and why."
+                        },
+                        {
+                            "title": "🏠 Accommodation tracking",
+                            "description": "Trainee lodging locations, check-in and check-out dates, and active status are tracked per outlet in one place — so the logistics of housing trainees stop living in someone's head."
+                        },
+                        {
+                            "title": "🎥 Embedded learning videos",
+                            "description": "Categorized tutorial videos with visibility controls and a public onboarding page (\"Video Tutorial Pusdiklat\") mean new trainees can start learning before day one, with no separate platform to manage."
+                        },
+                        {
+                            "title": "🧩 Competency definitions & targets",
+                            "description": "Trainers define the competencies and target outcomes that the assessment system scores against, so the evaluation criteria are configurable rather than hard-coded — the framework can grow with the curriculum."
+                        },
+                        {
+                            "title": "🏢 Multi-outlet configuration & reporting",
+                            "description": "Outlets, positions, and system settings are managed centrally, and complete trainee data can be printed or exported for certification and compliance — one system serving multiple training locations."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "1", "label": "Unified record per trainee" },
+                        { "value": "5", "label": "Lifecycle stages tracked end to end" },
+                        { "value": "3", "label": "Assessment milestones per trainee (H3 / H7 / final)" },
+                        { "value": "0", "label": "Spreadsheets for attendance and scoring" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "deabakery-careers",
+            "number": "07",
+            "tab": "systems",
+            "category": "Recruitment Platform",
+            "status": "In Production",
+            "title": "Dea Bakery Careers — Recruitment Platform",
+            "subtitle": "A public careers site and internal hiring pipeline that lets candidates browse jobs, build a deep profile, and take psychometric tests in the browser — while recruiters track every applicant from application to offer.",
+            "tags": ["SvelteKit", "TypeScript", "Vite", "Laravel API", "MySQL", "Bootstrap"],
+            "miniImage": "/images/mini-placeholder.svg",
+            "meta": {
+                "team": "Small in-house team",
+                "role": "Full-Stack Developer",
+                "tools": "SvelteKit, TypeScript, Vite, static adapter, Laravel REST API, MySQL",
+                "status": "In Production"
+            },
+            "links": {
+                "live": "https://karir.deabakery.co.id",
+                "github": "https://github.com/Dea-Bakery/Website-Rekrutmen"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Hiring spanned three regions — Java, Sumatra, and Kalimantan — and every kind of role, from oven and production staff to store managers, yet almost all of it ran on paper, phone calls, and memory. Candidate information arrived in whatever format people happened to send, so no two applications were comparable. Psychological tests, central to how the company assessed fit, were administered and scored by hand, so results came back slowly and inconsistently. Nobody could say at a glance where an applicant stood, so good candidates went cold while their files sat in a drawer. The company was losing talent not because it lacked applicants, but because the process couldn't keep up with them."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Static front end, API back end",
+                            "description": "I built the candidate-facing site as a pre-rendered SvelteKit app that talks to a Laravel API. Pages load fast and cheaply from a CDN — which matters when applicants are on mobile data in the regions — while everything sensitive (auth, candidate data, business logic) stays safely behind the API instead of in the browser."
+                        },
+                        {
+                            "title": "Make the candidate profile the real asset",
+                            "description": "Instead of a thin 'name and CV' application, candidates build a deep, structured profile: work experience, education, skills, job preferences, portfolio and social links, awards, organizations, family, and health — with a live completion percentage nudging them to finish. A richer profile up front means recruiters shortlist on real information, not guesswork."
+                        },
+                        {
+                            "title": "Bring psychometric testing into the application itself",
+                            "description": "Tests like CFIT, DISC, Kraeplin, PAPI, RMIB, and MSDT run directly inside the platform behind token-gated access, so assessment is part of applying rather than a separate manual step scheduled weeks later. The data lands against the candidate automatically, the moment they finish."
+                        },
+                        {
+                            "title": "A pipeline recruiters can actually drive",
+                            "description": "Every applicant moves through explicit stages — under review, shortlisted, psychological assessment, interview, competency test, offer, hired, or rejected. The status is never a mystery and no candidate quietly falls off the radar, because the funnel is the system, not a recruiter's memory."
+                        },
+                        {
+                            "title": "Protect work-in-progress and long forms",
+                            "description": "Profile building and testing are long, easy-to-lose sessions, so I added before-unload warnings and session state with expiry in local storage. A candidate who's halfway through a detailed profile or a timed test doesn't lose it to an accidental refresh."
+                        },
+                        {
+                            "title": "Treat company culture as a recruiting tool",
+                            "description": "A managed \"Life at Dea Bakery\" blog sits inside the same site, so the careers page sells the company while it collects applications — turning a transactional form into a reason for good candidates to want in."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🔍 Job browsing & application",
+                            "description": "Candidates filter open vacancies by role (sales, oven, production, outlet leader, store manager, admin) and by region, apply in a few clicks, and track everything they've applied to from their own dashboard."
+                        },
+                        {
+                            "title": "📝 Deep candidate profiles",
+                            "description": "A guided, multi-section profile with a completion meter walks candidates through experience, education, skills, preferences, portfolio, awards, family, and health — so recruiters get the full picture before the first conversation."
+                        },
+                        {
+                            "title": "🧠 In-browser psychometric tests",
+                            "description": "A full suite — CFIT, DISC, Kraeplin, PAPI, RMIB, MSDT — runs as real-time, token-secured tests inside the platform, with assessment data captured automatically against each candidate's profile."
+                        },
+                        {
+                            "title": "📊 Recruiter pipeline dashboard",
+                            "description": "Recruiters see every applicant by hiring stage, filter and re-categorize candidates, drill into full profiles, and reach out directly over WhatsApp — all from one candidate database instead of a stack of files."
+                        },
+                        {
+                            "title": "📂 Application management",
+                            "description": "Every vacancy application is listed with candidate details, timestamps, and current status, so recruiters can move people forward or close them out in a single place."
+                        },
+                        {
+                            "title": "📖 Life at Dea Bakery content",
+                            "description": "An editorial blog with articles, tags, and cover images lets the company show its culture and stories to candidates, turning the careers site into an attraction tool rather than just a form."
+                        },
+                        {
+                            "title": "✍️ Blog & content management",
+                            "description": "Administrators create, edit, and publish articles with thumbnails and tags, keeping the culture content fresh without a developer in the loop."
+                        },
+                        {
+                            "title": "📈 Hiring reports",
+                            "description": "Reports on candidates, job postings, and sourcing channels give HR a clear view of what's working across the funnel and where applicants are coming from."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "3", "label": "Regions hiring through one platform" },
+                        { "value": "6", "label": "Psychometric tests built into the flow" },
+                        { "value": "8-stage", "label": "Tracked hiring funnel per candidate" },
+                        { "value": "0", "label": "Paper application forms" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "outlet-operations",
+            "number": "08",
+            "tab": "systems",
+            "category": "Franchise Operations System",
+            "status": "In Production",
+            "title": "Outlet — Franchise Operations System",
+            "subtitle": "A multi-tenant platform giving every bakery outlet one place to report problems, manage staff, log and correct finance transactions, raise IT tickets, and handle customer orders — with each location's data cleanly isolated.",
+            "tags": ["Laravel 11", "PHP 8.2", "MySQL", "Laravel Sanctum", "PhpSpreadsheet"],
+            "miniImage": "/images/mini-placeholder.svg",
+            "meta": {
+                "team": "Small in-house team",
+                "role": "Backend / Full-Stack Developer",
+                "tools": "Laravel 11, PHP 8.2, MySQL (multi-connection), Laravel Sanctum, GuzzleHTTP, PhpSpreadsheet",
+                "status": "In Production"
+            },
+            "links": {
+                "github": "https://github.com/okuruu/outlet"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Each outlet operated as its own island. When something broke, a transaction went wrong, or equipment failed, staff reported it however they could — a message here, a phone call there — and head office usually only heard about it once it had become a crisis. There was no shared record of complaints, no consistent way to correct financial errors, and no common queue for IT problems, so the same issues recurred outlet after outlet because nobody could see the pattern. Managing staff across branches meant juggling separate spreadsheets for leave, overtime, and evaluations that never lined up. The chain was growing faster than the manual processes holding it together."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Multi-tenant on a single deployment",
+                            "description": "Every outlet shares one application, but each query is scoped to the logged-in location through the session. One codebase serves the entire chain, outlets never see each other's data, and rolling out a fix or a new module reaches everyone at once — dramatically cheaper and more consistent than standing up a separate system per branch."
+                        },
+                        {
+                            "title": "Organize the database around the org chart",
+                            "description": "Tables are prefixed by function — hrd_ for HR, finance_ for finance, marketing_, it_, app_, sy_ — so the schema reads the way the company is structured. A new developer can find their way around immediately, and the modules stay cleanly separated as the system grows."
+                        },
+                        {
+                            "title": "No workflow is 'done' without evidence",
+                            "description": "Complaints and finance corrections carry photos, document attachments, and a full status trail — including separate verification images. The principle was accountability: an issue isn't closed because someone says so, it's closed because there's proof and a recorded resolution attached to it."
+                        },
+                        {
+                            "title": "One status pattern across every module",
+                            "description": "Every workflow — IT ticket, leave request, finance correction, outlet complaint — uses the same status vocabulary: pending, in progress, approved or rejected, done. Staff learn the pattern once and it behaves identically everywhere, which cut training time and confusion across departments."
+                        },
+                        {
+                            "title": "Flexible JSON where the shape varies",
+                            "description": "Things like overtime rosters, complaint handlers, and announcements are stored as JSON rather than forced into rigid columns. It kept the schema clean for the stable data while letting the genuinely variable parts flex without a migration every time the business changed its mind."
+                        },
+                        {
+                            "title": "Built ready to integrate and report",
+                            "description": "External HRIS integration, a Sanctum-secured API surface, and direct links into Google Data Studio dashboards were designed in from the start — so outlet data doesn't dead-end in the app, it flows into the wider company stack and into management reporting."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🚨 Outlet issue dashboard",
+                            "description": "Staff report problems and broken facilities with photos, area scope, and department tags; managers see, assign a handler, add an action plan, and verify the fix to closure — so head office hears about issues early, with evidence, instead of too late."
+                        },
+                        {
+                            "title": "🧑‍💼 Staff & leave management",
+                            "description": "Comprehensive employee records, leave requests with approval, overtime (SPKL) tracking by department, and multi-level evaluations all live per outlet — so managing HR across many branches no longer means managing many spreadsheets."
+                        },
+                        {
+                            "title": "💸 Finance transaction corrections",
+                            "description": "Transaction errors are logged by category (data entry, sales, cash, deposits, account, customer data), documented with attachments, given an initial treatment, and tracked through to done — giving finance a clean, auditable correction trail."
+                        },
+                        {
+                            "title": "✅ Finance daily checklist",
+                            "description": "Daily financial situations are recorded with the actions taken, issue status, and PIC assignment (with Trello integration), so nothing routine slips and there's a record of how each day was handled."
+                        },
+                        {
+                            "title": "🛠️ IT help desk & file center",
+                            "description": "Outlets raise tickets for POS/software, hardware, printers, internet, and more by category and watch them move to resolution, alongside a centralized download center for shared documents."
+                        },
+                        {
+                            "title": "🛒 Customer orders & membership",
+                            "description": "Online customer-service orders with urgency levels, down-payment and delivery tracking, and invoice integration, plus grand-opening member registration with identity verification — giving marketing real operational data per outlet."
+                        },
+                        {
+                            "title": "🎓 Training returns & resources",
+                            "description": "Trainee-return workflows and learning video resources tie outlet operations back to the training center, keeping staff development connected to the floor."
+                        },
+                        {
+                            "title": "📣 Announcements & live dashboards",
+                            "description": "Head office pushes announcements out to outlets and links straight into per-outlet Google Data Studio reports, keeping every location on the same page and every manager looking at the same numbers."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "1", "label": "Deployment serving every outlet" },
+                        { "value": "5", "label": "Departments unified per outlet" },
+                        { "value": "100%", "label": "Issues closed with photo evidence" },
+                        { "value": "0", "label": "Outlet issues tracked off-system" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "psikotes-assessment",
+            "number": "09",
+            "tab": "systems",
+            "category": "Psychometric Testing Platform",
+            "status": "In Production",
+            "title": "Psikotes — Psychometric Assessment Platform",
+            "subtitle": "A web platform that administers a full battery of psychological and cognitive tests and auto-scores them with real interpretation logic — turning hours of manual, error-prone scoring into instant, comparable candidate reports.",
+            "tags": ["Laravel 12", "PHP 8.2", "Tailwind CSS 4", "Vite", "Chart.js", "MySQL"],
+            "miniImage": "/images/mini-placeholder.svg",
+            "meta": {
+                "team": "Small in-house team",
+                "role": "Full-Stack Developer",
+                "tools": "Laravel 12, PHP 8.2, Tailwind CSS 4, Vite, Chart.js, MySQL, WhatsApp & Telegram APIs",
+                "status": "In Production"
+            },
+            "links": {
+                "live": "https://psikotes.deabakery.co.id"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Psychological testing was the bottleneck in the entire hiring process. Candidates sat tests on paper, and a psychologist then hand-scored each one — counting Kraeplin rows phase by phase, mapping DISC answers, tallying nineteen PAPI dimensions, ranking RMIB interests — for hours per candidate. During busy hiring drives, results came back days later, by which point the team had often already lost the candidate. The scoring was slow, mentally exhausting, and quietly error-prone: a miscount in one phase could change an interpretation, with no easy way to audit how a score was reached. And none of it scaled — the only way to test more candidates was to find more hours of a specialist's time."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Encode the scoring methodology, not just the questions",
+                            "description": "The easy part is showing questions; the hard part is interpretation. I built the actual scoring algorithms for each instrument — Kraeplin speed-and-accuracy metrics (mean, range, deviation, errors), the MSDT leadership-style conversion matrix, PAPI's nineteen dimensions, RMIB ranking, CFIT IQ classification. The platform produces a real psychological report, not a pile of raw answers waiting to be scored by hand."
+                        },
+                        {
+                            "title": "Checkpoint-based test flow",
+                            "description": "Candidates resume from exactly where they left off, and administrators can control how progression unfolds. The tradeoff over a rigid fixed sequence was more state to manage, but it survives dropped connections and timed tests, and it matches how recruitment actually runs — in batches, with interruptions, across days."
+                        },
+                        {
+                            "title": "Version the question and interpretation banks",
+                            "description": "Questions and interpretation rules are stored as versioned data rather than hard-coded, so the test battery and its scoring can be updated without code changes or migrations. Keeping assessments current — or running an old version for comparison — becomes a data decision, not a deployment."
+                        },
+                        {
+                            "title": "Separate delivery, scoring, and interpretation",
+                            "description": "Test delivery, answer collection, and the interpretation engine are deliberately split across distinct controllers. The scoring logic — the most complex and most critical part — lives on its own where it can be reasoned about, tested, and extended without disturbing the screens candidates use."
+                        },
+                        {
+                            "title": "Notify recruiters where they already are",
+                            "description": "A new candidate registration fires WhatsApp and Telegram alerts straight to the recruiting group, with graceful fallback to logging if the gateway is down. Recruiters act on candidates the moment they arrive, instead of remembering to check a dashboard — and a messaging outage never blocks a registration."
+                        },
+                        {
+                            "title": "Decouple media and keep registration resilient",
+                            "description": "Candidate photos upload to a separate image service rather than the app server, and failed notifications are logged instead of throwing. The registration path stays fast and reliable even when an external dependency hiccups — the candidate never feels the plumbing."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "🧩 Full psychometric battery",
+                            "description": "TIU general intelligence, DISC personality, RMIB interest inventory, PAPI Kostick, the Kraeplin speed-and-accuracy test, MSDT, and CFIT all run in the browser — so a candidate completes a complete, multi-instrument assessment in a single sitting."
+                        },
+                        {
+                            "title": "⚡ Instant automatic scoring",
+                            "description": "Every test is scored automatically using the same logic a psychologist would apply, removing hours of manual counting per candidate and the quiet mistakes that come with fatigue."
+                        },
+                        {
+                            "title": "📑 Rich interpretation reports",
+                            "description": "Each candidate gets a structured profile — personality dimensions, IQ classification, leadership/management style, ranked interests, Kraeplin performance curves — rendered with Chart.js visualizations and ready to drop into a hiring decision."
+                        },
+                        {
+                            "title": "🧾 Guided candidate registration",
+                            "description": "Public and admin registration forms capture full candidate detail — education, work history, languages, organizations, emergency contacts, motivation, target position — with photo upload, so testing and candidate data start in the same place."
+                        },
+                        {
+                            "title": "🧭 Checkpoint-driven test journey",
+                            "description": "Candidates move through an explained, step-by-step sequence with instructions before each test and clean resume behavior, so even a long battery feels manageable and never loses progress."
+                        },
+                        {
+                            "title": "📊 Administrator progress tracking",
+                            "description": "A single dashboard shows every candidate's registration, completion, scores, and current checkpoint, with bulk update controls to move people forward during high-volume drives."
+                        },
+                        {
+                            "title": "🔔 Real-time recruiter notifications",
+                            "description": "Automatic WhatsApp and Telegram alerts on new candidates keep recruiters moving without watching a screen, with logging fallback so nothing is silently lost."
+                        },
+                        {
+                            "title": "🗂️ Versioned question & scoring banks",
+                            "description": "Questions and interpretation rules are centralized and versioned, so the test content and its scoring can evolve over time without touching the application code."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results After Launch",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "7", "label": "Psychometric tests auto-scored" },
+                        { "value": "instant", "label": "Reports vs. days of manual scoring" },
+                        { "value": "100%", "label": "Candidates scored on identical logic" },
+                        { "value": "0", "label": "Tests scored by hand" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "bot-microservices",
+            "number": "01",
+            "tab": "automation",
+            "category": "Automation & Integrations",
+            "status": "In Production",
+            "title": "WhatsApp & Telegram Bot as Microservices",
+            "subtitle": "Automating customer communications and internal staff coordination at Dea Bakery through dedicated, independently deployable messaging microservices.",
+            "tags": ["WhatsApp API", "Telegram", "Laravel", "Microservices"],
+            "miniImage": "/images/mini-bots.svg",
+            "meta": {
+                "team": "Solo + 1 engineer",
+                "role": "Lead Developer",
+                "tools": "PHP, Laravel, WhatsApp Cloud API, Telegram Bot API",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Dea Bakery receives hundreds of customer messages per day across WhatsApp — order status checks, product questions, promotional inquiries — all handled manually by staff with other responsibilities. Internally, shift assignments, production updates, and escalations were buried in informal WhatsApp group chats. Critical operational messages went unread. Both problems shared a root cause: no structure, no automation."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Two bots, one shared business layer",
+                            "description": "The customer WhatsApp bot and the internal Telegram bot serve different audiences but need the same data — orders, staff, inventory. A shared service layer meant zero logic duplication."
+                        },
+                        {
+                            "title": "Microservice boundaries for uptime",
+                            "description": "Each bot is independently deployable. If the WhatsApp service needs an update, Telegram keeps running. This matters for a business that operates 24/7."
+                        },
+                        {
+                            "title": "Queue-first dispatch for webhook compliance",
+                            "description": "WhatsApp retries delivery if a webhook doesn't return immediately. Every reply is dispatched as a queued job — the webhook returns instantly and processing happens asynchronously."
+                        },
+                        {
+                            "title": "Telegram for internal ops, not WhatsApp",
+                            "description": "Telegram's Bot API supports inline keyboard buttons natively. That made it the right fit for action-requiring internal notifications — accept, delegate, escalate — without custom UI work."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "💬 Customer WhatsApp Bot",
+                            "description": "Keyword routing — STATUS, MENU, PROMO, HELP — with 24-hour session window management. Customers get instant answers without touching a staff member."
+                        },
+                        {
+                            "title": "🔔 Internal Telegram Bot",
+                            "description": "Production alerts, shift assignments, and order escalations delivered directly to the right team member with inline action buttons — no group chat noise."
+                        },
+                        {
+                            "title": "🔗 Shared Business Service",
+                            "description": "Single internal HTTP service for order lookups, staff directory, and inventory. Neither bot has direct DB access — business logic lives in one place."
+                        },
+                        {
+                            "title": "📋 Event Publisher",
+                            "description": "Every bot interaction logs a structured event to the main application — enabling audit trails, analytics, and replay of failed messages."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "80%", "label": "Reduction in manual message handling" },
+                        { "value": "2×", "label": "Faster internal coordination" },
+                        { "value": "24/7", "label": "Automated customer coverage" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "ai-company-dashboard",
+            "number": "02",
+            "tab": "automation",
+            "category": "AI & Machine Learning",
+            "status": "In Production",
+            "title": "AI-Powered Company Dashboard",
+            "subtitle": "Integrating Mastra and Ollama with the company database to serve natural language data explanations directly on the internal dashboard — fully on-premise.",
+            "tags": ["Mastra", "Ollama", "LLM", "SvelteKit", "TypeScript"],
+            "miniImage": "/images/mini-ai-dashboard.svg",
+            "meta": {
+                "team": "Solo",
+                "role": "AI Engineer",
+                "tools": "Mastra, Ollama, SvelteKit, MySQL",
+                "status": "In Production"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "The internal dashboard showed numbers — daily revenue, order counts, top SKUs. But every follow-up question required a technical person to write a SQL query: 'Why did revenue drop last Tuesday?' 'Which outlet had the most returns this month?' IT was the bottleneck between the data and the people who needed it. The goal was to let stakeholders ask those questions in plain language, on the dashboard, and get a real answer — not a ticket."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "On-premise LLM, no exceptions",
+                            "description": "Company financial data cannot leave the server. Routing queries through any cloud provider — regardless of cost — wasn't on the table. Ollama runs entirely on the company's own hardware."
+                        },
+                        {
+                            "title": "Zero inference cost as a design goal",
+                            "description": "At internal dashboard query frequency, per-token billing adds up fast. Local hardware means the marginal cost of every query is zero — usage doesn't need to be rationed."
+                        },
+                        {
+                            "title": "Mastra as the agent layer",
+                            "description": "Building tool calling and context management from scratch was unnecessary. Mastra handles the orchestration; the only custom work was the SQL tool and the system prompt."
+                        },
+                        {
+                            "title": "Read-only safety gate at the tool level",
+                            "description": "The agent can only run SELECT queries. Any mutation keyword is stripped before the query reaches the database — the LLM can't modify data regardless of how it's prompted."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "💬 Natural Language Interface",
+                            "description": "Stakeholders type business questions in plain Indonesian directly on the dashboard — no SQL, no tickets, no waiting for IT."
+                        },
+                        {
+                            "title": "🔍 Live Database Query Tool",
+                            "description": "The agent generates and executes read-only SELECT queries against the live company database to answer each question with real data."
+                        },
+                        {
+                            "title": "🤖 On-Premise AI Agent",
+                            "description": "Llama 3.2 running locally via Ollama. No cloud dependency, no per-token cost, no data leaving the server."
+                        },
+                        {
+                            "title": "📡 Streaming Responses",
+                            "description": "Answers stream token-by-token back to the dashboard UI — appearing progressively so stakeholders see results as they're generated, not after a full wait."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "Results",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "0", "label": "External API calls for LLM inference" },
+                        { "value": "< 3s", "label": "Average first-token latency" },
+                        { "value": "100%", "label": "Data stays on-premise" }
+                    ]
+                }
+            ]
+        },
+        {
+            "slug": "koperasi-kosada",
+            "number": "03",
+            "tab": "automation",
+            "category": "Automation & Integrations",
+            "status": "Shipped",
+            "title": "Koperasi Kosada Internal System",
+            "subtitle": "An internal cooperative management system with automated WhatsApp notifications that contact members directly after every transaction.",
+            "tags": ["Laravel", "Baileys", "WhatsApp", "PHP", "Queue"],
+            "miniImage": "/images/mini-kosada.svg",
+            "meta": {
+                "team": "Solo",
+                "role": "Full-Stack Developer",
+                "tools": "Laravel, MySQL, Node.js, Baileys (WhatsApp)",
+                "status": "Shipped"
+            },
+            "sections": [
+                {
+                    "label": "01 Problem",
+                    "heading": "The Situation",
+                    "type": "text",
+                    "body": "Koperasi Kosada manages member savings, loans, and transactions for an internal cooperative. Every transaction required two manual steps: record it in the ledger, then type and send a WhatsApp message to the member with the details and updated balance. As membership grew, the notification step alone consumed significant staff time — and messages sometimes got delayed or skipped entirely. Members had no reliable way to confirm their own balances."
+                },
+                {
+                    "label": "02 Thinking",
+                    "heading": "Key Decisions",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "Automate the notification, not just the ledger",
+                            "description": "The goal wasn't to digitize the manual process — it was to eliminate the manual step entirely. Every recorded transaction needed to trigger a message with zero staff action."
+                        },
+                        {
+                            "title": "Baileys over the Cloud API",
+                            "description": "The cooperative doesn't have a registered WhatsApp Business account, and the message volume doesn't justify that setup cost. Baileys connects as a regular WA account — sufficient at this scale."
+                        },
+                        {
+                            "title": "Persistent Node.js process for the socket",
+                            "description": "Baileys requires a live socket connection that can't be spun up per-request. A persistent Node process keeps the WA session alive; Laravel dispatches jobs to a queue it picks up."
+                        },
+                        {
+                            "title": "Retry logic over silent failures",
+                            "description": "If the WA socket goes down, a failed notification is worse than a delayed one. Jobs retry with exponential backoff rather than silently dropping messages."
+                        }
+                    ]
+                },
+                {
+                    "label": "03 Solution",
+                    "heading": "What We Built",
+                    "type": "cards",
+                    "cards": [
+                        {
+                            "title": "📋 Member Management",
+                            "description": "Full member profiles with contact info, transaction history, and balance — replacing the manual ledger with a queryable system."
+                        },
+                        {
+                            "title": "💳 Transaction Logging",
+                            "description": "Savings deposits, loan disbursements, and repayments recorded with timestamps and staff attribution — every entry auditable."
+                        },
+                        {
+                            "title": "📲 Automated WA Notifications",
+                            "description": "Every transaction triggers a WhatsApp message to the member with the details and new balance — no staff action required, no messages skipped."
+                        },
+                        {
+                            "title": "📄 PDF Statements",
+                            "description": "Per-member transaction statements generated server-side and downloadable from the dashboard — members can verify their own history anytime."
+                        }
+                    ]
+                },
+                {
+                    "label": "04 Impact",
+                    "heading": "After Deployment",
+                    "type": "metrics",
+                    "metrics": [
+                        { "value": "100%", "label": "Transactions auto-notified via WhatsApp" },
+                        { "value": "0", "label": "Manual notification messages sent by staff" },
+                        { "value": "< 5s", "label": "Notification delivery after transaction" }
+                    ]
+                }
+            ]
+        }
+    ],
+
+    "moreWork": [
+        {
+            "title": "KPI System — Jasa Tirta I",
+            "category": "Systems Engineering",
+            "image": "/images/mini-kpi.svg"
+        },
+        {
+            "title": "Bank Daus — PLN Internal System",
+            "category": "Full-Stack Web",
+            "image": "/images/mini-bankdaus.svg"
+        }
+    ]
+}

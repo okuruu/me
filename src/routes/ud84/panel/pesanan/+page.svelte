@@ -117,107 +117,102 @@
     }
 </script>
 <Ud84Navigation/>
-<div class="container-fluid">
-    <div class="card shadow-sm my-3 bg-white">
-        <div class="card-body">
-            <h3 class="fw-bold">Pesanan Masuk</h3>
+<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <h3 class="card-title text-lg font-bold">Pesanan Masuk</h3>
+        </div>
 
-            <div class="row">
-                <div class="col-9">
-                    <form class="row" onsubmit={doPost}>
-                        <div class="col me-2">
-                            <label for="startDate" class="form-label fw-bolder mt-2">Pencarian Awal</label>
-                            <DatePlaceholder bind:value={useInput.startDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Awal"/>
-                        </div>
-                        <div class="col me-2">
-                            <label for="endDate" class="form-label fw-bolder mt-2">Pencarian Akhir</label>
-                            <DatePlaceholder bind:value={useInput.endDate} class="form-control form-control-sm form-control-flush" placeholder="Tanggal Akhir"/>
-                        </div>
-                        <div class="col">
-                            <label for="actionButton" class="form-label fw-bolder mt-2">Pencarian</label>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-sm btn-icon btn-primary">
-                                    <img src="/icons/Search.svg" class="h-30px svg-white" alt="Search Toggle" />
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <form class="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3" onsubmit={doPost}>
+                <div>
+                    <label for="startDate" class="label-text mb-1 block font-medium">Pencarian Awal</label>
+                    <DatePlaceholder bind:value={useInput.startDate} class="input input-bordered input-sm w-full" placeholder="Tanggal Awal"/>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex justify-content-end">
-                        <label class="form-check form-switch form-check-custom form-check-solid mt-11">
-                            <input class="form-check-input" type="checkbox" onchange={reverseData}/>
-                            <span class="form-check-label fw-bolder ms-5">A-Z</span>
-                        </label>
-                    </div>
+                <div>
+                    <label for="endDate" class="label-text mb-1 block font-medium">Pencarian Akhir</label>
+                    <DatePlaceholder bind:value={useInput.endDate} class="input input-bordered input-sm w-full" placeholder="Tanggal Akhir"/>
                 </div>
-            </div>
+                <div class="flex items-end">
+                    <button type="submit" class="btn btn-square btn-primary btn-sm">
+                        <img src="/icons/Search.svg" class="h-5 w-5" alt="Search Toggle" />
+                    </button>
+                </div>
+            </form>
+            <label class="flex cursor-pointer items-center gap-2 lg:pb-1">
+                <input type="checkbox" class="toggle toggle-sm" onchange={reverseData}/>
+                <span class="label-text font-bold">A-Z</span>
+            </label>
+        </div>
 
-            <div class="separator my-5"></div>
+        <div class="divider my-3"></div>
 
-            <div class="table-responsive">
-                <table class="table align-middle gy-1 gx-1">
-                    <thead>
-                        <tr class="fw-bolder">
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>WhatsApp</th>
-                            <th>Nama Sales</th>
-                            <th>Dipesan Pada</th>
-                            <th>Keterangan</th>
-                            <th>Action</th>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
+                <thead>
+                    <tr class="font-bold">
+                        <th>#</th>
+                        <th class="text-left">Nama</th>
+                        <th class="hidden sm:table-cell">WhatsApp</th>
+                        <th class="hidden lg:table-cell">Nama Sales</th>
+                        <th class="hidden md:table-cell">Dipesan Pada</th>
+                        <th class="hidden lg:table-cell">Keterangan</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#if newData.length === 0}
+                        <tr>
+                            <td colspan="7" class="text-center text-base-content/60">Tidak ada data</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {#if newData.length === 0}
+                    {:else}
+                        {#each newData as data, index }
                             <tr>
-                                <td colspan="7" class="text-center">Tidak ada data</td>
-                            </tr>
-                        {:else}
-                            {#each newData as data, index }
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td>{data.NAMA}</td>
-                                    <td>{data.WHATSAPP}</td>
-                                    <td>{data.SALES}</td>
-                                    <td>{Carbon(data.CREATED_AT, "date-short-with-time")}</td>
-                                    <td>{data.CATATAN}</td>
-                                    <td>
-                                        <button type="button" onclick={() => removeItem(data.KODE, index)} class="btn btn-sm btn-icon btn-danger">
-                                            <img src="/icons/Delete.svg" class="h-15px svg-white" alt="Lihat Item"/>
+                                <td>{index + 1}</td>
+                                <td class="text-left font-medium">{data.NAMA}</td>
+                                <td class="hidden sm:table-cell">{data.WHATSAPP}</td>
+                                <td class="hidden lg:table-cell">{data.SALES}</td>
+                                <td class="hidden md:table-cell">{Carbon(data.CREATED_AT, "date-short-with-time")}</td>
+                                <td class="hidden lg:table-cell">{data.CATATAN}</td>
+                                <td>
+                                    <div class="flex items-center justify-center gap-1">
+                                        <button type="button" onclick={() => removeItem(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-error">
+                                            <img src="/icons/Delete.svg" alt="Hapus Pesanan" height="16"/>
                                         </button>
                                         {#if data.VALID === null}
-                                            <button type="button" onclick={() => isValid(data.KODE, index)} class="btn btn-sm btn-icon btn-primary">
-                                                <img src="/icons/Add.svg" class="h-25px svg-white" alt="Lihat Item"/>
+                                            <button type="button" onclick={() => isValid(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-primary">
+                                                <img src="/icons/Add.svg" alt="Validasi Pesanan" height="20"/>
                                             </button>
                                         {:else}
                                             <button type="button" class="btn btn-sm btn-success">Verified</button>
                                         {/if}
-                                        <button type="button" onclick={() => viewItem(data.KODE)} class="btn btn-sm btn-icon btn-info">
-                                            <img src="/icons/Share.svg" class="h-15px svg-white" alt="Lihat Item"/>
+                                        <button type="button" onclick={() => viewItem(data.KODE)} class="btn btn-ghost btn-square btn-sm text-info">
+                                            <img src="/icons/Share.svg" alt="Lihat Item" height="16"/>
                                         </button>
-                                    </td>
-                                </tr>
-                            {/each}
-                        {/if}
-                    </tbody>
-                </table>
-            </div>
-
+                                    </div>
+                                </td>
+                            </tr>
+                        {/each}
+                    {/if}
+                </tbody>
+            </table>
         </div>
-    </div>    
+
+    </div>
+</div>
 </div>
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
-    <div class="form-group w-100 p-5">
-        <h3>Detail Pesanan</h3>
-        <div class="separator my-3"></div>
-        <div class="table-responsive">
-            <table class="table align-middle gy-1 gx-1 table-striped table-hover">
+    <div class="w-full p-5">
+        <h3 class="text-lg font-bold">Detail Pesanan</h3>
+        <div class="divider my-3"></div>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra align-middle text-center">
                 <thead>
-                    <tr class="fw-bolder">
+                    <tr class="font-bold">
                         <th>#</th>
-                        <th>Nama</th>
+                        <th class="text-left">Nama</th>
                         <th class="text-center">Jumlah Pesanan (Pcs)</th>
                         <th class="text-center">Stok</th>
                         <th>Satuan</th>
@@ -228,20 +223,20 @@
                 <tbody>
                     {#if carts.length === 0}
                         <tr>
-                            <td colspan="7" class="text-center">Tidak ada data</td>
+                            <td colspan="7" class="text-center text-base-content/60">Tidak ada data</td>
                         </tr>
                     {:else}
                         {#each carts as carts, index }
                             <tr>
                                 <td>{index + 1}</td>
-                                <td>
+                                <td class="text-left">
                                     {capitalizeEachWord(carts.NAMA)} <br/>
-                                    <span class="text-golden fw-bolder">[{carts.DISTRIBUTOR}]</span>
+                                    <span class="font-extrabold text-warning">[{carts.DISTRIBUTOR}]</span>
                                 </td>
                                 <td class="text-center">{carts.JUMLAH}</td>
                                 <td class="text-center">
                                     {#if carts.STOK < 30}
-                                        <span class="text-danger fw-bolder">{ carts.STOK }</span>
+                                        <span class="font-extrabold text-error">{ carts.STOK }</span>
                                     {:else}
                                         { carts.STOK }
                                     {/if}
