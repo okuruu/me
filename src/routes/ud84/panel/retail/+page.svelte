@@ -273,58 +273,61 @@
 
                 <div class="divider my-3"></div>
 
-                <div class="overflow-y-auto" style="max-height: 55vh;">
+                <div class="overflow-y-auto" style="max-height: 60vh;">
                     <div class="overflow-x-auto">
-                        <table class="table table-zebra align-middle">
+                        <table class="table table-zebra table-sm align-middle">
                             <thead>
                                 <tr class="font-bold">
                                     <th class="text-left">Nama Item</th>
-                                    <th class="text-center">Stok</th>
-                                    <th class="hidden font-extrabold text-error lg:table-cell">Harga Item (Pabrik)</th>
-                                    <th class="font-extrabold text-info">Harga Item (Satuan)</th>
-                                    <th class="font-extrabold text-success">Harga Item (Pcs)</th>
-                                    <th>Potongan (Rp)</th>
-                                    <th>Potongan (%)</th>
-                                    <th>Jumlah Item</th>
-                                    <th>Go (Satuan)</th>
-                                    <th>Go (Pcs)</th>
+                                    <th class="text-center">Diskon<br/><span class="text-[10px] font-normal opacity-70">Rp / %</span></th>
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-center font-extrabold text-info">Satuan</th>
+                                    <th class="text-center font-extrabold text-success">Pcs</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {#each masterProduk as data, index }
                                     <tr>
                                         <td class="text-left">
-                                            <span class="font-extrabold text-warning">[{ data.TIPE }] - </span>
-                                            { data.NAMA }
+                                            <div class="flex items-center gap-2">
+                                                {#if data.STOK < 30}
+                                                    <span class="badge badge-error badge-sm shrink-0">{ data.STOK }</span>
+                                                {:else}
+                                                    <span class="badge badge-ghost badge-sm shrink-0">{ data.STOK }</span>
+                                                {/if}
+                                                <div class="leading-tight">
+                                                    <div>
+                                                        <span class="font-extrabold text-warning">[{ data.TIPE }]</span>
+                                                        <span class="font-medium">{ data.NAMA }</span>
+                                                    </div>
+                                                    <span class="text-[10px] text-error opacity-70">Pabrik: { rupiahFormatter.format(data.HARGA_PABRIK) }</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-1">
+                                                <input type="number" id="potonganRupiah_{index}" class="input input-bordered input-xs w-20" placeholder="Rp" />
+                                                <input type="number" id="potonganPersen_{index}" min=1 max="100" class="input input-bordered input-xs w-20" placeholder="%" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" id="potonganQuantity_{index}" value="1" min=1 class="input input-bordered input-xs w-16 text-center" placeholder="Qty" />
                                         </td>
                                         <td class="text-center">
-                                            {#if data.STOK < 30}
-                                                <button type="button" class="btn btn-xs btn-error">{ data.STOK }</button>
-                                            {:else}
-                                                { data.STOK }
-                                            {/if}
+                                            <div class="flex flex-col items-center gap-1">
+                                                <span class="whitespace-nowrap text-xs font-semibold text-info">{ rupiahFormatter.format(data.HARGA_JUAL) }</span>
+                                                <button type="button" onclick={() => addToCart(index)} class="btn btn-xs btn-square btn-success">
+                                                    <img src="/icons/Add-Arrow.svg" alt="Tambah satuan" height="16" />
+                                                </button>
+                                            </div>
                                         </td>
-                                        <td class="hidden lg:table-cell">{ rupiahFormatter.format(data.HARGA_PABRIK) }</td>
-                                        <td>{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
-                                        <td>{ rupiahFormatter.format(data.HARGA_PER_ITEM) }</td>
-                                        <td>
-                                            <input type="number" id="potonganRupiah_{index}" class="input input-bordered input-sm w-full" placeholder="Rp. 0,00-" />
-                                        </td>
-                                        <td>
-                                            <input type="number" id="potonganPersen_{index}" min=1 max="100" class="input input-bordered input-sm w-full" placeholder="0%" />
-                                        </td>
-                                        <td>
-                                            <input type="number" id="potonganQuantity_{index}" value="1" min=1 class="input input-bordered input-sm w-full" placeholder="Jumlah Item" />
-                                        </td>
-                                        <td>
-                                            <button type="button" onclick={() => addToCart(index)} class="btn btn-sm btn-square btn-success">
-                                                <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-sm btn-square btn-neutral">
-                                                <img src="/icons/Add-Arrow.svg" alt="Add to cart" height="20" />
-                                            </button>
+                                        <td class="text-center">
+                                            <div class="flex flex-col items-center gap-1">
+                                                <span class="whitespace-nowrap text-xs font-semibold text-success">{ rupiahFormatter.format(data.HARGA_PER_ITEM) }</span>
+                                                <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-xs btn-square btn-neutral">
+                                                    <img src="/icons/Add-Arrow.svg" alt="Tambah pcs" height="16" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 {/each}
