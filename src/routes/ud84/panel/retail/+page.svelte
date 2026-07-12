@@ -248,7 +248,7 @@
 
 </script>
 <Ud84Navigation/>
-<div class="mx-auto w-full max-w-screen-xl px-4 py-6 sm:px-6">
+<div class="mx-auto w-full max-w-none px-4 py-6 sm:px-6 lg:px-8">
 <div class="card bg-base-100 shadow-sm">
     <div class="card-body">
 
@@ -348,9 +348,9 @@
                         <table class="table table-zebra align-middle">
                             <thead>
                                 <tr class="font-bold">
-                                    <th class="w-1/2 text-left">Nama Item</th>
-                                    <th class="w-1/4 text-center">Jumlah</th>
-                                    <th class="w-1/4">Hapus</th>
+                                    <th class="text-left">Nama Item</th>
+                                    <th class="text-center">Jumlah</th>
+                                    <th class="w-16 text-center">Hapus</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -361,7 +361,7 @@
                                             <span class="font-extrabold text-error">{ rupiahFormatter.format(carts.TOTAL) }</span>
                                         </td>
                                         <td class="text-center">
-                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} onkeyup={() => editCartQuantity(index, carts.QUANTITY)} class="input input-bordered input-sm w-full text-center" placeholder="Qty">
+                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} onkeyup={() => editCartQuantity(index, carts.QUANTITY)} class="input input-bordered input-sm w-full min-w-16 text-center" placeholder="Qty">
                                         </td>
                                         <td>
                                             <button type="button" onclick={() => removeItem(index)} class="btn btn-sm btn-neutral">X</button>
