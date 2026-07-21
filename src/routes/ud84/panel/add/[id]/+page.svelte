@@ -341,7 +341,7 @@
                                         </td>
                                         <td><span class="font-bold text-primary">{ rupiahFormatter.format(cartItem.HARGA) }</span></td>
                                         <td>
-                                            <input type="number" min="1" id="quantity_{index}" bind:value={cartItem.INPUT_STOK}  onkeyup={() => editCartQuantity(index,cartItem.JUMLAH)}  class="input input-bordered input-sm mx-auto w-20 text-center" placeholder="Pcs"/>
+                                            <input type="number" min="1" id="quantity_{index}" bind:value={cartItem.INPUT_STOK}  oninput={() => editCartQuantity(index,cartItem.JUMLAH)}  class="input input-bordered input-sm mx-auto w-20 text-center" placeholder="Pcs"/>
                                         </td>
                                         <td class="font-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
                                         <td>

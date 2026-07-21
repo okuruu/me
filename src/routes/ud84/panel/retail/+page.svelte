@@ -149,7 +149,7 @@
             return toast.error("Item tidak ditemukan!");
         }
 
-        currentCart[id].TOTAL = value * searchQueries.HARGA_ASLI - (searchQueries.POTONGAN_PERSEN + searchQueries.POTONGAN_RUPIAH);
+        currentCart[id].TOTAL = ( Number(searchQueries.HARGA_ASLI) - Number(searchQueries.POTONGAN_PERSEN) - Number(searchQueries.POTONGAN_RUPIAH) ) * Number(value);
         recalculatePrice(currentCart);
     }
 
@@ -361,7 +361,7 @@
                                             <span class="font-extrabold text-error">{ rupiahFormatter.format(carts.TOTAL) }</span>
                                         </td>
                                         <td class="text-center">
-                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} onkeyup={() => editCartQuantity(index, carts.QUANTITY)} class="input input-bordered input-sm w-full min-w-16 text-center" placeholder="Qty">
+                                            <input type="number" id="itemPotongan_{index}" bind:value={carts.QUANTITY} oninput={() => editCartQuantity(index, carts.QUANTITY)} class="input input-bordered input-sm w-full min-w-16 text-center" placeholder="Qty">
                                         </td>
                                         <td>
                                             <button type="button" onclick={() => removeItem(index)} class="btn btn-sm btn-neutral">X</button>
