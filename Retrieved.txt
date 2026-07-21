@@ -1,0 +1,34 @@
+{
+    "status": "success",
+    "message": "Loaded",
+    "data": {
+        "tanggal": "12 Juli 2026",
+        "tuan": "UMUM",
+        "total": 0,
+        "data": [
+            {
+                "QUANTITY": "1",
+                "NAMA": "ABC KCP ASIN 131 ML",
+                "HARGA": "0",
+                "JUMLAH": 0
+            }
+        ],
+        "rekap": {
+            "ID": "29",
+            "UNIQUE": "6a53349c8a072",
+            "NAMA": "UMUM",
+            "CASH": "0",
+            "KEMBALIAN": "0",
+            "DP": "0",
+            "POTONGAN": "0",
+            "JATUH_TEMPO": null,
+            "KETERANGAN": "Testing",
+            "TOTAL": "0",
+            "MEMBER": "UMUM",
+            "CREATED_AT": "2026-07-12 13:30:52",
+            "UPDATED_AT": null
+        },
+        "alamat": "-",
+        "point": 0
+    }
+}

@@ -157,7 +157,7 @@
         forms.append('GAMBAR', fileInput.files[0]);
         forms.append('ID', ID.toString());
 
-        const { status, message } = await db(forms, 'Master-Produk/Upload-Gambar');
+        const { status, message } = await db(forms, 'UD84/Master-Produk/Upload-Gambar');
 
         if (status === "error") {
             toast.error(message);
