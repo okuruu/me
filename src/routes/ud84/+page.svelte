@@ -84,7 +84,7 @@
     }
 
     async function openImage(index: number): Promise <void> {
-        imagePath = `https://esdelfron.deabakery.co.id/public/UD84/Images/${katalog[index].GAMBAR}`;
+        imagePath = `https://fae.deabakery.co.id/public/UD84/Images/${katalog[index].GAMBAR}`;
         isImage = true;
     }
 
