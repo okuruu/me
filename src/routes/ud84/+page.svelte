@@ -297,8 +297,10 @@
                 <div class="card-body flex flex-col gap-2 p-4">
                     <div class="flex items-start justify-between gap-2">
                         <span class="badge badge-neutral badge-sm">{ index + 1 }</span>
-                        <button type="button" onclick={() => openImage(index)} class="btn btn-ghost btn-square btn-sm text-neutral">
-                            <img src="/icons/Share.svg" class="h-4 w-4" alt="View" />
+                        <button type="button" onclick={() => openImage(index)} class="btn btn-ghost btn-square btn-sm text-neutral" aria-label="View">
+                            <svg class="h-4 w-4" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.97838 7.97406L9.70272 15.7336C9.80052 16.1737 10.3856 16.2687 10.6176 15.8821L18.5012 2.74264C18.7008 2.4101 18.4612 1.98703 18.0734 1.98703H2.34222C1.87902 1.98703 1.66584 2.56331 2.01753 2.86476L7.97838 7.97406ZM7.97838 7.97406L17.9568 2.48595" stroke="currentColor" stroke-width="1.99568"/>
+                            </svg>
                         </button>
                     </div>
                     <h4 class="card-title text-base font-bold leading-tight">{katalog.NAMA_PRODUK}</h4>
