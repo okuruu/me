@@ -296,8 +296,8 @@
             <div class="card border border-base-200 bg-base-100 shadow-sm">
                 <div class="card-body flex flex-col gap-2 p-4">
                     <div class="flex items-start justify-between gap-2">
-                        <span class="badge badge-ghost badge-sm">{ index + 1 }</span>
-                        <button type="button" onclick={() => openImage(index)} class="btn btn-ghost btn-square btn-sm text-primary">
+                        <span class="badge badge-neutral badge-sm">{ index + 1 }</span>
+                        <button type="button" onclick={() => openImage(index)} class="btn btn-ghost btn-square btn-sm text-neutral">
                             <img src="/icons/Share.svg" class="h-4 w-4" alt="View" />
                         </button>
                     </div>
