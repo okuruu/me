@@ -50,7 +50,7 @@
 
     let selectPIC: string = $state('');
     let responsiblePerson: any = $state([]);
-    let userList: { ID: number; NAMA: string; NOMINAL: number }[] = $state([]);
+    let userList: { ID: number; NAMA: string; NOMINAL: number; STATUS?: "Aktif" | "Nonaktif" }[] = $state([]);
     let kategoriAfkir: string[] = $state([
         'Afkir', 'Retur', 'Dikembalikan', 'Free', 'Trial', 'Dimusnahkan'
     ]);
@@ -58,7 +58,9 @@
     let notes: string = $state('');
 
     onMount( async () => {
-        userList = await useFetch("UD84/Stocks/Staff");
+        // Only active staff may be picked as PIC for a new stock movement.
+        const staff = await useFetch("UD84/Stocks/Staff") ?? [];
+        userList = staff.filter((person: { STATUS?: string }) => person.STATUS !== "Nonaktif");
     });
 
     function openSidebar(id: string) {
