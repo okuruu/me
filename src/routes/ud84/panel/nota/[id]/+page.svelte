@@ -2,6 +2,7 @@
     import { onMount, tick } from "svelte";
     import { useFetch } from "../../../../../library/hooks/db";
     import NotaDl from "../../../../../components/content/ud84/nota/NotaDL.svelte";
+    import NotaThermal from "../../../../../components/content/ud84/nota/NotaThermal.svelte";
     import { emptyReceipt, type Receipt } from "../../../../../components/content/ud84/nota/types";
 
     let { data } = $props();
@@ -21,6 +22,7 @@
 
     let paper: Paper = $state("DL");
     let pageRule: string = $state(DL_RULE);
+    let thermalNode: HTMLDivElement | undefined = $state();
 
     onMount(async () => {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -53,6 +55,24 @@
         await tick();
         window.print();
     }
+
+    /**
+     * `@page { size: 58mm auto }` is not valid CSS — the grammar does not allow
+     * mixing a length with the auto keyword — and `size: 58mm` alone means a
+     * 58x58mm square page, which would slice the receipt into fragments. So the
+     * height is measured from the rendered node and written into the rule.
+     */
+    async function printThermal(): Promise<void> {
+        selectPaper("Thermal");
+        await tick();
+
+        const heightPx = thermalNode?.getBoundingClientRect().height ?? 0;
+        const heightMm = Math.ceil((heightPx / 96) * 25.4) + 6; // + tail feed
+
+        pageRule = `@page { size: 58mm ${heightMm}mm; margin: 2mm; }`;
+        await tick();
+        window.print();
+    }
 </script>
 
 <svelte:head>
@@ -63,19 +83,29 @@
     <div class="card bg-base-100 shadow-sm print:shadow-none">
         <div class="card-body print:p-0">
 
-            <div class="no-print mb-4 flex flex-wrap items-center justify-end gap-2">
-                <button type="button" class="btn btn-sm btn-primary" onclick={printDl}>
-                    <img src="/icons/Printer.svg" class="h-5 w-5" alt="" />
-                    Cetak DL
-                </button>
-            </div>
-
             {#if loading}
                 <p class="text-center text-base-content/60">Memuat nota…</p>
             {:else if notFound}
                 <p class="text-center font-bold text-error">Nota tidak ditemukan.</p>
             {:else}
-                <NotaDl receipt={receipt} />
+                <div class="no-print mb-4 flex flex-wrap items-center justify-end gap-2">
+                    <button type="button" class="btn btn-sm btn-primary" onclick={printDl}>
+                        <img src="/icons/Printer.svg" class="h-5 w-5" alt="" />
+                        Cetak DL
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" onclick={printThermal}>
+                        <img src="/icons/Printer.svg" class="h-5 w-5" alt="" />
+                        Cetak 58mm
+                    </button>
+                </div>
+
+                {#if paper === "Thermal"}
+                    <div bind:this={thermalNode}>
+                        <NotaThermal receipt={receipt} />
+                    </div>
+                {:else}
+                    <NotaDl receipt={receipt} />
+                {/if}
             {/if}
 
         </div>
