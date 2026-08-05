@@ -24,7 +24,7 @@ This sub-project covers four bullets from the brief:
 - Fleksibilitas Cetak (DL paper and 58mm thermal, two print buttons)
 - Munculkan satuan item di nota
 
-Plus one correctness fix found in the code being touched (§4).
+Plus three correctness fixes found in the code being touched (§4) and one workflow gap (§5.4).
 
 ### Current state
 
@@ -46,6 +46,12 @@ ud84_penjualan_detail(
   CREATED_AT, UPDATED_AT
 )
 
+ud84_penjualan_rekap(
+  ID, `UNIQUE`, NAMA, CASH int, KEMBALIAN int, DP int, POTONGAN int,
+  JATUH_TEMPO date, KETERANGAN, TOTAL int, MEMBER,
+  CREATED_AT, UPDATED_AT
+)
+
 ud84_master_produk(
   ID, NAMA, STOK int, TIPE varchar(10), STATUS_JUAL enum,
   DISTRIBUTOR, HARGA_PABRIK, HARGA_JUAL, JUMLAH_PER_ITEM smallint,
@@ -55,7 +61,16 @@ ud84_master_produk(
 
 `ud84_master_produk.TIPE` is the unit of the whole item (`Set`, `Dus`, `Karton`, `Bal`, `Pieces`, …) and `JUMLAH_PER_ITEM` is how many pieces that unit contains. `STOK` is counted in pieces: selling one `Satuan` deducts `JUMLAH_PER_ITEM` from stock, selling one `Pieces` deducts 1.
 
-The export contains 69 rows in `ud84_penjualan_detail` and 37 in `ud84_penjualan_rekap`. Every existing detail row has `JUMLAH = 1`.
+Value semantics that matter for the totals block:
+
+- `penjualan_detail.HARGA_TERJUAL` is the **line total**, not a unit price — `postPenjualan` writes the POS's `TOTAL`, which is `(unit price − discounts) × quantity`
+- `penjualan_detail.POTONGAN_PERSEN` holds the **rupiah value** of the percentage discount per unit, not the percentage
+- `penjualan_rekap.TOTAL` is already **net** of the invoice-level `POTONGAN` — `postPenjualan` writes `$total - $potongan`
+- `penjualan_rekap.KEMBALIAN` is computed as `CASH − (TOTAL − POTONGAN)` and **ignores DP**, so it is wrong whenever DP is used
+
+The export contains 69 rows in `ud84_penjualan_detail` and 37 in `ud84_penjualan_rekap`. Every existing detail row has `JUMLAH = 1`. Detail IDs begin at 66, so most historical `rekap` rows have **no matching detail rows** — reprinting an old nota already yields an empty item table today.
+
+App locale is `id` (`config/app.php:81`, no `APP_LOCALE` override), so Carbon's `translatedFormat('d F Y')` produces `05 Agustus 2026`.
 
 ---
 
@@ -70,7 +85,10 @@ The export contains 69 rows in `ud84_penjualan_detail` and 37 in `ud84_penjualan
 | Signature city/date | **"Malang, <transaction date>"** — uses `CREATED_AT`, so reprints keep the original date |
 | QRIS placement | **Both papers, always shown**, regardless of payment state |
 | QRIS asset | **Generated placeholder**, swapped by replacing the file |
-| Price-display fix (§4) | **Included** in this sub-project |
+| Unit-price display fix (§4.1) | **Included** |
+| Invoice-level potongan fix (§4.2) | **Included** |
+| Outstanding balance line (§4.3) | **Included** |
+| Post-sale print path (§5.4) | **Included** |
 | Schema delivery | **Migration file for version control + matching `.sql` to paste into phpMyAdmin.** `php artisan migrate` is not run on production |
 
 ### Rationale on the two that carry risk
@@ -86,20 +104,25 @@ The export contains 69 rows in `ud84_penjualan_detail` and 37 in `ud84_penjualan
 Split the container from the layouts:
 
 ```
-me/src/routes/ud84/panel/nota/[id]/+page.svelte      container: fetch, paper toggle, print buttons
-me/src/components/content/ud84/nota/NotaDL.svelte     110×220mm layout
+me/src/routes/ud84/panel/nota/[id]/+page.svelte       container: fetch, paper toggle, print buttons
+me/src/components/content/ud84/nota/NotaDL.svelte      110×220mm layout
 me/src/components/content/ud84/nota/NotaThermal.svelte 58mm receipt layout
-me/src/components/content/ud84/nota/types.ts          shared Receipt / Detail / Rekap interfaces
+me/src/components/content/ud84/nota/types.ts           shared Receipt / Detail / Rekap interfaces
+me/src/components/content/ud84/nota/totals.ts          pure totals derivation (§4.3)
 ```
 
-One fetch, one data shape, two renderers. Each layout is understandable on its own and changing one cannot break the other. This follows the existing `components/content/ud84/analisa/` convention.
+One fetch, one data shape, two renderers. Each layout is understandable on its own and changing one cannot break the other. The totals derivation is a pure function shared by both, so DL and thermal cannot drift into disagreeing about what the customer owes. This follows the existing `components/content/ud84/analisa/` convention.
 
 The container owns:
 
 - the `UD84/Get-Invoices/{ID}` fetch (unchanged endpoint, extended payload)
-- `paper: 'DL' | 'Thermal'` state, defaulting to `'DL'`, persisted to `localStorage` under `ud84-nota-paper` so an operator printing thermal all day does not have to re-select each time
-- two print buttons — **Cetak DL** and **Cetak 58mm** — each setting `paper` then calling `window.print()`
-- the reactive `@page` rule
+- `paper: 'DL' | 'Thermal'` state, defaulting to `'DL'`, persisted to `localStorage` under `ud84-nota-paper` so an operator printing thermal all day does not re-select each time
+- two print buttons — **Cetak DL** and **Cetak 58mm** — each setting `paper`, then printing
+- the `@page` rule injection
+
+The selected layout renders on screen as well as in print, so the operator sees what they will get. Print buttons carry `.no-print`.
+
+### Page size injection
 
 `@page` cannot be scoped to a CSS class, so the container injects it:
 
@@ -110,54 +133,50 @@ The container owns:
 ```
 
 - DL: `size: 110mm 220mm; margin: 6mm`
-- Thermal: `size: 58mm auto; margin: 2mm` — `auto` height for continuous roll
+- Thermal: `size: 58mm ${measuredHeight}mm; margin: 2mm`
 
-The selected layout renders on screen as well as in print, so the operator sees what they will get. Print buttons carry `.no-print`.
+**Thermal height is measured, not `auto`.** CSS Paged Media grammar for `size` is `auto | <length>{1,2} | <page-size> || [portrait | landscape]` — mixing a length with the `auto` keyword (`size: 58mm auto`) is not valid, and `size: 58mm` alone means a 58×58mm square page, which would slice the receipt into fragments. So before printing thermal, the container measures the rendered receipt node with `getBoundingClientRect().height`, converts px to mm at 96px = 25.4mm, adds 6mm of tail feed, and injects that height. This must happen after the layout has rendered — set `paper`, `await tick()`, measure, inject, then `window.print()`.
 
 ### Print CSS
 
-Applied in both layouts:
-
 - `-webkit-print-color-adjust: exact; print-color-adjust: exact;` so the QRIS image and rules render rather than being dropped as background decoration
+- **`+layout.svelte` chrome must be neutralised.** The `/ud84` layout wraps every page in `.ud84-root` with `min-h-screen bg-base-200` and renders `<Toaster />` outside the slot. Under `@media print`: force the wrapper background to transparent, drop `min-height`, and hide the toaster container — otherwise a stray toast prints onto the nota and the page carries a grey background
 - DaisyUI card chrome (`shadow`, `bg-base-100`, card padding) suppressed under `@media print`
-- `font-variant-numeric: tabular-nums` on all currency so columns align without depending on a monospace font being installed
+- `font-variant-numeric: tabular-nums` on all currency so columns align without depending on a monospace font
 - DL base font 9pt, thermal 8pt
+
+### Date handling
+
+All dates come from the backend as pre-formatted strings (`Carbon::translatedFormat('d F Y')` under locale `id`). The frontend does **not** parse `CREATED_AT` with `new Date()`. MySQL's `"2026-08-05 22:54:04"` has no `T` separator and is not reliably parseable across browsers; the backend already formats it correctly, so the frontend just prints the string.
+
+The customer block and the signature line both use the existing `tanggal` field. No new date field is added.
 
 ---
 
-## 4. Correctness fix: nota prints inconsistent numbers
+## 4. Correctness fixes
 
-### The defect
+Three defects in `Report::getInvoices`, all in the function this sub-project already modifies, all affecting what a customer sees on a printed document.
 
-`Penjualan::postPenjualan` stores `HARGA_TERJUAL => $data['TOTAL']`, and the POS computes `TOTAL` as `(unit price − discounts) × quantity` (`retail/+page.svelte:99`). So **`HARGA_TERJUAL` holds the line total, not a unit price.**
+### 4.1 Quantity is double-counted in the Jumlah column
 
-`Report::getInvoices` (`Report.php:246-252`) treats it as a unit price:
+`getInvoices` (`Report.php:246-252`) treats `HARGA_TERJUAL` as a unit price when it stores the line total:
 
 ```php
 "HARGA"  => $data->HARGA_TERJUAL,                  // labeled "Harga"; is the line total
-"JUMLAH" => $data->HARGA_TERJUAL * $data->JUMLAH,  // line total × qty → double-counts quantity
+"JUMLAH" => $data->HARGA_TERJUAL * $data->JUMLAH,  // line total × qty → double-counts
 "total"  => array_sum($totalSum)                   // sums HARGA_TERJUAL → correct
 ```
 
-Every row in the export has `JUMLAH = 1`, which makes the defect invisible in existing data. At quantity 2 the nota prints:
+Every row in the export has `JUMLAH = 1`, which makes this invisible in existing data. At quantity 2 the nota prints `Qty 2 | Harga Rp 38.000 | Jumlah Rp 76.000` under a footer total of `Rp 38.000` — a printed document contradicting itself.
 
-```
-Qty 2 | Harga Rp 38.000 | Jumlah Rp 76.000
-                          Total  Rp 38.000
-```
-
-A printed customer document that contradicts itself.
-
-### The fix
-
-Derive the unit price from the stored discount columns rather than by division:
+**Fix** — derive the unit price from the stored discount columns rather than by division:
 
 ```php
 "HARGA"  => $data->HARGA_ASLI - $data->POTONGAN_PERSEN - $data->POTONGAN_RUPIAH,
 "JUMLAH" => $data->HARGA_TERJUAL,
 ```
 
-`POTONGAN_PERSEN` stores the **rupiah value** of the percentage discount per unit, not the percentage itself (`retail/+page.svelte:102` writes `doDiscount`, not the raw percent). So `HARGA_ASLI − POTONGAN_PERSEN − POTONGAN_RUPIAH` is exactly the post-discount unit price the POS used, and multiplying it by quantity reproduces `HARGA_TERJUAL` by construction.
+Since `POTONGAN_PERSEN` holds the rupiah value of the percentage discount per unit, this reproduces exactly the post-discount unit price the POS used, and multiplying by quantity reproduces `HARGA_TERJUAL` by construction.
 
 Verified against export data:
 
@@ -166,13 +185,53 @@ Verified against export data:
 | 66 | 19 000 | 0 | 0 | 19 000 | 1 | 19 000 ✓ |
 | 69 | 518 000 | 0 | 3 000 | 515 000 | 1 | 515 000 ✓ |
 
-Integer subtraction throughout — no rounding artifact, unlike `HARGA_TERJUAL / JUMLAH` which would print `33 × 3 = 99` against a stored total of `100`.
+Integer subtraction throughout — no rounding artifact, unlike `HARGA_TERJUAL / JUMLAH`, which would print `33 × 3 = 99` against a stored total of `100`.
 
-This is display-layer only. No stored data changes, and the footer total (`array_sum` of `HARGA_TERJUAL`) already agrees with this reading.
+Display-layer only; no stored data changes.
 
-### Guard
+### 4.2 Invoice-level potongan is missing from the nota
 
-If a legacy row fails `HARGA × JUMLAH == HARGA_TERJUAL`, the line total shown is `HARGA_TERJUAL` regardless. `HARGA_TERJUAL` is what feeds the footer total, so the nota stays internally consistent even if a historical row's discount columns are incoherent.
+`postPenjualan` stores `rekap.TOTAL = $total − $potongan`, but `getInvoices` returns `total` as the sum of detail line totals — the figure **before** the invoice-level discount. When `POTONGAN > 0` the nota prints a total higher than what the customer owes, with nothing explaining the difference.
+
+Latent in current data (every exported row has `POTONGAN` at 0 or null), but wrong the first time a discount is applied.
+
+**Fix** — the totals block adapts to whether a potongan exists:
+
+- `POTONGAN = 0` → one line, **Total** = `rekap.TOTAL`
+- `POTONGAN > 0` → three lines, **Total Barang** = sum of line totals, **Potongan** = `rekap.POTONGAN`, **Total Tagihan** = `rekap.TOTAL`
+
+This also repairs historical reprints. Because most old `rekap` rows have no surviving detail rows, the sum of line totals is `0` for them; today's nota therefore prints `Total Rp 0` against a real transaction. Anchoring the headline figure to `rekap.TOTAL` prints `Rp 36.000` instead — correct, where today it is zero.
+
+### 4.3 No outstanding balance shown, and stored KEMBALIAN is unreliable
+
+QRIS on the receipt is there so a customer can settle what they owe. The nota currently never states an outstanding amount, which makes the QRIS block decorative.
+
+Stored `rekap.KEMBALIAN` cannot be used: `postPenjualan` computes it as `CASH − (TOTAL − POTONGAN)`, ignoring `DP` entirely. Export row 27 shows the consequence — `CASH 0, DP 17500, TOTAL 17500, KEMBALIAN −17500`: fully paid via DP, yet the stored change is negative.
+
+**Fix** — derive both figures in `totals.ts`, a pure function shared by both layouts:
+
+```
+dibayar    = CASH + DP
+sisa       = TOTAL − dibayar      shown as "Sisa Tagihan" when > 0
+kembalian  = dibayar − TOTAL      shown as "Kembalian"     when > 0
+```
+
+Neither line renders when the transaction balances exactly. Stored `KEMBALIAN` is ignored and left untouched — repairing it is a write-path change belonging to sub-project 2.
+
+Resulting totals block, potongan case:
+
+```
+Total Barang            Rp 1.802.000
+Potongan              − Rp    50.000
+─────────────────────────────────────
+Total Tagihan           Rp 1.752.000
+Pembayaran Cash         Rp 1.600.000
+Pembayaran DP           Rp   100.000
+─────────────────────────────────────
+Sisa Tagihan            Rp    52.000
+```
+
+Cash and DP lines render only when non-zero.
 
 ---
 
@@ -194,37 +253,55 @@ Delivered two ways:
 
 The migration file is **not** run on production. `php artisan migrate` has never been run against this database, and doing so now would fire Laravel's three default migrations and collide with the existing `users` table. The file exists so the repo tells the truth about the schema; phpMyAdmin is the deployment path.
 
-**Deploy order matters:** the `ALTER TABLE` must be applied *before* the new backend code ships. `postPenjualan` writes to `SATUAN` and would fail on every sale if the column is absent. `getInvoices` reads it and would 500 on every nota.
+**Deploy order matters:** the `ALTER TABLE` must be applied *before* the new backend code ships. `postPenjualan` writes to `SATUAN` and would fail on every sale if the column is absent; `getInvoices` reads it and would error on every nota.
 
 ### 5.2 `Penjualan::postPenjualan`
 
-Store the unit at sale time, resolving it the same way the stock arithmetic already does:
+Two changes:
+
+**Store the unit at sale time**, resolving it the same way the stock arithmetic already does:
 
 - `TIPE === 'Pieces'` → `'Pcs'`
 - otherwise → the master product's `TIPE` (`Set`, `Dus`, `Karton`, …)
 
 This requires moving the `ud84_master_produk` lookup **above** the `ud84_penjualan_detail` insert. It currently runs after (line 73), because only the stock update needed it.
 
-The lookup is by `NAMA`, matching existing behaviour. Not changed here — switching it to `KODE`/`ID` is a correctness improvement but touches stock arithmetic, which belongs to sub-project 2.
+**Return the transaction's `UNIQUE`** in the success response, so the POS can offer to print the nota it just created (§5.4):
+
+```php
+'data' => ['UNIQUE' => $uniqueID]
+```
+
+Additive — no existing consumer reads `data` from this endpoint.
+
+The product lookup remains keyed by `NAMA`, matching existing behaviour. Switching it to ID is a correctness improvement but touches stock arithmetic, which belongs to sub-project 2.
 
 ### 5.3 `Report::getInvoices`
 
-- add `SATUAN` to each row of the returned `data[]` array
-- apply the price fix from §4
+- return `SATUAN` on each row of `data[]`
+- apply the three fixes in §4
+- **guard the not-found case.** `$dataRekap->NAMA` is dereferenced at line 241 without checking that the row exists, so an unknown or mistyped `UNIQUE` produces a 500 and a blank screen. Return `status: "error"` with a clear message instead, and have the container render "Nota tidak ditemukan" rather than an empty nota
 
 Response shape after the change:
 
 ```
 data: {
-  tanggal, tuan, alamat, point, total,
+  tanggal, tuan, alamat, point,
+  total,                                  sum of line totals (pre-potongan)
   data: [ { QUANTITY, NAMA, SATUAN, HARGA, JUMLAH } ],
-  rekap: { ...ud84_penjualan_rekap row }
+  rekap: { ...ud84_penjualan_rekap row }  TOTAL is net of POTONGAN
 }
 ```
 
-`SATUAN` is `null` for pre-migration rows; the frontend renders `-`.
+`SATUAN` is `null` for pre-migration rows; the frontend renders `-` on DL and omits the unit on thermal. No route changes — `GET /UD84/Get-Invoices/{ID}` keeps its signature.
 
-No route changes. `GET /UD84/Get-Invoices/{ID}` keeps its signature.
+### 5.4 Post-sale print path
+
+**The gap:** `retail/+page.svelte` `doSubmit` currently toasts success and clears the cart. It never navigates to the nota, and `postPenjualan` returns no identifier. To print the sale just made, an operator has to open Transaksi, date-search for it, and click Cetak Ulang. Two print buttons on the nota page therefore only help on reprints — the primary path, printing at the point of sale, does not reach them at all.
+
+**Fix:** with `UNIQUE` now returned (§5.2), the success toast carries a **Cetak Nota** action that opens `/ud84/panel/nota/{UNIQUE}` in a new tab. `window.open`, not `goto`, so the POS stays on the retail screen ready for the next customer.
+
+Requires `doSubmit` to destructure `data` alongside `status` and `message`. Contained: one destructure, one toast action.
 
 ---
 
@@ -232,16 +309,14 @@ No route changes. `GET /UD84/Get-Invoices/{ID}` keeps its signature.
 
 ### 6.1 DL — 110×220mm
 
-Same information as today, restructured:
-
 - header: `UD84` and WhatsApp admin number
 - customer block: Pelanggan, Alamat, Tanggal, Poin
 - item table gaining a **Satuan** column: `Qty | Satuan | Nama Barang | Harga | Jumlah`
-- totals: Total, Pembayaran Cash, Pembayaran DP
+- totals block per §4.2 and §4.3
 - QRIS block, centred, ~28mm
 - signature block, right-aligned
 
-`Harga` is the post-discount unit price and `Jumlah` the line total, per §4.
+`Harga` is the post-discount unit price, `Jumlah` the line total.
 
 ### 6.2 Thermal — 58mm
 
@@ -261,6 +336,7 @@ PANILI CAP MOBIL
 --------------------------------
 TOTAL              Rp 1.802.000
 Tunai              Rp 1.800.000
+Sisa Tagihan       Rp     2.000
 --------------------------------
         [ QRIS ]
 --------------------------------
@@ -271,11 +347,11 @@ Tunai              Rp 1.800.000
     (__________________)
 ```
 
-Item name on its own line (long product names are common — `SAOS LOMBOK BAHAGIA 620 ML` is 26 characters), then quantity, unit, unit price, and line total on the next. Where `SATUAN` is null the unit is omitted rather than showing a dash inline: `2 x 865.000`.
+Item name on its own line (long names are common — `SAOS LOMBOK BAHAGIA 620 ML` is 26 characters), then quantity, unit, unit price, and line total on the next. Where `SATUAN` is null the unit is omitted rather than showing a dash inline: `2 x 865.000`.
 
-Alamat and Poin are dropped from thermal — the roll is for over-the-counter receipts where the address is not needed, and vertical space is the constraint being optimised.
+Alamat and Poin are dropped from thermal — the roll is for over-the-counter receipts, and vertical space is the constraint being optimised. Cash, DP, Sisa Tagihan, and Kembalian lines render only when non-zero.
 
-DP line is shown only when non-zero, matching receipt convention.
+Item lines use a plain thousands separator, not the `Rp`-prefixed currency format, to save horizontal space. `useFormat.ts` gains a `numberFormatter` (`Intl.NumberFormat('id-ID')`) alongside the existing `rupiahFormatter`; totals keep the `Rp` prefix.
 
 ### 6.3 Signature block
 
@@ -289,7 +365,7 @@ Both papers:
         (__________________)
 ```
 
-Right-aligned on DL, centred on thermal. Date from `rekap.CREATED_AT` formatted `d F Y` in Indonesian, so a reprint months later still shows the transaction date.
+Right-aligned on DL, centred on thermal. Date is the backend-formatted `tanggal` string, so a reprint months later still shows the transaction date.
 
 ---
 
@@ -303,7 +379,7 @@ Replacement procedure: overwrite `me/static/images/qris.png` with the real QRIS 
 
 The generator is committed at `me/scripts/generate-qris-placeholder.php` so the placeholder can be regenerated. It lives outside `static/` deliberately — anything under `static/` is served verbatim, and a `.php` file there would be published as readable source.
 
-Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit; the placeholder is drawn in pure black on white with no greys so it dithers predictably.
+Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit, so the placeholder is drawn in pure black on white with no greys, to dither predictably.
 
 ---
 
@@ -317,6 +393,10 @@ Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit; the pl
 | `src/components/content/ud84/nota/NotaDL.svelte` | new |
 | `src/components/content/ud84/nota/NotaThermal.svelte` | new |
 | `src/components/content/ud84/nota/types.ts` | new |
+| `src/components/content/ud84/nota/totals.ts` | new |
+| `src/routes/ud84/+layout.svelte` | print-mode neutralisation of wrapper and toaster |
+| `src/routes/ud84/panel/retail/+page.svelte` | Cetak Nota action on the success toast |
+| `src/library/utils/useFormat.ts` | add `numberFormatter` |
 | `static/images/qris.png` | new |
 | `scripts/generate-qris-placeholder.php` | new (generator, not served) |
 
@@ -324,52 +404,53 @@ Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit; the pl
 
 | File | Action |
 |---|---|
-| `app/Http/Controllers/UD84/Penjualan.php` | store `SATUAN`; move master lookup above insert |
-| `app/Http/Controllers/UD84/Report.php` | `getInvoices` returns `SATUAN`; price fix |
+| `app/Http/Controllers/UD84/Penjualan.php` | store `SATUAN`; move master lookup above insert; return `UNIQUE` |
+| `app/Http/Controllers/UD84/Report.php` | `getInvoices`: `SATUAN`, three fixes from §4, not-found guard |
 | `database/migrations/2026_08_05_000000_add_satuan_to_ud84_penjualan_detail.php` | new |
 | `database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.sql` | new |
 
-`Marmyadose` has unrelated uncommitted work (POS/EMoney, Kosada/Kredit, POS/Transaksi, routes). Only the files above are staged; that work is left untouched. Note that committing the UD84 controllers will also record CRLF→LF normalisation, since the working copies use CRLF and `.gitattributes` normalises on commit.
+`Marmyadose` has unrelated uncommitted work (POS/EMoney, Kosada/Kredit, POS/Transaksi, routes). Only the files above are staged; that work is left untouched. Committing the UD84 controllers will also record CRLF→LF normalisation, since the working copies use CRLF and `.gitattributes` normalises on commit.
 
 ---
 
 ## 9. Verification
 
-Being explicit about what can and cannot be verified.
-
 **No test infrastructure exists.** The frontend has no test runner in `package.json`. `Marmyadose/tests/` contains only Laravel's untouched `ExampleTest` scaffolding. No database is reachable locally — `127.0.0.1:3306` refuses connections and production is on cPanel shared hosting.
 
 **Can be verified:**
 
-- `npm run check` (svelte-check) passes with no new errors
-- both layouts render in Chrome print preview at 110×220mm and 58mm with representative invoice data, including a multi-quantity line and a line with both discount types
-- legacy rows (null `SATUAN`) render `-` on DL and omit the unit on thermal
-- the QRIS placeholder renders legibly at print scale on both papers
+- `npm run check` (svelte-check) — baseline captured *before* any edit, so pre-existing errors are not attributed to this work; must not regress
 - `php -l` passes on both modified controllers
+- both layouts render in Chrome print preview at 110×220mm and 58mm with representative invoice data stubbed at the fetch boundary, covering: a multi-quantity line, a line with both discount types, `POTONGAN > 0`, `POTONGAN = 0`, an outstanding balance, an overpayment, and a legacy row with null `SATUAN` and no detail rows
+- thermal measured height produces a single continuous page with no blank tail page
+- a toast raised immediately before printing does not appear in print preview
+- the QRIS placeholder is legible at print scale on both papers
 
 **Cannot be verified before deployment:**
 
-- that `postPenjualan` writes `SATUAN` correctly — requires a live database
-- that `getInvoices` returns the new field — same
-- actual output from a physical 58mm thermal printer and a DL-loaded printer
+- that `postPenjualan` writes `SATUAN` and returns `UNIQUE` — requires a live database
+- that `getInvoices` returns the new field and corrected figures — same
+- output from a physical 58mm thermal printer and a DL-loaded printer
 
-The backend changes are verified by reading only. This should be treated as unproven until a sale is made against the real database and its nota inspected on both papers.
+The backend changes are verified by reading only. Treat them as unproven until a sale is made against the real database and its nota inspected on both papers.
 
-**Post-deploy check:** make one test sale with a quantity above 1 and one product sold as `Satuan`, then print its nota on both papers and confirm `Harga × Qty = Jumlah` and the footer total matches `rekap.TOTAL`.
+**Post-deploy check:** make one test sale with quantity above 1, one product sold as `Satuan`, a non-zero `POTONGAN`, and cash below the total. Then confirm on both papers that `Harga × Qty = Jumlah` per line, `Total Barang − Potongan = Total Tagihan`, `Total Tagihan = rekap.TOTAL`, and `Sisa Tagihan` matches what is actually owed.
 
 ---
 
 ## 10. Deferred findings
 
-Found while reading the code, deliberately **not** fixed here.
-
-**`getInvoices` ignores invoice-level `POTONGAN`.** `postPenjualan` stores `ud84_penjualan_rekap.TOTAL = $total - $potongan`, but `getInvoices` returns `total` as the sum of detail line totals — the figure *before* the invoice-level discount. So when `POTONGAN > 0` the nota prints a total higher than what the customer actually owes, with no line explaining the difference.
-
-Every row in the export has `POTONGAN` at 0 or null, so this is currently latent. The fix is small: add a `Potongan` line and show `rekap.TOTAL` as the final amount. It is deferred because it changes what the nota reports as owed, which deserves its own decision rather than riding along with a units change.
+Found while reading, deliberately **not** fixed here.
 
 **`postPenjualan` matches products by `NAMA`, not ID.** Stock arithmetic and the master lookup both key on the product name. A rename between sale and lookup, or two products sharing a name, silently corrupts stock. Belongs to sub-project 2, which already touches stock movement.
 
-**`postPenjualan` has no guard on unrecognised `TIPE`.** If a cart line arrives with a `TIPE` that is neither `'Satuan'` nor `'Pieces'`, `$stokDecrease` is never assigned and the request dies inside the transaction. It rolls back cleanly, so it fails safe, but the customer-facing error is a generic 500. Also sub-project 2.
+**`postPenjualan` has no guard on unrecognised `TIPE`.** A cart line whose `TIPE` is neither `'Satuan'` nor `'Pieces'` leaves `$stokDecrease` unassigned and kills the request inside the transaction. It rolls back cleanly, so it fails safe, but surfaces as a generic 500. Sub-project 2.
+
+**Stored `rekap.KEMBALIAN` is wrong whenever DP is used.** §4.3 works around it on the read side; repairing the write path and backfilling existing rows is sub-project 2.
+
+**Most historical `rekap` rows have no detail rows.** Detail IDs start at 66 against 37 rekap rows, so reprints of older transactions show an empty item table. §4.2 makes the total correct regardless, but the item list stays empty. Whether that data is recoverable is a question for you, not a code fix.
+
+**`AUTH_KEY` is hardcoded in `me/src/library/hooks/db.ts`** with the comment *"move to .env later"*, and the UD84 API routes carry no authentication middleware. Out of scope for all four sub-projects; raised because it is a production concern.
 
 ---
 
