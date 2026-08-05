@@ -258,7 +258,7 @@ Delivered two ways:
 - `Marmyadose/database/migrations/2026_08_05_000000_add_satuan_to_ud84_penjualan_detail.php` — committed for version control, with a working `down()`
 - `Marmyadose/database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.sql` — the statement above, pasted into phpMyAdmin against production
 
-The migration file is **not** run on production. `php artisan migrate` has never been run against this database, and doing so now would fire Laravel's three default migrations and collide with the existing `users` table. The file exists so the repo tells the truth about the schema; phpMyAdmin is the deployment path.
+The migration file is **not** run on production. The `migrations` table records only four Laravel 9/10-era migrations from the project's original setup (`2014_10_12_000000_create_users_table` and friends, batch 1). The repo's current `database/migrations/` holds Laravel 11-style files (`0001_01_01_000000_create_users_table` and two others) that are **not** recorded there, so `php artisan migrate` would attempt `create_users_table` against the existing `users` table and fail. The file exists so the repo tells the truth about the schema; phpMyAdmin is the deployment path.
 
 **Deploy order matters:** the `ALTER TABLE` must be applied *before* the new backend code ships. `postPenjualan` writes to `SATUAN` and would fail on every sale if the column is absent; `getInvoices` reads it and would error on every nota.
 
