@@ -107,11 +107,12 @@ Split the container from the layouts:
 me/src/routes/ud84/panel/nota/[id]/+page.svelte       container: fetch, paper toggle, print buttons
 me/src/components/content/ud84/nota/NotaDL.svelte      110×220mm layout
 me/src/components/content/ud84/nota/NotaThermal.svelte 58mm receipt layout
-me/src/components/content/ud84/nota/types.ts           shared Receipt / Detail / Rekap interfaces
-me/src/components/content/ud84/nota/totals.ts          pure totals derivation (§4.3)
+me/src/components/content/ud84/nota/types.ts           shared Receipt / Detail / Ringkasan interfaces
 ```
 
-One fetch, one data shape, two renderers. Each layout is understandable on its own and changing one cannot break the other. The totals derivation is a pure function shared by both, so DL and thermal cannot drift into disagreeing about what the customer owes. This follows the existing `components/content/ud84/analisa/` convention.
+One fetch, one data shape, two renderers. Each layout is understandable on its own and changing one cannot break the other. This follows the existing `components/content/ud84/analisa/` convention.
+
+**Money is derived on the server, not in the layouts.** `getInvoices` returns a `ringkasan` block with every figure the totals section prints (§4.3). The layouts only decide which lines to show. This gives one implementation instead of two, makes it testable under PHPUnit against the real database, and removes any chance of DL and thermal disagreeing about what the customer owes.
 
 The container owns:
 
@@ -208,15 +209,21 @@ QRIS on the receipt is there so a customer can settle what they owe. The nota cu
 
 Stored `rekap.KEMBALIAN` cannot be used: `postPenjualan` computes it as `CASH − (TOTAL − POTONGAN)`, ignoring `DP` entirely. Export row 27 shows the consequence — `CASH 0, DP 17500, TOTAL 17500, KEMBALIAN −17500`: fully paid via DP, yet the stored change is negative.
 
-**Fix** — derive both figures in `totals.ts`, a pure function shared by both layouts:
+**Fix** — `getInvoices` returns a `ringkasan` block carrying every figure the totals section prints:
 
-```
-dibayar    = CASH + DP
-sisa       = TOTAL − dibayar      shown as "Sisa Tagihan" when > 0
-kembalian  = dibayar − TOTAL      shown as "Kembalian"     when > 0
+```php
+"ringkasan" => [
+    "TOTAL_BARANG"  => $sumOfLineTotals,
+    "POTONGAN"      => $rekap->POTONGAN ?? 0,
+    "TOTAL_TAGIHAN" => $rekap->TOTAL ?? 0,
+    "CASH"          => $rekap->CASH ?? 0,
+    "DP"            => $rekap->DP ?? 0,
+    "SISA"          => max(0, $totalTagihan - ($cash + $dp)),
+    "KEMBALIAN"     => max(0, ($cash + $dp) - $totalTagihan),
+]
 ```
 
-Neither line renders when the transaction balances exactly. Stored `KEMBALIAN` is ignored and left untouched — repairing it is a write-path change belonging to sub-project 2.
+`SISA` renders as "Sisa Tagihan" and `KEMBALIAN` as "Kembalian"; each is suppressed when zero, so a transaction that balances exactly shows neither. Stored `rekap.KEMBALIAN` is ignored and left untouched — repairing the write path is sub-project 2.
 
 Resulting totals block, potongan case:
 
@@ -287,11 +294,14 @@ Response shape after the change:
 ```
 data: {
   tanggal, tuan, alamat, point,
-  total,                                  sum of line totals (pre-potongan)
-  data: [ { QUANTITY, NAMA, SATUAN, HARGA, JUMLAH } ],
-  rekap: { ...ud84_penjualan_rekap row }  TOTAL is net of POTONGAN
+  total,                                  sum of line totals (kept for compatibility)
+  data:      [ { QUANTITY, NAMA, SATUAN, HARGA, JUMLAH } ],
+  ringkasan: { TOTAL_BARANG, POTONGAN, TOTAL_TAGIHAN, CASH, DP, SISA, KEMBALIAN },
+  rekap:     { ...ud84_penjualan_rekap row }
 }
 ```
+
+`total` is retained unchanged so nothing else reading this endpoint breaks; the nota reads `ringkasan` exclusively.
 
 `SATUAN` is `null` for pre-migration rows; the frontend renders `-` on DL and omits the unit on thermal. No route changes — `GET /UD84/Get-Invoices/{ID}` keeps its signature.
 
@@ -393,7 +403,6 @@ Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit, so the
 | `src/components/content/ud84/nota/NotaDL.svelte` | new |
 | `src/components/content/ud84/nota/NotaThermal.svelte` | new |
 | `src/components/content/ud84/nota/types.ts` | new |
-| `src/components/content/ud84/nota/totals.ts` | new |
 | `src/routes/ud84/+layout.svelte` | print-mode neutralisation of wrapper and toaster |
 | `src/routes/ud84/panel/retail/+page.svelte` | Cetak Nota action on the success toast |
 | `src/library/utils/useFormat.ts` | add `numberFormatter` |
@@ -415,26 +424,27 @@ Rendered at ~28mm on DL and ~35mm on thermal. Thermal printers are 1-bit, so the
 
 ## 9. Verification
 
-**No test infrastructure exists.** The frontend has no test runner in `package.json`. `Marmyadose/tests/` contains only Laravel's untouched `ExampleTest` scaffolding. No database is reachable locally — `127.0.0.1:3306` refuses connections and production is on cPanel shared hosting.
+A local MySQL instance is available at `127.0.0.1:3306`, database `dao`, carrying the same schema and comparable data (28 `rekap` rows, 56 `detail` rows, 409 products). `.env` already points at it. Laravel 11.45.1, PHPUnit runs.
 
-**Can be verified:**
+**Backend — executable tests.** `tests/Feature/UD84/` gains real feature tests hitting the routes over HTTP, each seeding its own fixture rows.
 
-- `npm run check` (svelte-check) — baseline captured *before* any edit, so pre-existing errors are not attributed to this work; must not regress
-- `php -l` passes on both modified controllers
-- both layouts render in Chrome print preview at 110×220mm and 58mm with representative invoice data stubbed at the fetch boundary, covering: a multi-quantity line, a line with both discount types, `POTONGAN > 0`, `POTONGAN = 0`, an outstanding balance, an overpayment, and a legacy row with null `SATUAN` and no detail rows
-- thermal measured height produces a single continuous page with no blank tail page
+> **Use the `DatabaseTransactions` trait, never `RefreshDatabase`.** `RefreshDatabase` runs `migrate:fresh`, which would drop every `ud84_*` table in the local database — none of them are covered by migrations, so they would not come back. `DatabaseTransactions` wraps each test and rolls back; the controllers' own `DB::beginTransaction()` calls nest as savepoints, which InnoDB handles correctly.
+
+Baseline before starting: `php artisan test` currently reports **1 passed, 1 failed** — `ExampleTest::test_the_application_returns_a_successful_response` fails on `GET /`. Pre-existing and unrelated; it must not be counted as a regression, and it must not be "fixed" as part of this work.
+
+**The defect is live in local data, not hypothetical.** 27 detail rows have quantity above 1. Transaction `64ca60eb59cb1` currently makes the nota print line totals of `Rp 80.000.000` and `Rp 14.375.000` under a footer total of `Rp 1.375.000`. The corrected arithmetic reproduces `unit × qty = HARGA_TERJUAL` exactly on every one of those rows — verified before writing any code. These figures are used directly as test fixtures.
+
+**Frontend — no test runner, and none is being added.** With totals derived server-side there is no pure frontend logic worth a runner; adding vitest to a production repo for zero units of logic is not justified. Frontend verification is:
+
+- `npm run check` (svelte-check) — baseline captured *before* any edit; must not regress
+- both layouts in Chrome print preview at 110×220mm and 58mm against real local invoices, covering: a multi-quantity line (`64ca60eb59cb1`), a line with both discount types, `POTONGAN > 0`, `POTONGAN = 0`, an outstanding balance, an overpayment, a DP-only payment, and a legacy row with null `SATUAN`
+- thermal measured height yields one continuous page with no blank tail page
 - a toast raised immediately before printing does not appear in print preview
 - the QRIS placeholder is legible at print scale on both papers
 
-**Cannot be verified before deployment:**
+**Still cannot be verified locally:** output from a physical 58mm thermal printer and a DL-loaded printer. Chrome print preview at the right page size is a good proxy for layout but says nothing about how a specific printer feeds, cuts, or dithers.
 
-- that `postPenjualan` writes `SATUAN` and returns `UNIQUE` — requires a live database
-- that `getInvoices` returns the new field and corrected figures — same
-- output from a physical 58mm thermal printer and a DL-loaded printer
-
-The backend changes are verified by reading only. Treat them as unproven until a sale is made against the real database and its nota inspected on both papers.
-
-**Post-deploy check:** make one test sale with quantity above 1, one product sold as `Satuan`, a non-zero `POTONGAN`, and cash below the total. Then confirm on both papers that `Harga × Qty = Jumlah` per line, `Total Barang − Potongan = Total Tagihan`, `Total Tagihan = rekap.TOTAL`, and `Sisa Tagihan` matches what is actually owed.
+**Post-deploy check on production:** one sale with quantity above 1, one product sold as `Satuan`, a non-zero `POTONGAN`, and cash below the total. Confirm on both papers that `Harga × Qty = Jumlah` per line, `Total Barang − Potongan = Total Tagihan`, `Total Tagihan = rekap.TOTAL`, and `Sisa Tagihan` matches what is actually owed.
 
 ---
 
