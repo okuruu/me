@@ -79,6 +79,22 @@ $centre = function (string $text, int $pt, int $baseline) use ($img, $font, $bla
 $centre('QRIS PLACEHOLDER', 30, $bandTop + 52);
 $centre('BUKAN KODE ASLI', 22, $bandTop + 96);
 
+// Thermal heads are 1-bit. Snap everything to pure black or white so no
+// driver-specific dithering decides how legible the warning text is.
+// Thresholding after anti-aliased rendering keeps truer glyph shapes than
+// drawing with anti-aliasing disabled.
+for ($y = 0; $y < $size; $y++) {
+    for ($x = 0; $x < $size; $x++) {
+        $rgb = imagecolorat($img, $x, $y);
+        $r   = ($rgb >> 16) & 0xFF;
+        $g   = ($rgb >> 8) & 0xFF;
+        $b   = $rgb & 0xFF;
+        // Rec. 601 luma
+        $luma = (0.299 * $r) + (0.587 * $g) + (0.114 * $b);
+        imagesetpixel($img, $x, $y, $luma < 128 ? $black : $white);
+    }
+}
+
 imagepng($img, $output);
 imagedestroy($img);
 
