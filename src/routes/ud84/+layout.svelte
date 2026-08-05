@@ -46,5 +46,24 @@
         :global([data-sonner-toaster]) {
             display: none !important;
         }
+        /* .ud84-root going transparent only uncovers whatever html/body paint.
+           daisyUI themes those, so pin them white for print — otherwise the
+           theme's dark band prints hard against the edge of the thermal roll. */
+        :global(html),
+        :global(body) {
+            background: #fff !important;
+        }
+        /* html/body alone is not enough: the site's root layout
+           (src/routes/+layout.svelte) wraps every page, including this one,
+           in its own `<div data-theme={$theme}>` that sits between <body>
+           and .ud84-root. daisyUI paints background-color directly on any
+           element carrying a data-theme attribute, not just on html/body, so
+           that div still painted its own theme's dark base-100 on top of an
+           already-white body. $theme is only ever 'portfolio' or
+           'portfolio-dark' (see src/library/stores/theme.ts) — pin both. */
+        :global([data-theme="portfolio"]),
+        :global([data-theme="portfolio-dark"]) {
+            background: #fff !important;
+        }
     }
 </style>
