@@ -11,6 +11,9 @@
 
     const STORAGE_KEY = "ud84-nota-paper";
     const DL_RULE = "@page { size: 110mm 220mm; margin: 6mm; }";
+    // Blank strip after the signature so the thermal printer's cutter does
+    // not shear through it.
+    const TAIL_FEED_MM = 6;
     // Split so svelte-check's raw-text style-tag scanner (which runs before
     // parsing, to hand off style blocks to PostCSS) does not mistake this
     // template literal for a real element and try to lint pageRule as CSS.
@@ -61,15 +64,22 @@
      * mixing a length with the auto keyword — and `size: 58mm` alone means a
      * 58x58mm square page, which would slice the receipt into fragments. So the
      * height is measured from the rendered node and written into the rule.
+     *
+     * The page margin is 0: the 2mm visual inset lives inside
+     * NotaThermal's own `.nota-thermal` padding instead, so the measured
+     * node's border-box height maps 1:1 onto the page height with nothing
+     * for a page margin to eat into. TAIL_FEED_MM only has to absorb the
+     * rounding gap between the on-screen measurement and the print engine's
+     * text metrics.
      */
     async function printThermal(): Promise<void> {
         selectPaper("Thermal");
         await tick();
 
         const heightPx = thermalNode?.getBoundingClientRect().height ?? 0;
-        const heightMm = Math.ceil((heightPx / 96) * 25.4) + 6; // + tail feed
+        const heightMm = Math.ceil((heightPx / 96) * 25.4) + TAIL_FEED_MM;
 
-        pageRule = `@page { size: 58mm ${heightMm}mm; margin: 2mm; }`;
+        pageRule = `@page { size: 58mm ${heightMm}mm; margin: 0; }`;
         await tick();
         window.print();
     }

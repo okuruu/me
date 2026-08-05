@@ -91,7 +91,13 @@
 
 <style>
     .nota-thermal {
+        /* box-sizing: border-box keeps the 54mm border-box width (and the
+           2mm inset that used to come from the page's @page margin) while
+           the padding is now inside the box, so the measured height in
+           printThermal() includes it 1:1 — no page margin to double-count. */
+        box-sizing: border-box;
         width: 54mm;
+        padding: 2mm;
         margin: 0 auto;
         font-size: 8pt;
         line-height: 1.3;
