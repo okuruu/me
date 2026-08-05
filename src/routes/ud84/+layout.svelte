@@ -36,4 +36,15 @@
     .ud84-root {
         font-family: 'Inter', sans-serif;
     }
+    @media print {
+        /* The layout wrapper and the toaster are outside every page's own
+           markup, so they print unless suppressed here. */
+        .ud84-root {
+            min-height: 0;
+            background: transparent !important;
+        }
+        :global([data-sonner-toaster]) {
+            display: none !important;
+        }
+    }
 </style>
