@@ -11,9 +11,16 @@
 
     const STORAGE_KEY = "ud84-nota-paper";
     const DL_RULE = "@page { size: 110mm 220mm; margin: 6mm; }";
-    // Blank strip after the signature so the thermal printer's cutter does
-    // not shear through it.
-    const TAIL_FEED_MM = 6;
+    const TAIL_FEED_MM = 6; // blank strip after the signature so the cutter does not shear it
+
+    /**
+     * Screen layout measures shorter than print layout — a 123mm measured receipt
+     * needed ~138mm on paper in testing, and the gap scales with content rather
+     * than being a fixed offset, so it is applied as a factor and not folded into
+     * TAIL_FEED_MM. Over-feeding a roll costs a few millimetres of paper; under-
+     * feeding clips the customer's signature onto a second strip.
+     */
+    const PRINT_SAFETY = 1.15;
     // Split so svelte-check's raw-text style-tag scanner (which runs before
     // parsing, to hand off style blocks to PostCSS) does not mistake this
     // template literal for a real element and try to lint pageRule as CSS.
@@ -68,16 +75,17 @@
      * The page margin is 0: the 2mm visual inset lives inside
      * NotaThermal's own `.nota-thermal` padding instead, so the measured
      * node's border-box height maps 1:1 onto the page height with nothing
-     * for a page margin to eat into. TAIL_FEED_MM only has to absorb the
-     * rounding gap between the on-screen measurement and the print engine's
-     * text metrics.
+     * for a page margin to eat into. What remains is PRINT_SAFETY (a
+     * proportional correction for print layout measuring taller than screen
+     * layout) and TAIL_FEED_MM (a fixed cutter allowance) — kept separate
+     * because one scales with content and the other does not.
      */
     async function printThermal(): Promise<void> {
         selectPaper("Thermal");
         await tick();
 
         const heightPx = thermalNode?.getBoundingClientRect().height ?? 0;
-        const heightMm = Math.ceil((heightPx / 96) * 25.4) + TAIL_FEED_MM;
+        const heightMm = Math.ceil(((heightPx / 96) * 25.4) * PRINT_SAFETY) + TAIL_FEED_MM;
 
         pageRule = `@page { size: 58mm ${heightMm}mm; margin: 0; }`;
         await tick();
