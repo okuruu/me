@@ -39,7 +39,7 @@
         </div>
         <div class="flex justify-between gap-2">
             <span>Potongan</span>
-            <span>− {rupiahFormatter.format(receipt.ringkasan.POTONGAN)}</span>
+            <span>- {rupiahFormatter.format(receipt.ringkasan.POTONGAN)}</span>
         </div>
     {/if}
 
