@@ -1,7 +1,11 @@
-# Deploy: UD84 Nota & Print
+# Deploy: UD84 Nota & Print + Sales Management
 
 **Date:** 2026-08-06
-**What ships:** unit (satuan) on each receipt line, QRIS block, compact signature, DL 110×220mm + 58mm thermal printing, three corrected money figures, and a print button straight from the POS.
+**What ships, two releases together:**
+
+1. **Nota & Print** — unit (satuan) on each receipt line, QRIS block, compact signature, DL 110×220mm + 58mm thermal printing, three corrected money figures, and a print button straight from the POS.
+2. **Sales Management** — a new page for adding, renaming, deactivating and deleting salespeople, which the system had no way to do before.
+
 **Repos:** `Marmyadose` (Laravel backend, manual upload) and `me` (SvelteKit frontend, Vercel).
 
 ---
@@ -24,29 +28,39 @@ The SQL is safe to apply days in advance — the column is nullable and additive
 
 Both of these, before touching anything.
 
-1. **Database.** In phpMyAdmin, select the database, choose **Export → Custom**, tick the tables `ud84_penjualan_detail`, `ud84_penjualan_rekap`, `ud84_master_produk`, `ud84_member`, and export as SQL. Keep the file.
-2. **Backend files.** Download the current copies of the two files you are about to replace, so you can put them back in seconds:
+1. **Database.** In phpMyAdmin, select the database, choose **Export → Custom**, tick the tables `ud84_penjualan_detail`, `ud84_penjualan_rekap`, `ud84_master_produk`, `ud84_member`, `ud84_sales`, `ud84_pesanan_rekap`, and export as SQL. Keep the file.
+2. **Backend files.** Download the current copies of the files you are about to replace, so you can put them back in seconds:
    - `app/Http/Controllers/UD84/Report.php`
    - `app/Http/Controllers/UD84/Penjualan.php`
+   - `app/Http/Controllers/UD84/Pesanan.php`
+   - `routes/api.php`
 
 ---
 
 ## Step 1 — Run the SQL in phpMyAdmin
 
-Open phpMyAdmin on cPanel, select the UD84 database (`u1643348_esdelfron`), open the **SQL** tab, and run:
+Open phpMyAdmin on cPanel, select the UD84 database (`u1643348_esdelfron`), open the **SQL** tab, and run **both** statements:
 
 ```sql
 ALTER TABLE `ud84_penjualan_detail`
   ADD COLUMN `SATUAN` varchar(20) DEFAULT NULL AFTER `NAMA`;
+
+ALTER TABLE `ud84_sales`
+  ADD COLUMN `STATUS` enum('Aktif','Nonaktif') NOT NULL DEFAULT 'Aktif' AFTER `NAMA`;
 ```
 
-Then confirm it landed. Run this and check you get one row back saying `varchar(20)` and `YES`:
+Then confirm both landed:
 
 ```sql
 SHOW COLUMNS FROM `ud84_penjualan_detail` LIKE 'SATUAN';
+SHOW COLUMNS FROM `ud84_sales` LIKE 'STATUS';
 ```
 
-Every existing row will have `SATUAN` as `NULL`. That is expected and correct — those sales never recorded a unit, and old receipts will print a dash in that column rather than guessing.
+Expect `varchar(20)` / `YES` for the first, and `enum('Aktif','Nonaktif')` / `NO` with default `Aktif` for the second.
+
+Every existing sales-detail row will have `SATUAN` as `NULL`. That is expected and correct — those sales never recorded a unit, and old receipts will print a dash in that column rather than guessing.
+
+Every existing salesperson becomes `Aktif`, which is the right starting state — nobody disappears from a dropdown because of this change.
 
 > **Never run `php artisan migrate` on this database.** Its `migrations` table holds only the project's original Laravel 9/10-era entries, while `database/migrations/` now contains Laravel 11-style files that are not recorded there. `migrate` would try to create the `users` table, which already exists, and fail. The `.sql` above is the only supported way to apply this change. There is a migration file in the repo purely so the schema history is written down; it is never executed.
 
@@ -75,19 +89,26 @@ Zipping the directory would push all of that live alongside the receipt fix. Bui
 
 ### Files to include
 
-Only these two are required:
+These five are required:
 
 ```
-app/Http/Controllers/UD84/Report.php
-app/Http/Controllers/UD84/Penjualan.php
+app/Http/Controllers/UD84/Report.php       (nota figures)
+app/Http/Controllers/UD84/Penjualan.php    (stores the unit, returns the sale id)
+app/Http/Controllers/UD84/Sales.php        (NEW — salesperson management)
+app/Http/Controllers/UD84/Pesanan.php      (null guard on the salesperson name)
+routes/api.php                             (NEW — four /UD84/Sales/* routes)
 ```
 
-Optionally include these two for the record — they change nothing at runtime:
+Optionally include these for the record — they change nothing at runtime:
 
 ```
 database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.sql
+database/sql/2026_08_06_add_status_to_ud84_sales.sql
 database/migrations/2026_08_05_000000_add_satuan_to_ud84_penjualan_detail.php
+database/migrations/2026_08_06_000000_add_status_to_ud84_sales.php
 ```
+
+> **`routes/api.php` is in this list, and your uncommitted E-Money routes are deliberately *not* in the committed version.** Those two routes point at `POS_E_Money::deleteTransaction` and `updateTransactionDate`, which exist only in your uncommitted `EMoney.php`. Shipping the routes without the controller would make `route:cache` fail outright. Build the zip with the `git archive` command below and the committed version is used automatically.
 
 Do **not** upload `tests/` — those are development-only and never run on the server.
 
@@ -96,11 +117,16 @@ Do **not** upload `tests/` — those are development-only and never run on the s
 From `D:\Coedes\Production\Marmyadose`, in Git Bash:
 
 ```bash
-git archive --format=zip --output=../ud84-nota-backend.zip ud84-nota-print \
+git archive --format=zip --output=../ud84-backend.zip main \
   app/Http/Controllers/UD84/Report.php \
   app/Http/Controllers/UD84/Penjualan.php \
+  app/Http/Controllers/UD84/Sales.php \
+  app/Http/Controllers/UD84/Pesanan.php \
+  routes/api.php \
   database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.sql \
-  database/migrations/2026_08_05_000000_add_satuan_to_ud84_penjualan_detail.php
+  database/sql/2026_08_06_add_status_to_ud84_sales.sql \
+  database/migrations/2026_08_05_000000_add_satuan_to_ud84_penjualan_detail.php \
+  database/migrations/2026_08_06_000000_add_status_to_ud84_sales.php
 ```
 
 `git archive` takes the files from the committed branch, so your uncommitted work-in-progress cannot leak into the zip even by accident. The zip lands at `D:\Coedes\Production\ud84-nota-backend.zip` with the correct folder structure inside.
@@ -108,15 +134,21 @@ git archive --format=zip --output=../ud84-nota-backend.zip ud84-nota-print \
 ### Upload and extract
 
 1. cPanel → **File Manager** → navigate to the Laravel project root (the folder containing `app`, `routes`, `artisan`).
-2. **Upload** `ud84-nota-backend.zip`.
+2. **Upload** `ud84-backend.zip`.
 3. Right-click it → **Extract**, into that same folder. Confirm overwrite when asked.
 4. Delete the zip from the server afterwards.
-5. Clear Laravel's caches. If cPanel has **Terminal**, run from the project root:
+5. **Clear the caches — the route cache in particular is not optional this time.**
+
+   This release adds four new routes, and Laravel serves routes from `bootstrap/cache/routes-v7.php` when that file exists. Without clearing it the new `/UD84/Sales/*` endpoints return **404** and the Sales page shows an empty table with no error explaining why. This is not hypothetical — it happened during local testing and cost a full round of confused debugging.
+
+   If cPanel has **Terminal**, run from the project root:
    ```
+   php artisan route:clear
    php artisan config:clear
    php artisan cache:clear
    ```
-   If there is no Terminal, delete the contents of `bootstrap/cache/` **except** `.gitignore`. Do not delete the folder itself.
+
+   If there is no Terminal, delete the contents of `bootstrap/cache/` **except** `.gitignore` — that includes `routes-v7.php`, `config.php`, `events.php`, `packages.php` and `services.php`. Do not delete the folder itself. Laravel rebuilds them on the next request.
 
 ---
 
@@ -178,7 +210,23 @@ Press **Cetak DL**, then **Cetak 58mm**, from the same page without reloading.
 - **58mm thermal** should be **one continuous strip**, with the signature line and the QRIS block on that same strip. If the signature comes out on a second piece, see *Tuning the thermal length* below.
 - Neither should print a grey background, the app navigation, or a floating notification.
 
-### 4d. Check an old receipt still reprints
+### 4d. Check the new Sales page
+
+There's a new **Sales** entry in the panel navigation, between Member and Master Produk. Open it.
+
+| Check | What you should see |
+|---|---|
+| The list loads | Adi and Andik, both `Aktif`. **An empty table here means the route cache was not cleared** — go back to Step 2.5. |
+| Add | Type a name, press **Tambah Sales**. It appears immediately. |
+| Duplicate names | Try adding an existing name in different capitals — it's refused. |
+| Rename | **Ubah** turns the name into an input; **Simpan** saves, **Batal** discards. |
+| Deactivate | **Nonaktifkan** turns the badge grey. Now open the order page at `/ud84` → **Pesan Online** → Kode Sales: the deactivated person is **gone from the dropdown**, while everyone else remains. |
+| History survives | Open **Pesanan** and confirm existing orders still show that person's name. Deactivating hides them from new work only. |
+| Delete guard | A salesperson with orders or members shows **"Tidak bisa dihapus"** instead of a delete button. One with no history can be deleted outright. |
+
+The delete guard exists because `ud84_pesanan_rekap.SALES` and `ud84_member.CREATED_BY` store the salesperson's ID. Deleting a referenced salesperson would blank their name across all that history — deactivating keeps it intact.
+
+### 4e. Check an old receipt still reprints
 
 Go to **Transaksi**, find any sale from before today, and press **Cetak Ulang**. It should print with a dash in the Satuan column and correct totals. Old sales never recorded a unit, so a dash is right — it is not a fault.
 
@@ -224,7 +272,7 @@ If you ever need to regenerate the placeholder, run `php scripts/generate-qris-p
 
 ## Rollback
 
-**If the backend misbehaves:** re-upload the two original `Report.php` and `Penjualan.php` files you saved in Step 0, and clear the caches again. The `SATUAN` column can stay — it is nullable, so the old code ignores it completely. Nothing else needs undoing.
+**If the backend misbehaves:** re-upload the original `Report.php`, `Penjualan.php`, `Pesanan.php` and `routes/api.php` you saved in Step 0, delete `app/Http/Controllers/UD84/Sales.php`, and clear the caches again (`route:clear` included). Both new columns can stay — `SATUAN` is nullable and `STATUS` defaults to `Aktif`, so the old code ignores them completely. Nothing else needs undoing.
 
 **If the frontend misbehaves:** in the Vercel dashboard, open the project's **Deployments** tab, find the previous working deployment and choose **Promote to Production**. That is faster than a git revert.
 
