@@ -186,7 +186,7 @@
 
         enableSubmit = true;
 
-        const { status, message } = await db({
+        const { status, message, data } = await db({
             DP: currencySanitizer(payDP),
             CASH: currencySanitizer(payCash),
             POTONGAN: currencySanitizer(cutMoney),
@@ -205,7 +205,21 @@
         }
 
         masterProduk = await useFetch('UD84/Master-Produk/Retrieve');
-        toast.success(message);
+
+        const unique = data?.UNIQUE;
+
+        if (unique) {
+            toast.success(message, {
+                action: {
+                    label: 'Cetak Nota',
+                    // New tab, so the POS stays on this screen for the next customer.
+                    onClick: () => window.open(`/ud84/panel/nota/${unique}`, '_blank')
+                }
+            });
+        } else {
+            toast.success(message);
+        }
+
         removeAll();
     }
 

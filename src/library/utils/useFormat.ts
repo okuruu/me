@@ -155,6 +155,12 @@ const rupiahFormatter = new Intl.NumberFormat('id-ID', {
     minimumFractionDigits: 0
 });
 
+// Thousands separator without the Rp prefix — 58mm receipts cannot spare
+// the horizontal space on item lines.
+const numberFormatter = new Intl.NumberFormat('id-ID', {
+    maximumFractionDigits: 0
+});
+
 function capitalizeEachWord(str: string): string {
     return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 }
@@ -165,4 +171,4 @@ function currencySanitizer(input: string | null): number {
     return sanitizedAmount;
 }
 
-export { likesCount, Carbon, capitalizeEachWord, rupiahFormatter, currencySanitizer }
+export { likesCount, Carbon, capitalizeEachWord, rupiahFormatter, numberFormatter, currencySanitizer }

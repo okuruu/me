@@ -15,7 +15,7 @@
 - **Two repos.** Frontend is `D:\Coedes\Production\me`, backend is `D:\Coedes\Production\Marmyadose`. They are separate git repos; commit in each independently.
 - **`Marmyadose` has unrelated uncommitted work** (`POS/EMoney.php`, `Kosada/Kredit.php`, `POS/Transaksi.php`, `routes/api.php`, `routes/web.php`, `app/DTO/*`, `app/Models/Kosada/`). **Never use `git add -A` or `git commit -a` in `Marmyadose`.** Stage only the exact paths named in each task.
 - **Never use `RefreshDatabase` in a test.** It runs `migrate:fresh`, which drops every `ud84_*` table. None of them are covered by migrations, so they would not come back. Use `Illuminate\Foundation\Testing\DatabaseTransactions`.
-- **Never run `php artisan migrate`** against `dao` or production. `artisan` has never been run on either database, so there is no `migrations` table, and running it would fire Laravel's three default migrations and collide with the existing `users` table. Schema changes are applied by executing the `.sql` file directly.
+- **Never run `php artisan migrate`** against `dao` or production. The `migrations` table records only four Laravel 9/10-era migrations from the original setup; the repo's current `database/migrations/` holds Laravel 11-style files (`0001_01_01_*`) that are not recorded there, so migrate would attempt `create_users_table` against the existing `users` table and fail. Schema changes are applied by executing the `.sql` file directly.
 - **Local database:** `127.0.0.1:3306`, database `dao`, user `root`, password `root`. `.env` already points at it.
 - **Pre-existing test failure:** `php artisan test` reports 1 passed / 1 failed before any work starts — `ExampleTest::test_the_application_returns_a_successful_response` fails on `GET /`. It is unrelated. Do not fix it, and do not count it as a regression.
 - **API path prefix is `/api`** — routes in `routes/api.php` are served at `/api/UD84/...`.
@@ -84,9 +84,11 @@ Create `Marmyadose/database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.s
 -- postPenjualan writes SATUAN and getInvoices reads it; without the column
 -- every sale and every nota fails.
 --
--- Do NOT run `php artisan migrate` on this database. There is no migrations
--- table, so Laravel's three default migrations would run and collide with the
--- existing `users` table.
+-- Do NOT run `php artisan migrate` on this database. Its migrations table
+-- records only the project's original Laravel 9/10-era migrations; the repo's
+-- current database/migrations/ holds Laravel 11-style files that are not
+-- recorded there, so migrate would attempt create_users_table against the
+-- existing `users` table and fail.
 
 ALTER TABLE `ud84_penjualan_detail`
   ADD COLUMN `SATUAN` varchar(20) DEFAULT NULL AFTER `NAMA`;
@@ -106,10 +108,11 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Version-control record for the SATUAN column.
  *
- * This migration is intentionally NOT executed. Neither the local `dao`
- * database nor production has a `migrations` table, so running `artisan
- * migrate` would also run Laravel's default migrations and collide with the
- * existing `users` table. The change is applied by executing
+ * This migration is intentionally NOT executed. The migrations table records
+ * only the project's original Laravel 9/10-era migrations; the Laravel
+ * 11-style files now in this directory are not recorded there, so running
+ * `artisan migrate` would attempt create_users_table against the existing
+ * `users` table and fail. The change is applied by executing
  * database/sql/2026_08_05_add_satuan_to_ud84_penjualan_detail.sql directly.
  */
 return new class extends Migration
