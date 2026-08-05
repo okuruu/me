@@ -16,10 +16,11 @@
         HARGA_PCS: number;
     }
 
-    interface Staff { 
-        ID: number; 
-        NAMA: string; 
-        NOMINAL: number 
+    interface Staff {
+        ID: number;
+        NAMA: string;
+        NOMINAL: number;
+        STATUS?: "Aktif" | "Nonaktif";
     }
 
     interface Carts {
@@ -58,7 +59,10 @@
     onMount(async () => {
         katalog = await useFetch('UD84/Master-Produk/Katalog');
         katalogDefault = katalog;
-        sales = await useFetch('UD84/Stocks/Staff');
+        // Only currently-active salespeople may be picked for a new order.
+        // Deactivated ones stay visible on existing orders and in reports.
+        const staff: Staff[] = await useFetch('UD84/Stocks/Staff') ?? [];
+        sales = staff.filter((person) => person.STATUS !== "Nonaktif");
     })
 
     function switchCatalogue(): boolean {
