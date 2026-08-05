@@ -14,13 +14,27 @@
     const TAIL_FEED_MM = 6; // blank strip after the signature so the cutter does not shear it
 
     /**
-     * Screen layout measures shorter than print layout — a 123mm measured receipt
-     * needed ~138mm on paper in testing, and the gap scales with content rather
-     * than being a fixed offset, so it is applied as a factor and not folded into
-     * TAIL_FEED_MM. Over-feeding a roll costs a few millimetres of paper; under-
-     * feeding clips the customer's signature onto a second strip.
+     * The original 1.15 factor was fitted while the page wrapper's `py-8`
+     * (~17mm, print-only — see the container's outermost div) was still
+     * live during printing, sitting outside the measured `thermalNode` but
+     * still consuming page height. That made a fixed ~17mm layout bug look
+     * like a gap that "scaled with content".
+     *
+     * With the wrapper neutralised for print (`print:px-0 print:py-0`),
+     * re-measuring both `64ca60eb59cb1` (2 items) and `64ca60a842fa6`
+     * (3 items) via bisection against real print-to-pdf output shows the
+     * screen-measured height already matches, or very slightly *undershoots*,
+     * the true minimum printable height (122mm true vs. 122.13mm measured
+     * for invoice 1; 131mm true vs. 130.52mm measured for invoice 2 — at
+     * most ~0.4% off, within rounding noise, not a proportional relationship).
+     * `Math.ceil()` alone already absorbs that. `PRINT_SAFETY` here is not
+     * compensating a measured effect — it is a small flat safety cushion
+     * (~2%) against per-invoice content this pair didn't cover (long item
+     * names, unusual line counts). Over-feeding a roll costs a few
+     * millimetres of paper; under-feeding clips the customer's signature
+     * onto a second strip, so the margin errs toward slightly more.
      */
-    const PRINT_SAFETY = 1.15;
+    const PRINT_SAFETY = 1.02;
     // Split so svelte-check's raw-text style-tag scanner (which runs before
     // parsing, to hand off style blocks to PostCSS) does not mistake this
     // template literal for a real element and try to lint pageRule as CSS.
@@ -75,10 +89,13 @@
      * The page margin is 0: the 2mm visual inset lives inside
      * NotaThermal's own `.nota-thermal` padding instead, so the measured
      * node's border-box height maps 1:1 onto the page height with nothing
-     * for a page margin to eat into. What remains is PRINT_SAFETY (a
-     * proportional correction for print layout measuring taller than screen
-     * layout) and TAIL_FEED_MM (a fixed cutter allowance) — kept separate
-     * because one scales with content and the other does not.
+     * for a page margin to eat into (this also requires the page wrapper
+     * outside `thermalNode` to be neutralised for print — see
+     * `print:px-0 print:py-0` on the container below — otherwise its
+     * padding still consumes page height without being part of the
+     * measured node). What remains is PRINT_SAFETY (a small flat safety
+     * cushion — see its own doc comment for the measurements behind the
+     * value) and TAIL_FEED_MM (a fixed cutter allowance).
      */
     async function printThermal(): Promise<void> {
         selectPaper("Thermal");
@@ -97,7 +114,7 @@
     {@html `<${STYLE_TAG}>${pageRule}</${STYLE_TAG}>`}
 </svelte:head>
 
-<div class="mx-auto w-full max-w-md px-4 py-8 sm:px-0">
+<div class="mx-auto w-full max-w-md px-4 py-8 sm:px-0 print:px-0 print:py-0">
     <div class="card bg-base-100 shadow-sm print:shadow-none">
         <div class="card-body print:p-0">
 
