@@ -9,6 +9,9 @@
     {#if receipt.dibatalkan}
         <div class="void-banner">TRANSAKSI DIBATALKAN</div>
     {/if}
+    {#if receipt.dikoreksi && !receipt.dibatalkan}
+        <div class="void-banner">NOTA KOREKSI &mdash; {receipt.dikoreksi_pada}</div>
+    {/if}
 
     <div class="text-center">
         <div class="text-[12pt] font-extrabold">UD84</div>
