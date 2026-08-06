@@ -19,6 +19,7 @@
         CATATAN: string;
         KODE: string;
         VALID: string | null;
+        ADA_DISKON: boolean;
         CREATED_AT: string;
     }
 
@@ -32,6 +33,7 @@
         HARGA_PER_ITEM: number;
         HARGA_JUAL: number;
         DISTRIBUTOR: string;
+        DISKON: string | null;
     }
 
     interface Staff {
@@ -182,6 +184,8 @@
             HARGA_PER_ITEM: produk.HARGA_PER_ITEM,
             HARGA_JUAL: produk.HARGA_JUAL,
             DISTRIBUTOR: produk.DISTRIBUTOR,
+            // Nobody asked for a discount on a line the admin added.
+            DISKON: null,
         }];
         produkDipilih = '';
     }
@@ -359,6 +363,7 @@
                     <tr class="font-bold">
                         <th>#</th>
                         <th class="text-left">Nama</th>
+                        <th class="hidden sm:table-cell">Diskon</th>
                         <th class="hidden sm:table-cell">WhatsApp</th>
                         <th class="hidden lg:table-cell">Nama Sales</th>
                         <th class="hidden md:table-cell">Dipesan Pada</th>
@@ -369,13 +374,20 @@
                 <tbody>
                     {#if newData.length === 0}
                         <tr>
-                            <td colspan="7" class="text-center text-base-content/60">Tidak ada data</td>
+                            <td colspan="8" class="text-center text-base-content/60">Tidak ada data</td>
                         </tr>
                     {:else}
                         {#each newData as data, index }
                             <tr>
                                 <td>{index + 1}</td>
                                 <td class="text-left font-medium">{data.NAMA}</td>
+                                <td class="hidden sm:table-cell">
+                                    {#if data.ADA_DISKON}
+                                        <span class="badge badge-warning">Ada pengajuan</span>
+                                    {:else}
+                                        <span class="text-base-content/40">-</span>
+                                    {/if}
+                                </td>
                                 <td class="hidden sm:table-cell">{data.WHATSAPP}</td>
                                 <td class="hidden lg:table-cell">{data.SALES}</td>
                                 <td class="hidden md:table-cell">{Carbon(data.CREATED_AT, "date-short-with-time")}</td>
@@ -476,6 +488,7 @@
                         <th>#</th>
                         <th class="text-left">Nama</th>
                         <th class="text-center">Jumlah Pesanan (Pcs)</th>
+                        <th class="text-center">Pengajuan Diskon</th>
                         <th class="text-center">Stok</th>
                         <th>Satuan</th>
                         <th class="text-center">Harga Jual</th>
@@ -485,7 +498,7 @@
                 <tbody>
                     {#if carts.length === 0}
                         <tr>
-                            <td colspan="7" class="text-center text-base-content/60">Tidak ada data</td>
+                            <td colspan="8" class="text-center text-base-content/60">Tidak ada data</td>
                         </tr>
                     {:else}
                         {#each carts as item, index }
@@ -500,6 +513,13 @@
                                         <input type="number" min="1" bind:value={item.JUMLAH} class="input input-bordered input-sm w-20 text-center"/>
                                     {:else}
                                         {item.JUMLAH}
+                                    {/if}
+                                </td>
+                                <td class="text-center">
+                                    {#if item.DISKON}
+                                        <span class="badge badge-warning">{item.DISKON}</span>
+                                    {:else}
+                                        <span class="text-base-content/40">-</span>
                                     {/if}
                                 </td>
                                 <td class="text-center">
