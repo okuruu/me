@@ -8,6 +8,9 @@
     import { toast } from "svelte-sonner";
     import DatePlaceholder from "../../../../components/shared/DatePlaceholder.svelte";
     import { initializeDate } from "../../../../library/utils/useDefault";
+    import RiwayatPanel from "../../../../components/shared/RiwayatPanel.svelte";
+    import { operatorSaatIni } from "../../../../library/utils/useAuth";
+    import type { Riwayat } from "../../../../library/types/riwayat";
 
     type Status = "Aktif" | "Dibatalkan";
 
@@ -36,16 +39,6 @@
         TOTAL: number;
         CREATED_AT: string;
         UPDATED_AT: string | null;
-    }
-
-    interface Riwayat {
-        ID: number;
-        UNIQUE_TRANSAKSI: string;
-        AKSI: string;
-        OPERATOR: string | null;
-        ALASAN: string | null;
-        CATATAN_SISTEM: string | null;
-        CREATED_AT: string;
     }
 
     interface Detail {
@@ -174,23 +167,6 @@
     function reverseData(): Transaksi[] {
         daftarTransaksi = daftarTransaksi.reverse();
         return daftarTransaksi;
-    }
-
-    /**
-     * Who is doing this. Sessions opened before the login page started storing
-     * the operator name hold a bare `true`, so the name can legitimately be
-     * missing; the backend records 'Tidak diketahui' for a blank one rather
-     * than refusing the cancellation.
-     */
-    function operatorSaatIni(): string {
-        try {
-            const stored = localStorage.getItem('Auth');
-            const parsed = stored ? JSON.parse(stored) : null;
-
-            return typeof parsed?.name === 'string' ? parsed.name : '';
-        } catch {
-            return '';
-        }
     }
 
     async function batalkanTransaksi(): Promise <void> {
@@ -469,27 +445,6 @@
             {/if}
         </div>
 
-        {#if riwayatTransaksi.length > 0}
-            <div class="divider my-3"></div>
-
-            <h4 class="mb-2 font-bold">Riwayat Perubahan</h4>
-            <div class="flex flex-col gap-3">
-                {#each riwayatTransaksi as riwayat}
-                    <div class="rounded-lg border border-base-300 p-3">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="badge badge-ghost">{riwayat.AKSI}</span>
-                            <span class="text-sm font-medium">{riwayat.OPERATOR}</span>
-                            <span class="text-sm text-base-content/60">{Carbon(riwayat.CREATED_AT, "timestamp")}</span>
-                        </div>
-                        {#if riwayat.ALASAN}
-                            <p class="mt-2 text-sm"><span class="font-medium">Alasan:</span> {riwayat.ALASAN}</p>
-                        {/if}
-                        {#if riwayat.CATATAN_SISTEM}
-                            <p class="mt-2 whitespace-pre-line text-sm text-base-content/70">{riwayat.CATATAN_SISTEM}</p>
-                        {/if}
-                    </div>
-                {/each}
-            </div>
-        {/if}
+        <RiwayatPanel entries={riwayatTransaksi} />
     </div>
 </Drawer>

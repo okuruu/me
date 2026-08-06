@@ -32,8 +32,14 @@
 | `Marmyadose/app/Http/Controllers/UD84/Pesanan.php` | Modify. Gains `updatePesanan` plus four private helpers; `removeItem` and `validateItem` repaired; `getPesanan` and `getItems` gain one field each. |
 | `Marmyadose/routes/api.php` | Modify. Two route lines. |
 | `Marmyadose/tests/Feature/UD84/PerbaikanPesananTest.php` | Create. Every test for this stage. |
+| `me/src/library/types/riwayat.ts` | Create. The `Riwayat` row shape, shared by both drawers. |
+| `me/src/library/utils/useAuth.ts` | Create. `operatorSaatIni()` — reading the panel operator's name out of `localStorage`. |
+| `me/src/components/shared/RiwayatPanel.svelte` | Create. The audit-trail block both drawers render. |
+| `me/src/routes/ud84/panel/transaksi/+page.svelte` | Modify. Uses the two extracted pieces instead of its own copies. |
 | `me/src/routes/ud84/panel/pesanan/+page.svelte` | Modify. Drawer becomes an editor; audit trail panel added. |
 | `me/docs/deployment/2026-08-06-ud84-perbaikan-pesanan-deploy.md` | Create. Runbook — no SQL, two files, one cache clear. |
+
+**On the extraction (Task 6).** `operatorSaatIni()` and the audit-trail markup were written for the Transaksi drawer this morning. Copying them into the Pesanan drawer would make two of each, and Stage 3 would make three. They are extracted first, with the Transaksi page moved onto them, so the second consumer arrives at a shared thing rather than a duplicate. This is cheap precisely now: the cancel-invoice release has not been deployed, so the Transaksi page is not yet live code.
 
 `Pesanan.php` is ~190 lines today and will roughly double. That is still a single-purpose file (everything about orders) and matches how `Transaksi.php` is organised, so it stays one file.
 
@@ -1125,14 +1131,161 @@ without complaint."
 
 ---
 
-### Task 6: The editor
+### Task 6: Extract what both drawers need
+
+The Transaksi drawer already has an operator-name helper and an audit-trail block. The Pesanan drawer needs the same two. Extract before the second consumer arrives, not after.
+
+**This task is frontend-only and lands in the `me` repo** (branch `ud84-perbaikan-pesanan`), unlike Tasks 1–5.
+
+**Files:**
+- Create: `me/src/library/types/riwayat.ts`
+- Create: `me/src/library/utils/useAuth.ts`
+- Create: `me/src/components/shared/RiwayatPanel.svelte`
+- Modify: `me/src/routes/ud84/panel/transaksi/+page.svelte`
+
+**Interfaces:**
+- Consumes: nothing.
+- Produces: `operatorSaatIni(): string` from `library/utils/useAuth`; `interface Riwayat` from `library/types/riwayat`; component `RiwayatPanel` taking `{ entries: Riwayat[], title?: string }` and rendering nothing when `entries` is empty.
+
+- [ ] **Step 1: Create the shared type**
+
+`me/src/library/types/riwayat.ts`:
+
+```typescript
+/**
+ * One row of ud84_transaksi_log. The table is keyed by UNIQUE_TRANSAKSI,
+ * which is a sale's UNIQUE or an order's KODE -- the same audit trail serves
+ * both, so the shape is shared rather than declared twice.
+ */
+export interface Riwayat {
+    ID: number;
+    AKSI: string;
+    OPERATOR: string | null;
+    ALASAN: string | null;
+    CATATAN_SISTEM: string | null;
+    CREATED_AT: string;
+}
+```
+
+- [ ] **Step 2: Create the auth helper**
+
+`me/src/library/utils/useAuth.ts`:
+
+```typescript
+/**
+ * The panel operator's name, for actions that are audited.
+ *
+ * Sessions opened before the login page started storing { name, privilege }
+ * hold a bare `true`, so the name can legitimately be missing; callers send
+ * an empty string and the backend records 'Tidak diketahui' rather than
+ * refusing the action. localStorage access is guarded because a throw here
+ * would take down whatever the operator was trying to do.
+ */
+export function operatorSaatIni(): string {
+    try {
+        const stored = localStorage.getItem('Auth');
+        const parsed = stored ? JSON.parse(stored) : null;
+
+        return typeof parsed?.name === 'string' ? parsed.name : '';
+    } catch {
+        return '';
+    }
+}
+```
+
+- [ ] **Step 3: Create the audit-trail component**
+
+`me/src/components/shared/RiwayatPanel.svelte`. It renders nothing at all when there is no history, so callers do not each repeat that check:
+
+```svelte
+<script lang="ts">
+    import { Carbon } from "../../library/utils/useFormat";
+    import type { Riwayat } from "../../library/types/riwayat";
+
+    let { entries, title = "Riwayat Perubahan" }: { entries: Riwayat[]; title?: string } = $props();
+</script>
+
+{#if entries.length > 0}
+    <div class="divider my-3"></div>
+
+    <h4 class="mb-2 font-bold">{title}</h4>
+    <div class="flex flex-col gap-3">
+        {#each entries as catatan}
+            <div class="rounded-lg border border-base-300 p-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="badge badge-ghost">{catatan.AKSI}</span>
+                    <span class="text-sm font-medium">{catatan.OPERATOR}</span>
+                    <span class="text-sm text-base-content/60">{Carbon(catatan.CREATED_AT, "timestamp")}</span>
+                </div>
+                {#if catatan.ALASAN}
+                    <p class="mt-2 text-sm"><span class="font-medium">Alasan:</span> {catatan.ALASAN}</p>
+                {/if}
+                {#if catatan.CATATAN_SISTEM}
+                    <p class="mt-2 whitespace-pre-line text-sm text-base-content/70">{catatan.CATATAN_SISTEM}</p>
+                {/if}
+            </div>
+        {/each}
+    </div>
+{/if}
+```
+
+- [ ] **Step 4: Move the Transaksi page onto both**
+
+In `me/src/routes/ud84/panel/transaksi/+page.svelte`:
+
+1. Add to the imports at the top of the `<script>` block:
+
+```typescript
+    import RiwayatPanel from "../../../../components/shared/RiwayatPanel.svelte";
+    import { operatorSaatIni } from "../../../../library/utils/useAuth";
+    import type { Riwayat } from "../../../../library/types/riwayat";
+```
+
+2. Delete the local `interface Riwayat { ... }` block — the imported type replaces it. Leave `let riwayatTransaksi: Riwayat[] = $state([]);` exactly as it is.
+
+3. Delete the local `function operatorSaatIni(): string { ... }` and its doc comment, including the `try/catch`. The call inside `batalkanTransaksi` is unchanged — it now resolves to the import.
+
+4. In the drawer markup, replace the whole `{#if riwayatTransaksi.length > 0} ... {/if}` block — from that `{#if}` through its matching `{/if}`, including the `<div class="divider my-3"></div>`, the `<h4>` and the `{#each}` — with one line:
+
+```svelte
+        <RiwayatPanel entries={riwayatTransaksi} />
+```
+
+The component renders the divider and heading itself, and renders nothing when the list is empty, so the behaviour is identical.
+
+- [ ] **Step 5: Check types**
+
+Run: `cd "D:/Coedes/Production/me" && npm run check`
+Expected: `0 ERRORS 6 WARNINGS`. A new warning or error means the extraction broke something — fix it before committing.
+
+- [ ] **Step 6: Commit**
+
+```bash
+cd "D:/Coedes/Production/me"
+git add src/library/types/riwayat.ts src/library/utils/useAuth.ts src/components/shared/RiwayatPanel.svelte src/routes/ud84/panel/transaksi/+page.svelte
+git commit -m "Extract the audit panel and the operator lookup
+
+Both were written for the Transaksi drawer this morning and the Pesanan
+drawer needs the same two. Extracted before the second consumer arrives
+rather than after, while the cancel-invoice release is still unshipped and
+touching that page costs nothing.
+
+RiwayatPanel renders nothing when there is no history, so callers do not
+each repeat that check."
+```
+
+---
+
+### Task 7: The editor
 
 **Files:**
 - Modify: `me/src/routes/ud84/panel/pesanan/+page.svelte` (whole file)
 
 **Interfaces:**
-- Consumes: `SALES_ID` (Task 1), `KODE_ITEM` and `ADA` (Task 1), `POST UD84/Pesanan/Update` (Task 2), `POST UD84/Pesanan/Riwayat` (Task 1), `POST UD84/Pesanan/Delete` with `OPERATOR` (Task 4).
+- Consumes: `SALES_ID` (Task 1), `KODE_ITEM` and `ADA` (Task 1), `POST UD84/Pesanan/Update` (Task 2), `POST UD84/Pesanan/Riwayat` (Task 1), `POST UD84/Pesanan/Delete` with `OPERATOR` (Task 4), and from Task 6: `operatorSaatIni()` from `library/utils/useAuth`, `Riwayat` from `library/types/riwayat`, and the `RiwayatPanel` component taking `{ entries }`.
 - Produces: nothing consumed by later tasks.
+
+**This task lands in the `me` repo** (branch `ud84-perbaikan-pesanan`).
 
 - [ ] **Step 1: Replace the `<script>` block**
 
@@ -1148,6 +1301,9 @@ The whole block, from `<script lang="ts">` to `</script>`:
     import Drawer from "../../../../components/shared/Drawer.svelte";
     import DatePlaceholder from "../../../../components/shared/DatePlaceholder.svelte";
     import Ud84Navigation from "../../../../components/content/ud84/UD84Navigation.svelte";
+    import RiwayatPanel from "../../../../components/shared/RiwayatPanel.svelte";
+    import { operatorSaatIni } from "../../../../library/utils/useAuth";
+    import type { Riwayat } from "../../../../library/types/riwayat";
 
     interface Pesanan {
         NAMA: string;
@@ -1183,15 +1339,6 @@ The whole block, from `<script lang="ts">` to `</script>`:
         NAMA: string;
     }
 
-    interface Riwayat {
-        ID: number;
-        AKSI: string;
-        OPERATOR: string | null;
-        ALASAN: string | null;
-        CATATAN_SISTEM: string | null;
-        CREATED_AT: string;
-    }
-
     let newData: Pesanan[] = $state([]);
     let carts: Carts[] = $state([]);
     let riwayat: Riwayat[] = $state([]);
@@ -1221,17 +1368,6 @@ The whole block, from `<script lang="ts">` to `</script>`:
     let salesPilihan: Staff[] = $derived(
         daftarSales.filter((orang) => orang.STATUS !== "Nonaktif" || orang.ID === terpilih?.SALES_ID)
     );
-
-    function operatorSaatIni(): string {
-        try {
-            const stored = localStorage.getItem('Auth');
-            const parsed = stored ? JSON.parse(stored) : null;
-
-            return typeof parsed?.name === 'string' ? parsed.name : '';
-        } catch {
-            return '';
-        }
-    }
 
     async function viewItem(pesanan: Pesanan): Promise <void> {
         const { status, message, data } = await db({
@@ -1618,28 +1754,7 @@ Replace everything from `<Drawer isOpen={isDrawer}` to the closing `</Drawer>`:
             </p>
         {/if}
 
-        {#if riwayat.length > 0}
-            <div class="divider my-3"></div>
-
-            <h4 class="mb-2 font-bold">Riwayat Perubahan</h4>
-            <div class="flex flex-col gap-3">
-                {#each riwayat as catatan}
-                    <div class="rounded-lg border border-base-300 p-3">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span class="badge badge-ghost">{catatan.AKSI}</span>
-                            <span class="text-sm font-medium">{catatan.OPERATOR}</span>
-                            <span class="text-sm text-base-content/60">{Carbon(catatan.CREATED_AT, "timestamp")}</span>
-                        </div>
-                        {#if catatan.ALASAN}
-                            <p class="mt-2 text-sm"><span class="font-medium">Alasan:</span> {catatan.ALASAN}</p>
-                        {/if}
-                        {#if catatan.CATATAN_SISTEM}
-                            <p class="mt-2 whitespace-pre-line text-sm text-base-content/70">{catatan.CATATAN_SISTEM}</p>
-                        {/if}
-                    </div>
-                {/each}
-            </div>
-        {/if}
+        <RiwayatPanel entries={riwayat} />
     </div>
 </Drawer>
 ```
@@ -1688,7 +1803,7 @@ The audit trail sits below, the same panel the Transaksi drawer uses."
 
 ---
 
-### Task 7: Browser verification and the runbook
+### Task 8: Browser verification and the runbook
 
 **Files:**
 - Create: `me/docs/deployment/2026-08-06-ud84-perbaikan-pesanan-deploy.md`
