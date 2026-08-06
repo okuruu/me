@@ -45,6 +45,8 @@ export interface Receipt {
     total: number;
     /** True when the sale has been voided. Both papers must print as cancelled. */
     dibatalkan: boolean;
+    dikoreksi: boolean;
+    dikoreksi_pada: string | null;
     data: Detail[];
     ringkasan: Ringkasan;
     rekap: Rekap;
@@ -57,6 +59,8 @@ export const emptyReceipt: Receipt = {
     point: 0,
     total: 0,
     dibatalkan: false,
+    dikoreksi: false,
+    dikoreksi_pada: null,
     data: [],
     ringkasan: {
         TOTAL_BARANG: 0,

@@ -37,6 +37,7 @@
         JATUH_TEMPO: string;
         KETERANGAN: string | null;
         TOTAL: number;
+        POTONGAN: number;
         CREATED_AT: string;
         UPDATED_AT: string | null;
     }
@@ -46,6 +47,7 @@
         UNIQUE: string;
         KODE: string | null;
         NAMA: string;
+        SATUAN: string | null;
         JUMLAH: number;
         HARGA_ASLI: number;
         HARGA_TERJUAL: number;
@@ -53,6 +55,34 @@
         POTONGAN_RUPIAH: number;
         CREATED_AT: string;
         UPDATED_AT: string | null;
+    }
+
+    interface Koreksi {
+        DAPAT_UBAH_ITEM: boolean;
+        ALASAN: string | null;
+    }
+
+    interface Produk {
+        ID: number;
+        NAMA: string;
+        TIPE: string;
+        HARGA_JUAL: number;
+        HARGA_PER_ITEM: number;
+        JUMLAH_PER_ITEM: number;
+    }
+
+    /** One row of the editor: a stored line carries its ID, a new one does not. */
+    interface BarisKoreksi {
+        ID: number | null;
+        KODE_ITEM: number;
+        NAMA: string;
+        SATUAN: string;
+        TIPE: string;
+        JUMLAH_PER_ITEM: number;
+        JUMLAH: number;
+        HARGA_ASLI: number;
+        POTONGAN_PERSEN: number;
+        POTONGAN_RUPIAH: number;
     }
 
     let daftarTransaksi: Transaksi[] = $state([]);
@@ -67,6 +97,7 @@
         JATUH_TEMPO: '',
         KETERANGAN: '',
         TOTAL: 0,
+        POTONGAN: 0,
         CREATED_AT: '',
         UPDATED_AT: ''
     });
@@ -94,6 +125,37 @@
     let alasanBatal: string = $state('');
     let sedangMembatalkan: boolean = $state(false);
 
+    let koreksi: Koreksi = $state({ DAPAT_UBAH_ITEM: false, ALASAN: null });
+
+    let isKoreksiForm: boolean = $state(false);
+    let sedangMemperbaiki: boolean = $state(false);
+    let alasanKoreksi: string = $state('');
+
+    let draftKoreksi = $state({ NAMA: '', KETERANGAN: '', JATUH_TEMPO: '', CASH: 0, DP: 0, POTONGAN: 0 });
+    let barisKoreksi: BarisKoreksi[] = $state([]);
+
+    let daftarProduk: Produk[] = $state([]);
+    let produkDipilih: string = $state('');
+
+    // What the operator will be saving, recomputed as they type, so the number
+    // is on screen before it is committed rather than after.
+    //
+    // On a header-only correction (DAPAT_UBAH_ITEM false) the backend does not
+    // touch the lines at all -- it sums each stored HARGA_TERJUAL as-is. That
+    // figure and (HARGA_ASLI - POTONGAN_PERSEN - POTONGAN_RUPIAH) * JUMLAH only
+    // agree when a stored line is internally consistent, which is not
+    // guaranteed for legacy rows (an empty HARGA_ASLI with a real stored
+    // HARGA_TERJUAL is live in production). The preview must derive from the
+    // same source the backend actually sums, or it can show a different total
+    // than what gets saved.
+    let totalBarangKoreksi: number = $derived(
+        koreksi.DAPAT_UBAH_ITEM
+            ? barisKoreksi.reduce((jumlah, baris) =>
+                jumlah + Math.max(0, baris.HARGA_ASLI - baris.POTONGAN_PERSEN - baris.POTONGAN_RUPIAH) * baris.JUMLAH, 0)
+            : detailTransaksi.reduce((jumlah, detail) => jumlah + Number(detail.HARGA_TERJUAL ?? 0), 0)
+    );
+    let totalKoreksi: number = $derived(totalBarangKoreksi - draftKoreksi.POTONGAN);
+
     type Search = Record<"startDate" | "endDate", string>;
     const useInput: Search = $state({
         startDate: initializeDate("first"),
@@ -102,16 +164,28 @@
 
     onMount(async () => doPost());
 
-    async function getDetail(id: string): Promise <Array<Detail>>{
+    // Loads the drawer's data without touching isDrawer, so a caller that
+    // refreshes an already-open drawer (a saved correction) doesn't also
+    // close it -- only getDetail, which opens the drawer fresh, should toggle.
+    async function muatDetail(id: string): Promise <Array<Detail>> {
         const getResponse = await useFetch('UD84/Daftar-Transaksi/Detail-Transaksi/' + id);
         detailTransaksi = getResponse.detail;
         rekapTransaksi = getResponse.rekap;
         useDP = rupiahFormatter.format(rekapTransaksi.TOTAL - rekapTransaksi.DP)
         isBatalForm = false;
         alasanBatal = '';
+        koreksi = getResponse.KOREKSI ?? { DAPAT_UBAH_ITEM: false, ALASAN: null };
+        isKoreksiForm = false;
+        alasanKoreksi = '';
+        produkDipilih = '';
         await getRiwayat(id);
-        isDrawer = !isDrawer;
         return detailTransaksi;
+    }
+
+    async function getDetail(id: string): Promise <Array<Detail>>{
+        const detail = await muatDetail(id);
+        isDrawer = !isDrawer;
+        return detail;
     }
 
     async function getRiwayat(id: string): Promise <void> {
@@ -213,6 +287,197 @@
         rekapTransaksi.STATUS = 'Dibatalkan';
 
         await getRiwayat(rekapTransaksi.UNIQUE);
+        await doPost();
+    }
+
+    async function mulaiKoreksi(): Promise <void> {
+        draftKoreksi = {
+            NAMA: rekapTransaksi.NAMA ?? '',
+            KETERANGAN: rekapTransaksi.KETERANGAN ?? '',
+            JATUH_TEMPO: rekapTransaksi.JATUH_TEMPO ?? '',
+            CASH: Number(rekapTransaksi.CASH ?? 0),
+            DP: Number(rekapTransaksi.DP ?? 0),
+            POTONGAN: Number(rekapTransaksi.POTONGAN ?? 0),
+        };
+
+        if (koreksi.DAPAT_UBAH_ITEM && daftarProduk.length === 0) {
+            daftarProduk = await useFetch('UD84/Master-Produk/Retrieve') ?? [];
+        }
+
+        // The dropdown must offer the product's real unit, not the stale unit
+        // the sale was rung under -- look it up from the product list (loaded
+        // above), falling back to the stored SATUAN only if the product is
+        // somehow gone.
+        barisKoreksi = detailTransaksi.map((baris) => {
+            const kodeItem = Number(baris.KODE ?? 0);
+            const produk = daftarProduk.find((item) => item.ID === kodeItem);
+
+            return {
+                ID: baris.ID,
+                KODE_ITEM: kodeItem,
+                NAMA: baris.NAMA,
+                SATUAN: baris.SATUAN ?? 'Pcs',
+                TIPE: produk?.TIPE ?? (baris.SATUAN ?? 'Pcs'),
+                JUMLAH_PER_ITEM: Number(produk?.JUMLAH_PER_ITEM ?? 0),
+                JUMLAH: Number(baris.JUMLAH),
+                HARGA_ASLI: Number(baris.HARGA_ASLI),
+                POTONGAN_PERSEN: Number(baris.POTONGAN_PERSEN),
+                POTONGAN_RUPIAH: Number(baris.POTONGAN_RUPIAH),
+            };
+        });
+
+        isKoreksiForm = true;
+    }
+
+    function batalKoreksi(): void {
+        isKoreksiForm = false;
+        alasanKoreksi = '';
+        produkDipilih = '';
+        barisKoreksi = [];
+    }
+
+    function tambahBaris(): void {
+        const id = Number(produkDipilih);
+
+        if (!id) {
+            toast.error("Pilih produk dulu");
+            return;
+        }
+
+        const produk = daftarProduk.find((item) => item.ID === id);
+
+        if (!produk) {
+            toast.error("Produk tidak ditemukan");
+            return;
+        }
+
+        // A new line starts as loose pieces, priced from the per-piece column --
+        // HARGA_JUAL is the whole-unit (Set/Dus) price, HARGA_PER_ITEM is the
+        // per-piece price, and both the unit and the price stay changeable on
+        // the row before saving.
+        barisKoreksi = [...barisKoreksi, {
+            ID: null,
+            KODE_ITEM: produk.ID,
+            NAMA: produk.NAMA,
+            SATUAN: 'Pcs',
+            TIPE: produk.TIPE,
+            JUMLAH_PER_ITEM: Number(produk.JUMLAH_PER_ITEM ?? 0),
+            JUMLAH: 1,
+            HARGA_ASLI: Number(produk.HARGA_PER_ITEM ?? 0),
+            POTONGAN_PERSEN: 0,
+            POTONGAN_RUPIAH: 0,
+        }];
+        produkDipilih = '';
+    }
+
+    function hapusBaris(index: number): void {
+        barisKoreksi = barisKoreksi.filter((_, posisi) => posisi !== index);
+    }
+
+    // Re-seed a row's price when its unit changes, so a switch between Pcs and
+    // the product's own unit doesn't leave the price from the old unit behind --
+    // the same HARGA_PER_ITEM / HARGA_JUAL split the POS enforces.
+    function ubahSatuanBaris(index: number): void {
+        const baris = barisKoreksi[index];
+
+        if (!baris) {
+            return;
+        }
+
+        const produk = daftarProduk.find((item) => item.ID === baris.KODE_ITEM);
+
+        if (!produk) {
+            return;
+        }
+
+        baris.HARGA_ASLI = baris.SATUAN === 'Pcs'
+            ? Number(produk.HARGA_PER_ITEM ?? 0)
+            : Number(produk.HARGA_JUAL ?? 0);
+    }
+
+    async function simpanKoreksi(): Promise <void> {
+        if (alasanKoreksi.trim() === '') {
+            toast.error("Alasan perbaikan wajib diisi");
+            return;
+        }
+
+        // Clearing a number input gives undefined -> JSON null -> (int) null
+        // = 0 on the backend, so an operator clearing CASH to retype it and
+        // saving too soon would silently zero the sale's cash and strip its
+        // points behind a success toast. Caught here, before the request ever
+        // goes out.
+        const bidangUang: Array<[string, number]> = [
+            ['Pembayaran Tunai', draftKoreksi.CASH],
+            ['DP', draftKoreksi.DP],
+            ['Potongan Lain', draftKoreksi.POTONGAN],
+        ];
+        const uangTidakValid = bidangUang.find(([, nilai]) => typeof nilai !== 'number' || Number.isNaN(nilai) || nilai < 0);
+
+        if (uangTidakValid) {
+            toast.error(`${uangTidakValid[0]} harus diisi dengan angka minimal 0`);
+            return;
+        }
+
+        if (koreksi.DAPAT_UBAH_ITEM && barisKoreksi.length === 0) {
+            toast.error("Transaksi harus punya minimal satu item");
+            return;
+        }
+
+        if (koreksi.DAPAT_UBAH_ITEM && barisKoreksi.some((baris) => !(Math.floor(baris.JUMLAH) >= 1))) {
+            toast.error("Jumlah setiap item harus minimal 1");
+            return;
+        }
+
+        sedangMemperbaiki = true;
+
+        const { status, message, data } = await db({
+            KODE: rekapTransaksi.UNIQUE,
+            NAMA: draftKoreksi.NAMA,
+            KETERANGAN: draftKoreksi.KETERANGAN,
+            JATUH_TEMPO: draftKoreksi.JATUH_TEMPO === '' ? null : draftKoreksi.JATUH_TEMPO,
+            CASH: Number(draftKoreksi.CASH),
+            DP: Number(draftKoreksi.DP),
+            POTONGAN: Number(draftKoreksi.POTONGAN),
+            ITEMS: koreksi.DAPAT_UBAH_ITEM
+                ? barisKoreksi.map((baris) => ({
+                    ID: baris.ID,
+                    KODE_ITEM: baris.KODE_ITEM,
+                    SATUAN: baris.SATUAN,
+                    JUMLAH: Math.floor(Number(baris.JUMLAH)),
+                    HARGA_ASLI: Number(baris.HARGA_ASLI),
+                    POTONGAN_PERSEN: Number(baris.POTONGAN_PERSEN),
+                    POTONGAN_RUPIAH: Number(baris.POTONGAN_RUPIAH),
+                }))
+                : null,
+            OPERATOR: operatorSaatIni(),
+            ALASAN: alasanKoreksi,
+        }, 'UD84/Daftar-Transaksi/Perbaiki');
+
+        sedangMemperbaiki = false;
+
+        if (status === "error") {
+            toast.error(message);
+            return;
+        }
+
+        toast.success(message);
+
+        // Stock left below zero is the one thing here nobody may miss, so this
+        // toast waits to be dismissed instead of expiring.
+        const stokMinus: string[] = data?.STOK_MINUS ?? [];
+
+        if (stokMinus.length > 0) {
+            toast.warning(`Stok ${stokMinus.length} produk sekarang minus`, {
+                description: `${stokMinus.join(', ')} — hitung ulang stoknya lewat Logistik.`,
+                duration: Number.POSITIVE_INFINITY,
+                closeButton: true,
+                action: { label: 'Mengerti', onClick: () => {} },
+            });
+        }
+
+        isKoreksiForm = false;
+        alasanKoreksi = '';
+        await muatDetail(rekapTransaksi.UNIQUE);
         await doPost();
     }
 </script>
@@ -393,7 +658,7 @@
                         <th class="text-left">Nama Produk</th>
                         <th class="text-center">Jumlah</th>
                         <th>Harga Terjual</th>
-                        <th>Potongan Persen</th>
+                        <th>Diskon (Rp)</th>
                         <th>Potongan Rupiah</th>
                     </tr>
                 </thead>
@@ -412,6 +677,128 @@
                     {/each}
                 </tbody>
             </table>
+        </div>
+
+        <div class="divider my-3"></div>
+
+        <div class="rounded-lg border border-info/30 p-4">
+            <h4 class="mb-2 font-bold text-info">Perbaikan Transaksi</h4>
+
+            {#if rekapTransaksi.STATUS === 'Dibatalkan'}
+                <p class="text-sm text-base-content/70">
+                    Transaksi yang sudah dibatalkan tidak bisa diperbaiki.
+                </p>
+            {:else if !isKoreksiForm}
+                <p class="mb-3 text-sm text-base-content/70">
+                    Memperbaiki transaksi akan menghitung ulang total, stok, dan poin member.
+                    {#if !koreksi.DAPAT_UBAH_ITEM}
+                        Untuk transaksi ini hanya data pelanggan dan nominal yang bisa diubah.
+                    {/if}
+                </p>
+                {#if !koreksi.DAPAT_UBAH_ITEM && koreksi.ALASAN}
+                    <p class="mb-3 text-sm text-warning">{koreksi.ALASAN}</p>
+                {/if}
+                <button type="button" onclick={mulaiKoreksi} class="btn btn-sm btn-info">Perbaiki Transaksi</button>
+            {:else}
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <div>
+                        <label for="koreksiNama" class="label-text mb-1 block font-medium">Nama Pelanggan</label>
+                        <input id="koreksiNama" type="text" bind:value={draftKoreksi.NAMA} class="input input-bordered input-sm w-full" placeholder="UMUM"/>
+                    </div>
+                    <div>
+                        <label for="koreksiKeterangan" class="label-text mb-1 block font-medium">Keterangan</label>
+                        <input id="koreksiKeterangan" type="text" bind:value={draftKoreksi.KETERANGAN} class="input input-bordered input-sm w-full" placeholder="Keterangan"/>
+                    </div>
+                    <div>
+                        <label for="koreksiCash" class="label-text mb-1 block font-medium">Pembayaran Tunai</label>
+                        <input id="koreksiCash" type="number" min="0" bind:value={draftKoreksi.CASH} class="input input-bordered input-sm w-full"/>
+                    </div>
+                    <div>
+                        <label for="koreksiDp" class="label-text mb-1 block font-medium">DP</label>
+                        <input id="koreksiDp" type="number" min="0" bind:value={draftKoreksi.DP} class="input input-bordered input-sm w-full"/>
+                    </div>
+                    <div>
+                        <label for="koreksiPotongan" class="label-text mb-1 block font-medium">Potongan Lain</label>
+                        <input id="koreksiPotongan" type="number" min="0" bind:value={draftKoreksi.POTONGAN} class="input input-bordered input-sm w-full"/>
+                    </div>
+                    <div>
+                        <label for="koreksiJatuhTempo" class="label-text mb-1 block font-medium">Jatuh Tempo</label>
+                        <DatePlaceholder bind:value={draftKoreksi.JATUH_TEMPO} class="input input-bordered input-sm w-full" placeholder="Jatuh Tempo"/>
+                    </div>
+                </div>
+
+                {#if koreksi.DAPAT_UBAH_ITEM}
+                    <div class="mt-4 overflow-x-auto">
+                        <table class="table table-sm align-middle">
+                            <thead>
+                                <tr class="font-bold">
+                                    <th class="text-left">Produk</th>
+                                    <th>Satuan</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga</th>
+                                    <th>Diskon (Rp)</th>
+                                    <th>Pot. Rp</th>
+                                    <th>Jumlah</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each barisKoreksi as baris, index}
+                                    <tr>
+                                        <td class="text-left">{baris.NAMA}</td>
+                                        <td>
+                                            <select bind:value={baris.SATUAN} onchange={() => ubahSatuanBaris(index)} class="select select-bordered select-sm">
+                                                <option value="Pcs">Pcs (eceran)</option>
+                                                {#if baris.TIPE && baris.TIPE !== 'Pcs'}
+                                                    <option value={baris.TIPE}>{baris.TIPE} (isi {baris.JUMLAH_PER_ITEM} pcs)</option>
+                                                {/if}
+                                            </select>
+                                        </td>
+                                        <td><input type="number" min="1" bind:value={baris.JUMLAH} class="input input-bordered input-sm w-20 text-center"/></td>
+                                        <td><input type="number" min="0" bind:value={baris.HARGA_ASLI} class="input input-bordered input-sm w-28"/></td>
+                                        <td><input type="number" min="0" bind:value={baris.POTONGAN_PERSEN} class="input input-bordered input-sm w-24"/></td>
+                                        <td><input type="number" min="0" bind:value={baris.POTONGAN_RUPIAH} class="input input-bordered input-sm w-24"/></td>
+                                        <td class="whitespace-nowrap">
+                                            {rupiahFormatter.format(Math.max(0, baris.HARGA_ASLI - baris.POTONGAN_PERSEN - baris.POTONGAN_RUPIAH) * baris.JUMLAH)}
+                                        </td>
+                                        <td><button type="button" onclick={() => hapusBaris(index)} class="btn btn-ghost btn-xs text-error">Hapus</button></td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
+                        <div class="flex-1">
+                            <label for="koreksiProduk" class="label-text mb-1 block font-medium">Tambah Produk</label>
+                            <select id="koreksiProduk" bind:value={produkDipilih} class="select select-bordered select-sm w-full">
+                                <option value="">Pilih produk</option>
+                                {#each daftarProduk as produk}
+                                    <option value={String(produk.ID)}>{produk.NAMA}</option>
+                                {/each}
+                            </select>
+                        </div>
+                        <button type="button" onclick={tambahBaris} class="btn btn-sm btn-primary">Tambah Item</button>
+                    </div>
+                {/if}
+
+                <p class="mt-3 text-sm">
+                    Total barang <b>{rupiahFormatter.format(totalBarangKoreksi)}</b>,
+                    total setelah potongan <b class="text-success">{rupiahFormatter.format(totalKoreksi)}</b>
+                </p>
+
+                <div class="mt-3">
+                    <label for="alasanKoreksi" class="label-text mb-1 block font-medium">Alasan Perbaikan</label>
+                    <input id="alasanKoreksi" type="text" bind:value={alasanKoreksi} class="input input-bordered input-sm w-full" placeholder="Contoh: Kasir salah input jumlah"/>
+                </div>
+
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onclick={simpanKoreksi} class="btn btn-sm btn-info" disabled={sedangMemperbaiki}>
+                        {sedangMemperbaiki ? 'Menyimpan...' : 'Simpan Perbaikan'}
+                    </button>
+                    <button type="button" onclick={batalKoreksi} class="btn btn-sm btn-ghost" disabled={sedangMemperbaiki}>Batal</button>
+                </div>
+            {/if}
         </div>
 
         <div class="divider my-3"></div>
