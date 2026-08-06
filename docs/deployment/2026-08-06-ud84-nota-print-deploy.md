@@ -8,6 +8,8 @@
 
 **Repos:** `Marmyadose` (Laravel backend, manual upload) and `me` (SvelteKit frontend, Vercel).
 
+> **A third release follows this one:** `2026-08-06-ud84-cancel-invoice-deploy.md`, which adds cancelling a transaction. It edits `Report.php` and `Penjualan.php` again, so **deploy this one first** — otherwise uploading these files afterwards would roll the cancel release back.
+
 ---
 
 ## Read this first

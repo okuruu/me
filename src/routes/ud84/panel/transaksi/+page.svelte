@@ -9,8 +9,11 @@
     import DatePlaceholder from "../../../../components/shared/DatePlaceholder.svelte";
     import { initializeDate } from "../../../../library/utils/useDefault";
 
+    type Status = "Aktif" | "Dibatalkan";
+
     interface Transaksi {
         ID: string;
+        STATUS: Status;
         TANGGAL: string;
         JATUH_TEMPO: string;
         NAMA: string;
@@ -24,6 +27,7 @@
     interface Rekap {
         ID: number;
         UNIQUE: string;
+        STATUS: Status;
         NAMA: string;
         CASH: number;
         DP: number;
@@ -32,6 +36,16 @@
         TOTAL: number;
         CREATED_AT: string;
         UPDATED_AT: string | null;
+    }
+
+    interface Riwayat {
+        ID: number;
+        UNIQUE_TRANSAKSI: string;
+        AKSI: string;
+        OPERATOR: string | null;
+        ALASAN: string | null;
+        CATATAN_SISTEM: string | null;
+        CREATED_AT: string;
     }
 
     interface Detail {
@@ -53,6 +67,7 @@
     let rekapTransaksi: Rekap = $state({
         ID: 0,
         UNIQUE: '',
+        STATUS: 'Aktif',
         NAMA: '',
         CASH: 0,
         DP: 0,
@@ -63,6 +78,7 @@
         UPDATED_AT: ''
     });
     let detailTransaksi: Detail[] = $state([]);
+    let riwayatTransaksi: Riwayat[] = $state([]);
 
     let nominalTransaksi:number     = $state(0);
     let nominalDP:number            = $state(0);
@@ -74,6 +90,17 @@
 
     let isDrawer: boolean = $state(false);
 
+    // Cancelled sales are hidden until this is ticked; the backend keeps them
+    // out of the totals either way.
+    let tampilkanBatal: boolean = $state(false);
+
+    // The cancel confirmation lives inside the drawer rather than in a modal:
+    // the Drawer closes on any mousedown outside its panel, so a separate
+    // dialog element would take the drawer down with it.
+    let isBatalForm: boolean = $state(false);
+    let alasanBatal: string = $state('');
+    let sedangMembatalkan: boolean = $state(false);
+
     type Search = Record<"startDate" | "endDate", string>;
     const useInput: Search = $state({
         startDate: initializeDate("first"),
@@ -82,23 +109,21 @@
 
     onMount(async () => doPost());
 
-    async function initializePage(): Promise <void>{
-        const doResponse    = await useFetch('UD84/Daftar-Transaksi');
-        daftarTransaksi     = doResponse.data;
-        nominalTransaksi    = doResponse.TRANSAKSI;
-        nominalDP           = doResponse.DP;
-        nominalTunai        = doResponse.BAYAR_TUNAI;
-        nominalPotongan     = doResponse.POTONGAN;
-        nominalKembalian    = doResponse.KEMBALIAN;
-    }
-
     async function getDetail(id: string): Promise <Array<Detail>>{
         const getResponse = await useFetch('UD84/Daftar-Transaksi/Detail-Transaksi/' + id);
         detailTransaksi = getResponse.detail;
         rekapTransaksi = getResponse.rekap;
         useDP = rupiahFormatter.format(rekapTransaksi.TOTAL - rekapTransaksi.DP)
+        isBatalForm = false;
+        alasanBatal = '';
+        await getRiwayat(id);
         isDrawer = !isDrawer;
         return detailTransaksi;
+    }
+
+    async function getRiwayat(id: string): Promise <void> {
+        const { status, data } = await db({ KODE: id }, 'UD84/Daftar-Transaksi/Riwayat');
+        riwayatTransaksi = status === "error" ? [] : (data ?? []);
     }
 
     async function updateDownPayment(): Promise <void> {
@@ -120,7 +145,7 @@
                     }
 
                     toast.success(message);
-                    initializePage();
+                    doPost();
                 }
             },
         })
@@ -130,6 +155,7 @@
         const { status, message, data } = await db({
             start: useInput.startDate,
             end: useInput.endDate,
+            TAMPILKAN_BATAL: tampilkanBatal,
         }, 'UD84/Daftar-Transaksi/Search');
 
         if (status === "error") {
@@ -148,6 +174,70 @@
     function reverseData(): Transaksi[] {
         daftarTransaksi = daftarTransaksi.reverse();
         return daftarTransaksi;
+    }
+
+    /**
+     * Who is doing this. Sessions opened before the login page started storing
+     * the operator name hold a bare `true`, so the name can legitimately be
+     * missing; the backend records 'Tidak diketahui' for a blank one rather
+     * than refusing the cancellation.
+     */
+    function operatorSaatIni(): string {
+        try {
+            const stored = localStorage.getItem('Auth');
+            const parsed = stored ? JSON.parse(stored) : null;
+
+            return typeof parsed?.name === 'string' ? parsed.name : '';
+        } catch {
+            return '';
+        }
+    }
+
+    async function batalkanTransaksi(): Promise <void> {
+        if (alasanBatal.trim() === '') {
+            toast.error("Alasan pembatalan wajib diisi");
+            return;
+        }
+
+        sedangMembatalkan = true;
+
+        const { status, message, data } = await db({
+            KODE: rekapTransaksi.UNIQUE,
+            ALASAN: alasanBatal,
+            OPERATOR: operatorSaatIni(),
+        }, 'UD84/Daftar-Transaksi/Batal');
+
+        sedangMembatalkan = false;
+
+        if (status === "error") {
+            toast.error(message);
+            return;
+        }
+
+        toast.success(message);
+
+        // Stock that could not be returned is the one thing here nobody may
+        // miss, so this toast waits to be dismissed instead of expiring.
+        const gagalRestok: string[] = data?.GAGAL_RESTOK ?? [];
+
+        if (gagalRestok.length > 0) {
+            toast.warning(`Stok untuk ${gagalRestok.length} item tidak dikembalikan otomatis`, {
+                description: `${gagalRestok.join(', ')} — silakan sesuaikan lewat Logistik.`,
+                duration: Number.POSITIVE_INFINITY,
+                closeButton: true,
+                action: {
+                    label: 'Mengerti',
+                    onClick: () => {}
+                },
+            });
+        }
+
+        isBatalForm = false;
+        alasanBatal = '';
+        rekapTransaksi.STATUS = 'Dibatalkan';
+
+        await getRiwayat(rekapTransaksi.UNIQUE);
+        await doPost();
     }
 </script>
 <Ud84Navigation/>
@@ -174,10 +264,16 @@
                     </button>
                 </div>
             </form>
-            <label class="flex cursor-pointer items-center gap-2 lg:pb-1">
-                <input type="checkbox" class="toggle toggle-sm" onchange={reverseData}/>
-                <span class="label-text font-bold">A-Z</span>
-            </label>
+            <div class="flex flex-wrap items-center gap-5 lg:pb-1">
+                <label class="flex cursor-pointer items-center gap-2">
+                    <input type="checkbox" class="toggle toggle-sm" onchange={reverseData}/>
+                    <span class="label-text font-bold">A-Z</span>
+                </label>
+                <label class="flex cursor-pointer items-center gap-2">
+                    <input type="checkbox" class="toggle toggle-sm" bind:checked={tampilkanBatal} onchange={doPost}/>
+                    <span class="label-text font-bold">Tampilkan Dibatalkan</span>
+                </label>
+            </div>
         </div>
 
         <div class="divider my-3"></div>
@@ -206,7 +302,7 @@
                         </tr>
                     {:else}
                         {#each daftarTransaksi as data, index}
-                            <tr>
+                            <tr class={data.STATUS === 'Dibatalkan' ? 'text-base-content/40' : ''}>
                                 <td>
                                     {#if data.JATUH_TEMPO !== '-'}
                                         {#if data.DP == data.NOMINAL}
@@ -220,7 +316,12 @@
                                 </td>
                                 <td>{data.TANGGAL}</td>
                                 <td class="hidden md:table-cell">{data.JATUH_TEMPO}</td>
-                                <td class="text-left font-medium">{data.NAMA}</td>
+                                <td class="text-left font-medium">
+                                    {data.NAMA}
+                                    {#if data.STATUS === 'Dibatalkan'}
+                                        <span class="badge badge-outline badge-error badge-sm ml-1 align-middle">Dibatalkan</span>
+                                    {/if}
+                                </td>
                                 <td>{rupiahFormatter.format(data.NOMINAL)}</td>
                                 <td class="hidden lg:table-cell">{rupiahFormatter.format(data.POTONGAN)}</td>
                                 <td>
@@ -233,10 +334,14 @@
                                 <td class="hidden lg:table-cell">{rupiahFormatter.format(data.KEMBALIAN)}</td>
                                 <td class="hidden md:table-cell">{rupiahFormatter.format(data.BAYAR_TUNAI)}</td>
                                 <td>
-                                    <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
-                                        <img src="/icons/Printer.svg" alt="Print" height="18" />
-                                        Cetak Ulang
-                                    </a>
+                                    {#if data.STATUS === 'Dibatalkan'}
+                                        <span class="text-xs text-base-content/50">Tidak dapat dicetak</span>
+                                    {:else}
+                                        <a href="/ud84/panel/nota/{data.ID}" target="_blank" class="btn btn-sm btn-info">
+                                            <img src="/icons/Printer.svg" alt="Print" height="18" />
+                                            Cetak Ulang
+                                        </a>
+                                    {/if}
                                 </td>
                                 <td>
                                     <button type="button" onclick={() => getDetail(data.ID)} class="btn btn-sm btn-primary">Lihat</button>
@@ -262,7 +367,12 @@
 
 <Drawer isOpen={isDrawer} position="right" width="768px" onClose={() => isDrawer = !isDrawer}>
     <div class="w-full p-5">
-        <h3 class="text-lg font-bold">Detail Transaksi</h3>
+        <div class="flex flex-wrap items-center gap-2">
+            <h3 class="text-lg font-bold">Detail Transaksi</h3>
+            {#if rekapTransaksi.STATUS === 'Dibatalkan'}
+                <span class="badge badge-error">Dibatalkan</span>
+            {/if}
+        </div>
 
         <div class="divider my-3"></div>
 
@@ -288,13 +398,15 @@
             </div>
         </div>
 
-        <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
-            <div class="flex-1">
-                <label for="nominalDP" class="label-text mb-1 block font-medium">Pelunasan DP</label>
-                <Rupiah id="nominalDP" bind:value={useDP} useClass="input input-bordered input-sm w-full text-error"/>
+        {#if rekapTransaksi.STATUS !== 'Dibatalkan'}
+            <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+                <div class="flex-1">
+                    <label for="nominalDP" class="label-text mb-1 block font-medium">Pelunasan DP</label>
+                    <Rupiah id="nominalDP" bind:value={useDP} useClass="input input-bordered input-sm w-full text-error"/>
+                </div>
+                <button type="button" onclick={updateDownPayment} class="btn btn-sm btn-primary">Simpan DP</button>
             </div>
-            <button type="button" onclick={updateDownPayment} class="btn btn-sm btn-primary">Simpan DP</button>
-        </div>
+        {/if}
 
         <div class="divider my-3"></div>
 
@@ -325,5 +437,59 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="divider my-3"></div>
+
+        <div class="rounded-lg border border-error/30 p-4">
+            <h4 class="mb-2 font-bold text-error">Pembatalan Transaksi</h4>
+
+            {#if rekapTransaksi.STATUS === 'Dibatalkan'}
+                <p class="text-sm text-base-content/70">
+                    Transaksi ini sudah dibatalkan. Stok dan poin sudah dikembalikan sejauh yang bisa
+                    dilakukan sistem — rinciannya ada pada riwayat di bawah.
+                </p>
+            {:else if !isBatalForm}
+                <p class="mb-3 text-sm text-base-content/70">
+                    Membatalkan transaksi akan mengembalikan stok dan poin, serta mengeluarkan transaksi ini
+                    dari semua perhitungan omzet. Nominal pembayaran tidak diubah.
+                </p>
+                <button type="button" onclick={() => isBatalForm = true} class="btn btn-sm btn-error">Batalkan Transaksi</button>
+            {:else}
+                <label for="alasanBatal" class="label-text mb-1 block font-medium">Alasan Pembatalan</label>
+                <textarea id="alasanBatal" bind:value={alasanBatal} rows="3" class="textarea textarea-bordered w-full" placeholder="Contoh: Pelanggan membatalkan pesanan, barang dikembalikan utuh"></textarea>
+                <p class="mt-1 mb-3 text-sm text-base-content/60">
+                    Alasan wajib diisi dan tercatat bersama nama operator serta waktu pembatalan.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick={batalkanTransaksi} class="btn btn-sm btn-error" disabled={sedangMembatalkan}>
+                        {sedangMembatalkan ? 'Memproses...' : 'Ya, Batalkan Transaksi'}
+                    </button>
+                    <button type="button" onclick={() => { isBatalForm = false; alasanBatal = ''; }} class="btn btn-sm btn-ghost" disabled={sedangMembatalkan}>Tidak Jadi</button>
+                </div>
+            {/if}
+        </div>
+
+        {#if riwayatTransaksi.length > 0}
+            <div class="divider my-3"></div>
+
+            <h4 class="mb-2 font-bold">Riwayat Perubahan</h4>
+            <div class="flex flex-col gap-3">
+                {#each riwayatTransaksi as riwayat}
+                    <div class="rounded-lg border border-base-300 p-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="badge badge-ghost">{riwayat.AKSI}</span>
+                            <span class="text-sm font-medium">{riwayat.OPERATOR}</span>
+                            <span class="text-sm text-base-content/60">{Carbon(riwayat.CREATED_AT, "timestamp")}</span>
+                        </div>
+                        {#if riwayat.ALASAN}
+                            <p class="mt-2 text-sm"><span class="font-medium">Alasan:</span> {riwayat.ALASAN}</p>
+                        {/if}
+                        {#if riwayat.CATATAN_SISTEM}
+                            <p class="mt-2 whitespace-pre-line text-sm text-base-content/70">{riwayat.CATATAN_SISTEM}</p>
+                        {/if}
+                    </div>
+                {/each}
+            </div>
+        {/if}
     </div>
 </Drawer>

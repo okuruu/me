@@ -6,6 +6,10 @@
 </script>
 
 <div class="nota-thermal">
+    {#if receipt.dibatalkan}
+        <div class="void-banner">TRANSAKSI DIBATALKAN</div>
+    {/if}
+
     <div class="text-center">
         <div class="text-[12pt] font-extrabold">UD84</div>
         <div>WA Admin 0858-5500-9169</div>
@@ -110,6 +114,15 @@
     .qris {
         width: 35mm;
         height: 35mm;
+    }
+    /* A voided sale must never reprint as an ordinary receipt. */
+    .void-banner {
+        margin-bottom: 2mm;
+        border: 1pt solid #000;
+        padding: 1mm 0;
+        text-align: center;
+        font-size: 10pt;
+        font-weight: 800;
     }
     @media print {
         .nota-thermal {
