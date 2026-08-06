@@ -12,10 +12,13 @@
 		disableButton = true;
 		buttonProcess = 'Memuat...';
 
-        const { status, message } = await db({
+        // The login response carries the operator's name and privilege beside
+        // the usual status/message. They are kept, because actions that are
+        // audited -- cancelling a transaction -- have to record who did it.
+        const { status, message, name, privilege } = await db({
             email: currentEmail,
             password: currentPassword
-        }, 'UD84/Auth');
+        }, 'UD84/Auth') as unknown as { status: string; message: string; name?: string; privilege?: string };
 
 		disableButton = false;
 		buttonProcess = 'Masuk';
@@ -26,7 +29,7 @@
         }
 
         toast.success(message);
-        localStorage.setItem('Auth', JSON.stringify(true));
+        localStorage.setItem('Auth', JSON.stringify({ name: name ?? '', privilege: privilege ?? '' }));
         return goto('/ud84/panel/pesanan');
 
     }
