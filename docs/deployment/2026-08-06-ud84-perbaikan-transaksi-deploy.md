@@ -31,7 +31,7 @@ The practical deploy sequence does not change: cancel-invoice's own runbook alre
 | 2 | **`config/ud84.php`** (the points constant) | cancel-invoice | `config('ud84.poin_per_rupiah')` returns null, so recalculating member points on a correction divides by zero or silently grants nothing. Points end up wrong on every correction to a member's sale. |
 | 3 | **`postPenjualan` writing `SATUAN`** — the unit of sale — on each sale line | **nota-print**: the `SATUAN` column its SQL adds to `ud84_penjualan_detail`, and the `UD84/Penjualan.php` that fills it in | **No sale rung up before that release will ever qualify for item editing.** The gate has to know how many *pieces* a line represents, and a line sold as a whole `Set`/`Dus` is worth `JUMLAH_PER_ITEM` of them. With no recorded unit that cannot be known, so item editing stays unavailable and only header/money correction ever appears. |
 
-**A note on `KODE`, the other half of the gate.** The gate also requires each line to name the product it sold, but `KODE` is **not** a dependency of any release in this sub-project — `postPenjualan` has written it since March 2025. It is already populated on every sale rung up in the last year and needs no checking. `SATUAN` is the field that is genuinely new.
+**A note on `KODE`, the other half of the gate.** The gate also requires each line to name the product it sold, but `KODE` is **not** a dependency of any release in this sub-project — `postPenjualan` has written it since March 2025. It is already populated on every sale rung up since then and needs no checking. `SATUAN` is the field that is genuinely new.
 
 **Check all three before you start.** In phpMyAdmin:
 

@@ -211,7 +211,7 @@ Two receipts for one sale showing different totals, with nothing on either expla
 
 Stage 3 adds **no columns and no tables**. Stock adjustments go to `ud84_logs`, the audit to `ud84_transaksi_log`, and the nota derives the correction mark from that audit row rather than from a new flag. Nothing to run in phpMyAdmin.
 
-It does depend on the cancel-invoice release being live — for `ud84_transaksi_log`, for `config/ud84.php`, and for `postPenjualan` writing `KODE` at all, without which no sale will ever qualify for line editing.
+It is not self-sufficient for all that. Two of its dependencies are on the **cancel-invoice** release — `ud84_transaksi_log` for the audit rows and `config/ud84.php` for the points constant — and the third is on **nota-print**: `postPenjualan` writing `SATUAN` at all, without which no sale will ever qualify for line editing (§3). `KODE`, the gate's other half, predates this sub-project entirely and depends on nothing shipping here.
 
 ---
 
