@@ -19,15 +19,19 @@ Saying this early because the previous two releases both had a SQL step, and its
 
 That makes this a two-step deploy: upload three backend files, clear the route cache, push the frontend.
 
-### It requires the cancel-invoice release to be live — for three separate reasons
+### It requires the cancel-invoice release to be live — and, through it, the nota-print release
 
-Not one dependency, three. Two of them break loudly; the third breaks silently and is the one worth understanding.
+Not one dependency, three. Two come from **cancel-invoice** and break loudly. The third comes from **nota-print** and breaks silently, and it is the one worth understanding.
+
+The practical deploy sequence does not change: cancel-invoice's own runbook already requires nota-print to be live before it. But it is worth knowing which dependency is there for which reason, because only one of them can be checked by looking at the data.
 
 | # | What is needed | Where it comes from | What happens without it |
 |---|---|---|---|
 | 1 | Table **`ud84_transaksi_log`** | cancel-invoice SQL | Every correction fails. The save runs inside a transaction ending with an insert into a table that does not exist, so the whole correction rolls back and the operator sees a generic failure. Nothing is corrupted; nothing can be corrected either. Additionally the nota's **NOTA KOREKSI** mark reads this table, so `getInvoices` errors on every reprint. |
 | 2 | **`config/ud84.php`** (the points constant) | cancel-invoice | `config('ud84.poin_per_rupiah')` returns null, so recalculating member points on a correction divides by zero or silently grants nothing. Points end up wrong on every correction to a member's sale. |
-| 3 | **`postPenjualan` writing `KODE`** on each sale line | cancel-invoice `UD84/Penjualan.php` | **No sale will ever qualify for item editing.** The gate requires every line to name the product it sold; before that release lines stored only the product's name. Without it the item editor is permanently unavailable and only header/money correction ever appears. |
+| 3 | **`postPenjualan` writing `SATUAN`** — the unit of sale — on each sale line | **nota-print**: the `SATUAN` column its SQL adds to `ud84_penjualan_detail`, and the `UD84/Penjualan.php` that fills it in | **No sale rung up before that release will ever qualify for item editing.** The gate has to know how many *pieces* a line represents, and a line sold as a whole `Set`/`Dus` is worth `JUMLAH_PER_ITEM` of them. With no recorded unit that cannot be known, so item editing stays unavailable and only header/money correction ever appears. |
+
+**A note on `KODE`, the other half of the gate.** The gate also requires each line to name the product it sold, but `KODE` is **not** a dependency of any release in this sub-project — `postPenjualan` has written it since March 2025. It is already populated on every sale rung up in the last year and needs no checking. `SATUAN` is the field that is genuinely new.
 
 **Check all three before you start.** In phpMyAdmin:
 
@@ -35,13 +39,17 @@ Not one dependency, three. Two of them break loudly; the third breaks silently a
 SHOW TABLES LIKE 'ud84_transaksi_log';
 ```
 
-In File Manager, confirm `config/ud84.php` and `app/Http/Controllers/UD84/Transaksi.php` both exist. And confirm sales rung up since the cancel release have a non-empty `KODE`:
+In File Manager, confirm `config/ud84.php` and `app/Http/Controllers/UD84/Transaksi.php` both exist. Then confirm that recently rung-up sales record their unit:
 
 ```sql
-SELECT `UNIQUE`, KODE, NAMA, SATUAN FROM ud84_penjualan_detail ORDER BY ID DESC LIMIT 10;
+SELECT `UNIQUE`, KODE, NAMA, SATUAN
+FROM ud84_penjualan_detail
+ORDER BY ID DESC LIMIT 10;
 ```
 
-If `KODE` is filled in on the recent rows, dependency 3 is satisfied. If it is empty, the cancel release's `Penjualan.php` did not make it onto the server — fix that first, or this release's item editor will never turn on.
+**Read the `SATUAN` column, not `KODE`.** If `SATUAN` is filled in on the most recent rows (`Pcs`, `Set`, `Dus`…), dependency 3 is satisfied. If it is `NULL` on every recent row, the nota-print release's `Penjualan.php` is not on the server — fix that first, or this release's item editor will never turn on.
+
+Do **not** read `KODE` as the signal. It has been populated since March 2025, so it will look healthy whether or not the real prerequisite is live. A pre-flight check that cannot fail is worse than no check at all: it gives false assurance exactly where you are looking for a real one.
 
 ### Expect the item editor to be inert at first. This is correct, not a fault.
 
@@ -49,9 +57,9 @@ If `KODE` is filled in on the recent rows, dependency 3 is satisfied. If it is e
 
 Correcting a sale's *items* means recomputing stock, and recomputing stock needs two facts from every line: **which product** it sold (`KODE`) and **in what unit** (`SATUAN` — `Pcs`, or a whole `Set`/`Dus` worth `JUMLAH_PER_ITEM` pieces). A line missing either cannot be recounted without guessing, and guessing is wrong by a factor of ten or more, which would corrupt stock silently. So the system refuses.
 
-Only sales rung up **after the cancel-invoice release went live** record both. Every sale from before it will offer **Perbaiki Transaksi**, and pressing it will give **header and money fields with no item table**, plus a line of yellow text saying which item is missing what — for example *"Item 'ABC KECAP ASIN 620ML' tidak mencatat satuan penjualan, jadi jumlah pcs-nya tidak bisa dipastikan."*
+`KODE` has been recorded since March 2025, so it is the **unit** that decides this in practice, and only sales rung up **after the nota-print release went live** carry one. Every sale from before it will offer **Perbaiki Transaksi**, and pressing it will give **header and money fields with no item table**, plus a line of yellow text saying which item is missing what — for example *"Item 'ABC KECAP ASIN 620ML' tidak mencatat satuan penjualan, jadi jumlah pcs-nya tidak bisa dipastikan."* (Sales older than March 2025 fail the `KODE` half of the gate instead, and say so in their own words.)
 
-On the local database this was measured: of 29 sales, **exactly one** qualified for item editing — the one rung up after the cancel release. Production will look the same on day one and will fill in naturally as new sales are made. Nothing needs to be done to "turn it on"; it turns itself on, one sale at a time.
+On the local database this was measured: of 29 sales, **exactly one** qualified for item editing — the only one rung up with a unit recorded. Production will look the same on day one and will fill in naturally as new sales are made. Nothing needs to be done to "turn it on"; it turns itself on, one sale at a time.
 
 Header and money correction works on **every** active sale from day one, including old ones. That is not a degraded mode — it is the correct answer for a sale whose items cannot be safely recounted.
 
@@ -211,7 +219,7 @@ The mark comes from the audit row, so it appears on **every** reprint from then 
 
 ### 3c. Confirm an old sale offers header correction only
 
-Open a sale from **before** the cancel release.
+Open a sale from **before** the nota-print release — on day one that is every sale but the newest few.
 
 | Check | What you should see |
 |---|---|
@@ -260,7 +268,7 @@ Ring up one small real sale through **Retail** and confirm it lands in the list 
 
 Stated plainly so nothing surprises you later.
 
-- **Item editing is gated, and on day one almost nothing passes the gate.** A sale's lines can only be corrected if every line records both its product (`KODE`) and its unit (`SATUAN`). Only sales rung up after the cancel-invoice release do. Locally that was 1 of 29. This resolves itself as new sales accumulate. Header and money correction is available on every active sale immediately.
+- **Item editing is gated, and on day one almost nothing passes the gate.** A sale's lines can only be corrected if every line records both its product (`KODE`, written since March 2025) and its unit (`SATUAN`, written only since the nota-print release). The unit is the binding constraint. Locally that was 1 of 29. This resolves itself as new sales accumulate. Header and money correction is available on every active sale immediately.
 - **Stock may go below zero, by design.** Raising a quantity past what is on the shelf is allowed — `postPenjualan` already subtracts without a floor, so refusing here would block a probably-correct fix while leaving the same outcome reachable through the POS. A negative figure is a visible instruction to recount. Every product left negative is named in a warning toast that stays on screen until dismissed.
 - **The `KEMBALIAN` column keeps its existing DP defect.** A correction recomputes it exactly as `postPenjualan` writes it — `CASH - TOTAL`, ignoring DP — so a deposit sale's stored `KEMBALIAN` stays wrong in the same way it always was, and will show as a negative number in the list's Kembalian column when the corrected total exceeds the cash paid. This is deliberate: the correction refuses to invent a new inconsistency. **The nota derives its own Sisa Tagihan and does not read that column**, so what the customer is handed is correct.
 - **A cancelled sale cannot be corrected.** The drawer says so and the endpoint refuses independently. Cancelling is final; re-ring instead.

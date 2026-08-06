@@ -56,7 +56,7 @@ Established by querying the local database, not assumed.
 
 That one sale was rung up during this morning's verification. **No historical sale qualifies for line editing.**
 
-It is worse than "legacy data" implies. `postPenjualan` only began writing `KODE` as part of the cancel-invoice work, which is **merged but not deployed**. So on the day Stage 3 ships, no sale in production will qualify, and the line editor will do nothing until the cancel-invoice release goes live and new sales accumulate behind it.
+It is worse than "legacy data" implies. `KODE` is not the binding constraint — `postPenjualan` has written it since March 2025 (`c4a57fb`), which is why the 52 lines missing it are simply the ones older than that. The newly-recorded field is **`SATUAN`**, first written by `c877a72` as part of the **nota-print** work, which is **merged but not deployed**. So on the day Stage 3 ships, no sale in production will qualify, and the line editor will do nothing until the nota-print release goes live and new sales accumulate behind it.
 
 This is not a reason to change the gate. Guessing which product a line meant, months later, would attach stock movement to a product chosen from memory — the same silent corruption Stage 1 refused to risk when it declined to guess a missing unit. The feature is built correctly now and becomes useful as qualifying sales accumulate. **The owner should expect the item editor to be inert at first**, and the deployment guide must say so plainly, or its absence will read as a broken release.
 
