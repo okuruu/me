@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { toast } from "svelte-sonner";
     import { db, useFetch } from "../../../../library/hooks/db";
     import { initializeDate } from "../../../../library/utils/useDefault";
@@ -79,6 +80,12 @@
         startDate: initializeDate("first"),
         endDate: initializeDate("last"),
     } as Search);
+
+    // Load the current month on arrival, as every other list page does. This
+    // page used to open reading "Tidak ada data" until the operator pressed
+    // search, which reads as "there are no orders" rather than "nothing has
+    // been asked for yet".
+    onMount(async () => doPost());
 
     // Deactivated salespeople stay pickable only if this order already names
     // one, so an edit never silently reassigns the order to somebody else.

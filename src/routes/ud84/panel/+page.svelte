@@ -23,8 +23,17 @@
 		disableButton = false;
 		buttonProcess = 'Masuk';
 
-        if(status === "Unauthorized") {
-            toast.error(message);
+        // Checked positively, against the one value the backend sends on
+        // success. It used to test for "Unauthorized", which db() can never
+        // return: a 401 makes fetchWithRetry throw, and the helper reports
+        // status "error" instead -- so a wrong password fell straight through
+        // to the success path and logged the operator in.
+        if (status !== "Authenticated") {
+            // db() collapses a 401 into a generic connection error, so a wrong
+            // password and an unreachable server arrive here looking the same.
+            // The message says what the operator can act on without claiming to
+            // know which of the two it was.
+            toast.error("Gagal masuk. Periksa email dan password Anda, atau koneksi internet.");
             return;
         }
 
