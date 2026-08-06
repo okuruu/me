@@ -84,6 +84,16 @@
         daftarSales.filter((orang) => orang.STATUS !== "Nonaktif" || orang.ID === terpilih?.SALES_ID)
     );
 
+    // A Nonaktif salesperson still has a row, so salesPilihan above keeps
+    // them. A DELETED salesperson has no row at all, so they are missing
+    // from daftarSales entirely -- the select would render with nothing
+    // selected even though the order still names them. This flags that case
+    // so a fallback option can be rendered.
+    let salesHilang: boolean = $derived.by(() => {
+        const salesId = terpilih?.SALES_ID;
+        return salesId != null && !daftarSales.some((orang) => orang.ID === salesId);
+    });
+
     async function viewItem(pesanan: Pesanan): Promise <void> {
         const { status, message, data } = await db({
             ID: pesanan.KODE
@@ -191,6 +201,20 @@
         if (carts.length === 0) {
             toast.error("Pesanan harus punya minimal satu item");
             return;
+        }
+
+        // The quantity input sits outside a <form>, so its min="1" is
+        // decorative: a decimal like 2.5 would silently truncate server-side,
+        // and clearing the box entirely arrives as NaN -> null -> 0, refused
+        // only after a round trip. Floor and check locally first so the
+        // operator hears about it right away.
+        for (const item of carts) {
+            item.JUMLAH = Math.floor(Number(item.JUMLAH));
+
+            if (!(item.JUMLAH >= 1)) {
+                toast.error(`Jumlah '${item.NAMA}' harus berupa angka minimal 1`);
+                return;
+            }
         }
 
         sedangMenyimpan = true;
@@ -412,6 +436,9 @@
                         {#each salesPilihan as orang}
                             <option value={String(orang.ID)}>{orang.NAMA}{orang.STATUS === "Nonaktif" ? ' (nonaktif)' : ''}</option>
                         {/each}
+                        {#if salesHilang}
+                            <option value={String(terpilih?.SALES_ID)}>Sales #{terpilih?.SALES_ID} (tidak ditemukan)</option>
+                        {/if}
                     </select>
                 </div>
                 <div>
@@ -523,7 +550,7 @@
                 </button>
                 <button type="button" onclick={batalUbah} class="btn btn-sm btn-ghost" disabled={sedangMenyimpan}>Batal</button>
             </div>
-        {:else if terpilih && !terpilih.VALID}
+        {:else if terpilih && terpilih.VALID === null}
             <div class="mt-4">
                 <button type="button" onclick={mulaiUbah} class="btn btn-sm btn-primary">Ubah Pesanan</button>
             </div>
