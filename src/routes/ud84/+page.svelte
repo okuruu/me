@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { db, useFetch } from '../../library/hooks/db';
-    import { capitalizeEachWord } from '../../library/utils/useFormat';
+    import { capitalizeEachWord, rupiahFormatter } from '../../library/utils/useFormat';
     import Ud84Katalog from '../../components/content/ud84/UD84Katalog.svelte';
     import Ud84History from '../../components/content/ud84/UD84History.svelte';
 
@@ -27,6 +27,8 @@
         ID: number;
         NAMA: string;
         QUANTITY: number;
+        HARGA_JUAL: number;
+        DISKON: string;
     }
     
     let katalog: Katalog[] = $state([]);
@@ -122,7 +124,9 @@
         carts = [...carts, {
             ID: item?.ID,
             NAMA: item?.NAMA_PRODUK,
-            QUANTITY: 1
+            QUANTITY: 1,
+            HARGA_JUAL: Number(item?.HARGA_JUAL ?? 0),
+            DISKON: ''
         }];
 
         useForms.kode = '';
@@ -372,22 +376,28 @@
                 <tr class="font-bold">
                     <th>#</th>
                     <th>Nama Produk</th>
+                    <th class="text-right">Harga Jual</th>
                     <th class="text-center">Jumlah (Pcs)</th>
+                    <th class="text-center">Pengajuan Diskon</th>
                     <th class="text-center">Hapus</th>
                 </tr>
             </thead>
             <tbody>
                 {#if carts.length === 0}
                     <tr>
-                        <td colspan="3" class="text-center">Keranjang Kosong</td>
+                        <td colspan="6" class="text-center">Keranjang Kosong</td>
                     </tr>
                 {:else}
                     {#each carts as carts, index }
                         <tr>
                             <td>{ index + 1 }</td>
                             <td>{carts.NAMA}</td>
+                            <td class="whitespace-nowrap text-right">{rupiahFormatter.format(carts.HARGA_JUAL)}</td>
                             <td class="text-center">
                                 <input type="number" min="1" class="input input-bordered input-sm w-24 text-center" placeholder="Qty" bind:value={carts.QUANTITY} />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" maxlength="100" class="input input-bordered input-sm w-40" placeholder="mis. 5% / 5000" bind:value={carts.DISKON} />
                             </td>
                             <td class="text-center">
                                 <button type="button" onclick={() => removeItem(index)} class="btn btn-ghost btn-square btn-sm text-error">
