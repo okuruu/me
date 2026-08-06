@@ -90,7 +90,12 @@
         let potonganPersen      = (document.getElementById('potonganPersen_' + ID) as HTMLInputElement)?.value;
         let potonganQuantity    = (document.getElementById('potonganQuantity_' + ID) as HTMLInputElement)?.value;
 
-        let doDiscount     = Number(currentItem.HARGA_JUAL) * (Number(potonganPersen)/100);
+        // Rounded once, here, so the figure that goes into TOTAL is the same
+        // one stored in POTONGAN_PERSEN. That column is an int, so MySQL used
+        // to round it on insert while TOTAL kept the unrounded value -- which
+        // is how a printed line could disagree with its own arithmetic by a
+        // rupiah or two.
+        let doDiscount     = Math.round(Number(currentItem.HARGA_JUAL) * (Number(potonganPersen)/100));
 
         currentCart = [...currentCart, {
             ID              : currentItem.ID,
@@ -119,7 +124,8 @@
         let potonganPersen      = (document.getElementById('potonganPersen_' + ID) as HTMLInputElement)?.value;
         let potonganQuantity    = (document.getElementById('potonganQuantity_' + ID) as HTMLInputElement)?.value;
 
-        let doDiscount     = Number(currentItem.HARGA_PER_ITEM) * (Number(potonganPersen)/100);
+        // Rounded for the same reason as the Satuan path above.
+        let doDiscount     = Math.round(Number(currentItem.HARGA_PER_ITEM) * (Number(potonganPersen)/100));
 
         currentCart = [...currentCart, {
             ID              : currentItem.ID,
