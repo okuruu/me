@@ -43,6 +43,11 @@
     interface Produk {
         ID: number;
         NAMA: string;
+        STOK: number;
+        TIPE: string;
+        HARGA_PER_ITEM: number;
+        HARGA_JUAL: number;
+        DISTRIBUTOR: string;
     }
 
     let newData: Pesanan[] = $state([]);
@@ -62,6 +67,10 @@
     let daftarSales: Staff[] = $state([]);
     let daftarProduk: Produk[] = $state([]);
     let produkDipilih: string = $state('');
+
+    // Snapshot of carts taken when edit mode starts, so Batal can restore it
+    // locally -- instantly, and without a refetch that could itself fail.
+    let cartsSebelumUbah: Carts[] = [];
 
     type Search = Record<"startDate" | "endDate", string>;
     const useInput: Search = $state({
@@ -89,6 +98,7 @@
         carts = data ?? [];
         isUbah = false;
         alasanUbah = '';
+        produkDipilih = '';
         await getRiwayat(pesanan.KODE);
         isDrawer = true;
     }
@@ -116,17 +126,15 @@
             daftarProduk = await useFetch('UD84/Master-Produk/Retrieve') ?? [];
         }
 
+        cartsSebelumUbah = $state.snapshot(carts);
         isUbah = true;
     }
 
     function batalUbah(): void {
+        carts = cartsSebelumUbah;
         isUbah = false;
         alasanUbah = '';
         produkDipilih = '';
-
-        if (terpilih) {
-            viewItem(terpilih);
-        }
     }
 
     // Picking a product already on the order adds to that line. Two lines for
@@ -159,11 +167,11 @@
             ADA: true,
             NAMA: produk.NAMA,
             JUMLAH: 1,
-            STOK: 0,
-            SATUAN: '-',
-            HARGA_PER_ITEM: 0,
-            HARGA_JUAL: 0,
-            DISTRIBUTOR: '-',
+            STOK: produk.STOK,
+            SATUAN: produk.TIPE,
+            HARGA_PER_ITEM: produk.HARGA_PER_ITEM,
+            HARGA_JUAL: produk.HARGA_JUAL,
+            DISTRIBUTOR: produk.DISTRIBUTOR,
         }];
         produkDipilih = '';
     }
