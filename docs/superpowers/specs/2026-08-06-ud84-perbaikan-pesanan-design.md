@@ -62,6 +62,12 @@ All return `status: "error"` with HTTP 200, matching the rest of the panel.
 | Reassigning to a `Nonaktif` salesperson | Sales tersebut sudah nonaktif. | They are already hidden from the public order form. An order that **already** names one keeps them — history stays intact |
 | Nothing changed | Tidak ada perubahan untuk disimpan. | An audit trail full of empty edits is worse than no entry |
 
+### A line whose product no longer exists
+
+`getItems` currently reads each line's product with `->first()` and then its `NAMA`, so an order referencing a since-deleted product throws and **the drawer cannot be opened at all** — the order becomes unviewable and unfixable. There are no such rows in local data; production is older and may have them.
+
+`getItems` therefore returns such a line marked `ADA: false` instead of failing, and the editor shows it as unresolvable with only **Hapus** available. Keeping the line is still refused, per the table above; **removing it is not**, because a removed line never reaches the payload. That is the only way out of the order, and it is the correct one.
+
 ---
 
 ## 4. Backend
