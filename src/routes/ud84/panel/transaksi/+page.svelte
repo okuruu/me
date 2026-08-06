@@ -67,6 +67,7 @@
         NAMA: string;
         TIPE: string;
         HARGA_JUAL: number;
+        HARGA_PER_ITEM: number;
     }
 
     /** One row of the editor: a stored line carries its ID, a new one does not. */
@@ -150,7 +151,10 @@
 
     onMount(async () => doPost());
 
-    async function getDetail(id: string): Promise <Array<Detail>>{
+    // Loads the drawer's data without touching isDrawer, so a caller that
+    // refreshes an already-open drawer (a saved correction) doesn't also
+    // close it -- only getDetail, which opens the drawer fresh, should toggle.
+    async function muatDetail(id: string): Promise <Array<Detail>> {
         const getResponse = await useFetch('UD84/Daftar-Transaksi/Detail-Transaksi/' + id);
         detailTransaksi = getResponse.detail;
         rekapTransaksi = getResponse.rekap;
@@ -162,8 +166,13 @@
         alasanKoreksi = '';
         produkDipilih = '';
         await getRiwayat(id);
-        isDrawer = !isDrawer;
         return detailTransaksi;
+    }
+
+    async function getDetail(id: string): Promise <Array<Detail>>{
+        const detail = await muatDetail(id);
+        isDrawer = !isDrawer;
+        return detail;
     }
 
     async function getRiwayat(id: string): Promise <void> {
@@ -278,21 +287,30 @@
             POTONGAN: Number(rekapTransaksi.POTONGAN ?? 0),
         };
 
-        barisKoreksi = detailTransaksi.map((baris) => ({
-            ID: baris.ID,
-            KODE_ITEM: Number(baris.KODE ?? 0),
-            NAMA: baris.NAMA,
-            SATUAN: baris.SATUAN ?? 'Pcs',
-            TIPE: baris.SATUAN === 'Pcs' ? 'Pcs' : (baris.SATUAN ?? 'Pcs'),
-            JUMLAH: Number(baris.JUMLAH),
-            HARGA_ASLI: Number(baris.HARGA_ASLI),
-            POTONGAN_PERSEN: Number(baris.POTONGAN_PERSEN),
-            POTONGAN_RUPIAH: Number(baris.POTONGAN_RUPIAH),
-        }));
-
         if (koreksi.DAPAT_UBAH_ITEM && daftarProduk.length === 0) {
             daftarProduk = await useFetch('UD84/Master-Produk/Retrieve') ?? [];
         }
+
+        // The dropdown must offer the product's real unit, not the stale unit
+        // the sale was rung under -- look it up from the product list (loaded
+        // above), falling back to the stored SATUAN only if the product is
+        // somehow gone.
+        barisKoreksi = detailTransaksi.map((baris) => {
+            const kodeItem = Number(baris.KODE ?? 0);
+            const produk = daftarProduk.find((item) => item.ID === kodeItem);
+
+            return {
+                ID: baris.ID,
+                KODE_ITEM: kodeItem,
+                NAMA: baris.NAMA,
+                SATUAN: baris.SATUAN ?? 'Pcs',
+                TIPE: produk?.TIPE ?? (baris.SATUAN ?? 'Pcs'),
+                JUMLAH: Number(baris.JUMLAH),
+                HARGA_ASLI: Number(baris.HARGA_ASLI),
+                POTONGAN_PERSEN: Number(baris.POTONGAN_PERSEN),
+                POTONGAN_RUPIAH: Number(baris.POTONGAN_RUPIAH),
+            };
+        });
 
         isKoreksiForm = true;
     }
@@ -319,8 +337,10 @@
             return;
         }
 
-        // A new line starts as loose pieces at the product's selling price --
-        // both are changeable on the row before saving.
+        // A new line starts as loose pieces, priced from the per-piece column --
+        // HARGA_JUAL is the whole-unit (Set/Dus) price, HARGA_PER_ITEM is the
+        // per-piece price, and both the unit and the price stay changeable on
+        // the row before saving.
         barisKoreksi = [...barisKoreksi, {
             ID: null,
             KODE_ITEM: produk.ID,
@@ -328,7 +348,7 @@
             SATUAN: 'Pcs',
             TIPE: produk.TIPE,
             JUMLAH: 1,
-            HARGA_ASLI: Number(produk.HARGA_JUAL ?? 0),
+            HARGA_ASLI: Number(produk.HARGA_PER_ITEM ?? 0),
             POTONGAN_PERSEN: 0,
             POTONGAN_RUPIAH: 0,
         }];
@@ -337,6 +357,27 @@
 
     function hapusBaris(index: number): void {
         barisKoreksi = barisKoreksi.filter((_, posisi) => posisi !== index);
+    }
+
+    // Re-seed a row's price when its unit changes, so a switch between Pcs and
+    // the product's own unit doesn't leave the price from the old unit behind --
+    // the same HARGA_PER_ITEM / HARGA_JUAL split the POS enforces.
+    function ubahSatuanBaris(index: number): void {
+        const baris = barisKoreksi[index];
+
+        if (!baris) {
+            return;
+        }
+
+        const produk = daftarProduk.find((item) => item.ID === baris.KODE_ITEM);
+
+        if (!produk) {
+            return;
+        }
+
+        baris.HARGA_ASLI = baris.SATUAN === 'Pcs'
+            ? Number(produk.HARGA_PER_ITEM ?? 0)
+            : Number(produk.HARGA_JUAL ?? 0);
     }
 
     async function simpanKoreksi(): Promise <void> {
@@ -404,7 +445,7 @@
 
         isKoreksiForm = false;
         alasanKoreksi = '';
-        await getDetail(rekapTransaksi.UNIQUE);
+        await muatDetail(rekapTransaksi.UNIQUE);
         await doPost();
     }
 </script>
@@ -659,7 +700,7 @@
                                     <th>Satuan</th>
                                     <th>Jumlah</th>
                                     <th>Harga</th>
-                                    <th>Pot. %</th>
+                                    <th>Diskon (Rp)</th>
                                     <th>Pot. Rp</th>
                                     <th>Jumlah</th>
                                     <th></th>
@@ -670,7 +711,7 @@
                                     <tr>
                                         <td class="text-left">{baris.NAMA}</td>
                                         <td>
-                                            <select bind:value={baris.SATUAN} class="select select-bordered select-sm">
+                                            <select bind:value={baris.SATUAN} onchange={() => ubahSatuanBaris(index)} class="select select-bordered select-sm">
                                                 <option value="Pcs">Pcs</option>
                                                 {#if baris.TIPE && baris.TIPE !== 'Pcs'}
                                                     <option value={baris.TIPE}>{baris.TIPE}</option>
