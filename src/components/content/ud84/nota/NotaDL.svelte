@@ -6,6 +6,10 @@
 </script>
 
 <div class="nota-dl">
+    {#if receipt.dibatalkan}
+        <div class="void-banner">TRANSAKSI DIBATALKAN</div>
+    {/if}
+
     <div class="flex items-start justify-between gap-3">
         <h2 class="text-xl font-extrabold text-error">UD84</h2>
         <span>WhatsApp Admin <b class="font-extrabold">0858-5500-9169</b></span>
@@ -117,6 +121,17 @@
     .qris {
         width: 28mm;
         height: 28mm;
+    }
+    /* A voided sale must never reprint as an ordinary receipt. Solid black on
+       white so it survives a 1-bit printer as well as a laser. */
+    .void-banner {
+        margin-bottom: 2mm;
+        border: 1.5pt solid #000;
+        padding: 1.5mm 0;
+        text-align: center;
+        font-size: 12pt;
+        font-weight: 800;
+        letter-spacing: 0.5mm;
     }
     @media print {
         .nota-dl {
