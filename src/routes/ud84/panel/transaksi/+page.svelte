@@ -68,6 +68,7 @@
         TIPE: string;
         HARGA_JUAL: number;
         HARGA_PER_ITEM: number;
+        JUMLAH_PER_ITEM: number;
     }
 
     /** One row of the editor: a stored line carries its ID, a new one does not. */
@@ -77,6 +78,7 @@
         NAMA: string;
         SATUAN: string;
         TIPE: string;
+        JUMLAH_PER_ITEM: number;
         JUMLAH: number;
         HARGA_ASLI: number;
         POTONGAN_PERSEN: number;
@@ -137,9 +139,20 @@
 
     // What the operator will be saving, recomputed as they type, so the number
     // is on screen before it is committed rather than after.
+    //
+    // On a header-only correction (DAPAT_UBAH_ITEM false) the backend does not
+    // touch the lines at all -- it sums each stored HARGA_TERJUAL as-is. That
+    // figure and (HARGA_ASLI - POTONGAN_PERSEN - POTONGAN_RUPIAH) * JUMLAH only
+    // agree when a stored line is internally consistent, which is not
+    // guaranteed for legacy rows (an empty HARGA_ASLI with a real stored
+    // HARGA_TERJUAL is live in production). The preview must derive from the
+    // same source the backend actually sums, or it can show a different total
+    // than what gets saved.
     let totalBarangKoreksi: number = $derived(
-        barisKoreksi.reduce((jumlah, baris) =>
-            jumlah + Math.max(0, baris.HARGA_ASLI - baris.POTONGAN_PERSEN - baris.POTONGAN_RUPIAH) * baris.JUMLAH, 0)
+        koreksi.DAPAT_UBAH_ITEM
+            ? barisKoreksi.reduce((jumlah, baris) =>
+                jumlah + Math.max(0, baris.HARGA_ASLI - baris.POTONGAN_PERSEN - baris.POTONGAN_RUPIAH) * baris.JUMLAH, 0)
+            : detailTransaksi.reduce((jumlah, detail) => jumlah + Number(detail.HARGA_TERJUAL ?? 0), 0)
     );
     let totalKoreksi: number = $derived(totalBarangKoreksi - draftKoreksi.POTONGAN);
 
@@ -305,6 +318,7 @@
                 NAMA: baris.NAMA,
                 SATUAN: baris.SATUAN ?? 'Pcs',
                 TIPE: produk?.TIPE ?? (baris.SATUAN ?? 'Pcs'),
+                JUMLAH_PER_ITEM: Number(produk?.JUMLAH_PER_ITEM ?? 0),
                 JUMLAH: Number(baris.JUMLAH),
                 HARGA_ASLI: Number(baris.HARGA_ASLI),
                 POTONGAN_PERSEN: Number(baris.POTONGAN_PERSEN),
@@ -347,6 +361,7 @@
             NAMA: produk.NAMA,
             SATUAN: 'Pcs',
             TIPE: produk.TIPE,
+            JUMLAH_PER_ITEM: Number(produk.JUMLAH_PER_ITEM ?? 0),
             JUMLAH: 1,
             HARGA_ASLI: Number(produk.HARGA_PER_ITEM ?? 0),
             POTONGAN_PERSEN: 0,
@@ -383,6 +398,23 @@
     async function simpanKoreksi(): Promise <void> {
         if (alasanKoreksi.trim() === '') {
             toast.error("Alasan perbaikan wajib diisi");
+            return;
+        }
+
+        // Clearing a number input gives undefined -> JSON null -> (int) null
+        // = 0 on the backend, so an operator clearing CASH to retype it and
+        // saving too soon would silently zero the sale's cash and strip its
+        // points behind a success toast. Caught here, before the request ever
+        // goes out.
+        const bidangUang: Array<[string, number]> = [
+            ['Pembayaran Tunai', draftKoreksi.CASH],
+            ['DP', draftKoreksi.DP],
+            ['Potongan Lain', draftKoreksi.POTONGAN],
+        ];
+        const uangTidakValid = bidangUang.find(([, nilai]) => typeof nilai !== 'number' || Number.isNaN(nilai) || nilai < 0);
+
+        if (uangTidakValid) {
+            toast.error(`${uangTidakValid[0]} harus diisi dengan angka minimal 0`);
             return;
         }
 
@@ -626,7 +658,7 @@
                         <th class="text-left">Nama Produk</th>
                         <th class="text-center">Jumlah</th>
                         <th>Harga Terjual</th>
-                        <th>Potongan Persen</th>
+                        <th>Diskon (Rp)</th>
                         <th>Potongan Rupiah</th>
                     </tr>
                 </thead>
@@ -689,6 +721,10 @@
                         <label for="koreksiPotongan" class="label-text mb-1 block font-medium">Potongan Lain</label>
                         <input id="koreksiPotongan" type="number" min="0" bind:value={draftKoreksi.POTONGAN} class="input input-bordered input-sm w-full"/>
                     </div>
+                    <div>
+                        <label for="koreksiJatuhTempo" class="label-text mb-1 block font-medium">Jatuh Tempo</label>
+                        <DatePlaceholder bind:value={draftKoreksi.JATUH_TEMPO} class="input input-bordered input-sm w-full" placeholder="Jatuh Tempo"/>
+                    </div>
                 </div>
 
                 {#if koreksi.DAPAT_UBAH_ITEM}
@@ -712,9 +748,9 @@
                                         <td class="text-left">{baris.NAMA}</td>
                                         <td>
                                             <select bind:value={baris.SATUAN} onchange={() => ubahSatuanBaris(index)} class="select select-bordered select-sm">
-                                                <option value="Pcs">Pcs</option>
+                                                <option value="Pcs">Pcs (eceran)</option>
                                                 {#if baris.TIPE && baris.TIPE !== 'Pcs'}
-                                                    <option value={baris.TIPE}>{baris.TIPE}</option>
+                                                    <option value={baris.TIPE}>{baris.TIPE} (isi {baris.JUMLAH_PER_ITEM} pcs)</option>
                                                 {/if}
                                             </select>
                                         </td>
