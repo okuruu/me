@@ -392,7 +392,13 @@
                         <tr>
                             <td>{ index + 1 }</td>
                             <td>{carts.NAMA}</td>
-                            <td class="whitespace-nowrap text-right">{rupiahFormatter.format(carts.HARGA_JUAL)}</td>
+                            <td class="whitespace-nowrap text-right">
+                                {#if carts.HARGA_JUAL > 0}
+                                    {rupiahFormatter.format(carts.HARGA_JUAL)}
+                                {:else}
+                                    <span class="text-base-content/50">Belum ada harga</span>
+                                {/if}
+                            </td>
                             <td class="text-center">
                                 <input type="number" min="1" class="input input-bordered input-sm w-24 text-center" placeholder="Qty" bind:value={carts.QUANTITY} />
                             </td>
