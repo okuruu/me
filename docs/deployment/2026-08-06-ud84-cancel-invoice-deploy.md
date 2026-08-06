@@ -25,7 +25,7 @@ The SQL is safe to apply days in advance. All four statements are additive or wi
 
 ## Step 0 — Back up first
 
-1. **Database.** phpMyAdmin → select the database → **Export → Custom** → tick `ud84_penjualan_rekap`, `ud84_penjualan_detail`, `ud84_master_produk`, `ud84_member`, `ud84_logs` → export as SQL. Keep the file. This release writes to all five.
+1. **Database.** phpMyAdmin → select the database → **Export → Custom** → tick `ud84_penjualan_rekap`, `ud84_penjualan_detail`, `ud84_master_produk`, `ud84_member`, `ud84_logs`, `ud84_pesanan_rekap` → export as SQL. Keep the file. This release writes to the first five; `ud84_pesanan_rekap` is there because of the fifth statement in Step 1.
 2. **Backend files.** Download the current copies of what you are about to replace:
    - `app/Http/Controllers/UD84/Report.php`
    - `app/Http/Controllers/UD84/Penjualan.php`
@@ -36,7 +36,9 @@ The SQL is safe to apply days in advance. All four statements are additive or wi
 
 ## Step 1 — Run the SQL in phpMyAdmin
 
-Open phpMyAdmin on cPanel, select the UD84 database (`u1643348_esdelfron`), open the **SQL** tab and run all four statements. They are also stored in the repo at `database/sql/2026_08_06_add_cancel_invoice.sql`, with the reasoning inline.
+Open phpMyAdmin on cPanel, select the UD84 database (`u1643348_esdelfron`), open the **SQL** tab and run all five statements. The first four are stored in the repo at `database/sql/2026_08_06_add_cancel_invoice.sql` and the fifth at `database/sql/2026_08_06_widen_pesanan_sales.sql`, both with the reasoning inline.
+
+**The fifth statement has nothing to do with cancelling invoices.** It is an unrelated defect found while running this release's tests, included here only because it is the same trip to phpMyAdmin and needs no code change at all. It is called out separately below so that if anything goes wrong you know which statement belongs to which problem.
 
 ```sql
 ALTER TABLE `ud84_penjualan_rekap`
@@ -61,24 +63,39 @@ CREATE TABLE `ud84_transaksi_log` (
   PRIMARY KEY (`ID`),
   KEY `UNIQUE_TRANSAKSI` (`UNIQUE_TRANSAKSI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Unrelated to cancel invoice. See "The fifth statement" below.
+ALTER TABLE `ud84_pesanan_rekap`
+  MODIFY COLUMN `SALES` int(11) DEFAULT NULL;
 ```
 
-Then confirm all four landed:
+Then confirm all five landed:
 
 ```sql
 SHOW COLUMNS FROM `ud84_penjualan_rekap` LIKE 'STATUS';
 SHOW COLUMNS FROM `ud84_penjualan_rekap` LIKE 'POIN';
 SHOW COLUMNS FROM `ud84_penjualan_detail` LIKE 'KODE';
 SHOW TABLES LIKE 'ud84_transaksi_log';
+SHOW COLUMNS FROM `ud84_pesanan_rekap` LIKE 'SALES';
 ```
 
-Expect `enum('Aktif','Dibatalkan')` / `NO` / default `Aktif`; `smallint(6)` / `YES`; `int(11)` / `YES`; and one table row.
+Expect `enum('Aktif','Dibatalkan')` / `NO` / default `Aktif`; `smallint(6)` / `YES`; `int(11)` / `YES`; one table row; and `int(11)` / `YES`.
 
 **What each one is for:**
 
 - **`STATUS`** — every existing sale becomes `Aktif`, so no report changes until something is actually cancelled.
 - **`POIN`** — records how many points a sale granted, so cancelling gives back exactly that. Existing rows stay `NULL`, meaning "granted before this column existed"; cancelling one of those recomputes from `CASH` and says so in the audit note.
 - **`KODE` widening** — it holds `ud84_master_produk.ID` but was `smallint(6)`, capped at 32767. Product IDs are around 466 today so it has never been hit, but cancellation now resolves the product by `KODE` to return stock. A truncated ID would silently credit a **different** product.
+
+**The fifth statement — `ud84_pesanan_rekap.SALES`.**
+
+The same kind of defect as the `KODE` widening, in a different table, and it belongs to no release — it is here because it costs nothing to run while you are already in phpMyAdmin.
+
+`SALES` records which salesperson took an order, storing `ud84_sales.ID`. That ID is an `int` that counts upward forever: every salesperson ever created consumes one permanently, and deleting a salesperson does **not** give theirs back. The column holding it was `tinyint` — a ceiling of 127.
+
+There are two salespeople today, so nothing is broken now. The Sales management page that shipped in the previous release is what makes the 128th a question of when rather than if. When that day comes, the database refuses the value outright rather than rounding it down, so **every order placed with that salesperson from the public Pesan Online page would fail** with a server error, and no existing order would be affected or point anywhere new.
+
+Widening the column is the whole fix. No code reads or writes it differently, and there is nothing to verify beyond the `SHOW COLUMNS` above.
 
 > **Never run `php artisan migrate` on this database.** Its `migrations` table holds only the project's original Laravel 9/10-era rows, while `database/migrations/` now contains Laravel 11-style files that are not recorded there. `migrate` would try to create the `users` table, which already exists, and fail. The `.sql` above is the only supported way to apply this. The migration file in the repo exists purely so the schema history is written down; it is never executed.
 
@@ -227,7 +244,9 @@ Ring up one ordinary sale and print it. Nothing about a normal transaction chang
 
 **If the backend misbehaves:** re-upload the original `Report.php`, `Penjualan.php`, `EMoney.php` and `routes/api.php` from Step 0, delete `app/Http/Controllers/UD84/Transaksi.php` and `config/ud84.php`, and clear the caches again (`route:clear` and `config:clear` included).
 
-All four schema changes can stay. `STATUS` defaults to `Aktif`, `POIN` is nullable, the widened `KODE` accepts everything it accepted before, and `ud84_transaksi_log` is simply unused by the old code. **Leave them.** Any sale cancelled before the rollback stays marked `Dibatalkan` in the data but will be counted in revenue again by the old code, so note down anything you cancelled in the meantime.
+All five schema changes can stay. `STATUS` defaults to `Aktif`, `POIN` is nullable, the widened `KODE` and `SALES` accept everything they accepted before, and `ud84_transaksi_log` is simply unused by the old code. **Leave them.** Any sale cancelled before the rollback stays marked `Dibatalkan` in the data but will be counted in revenue again by the old code, so note down anything you cancelled in the meantime.
+
+The `SALES` widening in particular has no code attached to it in either direction — rolling the release back does not give you a reason to undo it, and undoing it would reintroduce the ceiling.
 
 **If the frontend misbehaves:** Vercel dashboard → **Deployments** → previous working deployment → **Promote to Production**. Faster than a git revert.
 
