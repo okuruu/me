@@ -1,17 +1,31 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { page } from "$app/state";
     import { redirect } from "@sveltejs/kit";
     import { onMount } from "svelte";
 
 
     let time: Date = $state(new Date());
-    let activeMenu: string = $state('Transaksi');
+
+    // Derived from the URL rather than hardcoded. It used to be a fixed
+    // 'Transaksi', so every panel page highlighted the same entry no matter
+    // which one you were on.
+    let activeMenu: string = $derived.by(() => {
+        const ruas = page.url.pathname.replace(/\/+$/, '').split('/').pop() ?? '';
+
+        return ruas;
+    });
     let isOption: boolean = $state(false);
 
     // Presentational-only UI state for the mobile/tablet nav collapse.
     let mobileOpen: boolean = $state(false);
 
     let isLogin: boolean | null = $state(null);
+
+    // Who is actually signed in. The login page stores { name, privilege };
+    // sessions opened before it did hold a bare true, so both are handled.
+    let namaOperator: string = $state('');
+    let hakOperator: string = $state('');
 
     onMount(() => {
         const getStorage = localStorage.getItem('Auth');
@@ -21,6 +35,11 @@
             return logOut();
         }
 
+        if (typeof isLogin === 'object') {
+            const auth = isLogin as unknown as { name?: string; privilege?: string };
+            namaOperator = auth.name ?? '';
+            hakOperator = auth.privilege ?? '';
+        }
     });
 
     $effect(() => {
@@ -39,16 +58,16 @@
     }
 </script>
 {#snippet navLinks()}
-    <a href="/ud84/panel/retail" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Retail' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Retail</a>
-    <a href="/ud84/panel/pesanan" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Pesanan' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Pesanan</a>
-    <a href="/ud84/panel/transaksi" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Transaksi' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Transaksi</a>
-    <a href="/ud84/panel/member" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Member' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Member</a>
-    <a href="/ud84/panel/poin" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Poin' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Poin</a>
-    <a href="/ud84/panel/sales" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Sales' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Sales</a>
-    <a href="/ud84/panel/master-produk" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Master Produk' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Master Produk</a>
-    <a href="/ud84/panel/analisa" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Analisa' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Analisa</a>
-    <a href="/ud84/panel/logistic" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Logistic' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Logistik</a>
-    <a href="/ud84/panel/kartu-stok" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu ===  'Stock-Cards' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Kartu Stok</a>
+    <a href="/ud84/panel/retail" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'retail' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Retail</a>
+    <a href="/ud84/panel/pesanan" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'pesanan' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Pesanan</a>
+    <a href="/ud84/panel/transaksi" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'transaksi' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Transaksi</a>
+    <a href="/ud84/panel/member" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'member' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Member</a>
+    <a href="/ud84/panel/poin" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'poin' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Poin</a>
+    <a href="/ud84/panel/sales" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'sales' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Sales</a>
+    <a href="/ud84/panel/master-produk" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'master-produk' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Master Produk</a>
+    <a href="/ud84/panel/analisa" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'analisa' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Analisa</a>
+    <a href="/ud84/panel/logistic" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'logistic' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Logistik</a>
+    <a href="/ud84/panel/kartu-stok" class="btn btn-ghost btn-sm w-full justify-start font-semibold lg:w-auto lg:justify-center {activeMenu === 'kartu-stok' ? 'bg-primary/10 text-primary' : 'text-base-content/60 hover:text-primary' }">Kartu Stok</a>
 {/snippet}
 
 <nav class="sticky top-0 z-30 border-b border-base-300 bg-base-100 shadow-sm">
@@ -66,8 +85,10 @@
         <div class="flex shrink-0 items-center gap-2 sm:gap-3">
             <div class="hidden text-right sm:block">
                 <span class="text-sm font-semibold">
-                    <span class="font-bold text-error">[Administrator]</span>
-                    Hello, <span class="text-primary">Richie</span>
+                    {#if hakOperator}
+                        <span class="font-bold text-error">[{hakOperator}]</span>
+                    {/if}
+                    Hello, <span class="text-primary">{namaOperator || 'Operator'}</span>
                 </span> <br/>
                 <small class="font-semibold text-base-content/50">
                     <span class="text-info">[2.0]</span>
