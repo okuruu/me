@@ -3,6 +3,8 @@
 **Periode:** 5–7 Agustus 2026
 **Status:** seluruh item di `Instruction.md` selesai dan sudah di-merge ke `main`. **Belum ada yang naik ke server.**
 
+Kode backend (`Marmyadose`) sudah di-push ke GitHub per 7 Agustus 2026 — itu hanya menyimpan kode, tidak mengubah apa pun di server. Frontend (`me`) sengaja belum di-push, karena push ke sana langsung memicu deploy Vercel. Menaikkan ke server tetap dilakukan manual lewat cPanel.
+
 Dokumen ini adalah catatan lengkap apa yang dikerjakan, kenapa dikerjakan begitu, dan apa yang ditemukan sepanjang jalan. Untuk menaikkannya ke server, lihat `me/docs/deployment/2026-08-07-DEPLOY-SEMUA.md`.
 
 ---
