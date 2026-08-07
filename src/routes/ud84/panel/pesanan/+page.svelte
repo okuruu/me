@@ -351,8 +351,10 @@
                     <DatePlaceholder bind:value={useInput.endDate} class="input input-bordered input-sm w-full" placeholder="Tanggal Akhir"/>
                 </div>
                 <div class="flex items-end">
-                    <button type="submit" class="btn btn-square btn-primary btn-sm">
-                        <img src="/icons/Search.svg" class="h-5 w-5" alt="Search Toggle" />
+                    <button type="submit" class="btn btn-square btn-primary btn-sm" aria-label="Search Toggle">
+                        <svg viewBox="0 0 28 28" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+                            <path d="M12.5322 19.0332C13.9297 19.0332 15.2393 18.6113 16.3291 17.8906L20.1787 21.749C20.4336 21.9951 20.7588 22.1182 21.1104 22.1182C21.8398 22.1182 22.376 21.5469 22.376 20.8262C22.376 20.4922 22.2617 20.167 22.0156 19.9209L18.1924 16.0801C18.9834 14.9551 19.4492 13.5928 19.4492 12.1162C19.4492 8.31055 16.3379 5.19922 12.5322 5.19922C8.73535 5.19922 5.61523 8.31055 5.61523 12.1162C5.61523 15.9219 8.72656 19.0332 12.5322 19.0332ZM12.5322 17.1875C9.74609 17.1875 7.46094 14.9023 7.46094 12.1162C7.46094 9.33008 9.74609 7.04492 12.5322 7.04492C15.3184 7.04492 17.6035 9.33008 17.6035 12.1162C17.6035 14.9023 15.3184 17.1875 12.5322 17.1875ZM9.93945 11.6064H15.1689C15.5293 11.6064 15.8105 11.3076 15.8105 10.9561C15.8105 10.5957 15.5293 10.3145 15.1689 10.3145H9.93945C9.57031 10.3145 9.30664 10.5957 9.30664 10.9561C9.30664 11.3076 9.5791 11.6064 9.93945 11.6064ZM9.93945 13.918H13.71C14.0615 13.918 14.3516 13.6279 14.3516 13.2764C14.3516 12.916 14.0703 12.626 13.71 12.626H9.93945C9.57031 12.626 9.30664 12.916 9.30664 13.2764C9.30664 13.6279 9.5791 13.918 9.93945 13.918Z"/>
+                        </svg>
                     </button>
                 </div>
             </form>
@@ -390,7 +392,7 @@
                                 <td class="text-left font-medium">{data.NAMA}</td>
                                 <td class="hidden sm:table-cell">
                                     {#if data.ADA_DISKON}
-                                        <span class="badge badge-warning">Ada pengajuan</span>
+                                        Ada pengajuan
                                     {:else}
                                         <span class="text-base-content/40">-</span>
                                     {/if}
@@ -402,17 +404,26 @@
                                 <td>
                                     <div class="flex items-center justify-center gap-1">
                                         {#if data.VALID === null}
-                                            <button type="button" onclick={() => removeItem(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-error">
-                                                <img src="/icons/Delete.svg" alt="Hapus Pesanan" height="16"/>
+                                            <button type="button" onclick={() => removeItem(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-error" aria-label="Hapus Pesanan">
+                                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                                                    <path d="M12.6673 7.33301V13.5997C12.6673 13.8206 12.4883 13.9997 12.2673 13.9997H3.73398C3.51307 13.9997 3.33398 13.8206 3.33398 13.5997V7.33301"/>
+                                                    <path d="M6.66602 11.333V7.33301"/>
+                                                    <path d="M9.33398 11.333V7.33301"/>
+                                                    <path d="M14 4.66667H10.6667M10.6667 4.66667V2.4C10.6667 2.17909 10.4876 2 10.2667 2H5.73333C5.51242 2 5.33333 2.17909 5.33333 2.4V4.66667M10.6667 4.66667H5.33333M2 4.66667H5.33333"/>
+                                                </svg>
                                             </button>
-                                            <button type="button" onclick={() => isValid(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-primary">
-                                                <img src="/icons/Add.svg" alt="Validasi Pesanan" height="20"/>
+                                            <button type="button" onclick={() => isValid(data.KODE, index)} class="btn btn-ghost btn-square btn-sm text-primary" aria-label="Validasi Pesanan">
+                                                <svg viewBox="0 0 28 28" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+                                                    <path d="M7.63672 14.6562H12.998V20.0176C12.998 20.5625 13.4463 21.0195 14 21.0195C14.5537 21.0195 15.002 20.5625 15.002 20.0176V14.6562H20.3633C20.9082 14.6562 21.3652 14.208 21.3652 13.6543C21.3652 13.1006 20.9082 12.6523 20.3633 12.6523H15.002V7.29102C15.002 6.74609 14.5537 6.28906 14 6.28906C13.4463 6.28906 12.998 6.74609 12.998 7.29102V12.6523H7.63672C7.0918 12.6523 6.63477 13.1006 6.63477 13.6543C6.63477 14.208 7.0918 14.6562 7.63672 14.6562Z"/>
+                                                </svg>
                                             </button>
                                         {:else}
                                             <button type="button" class="btn btn-sm btn-success">Verified</button>
                                         {/if}
-                                        <button type="button" onclick={() => viewItem(data)} class="btn btn-ghost btn-square btn-sm text-info">
-                                            <img src="/icons/Share.svg" alt="Lihat Item" height="16"/>
+                                        <button type="button" onclick={() => viewItem(data)} class="btn btn-ghost btn-square btn-sm text-info" aria-label="Lihat Item">
+                                            <svg viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="1.99568" class="h-4 w-4" aria-hidden="true">
+                                                <path d="M7.97838 7.97406L9.70272 15.7336C9.80052 16.1737 10.3856 16.2687 10.6176 15.8821L18.5012 2.74264C18.7008 2.4101 18.4612 1.98703 18.0734 1.98703H2.34222C1.87902 1.98703 1.66584 2.56331 2.01753 2.86476L7.97838 7.97406ZM7.97838 7.97406L17.9568 2.48595"/>
+                                            </svg>
                                         </button>
                                     </div>
                                 </td>
@@ -524,7 +535,7 @@
                                 </td>
                                 <td class="text-center">
                                     {#if item.DISKON}
-                                        <span class="badge badge-warning">{item.DISKON}</span>
+                                        {item.DISKON}
                                     {:else}
                                         <span class="text-base-content/40">-</span>
                                     {/if}

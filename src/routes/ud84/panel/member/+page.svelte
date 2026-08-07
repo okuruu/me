@@ -216,8 +216,13 @@
                                 <a href="https://wa.me/62{ data.WHATSAPP }" target="_blank" class="btn btn-sm btn-success" >0{ data.WHATSAPP }</a>
                             </td>
                             <td>
-                                <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-ghost btn-square btn-sm text-error">
-                                    <img src="/icons/Delete.svg" alt="Delete" height="20"/>
+                                <button type="button" onclick={() => deleteMember(data.ID)} class="btn btn-ghost btn-square btn-sm text-error" aria-label="Delete">
+                                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+                                        <path d="M12.6673 7.33301V13.5997C12.6673 13.8206 12.4883 13.9997 12.2673 13.9997H3.73398C3.51307 13.9997 3.33398 13.8206 3.33398 13.5997V7.33301"/>
+                                        <path d="M6.66602 11.333V7.33301"/>
+                                        <path d="M9.33398 11.333V7.33301"/>
+                                        <path d="M14 4.66667H10.6667M10.6667 4.66667V2.4C10.6667 2.17909 10.4876 2 10.2667 2H5.73333C5.51242 2 5.33333 2.17909 5.33333 2.4V4.66667M10.6667 4.66667H5.33333M2 4.66667H5.33333"/>
+                                    </svg>
                                 </button>
                             </td>
                         </tr>

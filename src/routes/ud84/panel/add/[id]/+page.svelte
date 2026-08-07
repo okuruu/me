@@ -347,8 +347,13 @@
                                         </td>
                                         <td class="font-bold">{rupiahFormatter.format(cartItem.TOTAL_HARGA)}</td>
                                         <td>
-                                            <button type="button" onclick={() => removeFromList(index)} class="btn btn-ghost btn-square btn-sm text-error">
-                                                <img src="/icons/Delete.svg" alt="" class="h-4 w-4" />
+                                            <button type="button" onclick={() => removeFromList(index)} class="btn btn-ghost btn-square btn-sm text-error" aria-label="Hapus item">
+                                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                                                    <path d="M12.6673 7.33301V13.5997C12.6673 13.8206 12.4883 13.9997 12.2673 13.9997H3.73398C3.51307 13.9997 3.33398 13.8206 3.33398 13.5997V7.33301"/>
+                                                    <path d="M6.66602 11.333V7.33301"/>
+                                                    <path d="M9.33398 11.333V7.33301"/>
+                                                    <path d="M14 4.66667H10.6667M10.6667 4.66667V2.4C10.6667 2.17909 10.4876 2 10.2667 2H5.73333C5.51242 2 5.33333 2.17909 5.33333 2.4V4.66667M10.6667 4.66667H5.33333M2 4.66667H5.33333"/>
+                                                </svg>
                                             </button>
                                         </td>
                                     </tr>
@@ -465,8 +470,10 @@
                                     <span class="text-warning">{rupiahFormatter.format(cartSearch.HARGA)}</span>
                                 </td>
                                 <td>
-                                    <button type="button" id="cartModal_{index}" onclick={() => selectionModal(cartSearch.ID)} class="btn btn-ghost btn-square btn-sm text-primary">
-                                        <img src="/icons/Add.svg" class="h-5 w-5" alt="Tambahkan ke Keranjang" />
+                                    <button type="button" id="cartModal_{index}" onclick={() => selectionModal(cartSearch.ID)} class="btn btn-ghost btn-square btn-sm text-primary" aria-label="Tambahkan ke Keranjang">
+                                        <svg viewBox="0 0 28 28" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+                                            <path d="M7.63672 14.6562H12.998V20.0176C12.998 20.5625 13.4463 21.0195 14 21.0195C14.5537 21.0195 15.002 20.5625 15.002 20.0176V14.6562H20.3633C20.9082 14.6562 21.3652 14.208 21.3652 13.6543C21.3652 13.1006 20.9082 12.6523 20.3633 12.6523H15.002V7.29102C15.002 6.74609 14.5537 6.28906 14 6.28906C13.4463 6.28906 12.998 6.74609 12.998 7.29102V12.6523H7.63672C7.0918 12.6523 6.63477 13.1006 6.63477 13.6543C6.63477 14.208 7.0918 14.6562 7.63672 14.6562Z"/>
+                                        </svg>
                                     </button>
                                 </td>
                             </tr>

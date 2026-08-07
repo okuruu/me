@@ -237,11 +237,19 @@
                             <td class="hidden md:table-cell">{ rupiahFormatter.format(data.HARGA_JUAL) }</td>
                             <td>
                                 <div class="flex items-center justify-center gap-1">
-                                    <button type="button" onclick={() => startEdit(index)} class="btn btn-ghost btn-square btn-sm text-primary">
-                                        <img src="/icons/Edit.svg" alt="Edit Button" height="20" />
+                                    <button type="button" onclick={() => startEdit(index)} class="btn btn-ghost btn-square btn-sm text-primary" aria-label="Edit Button">
+                                        <svg viewBox="0 0 16 16" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+                                            <path d="M4.66699 11.3423L7.60899 11.3323L14.0303 4.97226C14.2823 4.72026 14.421 4.38559 14.421 4.02959C14.421 3.67359 14.2823 3.33893 14.0303 3.08693L12.973 2.02959C12.469 1.52559 11.5897 1.52826 11.0897 2.02759L4.66699 8.38893V11.3423ZM12.0303 2.97226L13.0897 4.02759L12.025 5.08226L10.9677 4.02559L12.0303 2.97226ZM6.00033 8.94493L10.0203 4.96293L11.0777 6.02026L7.05833 10.0009L6.00033 10.0043V8.94493Z"/>
+                                            <path d="M3.33333 14H12.6667C13.402 14 14 13.402 14 12.6667V6.888L12.6667 8.22133V12.6667H5.43867C5.42133 12.6667 5.40333 12.6733 5.386 12.6733C5.364 12.6733 5.342 12.6673 5.31933 12.6667H3.33333V3.33333H7.898L9.23133 2H3.33333C2.598 2 2 2.598 2 3.33333V12.6667C2 13.402 2.598 14 3.33333 14Z"/>
+                                        </svg>
                                     </button>
-                                    <button type="button" onclick={() => doDelete(index)} class="btn btn-ghost btn-square btn-sm text-error">
-                                        <img src="/icons/Delete.svg" alt="Delete Button" height="20" />
+                                    <button type="button" onclick={() => doDelete(index)} class="btn btn-ghost btn-square btn-sm text-error" aria-label="Delete Button">
+                                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+                                            <path d="M12.6673 7.33301V13.5997C12.6673 13.8206 12.4883 13.9997 12.2673 13.9997H3.73398C3.51307 13.9997 3.33398 13.8206 3.33398 13.5997V7.33301"/>
+                                            <path d="M6.66602 11.333V7.33301"/>
+                                            <path d="M9.33398 11.333V7.33301"/>
+                                            <path d="M14 4.66667H10.6667M10.6667 4.66667V2.4C10.6667 2.17909 10.4876 2 10.2667 2H5.73333C5.51242 2 5.33333 2.17909 5.33333 2.4V4.66667M10.6667 4.66667H5.33333M2 4.66667H5.33333"/>
+                                        </svg>
                                     </button>
                                 </div>
                             </td>

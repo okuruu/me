@@ -336,16 +336,34 @@
                                         <td class="text-center">
                                             <div class="flex flex-col items-center gap-1">
                                                 <span class="whitespace-nowrap text-xs font-semibold text-info">{ rupiahFormatter.format(data.HARGA_JUAL) }</span>
-                                                <button type="button" onclick={() => addToCart(index)} class="btn btn-xs btn-square btn-success">
-                                                    <img src="/icons/Add-Arrow.svg" alt="Tambah satuan" height="16" />
+                                                <button type="button" onclick={() => addToCart(index)} class="btn btn-xs btn-square btn-success" aria-label="Tambah satuan">
+                                                    <svg viewBox="0 0 1080 1080" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                                                        <g transform="matrix(1 0 0 1 540 540)">
+                                                            <g transform="matrix(1 0 0 1 -110.5 0)">
+                                                                <path fill-rule="evenodd" transform="translate(-145, -255.5)" d="M -0.5 431.5 C -0.5 427.833 -0.5 424.167 -0.5 420.5 C 2.33836 415.473 5.83836 410.807 10 406.5 C 55.7526 356.587 100.919 306.253 145.5 255.5 C 100.919 204.747 55.7526 154.413 10 104.5 C 5.83836 100.193 2.33836 95.5267 -0.5 90.5 C -0.5 86.8333 -0.5 83.1667 -0.5 79.5 C 1.62437 73.8785 5.62437 70.0451 11.5 68 C 48.8333 67.3333 86.1667 67.3333 123.5 68 C 125.246 68.4709 126.913 69.1376 128.5 70 C 180.943 127.782 233.443 185.615 286 243.5 C 292 251.5 292 259.5 286 267.5 C 233.443 325.385 180.943 383.218 128.5 441 C 126.913 441.862 125.246 442.529 123.5 443 C 86.1667 443.667 48.8333 443.667 11.5 443 C 5.62437 440.955 1.62437 437.122 -0.5 431.5 Z"/>
+                                                            </g>
+                                                            <g transform="matrix(1 0 0 1 110.85 0)">
+                                                                <path fill-rule="evenodd" transform="translate(-366.35, -255.5)" d="M 511.5 249.5 C 511.5 253.5 511.5 257.5 511.5 261.5 C 458.782 322.059 405.115 381.892 350.5 441 C 348.913 441.862 347.246 442.529 345.5 443 C 308.167 443.667 270.833 443.667 233.5 443 C 223.212 438.927 219.379 431.427 222 420.5 C 222.561 418.275 223.561 416.275 225 414.5 C 272.685 361.649 320.185 308.649 367.5 255.5 C 320.185 202.351 272.685 149.351 225 96.5 C 219.383 86.7079 220.55 77.8746 228.5 70 C 230.246 69.5291 231.913 68.8624 233.5 68 C 270.833 67.3333 308.167 67.3333 345.5 68 C 347.246 68.4709 348.913 69.1376 350.5 70 C 405.115 129.108 458.782 188.941 511.5 249.5 Z"/>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
                                                 </button>
                                             </div>
                                         </td>
                                         <td class="text-center">
                                             <div class="flex flex-col items-center gap-1">
                                                 <span class="whitespace-nowrap text-xs font-semibold text-success">{ rupiahFormatter.format(data.HARGA_PER_ITEM) }</span>
-                                                <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-xs btn-square btn-neutral">
-                                                    <img src="/icons/Add-Arrow.svg" alt="Tambah pcs" height="16" />
+                                                <button type="button" onclick={() => addToCartPieces(index)} class="btn btn-xs btn-square btn-neutral" aria-label="Tambah pcs">
+                                                    <svg viewBox="0 0 1080 1080" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                                                        <g transform="matrix(1 0 0 1 540 540)">
+                                                            <g transform="matrix(1 0 0 1 -110.5 0)">
+                                                                <path fill-rule="evenodd" transform="translate(-145, -255.5)" d="M -0.5 431.5 C -0.5 427.833 -0.5 424.167 -0.5 420.5 C 2.33836 415.473 5.83836 410.807 10 406.5 C 55.7526 356.587 100.919 306.253 145.5 255.5 C 100.919 204.747 55.7526 154.413 10 104.5 C 5.83836 100.193 2.33836 95.5267 -0.5 90.5 C -0.5 86.8333 -0.5 83.1667 -0.5 79.5 C 1.62437 73.8785 5.62437 70.0451 11.5 68 C 48.8333 67.3333 86.1667 67.3333 123.5 68 C 125.246 68.4709 126.913 69.1376 128.5 70 C 180.943 127.782 233.443 185.615 286 243.5 C 292 251.5 292 259.5 286 267.5 C 233.443 325.385 180.943 383.218 128.5 441 C 126.913 441.862 125.246 442.529 123.5 443 C 86.1667 443.667 48.8333 443.667 11.5 443 C 5.62437 440.955 1.62437 437.122 -0.5 431.5 Z"/>
+                                                            </g>
+                                                            <g transform="matrix(1 0 0 1 110.85 0)">
+                                                                <path fill-rule="evenodd" transform="translate(-366.35, -255.5)" d="M 511.5 249.5 C 511.5 253.5 511.5 257.5 511.5 261.5 C 458.782 322.059 405.115 381.892 350.5 441 C 348.913 441.862 347.246 442.529 345.5 443 C 308.167 443.667 270.833 443.667 233.5 443 C 223.212 438.927 219.379 431.427 222 420.5 C 222.561 418.275 223.561 416.275 225 414.5 C 272.685 361.649 320.185 308.649 367.5 255.5 C 320.185 202.351 272.685 149.351 225 96.5 C 219.383 86.7079 220.55 77.8746 228.5 70 C 230.246 69.5291 231.913 68.8624 233.5 68 C 270.833 67.3333 308.167 67.3333 345.5 68 C 347.246 68.4709 348.913 69.1376 350.5 70 C 405.115 129.108 458.782 188.941 511.5 249.5 Z"/>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
                                                 </button>
                                             </div>
                                         </td>
