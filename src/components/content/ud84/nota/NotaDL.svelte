@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { rupiahFormatter } from "../../../../library/utils/useFormat";
+    import { numberFormatter } from "../../../../library/utils/useFormat";
     import type { Receipt } from "./types";
 
     let { receipt }: { receipt: Receipt } = $props();
@@ -43,8 +43,8 @@
                     <td class="text-center">{item.QUANTITY}</td>
                     <td>{item.SATUAN ?? '-'}</td>
                     <td>{item.NAMA}</td>
-                    <td class="text-right">{rupiahFormatter.format(item.HARGA)}</td>
-                    <td class="text-right">{rupiahFormatter.format(item.JUMLAH)}</td>
+                    <td class="text-right">{numberFormatter.format(item.HARGA)}</td>
+                    <td class="text-right">{numberFormatter.format(item.JUMLAH)}</td>
                 </tr>
             {:else}
                 <tr>
@@ -60,45 +60,45 @@
         {#if receipt.ringkasan.POTONGAN > 0}
             <div class="flex justify-between gap-3">
                 <span>Total Barang</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.TOTAL_BARANG)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.TOTAL_BARANG)}</span>
             </div>
             <div class="flex justify-between gap-3">
                 <span>Potongan</span>
-                <span>− {rupiahFormatter.format(receipt.ringkasan.POTONGAN)}</span>
+                <span>− {numberFormatter.format(receipt.ringkasan.POTONGAN)}</span>
             </div>
             <div class="flex justify-between gap-3 border-t border-base-300 pt-1 font-bold">
                 <span>Total Tagihan</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.TOTAL_TAGIHAN)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.TOTAL_TAGIHAN)}</span>
             </div>
         {:else}
             <div class="flex justify-between gap-3 font-bold">
                 <span>Total</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.TOTAL_TAGIHAN)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.TOTAL_TAGIHAN)}</span>
             </div>
         {/if}
 
         {#if receipt.ringkasan.CASH > 0}
             <div class="flex justify-between gap-3">
                 <span>Pembayaran Cash</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.CASH)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.CASH)}</span>
             </div>
         {/if}
         {#if receipt.ringkasan.DP > 0}
             <div class="flex justify-between gap-3">
                 <span>Pembayaran DP</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.DP)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.DP)}</span>
             </div>
         {/if}
         {#if receipt.ringkasan.SISA > 0}
             <div class="flex justify-between gap-3 border-t border-base-300 pt-1 font-bold text-error">
                 <span>Sisa Tagihan</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.SISA)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.SISA)}</span>
             </div>
         {/if}
         {#if receipt.ringkasan.KEMBALIAN > 0}
             <div class="flex justify-between gap-3 border-t border-base-300 pt-1 font-bold">
                 <span>Kembalian</span>
-                <span>{rupiahFormatter.format(receipt.ringkasan.KEMBALIAN)}</span>
+                <span>{numberFormatter.format(receipt.ringkasan.KEMBALIAN)}</span>
             </div>
         {/if}
     </div>
