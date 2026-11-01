@@ -104,8 +104,8 @@
     </div>
 
     <div class="mt-3 flex flex-col items-center">
-        <img src="/images/qris.png" alt="QRIS" class="qris" />
-        <span class="mt-1 text-[7pt]">Scan untuk pembayaran QRIS</span>
+        <img src="/images/qris.png" alt="QR DANA" class="qris" />
+        <span class="mt-1 text-[7pt]">Scan untuk bayar DANA</span>
     </div>
 
     <div class="mt-4 text-right">

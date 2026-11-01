@@ -83,8 +83,8 @@
     <div class="rule"></div>
 
     <div class="flex flex-col items-center">
-        <img src="/images/qris.png" alt="QRIS" class="qris" />
-        <span class="text-[6pt]">Scan untuk pembayaran QRIS</span>
+        <img src="/images/qris.png" alt="QR DANA" class="qris" />
+        <span class="text-[6pt]">Scan untuk bayar DANA</span>
     </div>
 
     <div class="rule"></div>
